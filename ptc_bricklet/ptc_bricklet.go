@@ -18,8 +18,8 @@ package ptc_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/tinkerforge/go-api-bindings/internal"
-    "github.com/tinkerforge/go-api-bindings/ipconnection"
+    . "github.com/Tinkerforge/go-api-bindings/internal"
+    "github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
 type Function uint8
