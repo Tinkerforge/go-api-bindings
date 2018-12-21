@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2018-12-18.      *
+ * This file was automatically generated on 2018-12-21.      *
  *                                                           *
  * Go Bindings Version 2.0.0                                 *
  *                                                           *
