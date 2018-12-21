@@ -356,7 +356,7 @@ const (
 	DisconnectReasonShutdown
 )
 
-type EnumerationType = uint8
+type EnumerationType uint8
 
 const (
 	EnumerationTypeAvailable EnumerationType = iota
@@ -847,7 +847,7 @@ type DisconnectCallbackContainer struct {
 	Callback func(uint8)
 }
 
-type ConnectionState = uint8
+type ConnectionState uint8
 
 const (
 	ConnectionStateDisconnected ConnectionState = iota
