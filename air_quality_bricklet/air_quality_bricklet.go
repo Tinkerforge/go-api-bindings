@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-07.      *
+ * This file was automatically generated on 2019-01-29.      *
  *                                                           *
- * Go Bindings Version 2.0.1                                 *
+ * Go Bindings Version 2.0.2                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -356,7 +356,7 @@ func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccura
     return iaqIndex, iaqIndexAccuracy, temperature, humidity, airPressure, nil
 }
 
-// Sets a temperature offset with resolution 1/100°C. A offset of 10 will decrease 
+// Sets a temperature offset with resolution 1/100°C. A offset of 10 will decrease
 	// the measured temperature by 0.1°C.
 	// 
 	// If you install this Bricklet into an enclosure and you want to measure the ambient

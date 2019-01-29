@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-07.      *
+ * This file was automatically generated on 2019-01-29.      *
  *                                                           *
- * Go Bindings Version 2.0.1                                 *
+ * Go Bindings Version 2.0.2                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -955,7 +955,7 @@ func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period 
     return period, valueHasToChange, nil
 }
 
-// Draws a white or black line from (x, y)-start to (x, y)-end. 
+// Draws a white or black line from (x, y)-start to (x, y)-end.
 	// The x values have to be within the range of 0 to 127 and the y
 	// values have t be within the range of 0 to 63.
 	// 
@@ -1085,7 +1085,7 @@ func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font
     return nil
 }
 
-// Draws a clickable button at position (x, y) with the given text 
+// Draws a clickable button at position (x, y) with the given text
 	// of up to 16 characters.
 	// 
 	// You can use up to 12 buttons (index 0-11).
@@ -1095,7 +1095,7 @@ func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font
 	// 
 	// The minimum useful width/height of a button is 3.
 	// 
-	// You can enable a callback for a button press with 
+	// You can enable a callback for a button press with
 	// SetGUIButtonPressedCallbackConfiguration. The callback will
 	// be triggered for press and release-events.
 	// 
@@ -1298,8 +1298,8 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool,
 	// 
 	// You can use up to 6 sliders (index 0-5).
 	// 
-	// If you use the horizontal direction, the x position + length has to be 
-	// within the range of 1 to 128 and the y position has to be within 
+	// If you use the horizontal direction, the x position + length has to be
+	// within the range of 1 to 128 and the y position has to be within
 	// the range of 0 to 46.
 	// 
 	// If you use the vertical direction, the y position + length has to be
@@ -1308,11 +1308,11 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool,
 	// 
 	// The minimum length of a slider is 8.
 	// 
-	// The parameter value is the start-position of the slider, it can 
+	// The parameter value is the start-position of the slider, it can
 	// be between 0 and length-8.
 	// 
-	// You can enable a callback for the slider value with 
-	// SetGUISliderValueCallbackConfiguration. 
+	// You can enable a callback for the slider value with
+	// SetGUISliderValueCallbackConfiguration.
 	// 
 	// The slider is drawn in a separate GUI buffer and it will
 	// always stay on top of the graphics drawn with WritePixels. To
@@ -1515,7 +1515,7 @@ func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, er
 // Sets the general configuration for tabs. You can configure the tabs to only
 	// accept clicks or only swipes (gesture left/right and right/left) or both.
 	// 
-	// Additionally, if you set `Clear GUI` to true, all of the GUI elements (buttons, 
+	// Additionally, if you set `Clear GUI` to true, all of the GUI elements (buttons,
 	// slider, graphs) will automatically be removed on every tab change.
 	// 
 	// By default click and swipe as well as automatic GUI clear is enabled.
@@ -1961,7 +1961,7 @@ func (device *LCD128x64Bricklet) GetGUIGraphConfiguration(index uint8) (active b
     return active, graphType, positionX, positionY, width, height, textX, textY, nil
 }
 
-// Sets the data for a graph with the given index. You have to configure the graph with 
+// Sets the data for a graph with the given index. You have to configure the graph with
 	// SetGUIGraphConfiguration before you can set the first data.
 	// 
 	// The graph will show the first n values of the data that you set, where
@@ -2001,7 +2001,7 @@ func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength
     return nil
 }
 
-// Sets the data for a graph with the given index. You have to configure the graph with 
+// Sets the data for a graph with the given index. You have to configure the graph with
 	// SetGUIGraphConfiguration before you can set the first data.
 	// 
 	// The graph will show the first n values of the data that you set, where

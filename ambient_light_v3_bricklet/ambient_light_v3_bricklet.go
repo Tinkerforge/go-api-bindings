@@ -9,11 +9,11 @@
  *************************************************************/
 
 
-//Measures ambient temperature with 0.2°C accuracy.
+//.
 // 
 // 
-// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/TemperatureV2_Bricklet_Go.html.
-package temperature_v2_bricklet
+// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AmbientLightV3_Bricklet_Go.html.
+package ambient_light_v3_bricklet
 
 import (
 	"encoding/binary"
@@ -25,11 +25,11 @@ import (
 type Function uint8
 
 const (
-    FunctionGetTemperature Function = 1
-	FunctionSetTemperatureCallbackConfiguration Function = 2
-	FunctionGetTemperatureCallbackConfiguration Function = 3
-	FunctionSetHeaterConfiguration Function = 5
-	FunctionGetHeaterConfiguration Function = 6
+    FunctionGetIlluminance Function = 1
+	FunctionSetIlluminanceCallbackConfiguration Function = 2
+	FunctionGetIlluminanceCallbackConfiguration Function = 3
+	FunctionSetConfiguration Function = 5
+	FunctionGetConfiguration Function = 6
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -42,7 +42,7 @@ const (
 	FunctionWriteUID Function = 248
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
-	FunctionCallbackTemperature Function = 4
+	FunctionCallbackIlluminance Function = 4
 )
 
 type ThresholdOption rune
@@ -55,11 +55,29 @@ const (
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type HeaterConfig uint8
+type IlluminanceRange uint8
 
 const (
-    HeaterConfigDisabled HeaterConfig = 0
-	HeaterConfigEnabled HeaterConfig = 1
+    IlluminanceRangeUnlimited IlluminanceRange = 6
+	IlluminanceRange64000Lux IlluminanceRange = 0
+	IlluminanceRange32000Lux IlluminanceRange = 1
+	IlluminanceRange16000Lux IlluminanceRange = 2
+	IlluminanceRange8000Lux IlluminanceRange = 3
+	IlluminanceRange1300Lux IlluminanceRange = 4
+	IlluminanceRange600Lux IlluminanceRange = 5
+)
+
+type IntegrationTime uint8
+
+const (
+    IntegrationTime50ms IntegrationTime = 0
+	IntegrationTime100ms IntegrationTime = 1
+	IntegrationTime150ms IntegrationTime = 2
+	IntegrationTime200ms IntegrationTime = 3
+	IntegrationTime250ms IntegrationTime = 4
+	IntegrationTime300ms IntegrationTime = 5
+	IntegrationTime350ms IntegrationTime = 6
+	IntegrationTime400ms IntegrationTime = 7
 )
 
 type BootloaderMode uint8
@@ -92,24 +110,24 @@ const (
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type TemperatureV2Bricklet struct{
+type AmbientLightV3Bricklet struct{
 	device Device
 }
-const DeviceIdentifier = 2113
-const DeviceDisplayName = "Temperature Bricklet 2.0"
+const DeviceIdentifier = 2131
+const DeviceDisplayName = "Ambient Light Bricklet 3.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
-func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, error) {
+func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV3Bricklet, error) {
     internalIPCon := ipcon.GetInternalHandle().(IPConnection)
     dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
     if err != nil {
-        return TemperatureV2Bricklet{}, err
+        return AmbientLightV3Bricklet{}, err
     }
-    dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHeaterConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetHeaterConfiguration] = ResponseExpectedFlagAlwaysTrue;
+    dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetIlluminanceCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetIlluminanceCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -122,7 +140,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, e
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return TemperatureV2Bricklet{dev}, nil
+    return AmbientLightV3Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -139,7 +157,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, e
 // and errors are silently ignored, because they cannot be detected.
 // 
 // See SetResponseExpected for the list of function ID constants available for this function.
-func (device *TemperatureV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
+func (device *AmbientLightV3Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
 }
 
@@ -151,72 +169,76 @@ func (device *TemperatureV2Bricklet) GetResponseExpected(functionID Function) (b
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-func (device *TemperatureV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
+func (device *AmbientLightV3Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
     return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
-func (device *TemperatureV2Bricklet) SetResponseExpectedAll(responseExpected bool) {
+func (device *AmbientLightV3Bricklet) SetResponseExpectedAll(responseExpected bool) {
 	device.device.SetResponseExpectedAll(responseExpected)
 }
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
-func (device *TemperatureV2Bricklet) GetAPIVersion() [3]uint8 {
+func (device *AmbientLightV3Bricklet) GetAPIVersion() [3]uint8 {
     return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetTemperatureCallbackConfiguration.
+	// SetIlluminanceCallbackConfiguration.
 	// 
-	// The parameter is the same as GetTemperature.
-func (device *TemperatureV2Bricklet) RegisterTemperatureCallback(fn func(int16)) uint64 {
+	// The parameter is the same as GetIlluminance.
+func (device *AmbientLightV3Bricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
-                var temperature int16
-                binary.Read(buf, binary.LittleEndian, &temperature)
-                fn(temperature)
+                var illuminance uint32
+                binary.Read(buf, binary.LittleEndian, &illuminance)
+                fn(illuminance)
             }
-    return device.device.RegisterCallback(uint8(FunctionCallbackTemperature), wrapper)
+    return device.device.RegisterCallback(uint8(FunctionCallbackIlluminance), wrapper)
 }
 
-//Remove a registered Temperature callback.
-func (device *TemperatureV2Bricklet) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+//Remove a registered Illuminance callback.
+func (device *AmbientLightV3Bricklet) DeregisterIlluminanceCallback(callbackID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), callbackID)
 }
 
 
-// Returns the temperature measured by the sensor. The value
-	// has a range of -4500 to 13000 and is given in °C/100,
-	// i.e. a value of 3200 means that a temperature of 32.00 °C is measured.
+// Returns the illuminance of the ambient light sensor. The measurement range goes
+	// up to about 100000lux, but above 64000lux the precision starts to drop.
+	// The illuminance is given in lux/100, i.e. a value of 450000 means that an
+	// illuminance of 4500lux is measured.
+	// 
+	// An illuminance of 0lux indicates that the sensor is saturated and the
+	// configuration should be modified, see SetConfiguration.
 	// 
 	// 
 	// If you want to get the value periodically, it is recommended to use the
-	// RegisterTemperatureCallback callback. You can set the callback configuration
-	// with SetTemperatureCallbackConfiguration.
-func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err error) {    
+	// RegisterIlluminanceCallback callback. You can set the callback configuration
+	// with SetIlluminanceCallbackConfiguration.
+func (device *AmbientLightV3Bricklet) GetIlluminance() (illuminance uint32, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
     if err != nil {
-        return temperature, err
+        return illuminance, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
         
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
+            return illuminance, BrickletError(header.ErrorCode)
         }
 
         resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+        binary.Read(resultBuf, binary.LittleEndian, &illuminance)
 
     }
     
-    return temperature, nil
+    return illuminance, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
+// The period in ms is the period with which the RegisterIlluminanceCallback callback is triggered
 	// periodically. A value of 0 turns the callback off.
 	// 
 	// If the `value has to change`-parameter is set to true, the callback is only
@@ -228,7 +250,7 @@ func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err er
 	// 
 	// It is furthermore possible to constrain the callback with thresholds.
 	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
+	// The `option`-parameter together with min/max sets a threshold for the RegisterIlluminanceCallback callback.
 	// 
 	// The following options are possible:
 	// 
@@ -251,7 +273,7 @@ func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err er
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {    
+func (device *AmbientLightV3Bricklet) SetIlluminanceCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -259,7 +281,7 @@ func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period 
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackConfiguration), buf.Bytes())
     if err != nil {
         return err
     }
@@ -278,7 +300,7 @@ func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period 
     return nil
 }
 
-// Returns the callback configuration as set by SetTemperatureCallbackConfiguration.
+// Returns the callback configuration as set by SetIlluminanceCallbackConfiguration.
 //
 // Associated constants:
 //
@@ -287,10 +309,10 @@ func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period 
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureV2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {    
+func (device *AmbientLightV3Bricklet) GetIlluminanceCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackConfiguration), buf.Bytes())
     if err != nil {
         return period, valueHasToChange, option, min, max, err
     }
@@ -314,19 +336,52 @@ func (device *TemperatureV2Bricklet) GetTemperatureCallbackConfiguration() (peri
     return period, valueHasToChange, option, min, max, nil
 }
 
-// Enables/disables the heater. The heater can be used to test the sensor.
+// Sets the configuration. It is possible to configure an illuminance range
+	// between 0-600lux and 0-64000lux and an integration time between 50ms and 400ms.
 	// 
-	// By default the heater is disabled.
+	// The unlimited illuminance range allows to measure up to about 100000lux, but
+	// above 64000lux the precision starts to drop.
+	// 
+	// A smaller illuminance range increases the resolution of the data. A longer
+	// integration time will result in less noise on the data.
+	// 
+	// If the actual measure illuminance is out-of-range then the current illuminance
+	// range maximum +0.01lux is reported by GetIlluminance and the
+	// RegisterIlluminanceCallback callback. For example, 800001 for the 0-8000lux range.
+	// 
+	// With a long integration time the sensor might be saturated before the measured
+	// value reaches the maximum of the selected illuminance range. In this case 0lux
+	// is reported by GetIlluminance and the RegisterIlluminanceCallback callback.
+	// 
+	// If the measurement is out-of-range or the sensor is saturated then you should
+	// configure the next higher illuminance range. If the highest range is already
+	// in use, then start to reduce the integration time.
+	// 
+	// The default values are 0-8000lux illuminance range and 150ms integration time.
 //
 // Associated constants:
 //
-//	* HeaterConfigDisabled
-//	* HeaterConfigEnabled
-func (device *TemperatureV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterConfig) (err error) {    
+//	* IlluminanceRangeUnlimited
+//	* IlluminanceRange64000Lux
+//	* IlluminanceRange32000Lux
+//	* IlluminanceRange16000Lux
+//	* IlluminanceRange8000Lux
+//	* IlluminanceRange1300Lux
+//	* IlluminanceRange600Lux
+//	* IntegrationTime50ms
+//	* IntegrationTime100ms
+//	* IntegrationTime150ms
+//	* IntegrationTime200ms
+//	* IntegrationTime250ms
+//	* IntegrationTime300ms
+//	* IntegrationTime350ms
+//	* IntegrationTime400ms
+func (device *AmbientLightV3Bricklet) SetConfiguration(illuminanceRange IlluminanceRange, integrationTime IntegrationTime) (err error) {    
         var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, heaterConfig);
+    binary.Write(&buf, binary.LittleEndian, illuminanceRange);
+	binary.Write(&buf, binary.LittleEndian, integrationTime);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetHeaterConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
     if err != nil {
         return err
     }
@@ -345,33 +400,47 @@ func (device *TemperatureV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterC
     return nil
 }
 
-// Returns the heater configuration as set by SetHeaterConfiguration.
+// Returns the configuration as set by SetConfiguration.
 //
 // Associated constants:
 //
-//	* HeaterConfigDisabled
-//	* HeaterConfigEnabled
-func (device *TemperatureV2Bricklet) GetHeaterConfiguration() (heaterConfig HeaterConfig, err error) {    
+//	* IlluminanceRangeUnlimited
+//	* IlluminanceRange64000Lux
+//	* IlluminanceRange32000Lux
+//	* IlluminanceRange16000Lux
+//	* IlluminanceRange8000Lux
+//	* IlluminanceRange1300Lux
+//	* IlluminanceRange600Lux
+//	* IntegrationTime50ms
+//	* IntegrationTime100ms
+//	* IntegrationTime150ms
+//	* IntegrationTime200ms
+//	* IntegrationTime250ms
+//	* IntegrationTime300ms
+//	* IntegrationTime350ms
+//	* IntegrationTime400ms
+func (device *AmbientLightV3Bricklet) GetConfiguration() (illuminanceRange IlluminanceRange, integrationTime IntegrationTime, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetHeaterConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
     if err != nil {
-        return heaterConfig, err
+        return illuminanceRange, integrationTime, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
         
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
-            return heaterConfig, BrickletError(header.ErrorCode)
+            return illuminanceRange, integrationTime, BrickletError(header.ErrorCode)
         }
 
         resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &heaterConfig)
+        binary.Read(resultBuf, binary.LittleEndian, &illuminanceRange)
+	binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
     }
     
-    return heaterConfig, nil
+    return illuminanceRange, integrationTime, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -385,7 +454,7 @@ func (device *TemperatureV2Bricklet) GetHeaterConfiguration() (heaterConfig Heat
 	// 
 	// The errors counts are for errors that occur on the Bricklet side. All
 	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *TemperatureV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+func (device *AmbientLightV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -434,7 +503,7 @@ func (device *TemperatureV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksu
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *TemperatureV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *AmbientLightV3Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -467,7 +536,7 @@ func (device *TemperatureV2Bricklet) SetBootloaderMode(mode BootloaderMode) (sta
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *TemperatureV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *AmbientLightV3Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -496,7 +565,7 @@ func (device *TemperatureV2Bricklet) GetBootloaderMode() (mode BootloaderMode, e
 	// 
 	// This function is used by Brick Viewer during flashing. It should not be
 	// necessary to call it in a normal user program.
-func (device *TemperatureV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+func (device *AmbientLightV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -527,7 +596,7 @@ func (device *TemperatureV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (er
 	// 
 	// This function is used by Brick Viewer during flashing. It should not be
 	// necessary to call it in a normal user program.
-func (device *TemperatureV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+func (device *AmbientLightV3Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -565,7 +634,7 @@ func (device *TemperatureV2Bricklet) WriteFirmware(data [64]uint8) (status uint8
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *TemperatureV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *AmbientLightV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -596,7 +665,7 @@ func (device *TemperatureV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) 
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *TemperatureV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *AmbientLightV3Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -625,7 +694,7 @@ func (device *TemperatureV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfi
 	// The temperature is only proportional to the real temperature and it has bad
 	// accuracy. Practically it is only useful as an indicator for
 	// temperature changes.
-func (device *TemperatureV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+func (device *AmbientLightV3Bricklet) GetChipTemperature() (temperature int16, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -654,7 +723,7 @@ func (device *TemperatureV2Bricklet) GetChipTemperature() (temperature int16, er
 	// After a reset you have to create new device objects,
 	// calling functions on the existing ones will result in
 	// undefined behavior!
-func (device *TemperatureV2Bricklet) Reset() (err error) {    
+func (device *AmbientLightV3Bricklet) Reset() (err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -681,7 +750,7 @@ func (device *TemperatureV2Bricklet) Reset() (err error) {
 	// integer first.
 	// 
 	// We recommend that you use Brick Viewer to change the UID.
-func (device *TemperatureV2Bricklet) WriteUID(uid uint32) (err error) {    
+func (device *AmbientLightV3Bricklet) WriteUID(uid uint32) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -706,7 +775,7 @@ func (device *TemperatureV2Bricklet) WriteUID(uid uint32) (err error) {
 
 // Returns the current UID as an integer. Encode as
 	// Base58 to get the usual string version.
-func (device *TemperatureV2Bricklet) ReadUID() (uid uint32, err error) {    
+func (device *AmbientLightV3Bricklet) ReadUID() (uid uint32, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -737,7 +806,7 @@ func (device *TemperatureV2Bricklet) ReadUID() (uid uint32, err error) {
 	// 
 	// The device identifier numbers can be found `here <device_identifier>`.
 	// |device_identifier_constant|
-func (device *TemperatureV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+func (device *AmbientLightV3Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())

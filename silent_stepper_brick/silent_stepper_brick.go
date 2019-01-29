@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-07.      *
+ * This file was automatically generated on 2019-01-29.      *
  *                                                           *
- * Go Bindings Version 2.0.1                                 *
+ * Go Bindings Version 2.0.2                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -384,7 +384,7 @@ func (device *SilentStepperBrick) DeregisterAllDataCallback(callbackID uint64) {
 }
 
 
-// This callback is triggered whenever the Slient Stepper Brick enters a new state.
+// This callback is triggered whenever the Silent Stepper Brick enters a new state.
 	// It returns the new state as well as the previous state.
 func (device *SilentStepperBrick) RegisterNewStateCallback(fn func(State, State)) uint64 {
             wrapper := func(byteSlice []byte) {
@@ -947,7 +947,7 @@ func (device *SilentStepperBrick) GetStackInputVoltage() (voltage uint16, err er
 }
 
 // Returns the external input voltage in mV. The external input voltage is
-	// given via the black power input connector on the Slient Stepper Brick.
+	// given via the black power input connector on the Silent Stepper Brick.
 	// 
 	// If there is an external input voltage and a stack input voltage, the motor
 	// will be driven by the external input voltage. If there is only a stack
@@ -1712,7 +1712,7 @@ func (device *SilentStepperBrick) GetDriverStatus() (openLoad OpenLoad, shortToG
 }
 
 // Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
-	// is triggered. The minimum possible value that works with the Slient Stepper
+	// is triggered. The minimum possible value that works with the Silent Stepper
 	// Brick is 8V.
 	// You can use this function to detect the discharge of a battery that is used
 	// to drive the stepper motor. If you have a fixed power supply, you likely do

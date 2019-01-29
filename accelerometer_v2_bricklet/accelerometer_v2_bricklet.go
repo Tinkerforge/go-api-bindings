@@ -9,11 +9,11 @@
  *************************************************************/
 
 
-//Measures ambient temperature with 0.2°C accuracy.
+//.
 // 
 // 
-// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/TemperatureV2_Bricklet_Go.html.
-package temperature_v2_bricklet
+// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AccelerometerV2_Bricklet_Go.html.
+package accelerometer_v2_bricklet
 
 import (
 	"encoding/binary"
@@ -25,11 +25,15 @@ import (
 type Function uint8
 
 const (
-    FunctionGetTemperature Function = 1
-	FunctionSetTemperatureCallbackConfiguration Function = 2
-	FunctionGetTemperatureCallbackConfiguration Function = 3
-	FunctionSetHeaterConfiguration Function = 5
-	FunctionGetHeaterConfiguration Function = 6
+    FunctionGetAcceleration Function = 1
+	FunctionSetConfiguration Function = 2
+	FunctionGetConfiguration Function = 3
+	FunctionSetAccelerationCallbackConfiguration Function = 4
+	FunctionGetAccelerationCallbackConfiguration Function = 5
+	FunctionSetInfoLEDConfig Function = 6
+	FunctionGetInfoLEDConfig Function = 7
+	FunctionSetContinuousAccelerationConfiguration Function = 9
+	FunctionGetContinuousAccelerationConfiguration Function = 10
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -42,24 +46,53 @@ const (
 	FunctionWriteUID Function = 248
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
-	FunctionCallbackTemperature Function = 4
+	FunctionCallbackAcceleration Function = 8
+	FunctionCallbackContinuousAcceleration16Bit Function = 11
+	FunctionCallbackContinuousAcceleration8Bit Function = 12
 )
 
-type ThresholdOption rune
+type DataRate uint8
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
-	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
-	ThresholdOptionSmaller ThresholdOption = '<'
-	ThresholdOptionGreater ThresholdOption = '>'
+    DataRate0781Hz DataRate = 0
+	DataRate1563Hz DataRate = 1
+	DataRate3125Hz DataRate = 2
+	DataRate62512Hz DataRate = 3
+	DataRate125Hz DataRate = 4
+	DataRate25Hz DataRate = 5
+	DataRate50Hz DataRate = 6
+	DataRate100Hz DataRate = 7
+	DataRate200Hz DataRate = 8
+	DataRate400Hz DataRate = 9
+	DataRate800Hz DataRate = 10
+	DataRate1600Hz DataRate = 11
+	DataRate3200Hz DataRate = 12
+	DataRate6400Hz DataRate = 13
+	DataRate12800Hz DataRate = 14
+	DataRate25600Hz DataRate = 15
 )
 
-type HeaterConfig uint8
+type FullScale uint8
 
 const (
-    HeaterConfigDisabled HeaterConfig = 0
-	HeaterConfigEnabled HeaterConfig = 1
+    FullScale2g FullScale = 0
+	FullScale4g FullScale = 1
+	FullScale8g FullScale = 2
+)
+
+type InfoLEDConfig uint8
+
+const (
+    InfoLEDConfigOff InfoLEDConfig = 0
+	InfoLEDConfigOn InfoLEDConfig = 1
+	InfoLEDConfigShowHeartbeat InfoLEDConfig = 2
+)
+
+type Resolution uint8
+
+const (
+    Resolution8bit Resolution = 0
+	Resolution16bit Resolution = 1
 )
 
 type BootloaderMode uint8
@@ -92,24 +125,28 @@ const (
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type TemperatureV2Bricklet struct{
+type AccelerometerV2Bricklet struct{
 	device Device
 }
-const DeviceIdentifier = 2113
-const DeviceDisplayName = "Temperature Bricklet 2.0"
+const DeviceIdentifier = 2130
+const DeviceDisplayName = "Accelerometer Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
-func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, error) {
+func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerV2Bricklet, error) {
     internalIPCon := ipcon.GetInternalHandle().(IPConnection)
     dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
     if err != nil {
-        return TemperatureV2Bricklet{}, err
+        return AccelerometerV2Bricklet{}, err
     }
-    dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHeaterConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetHeaterConfiguration] = ResponseExpectedFlagAlwaysTrue;
+    dev.ResponseExpected[FunctionGetAcceleration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetAccelerationCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetAccelerationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetInfoLEDConfig] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetInfoLEDConfig] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetContinuousAccelerationConfiguration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetContinuousAccelerationConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -122,7 +159,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, e
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return TemperatureV2Bricklet{dev}, nil
+    return AccelerometerV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -139,7 +176,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureV2Bricklet, e
 // and errors are silently ignored, because they cannot be detected.
 // 
 // See SetResponseExpected for the list of function ID constants available for this function.
-func (device *TemperatureV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
+func (device *AccelerometerV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
 }
 
@@ -151,115 +188,165 @@ func (device *TemperatureV2Bricklet) GetResponseExpected(functionID Function) (b
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-func (device *TemperatureV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
+func (device *AccelerometerV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
     return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
-func (device *TemperatureV2Bricklet) SetResponseExpectedAll(responseExpected bool) {
+func (device *AccelerometerV2Bricklet) SetResponseExpectedAll(responseExpected bool) {
 	device.device.SetResponseExpectedAll(responseExpected)
 }
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
-func (device *TemperatureV2Bricklet) GetAPIVersion() [3]uint8 {
+func (device *AccelerometerV2Bricklet) GetAPIVersion() [3]uint8 {
     return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetTemperatureCallbackConfiguration.
+	// SetAccelerationCallbackConfiguration.
 	// 
-	// The parameter is the same as GetTemperature.
-func (device *TemperatureV2Bricklet) RegisterTemperatureCallback(fn func(int16)) uint64 {
+	// The parameters are the same as GetAcceleration.
+func (device *AccelerometerV2Bricklet) RegisterAccelerationCallback(fn func(int32, int32, int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
-                var temperature int16
-                binary.Read(buf, binary.LittleEndian, &temperature)
-                fn(temperature)
+                var x int32
+var y int32
+var z int32
+                binary.Read(buf, binary.LittleEndian, &x)
+binary.Read(buf, binary.LittleEndian, &y)
+binary.Read(buf, binary.LittleEndian, &z)
+                fn(x, y, z)
             }
-    return device.device.RegisterCallback(uint8(FunctionCallbackTemperature), wrapper)
+    return device.device.RegisterCallback(uint8(FunctionCallbackAcceleration), wrapper)
 }
 
-//Remove a registered Temperature callback.
-func (device *TemperatureV2Bricklet) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+//Remove a registered Acceleration callback.
+func (device *AccelerometerV2Bricklet) DeregisterAccelerationCallback(callbackID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), callbackID)
 }
 
 
-// Returns the temperature measured by the sensor. The value
-	// has a range of -4500 to 13000 and is given in °C/100,
-	// i.e. a value of 3200 means that a temperature of 32.00 °C is measured.
+// Returns 30 acceleration values with 16 bit resolution. The data rate can
+	// be configured with SetConfiguration and this callback can be
+	// enabled with SetContinuousAccelerationConfiguration.
 	// 
+	// The data is formated in the sequence x, y, z, x, y, z, ... depending on
+	// the enabled axis. Examples:
 	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterTemperatureCallback callback. You can set the callback configuration
-	// with SetTemperatureCallbackConfiguration.
-func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err error) {    
+	// * x, y, z enabled: x, y, z, ... 10x ..., x, y, z
+	// * x, z enabled: x, z, ... 15x ..., x, z
+	// * y enabled: y, ... 30x ..., y
+func (device *AccelerometerV2Bricklet) RegisterContinuousAcceleration16BitCallback(fn func([30]int16)) uint64 {
+            wrapper := func(byteSlice []byte) {
+                buf := bytes.NewBuffer(byteSlice[8:])
+                var acceleration [30]int16
+                binary.Read(buf, binary.LittleEndian, &acceleration)
+                fn(acceleration)
+            }
+    return device.device.RegisterCallback(uint8(FunctionCallbackContinuousAcceleration16Bit), wrapper)
+}
+
+//Remove a registered Continuous Acceleration 16 Bit callback.
+func (device *AccelerometerV2Bricklet) DeregisterContinuousAcceleration16BitCallback(callbackID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackContinuousAcceleration16Bit), callbackID)
+}
+
+
+// Returns 30 acceleration values with 8 bit resolution. The data rate can
+	// be configured with SetConfiguration and this callback can be
+	// enabled with SetContinuousAccelerationConfiguration.
+	// 
+	// The data is formated in the sequence x, y, z, x, y, z, ... depending on
+	// the enabled axis. Examples:
+	// 
+	// * x, y, z enabled: x, y, z, ... 20x ..., x, y, z
+	// * x, z enabled: x, z, ... 30x ..., x, z
+	// * y enabled: y, ... 60x ..., y
+func (device *AccelerometerV2Bricklet) RegisterContinuousAcceleration8BitCallback(fn func([60]int8)) uint64 {
+            wrapper := func(byteSlice []byte) {
+                buf := bytes.NewBuffer(byteSlice[8:])
+                var acceleration [60]int8
+                binary.Read(buf, binary.LittleEndian, &acceleration)
+                fn(acceleration)
+            }
+    return device.device.RegisterCallback(uint8(FunctionCallbackContinuousAcceleration8Bit), wrapper)
+}
+
+//Remove a registered Continuous Acceleration 8 Bit callback.
+func (device *AccelerometerV2Bricklet) DeregisterContinuousAcceleration8BitCallback(callbackID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackContinuousAcceleration8Bit), callbackID)
+}
+
+
+// Returns the acceleration in x, y and z direction. The values
+	// are given in g/10000 (1g = 9.80665m/s²), not to be confused with grams.
+	// 
+	// If you want to get the acceleration periodically, it is recommended
+	// to use the RegisterAccelerationCallback callback and set the period with
+	// SetAccelerationCallbackConfiguration.
+func (device *AccelerometerV2Bricklet) GetAcceleration() (x int32, y int32, z int32, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
     if err != nil {
-        return temperature, err
+        return x, y, z, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
         
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
+            return x, y, z, BrickletError(header.ErrorCode)
         }
 
         resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+        binary.Read(resultBuf, binary.LittleEndian, &x)
+	binary.Read(resultBuf, binary.LittleEndian, &y)
+	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
     
-    return temperature, nil
+    return x, y, z, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
+// Configures the data rate, full scale range and filter bandwidth.
+	// Possible values are:
 	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
+	// * Data rate of 0.781Hz to 25600Hz.
+	// * Full scale range of -2G to +2G up to -8G to +8G.
 	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
+	// Decreasing data rate or full scale range will also decrease the noise on
+	// the data.
 	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+	// The default values are 100Hz data rate and -2G to +2G range.
 //
 // Associated constants:
 //
-//	* ThresholdOptionOff
-//	* ThresholdOptionOutside
-//	* ThresholdOptionInside
-//	* ThresholdOptionSmaller
-//	* ThresholdOptionGreater
-func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {    
+//	* DataRate0781Hz
+//	* DataRate1563Hz
+//	* DataRate3125Hz
+//	* DataRate62512Hz
+//	* DataRate125Hz
+//	* DataRate25Hz
+//	* DataRate50Hz
+//	* DataRate100Hz
+//	* DataRate200Hz
+//	* DataRate400Hz
+//	* DataRate800Hz
+//	* DataRate1600Hz
+//	* DataRate3200Hz
+//	* DataRate6400Hz
+//	* DataRate12800Hz
+//	* DataRate25600Hz
+//	* FullScale2g
+//	* FullScale4g
+//	* FullScale8g
+func (device *AccelerometerV2Bricklet) SetConfiguration(dataRate DataRate, fullScale FullScale) (err error) {    
         var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+    binary.Write(&buf, binary.LittleEndian, dataRate);
+	binary.Write(&buf, binary.LittleEndian, fullScale);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
     if err != nil {
         return err
     }
@@ -278,55 +365,127 @@ func (device *TemperatureV2Bricklet) SetTemperatureCallbackConfiguration(period 
     return nil
 }
 
-// Returns the callback configuration as set by SetTemperatureCallbackConfiguration.
+// Returns the configuration as set by SetConfiguration.
 //
 // Associated constants:
 //
-//	* ThresholdOptionOff
-//	* ThresholdOptionOutside
-//	* ThresholdOptionInside
-//	* ThresholdOptionSmaller
-//	* ThresholdOptionGreater
-func (device *TemperatureV2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {    
+//	* DataRate0781Hz
+//	* DataRate1563Hz
+//	* DataRate3125Hz
+//	* DataRate62512Hz
+//	* DataRate125Hz
+//	* DataRate25Hz
+//	* DataRate50Hz
+//	* DataRate100Hz
+//	* DataRate200Hz
+//	* DataRate400Hz
+//	* DataRate800Hz
+//	* DataRate1600Hz
+//	* DataRate3200Hz
+//	* DataRate6400Hz
+//	* DataRate12800Hz
+//	* DataRate25600Hz
+//	* FullScale2g
+//	* FullScale4g
+//	* FullScale8g
+func (device *AccelerometerV2Bricklet) GetConfiguration() (dataRate DataRate, fullScale FullScale, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
     if err != nil {
-        return period, valueHasToChange, option, min, max, err
+        return dataRate, fullScale, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
         
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
-            return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
+            return dataRate, fullScale, BrickletError(header.ErrorCode)
+        }
+
+        resultBuf := bytes.NewBuffer(resultBytes[8:])
+        binary.Read(resultBuf, binary.LittleEndian, &dataRate)
+	binary.Read(resultBuf, binary.LittleEndian, &fullScale)
+
+    }
+    
+    return dataRate, fullScale, nil
+}
+
+// The period in ms is the period with which the RegisterAccelerationCallback
+	// callback is triggered periodically. A value of 0 turns the callback off.
+	// 
+	// If the `value has to change`-parameter is set to true, the callback is only
+	// triggered after the value has changed. If the value didn't change within the
+	// period, the callback is triggered immediately on change.
+	// 
+	// If it is set to false, the callback is continuously triggered with the period,
+	// independent of the value.
+	// 
+	// The default value is (0, false).
+func (device *AccelerometerV2Bricklet) SetAccelerationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+        var buf bytes.Buffer
+    binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+
+    resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackConfiguration), buf.Bytes())
+    if err != nil {
+        return err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+        
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return BrickletError(header.ErrorCode)
+        }
+
+        bytes.NewBuffer(resultBytes[8:])
+        
+    }
+    
+    return nil
+}
+
+// Returns the callback configuration as set by
+	// SetAccelerationCallbackConfiguration.
+func (device *AccelerometerV2Bricklet) GetAccelerationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+        var buf bytes.Buffer
+    
+    resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackConfiguration), buf.Bytes())
+    if err != nil {
+        return period, valueHasToChange, err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+        
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return period, valueHasToChange, BrickletError(header.ErrorCode)
         }
 
         resultBuf := bytes.NewBuffer(resultBytes[8:])
         binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
     
-    return period, valueHasToChange, option, min, max, nil
+    return period, valueHasToChange, nil
 }
 
-// Enables/disables the heater. The heater can be used to test the sensor.
-	// 
-	// By default the heater is disabled.
+// Configures the info LED (marked as Force on the Bricklet) to be either turned off,
+	// turned on, or blink in heartbeat mode.
 //
 // Associated constants:
 //
-//	* HeaterConfigDisabled
-//	* HeaterConfigEnabled
-func (device *TemperatureV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterConfig) (err error) {    
+//	* InfoLEDConfigOff
+//	* InfoLEDConfigOn
+//	* InfoLEDConfigShowHeartbeat
+func (device *AccelerometerV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err error) {    
         var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, heaterConfig);
+    binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetHeaterConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Set(uint8(FunctionSetInfoLEDConfig), buf.Bytes())
     if err != nil {
         return err
     }
@@ -345,33 +504,120 @@ func (device *TemperatureV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterC
     return nil
 }
 
-// Returns the heater configuration as set by SetHeaterConfiguration.
+// Returns the LED configuration as set by SetInfoLEDConfig
 //
 // Associated constants:
 //
-//	* HeaterConfigDisabled
-//	* HeaterConfigEnabled
-func (device *TemperatureV2Bricklet) GetHeaterConfiguration() (heaterConfig HeaterConfig, err error) {    
+//	* InfoLEDConfigOff
+//	* InfoLEDConfigOn
+//	* InfoLEDConfigShowHeartbeat
+func (device *AccelerometerV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err error) {    
         var buf bytes.Buffer
     
-    resultBytes, err := device.device.Get(uint8(FunctionGetHeaterConfiguration), buf.Bytes())
+    resultBytes, err := device.device.Get(uint8(FunctionGetInfoLEDConfig), buf.Bytes())
     if err != nil {
-        return heaterConfig, err
+        return config, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
         
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
-            return heaterConfig, BrickletError(header.ErrorCode)
+            return config, BrickletError(header.ErrorCode)
         }
 
         resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &heaterConfig)
+        binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
     
-    return heaterConfig, nil
+    return config, nil
+}
+
+// For high throughput of acceleration data (> 1000Hz) you have to use the
+	// RegisterContinuousAcceleration16BitCallback or RegisterContinuousAcceleration8BitCallback
+	// callbacks.
+	// 
+	// You can enable the callback for each axis (x, y, z) individually and choose a
+	// resolution of 8 bit or 16 bit.
+	// 
+	// If at least one of the axis is enabled and the resolution is set to 8 bit,
+	// the RegisterContinuousAcceleration8BitCallback callback is activated. If at least
+	// one of the axis is enabled and the resolution is set to 16 bit,
+	// the RegisterContinuousAcceleration16BitCallback callback is activated.
+	// 
+	// If no axis is enabled, both callbacks are disabled. If one of the continuous
+	// callbacks is enabled, the RegisterAccelerationCallback callback is disabled.
+	// 
+	// The maximum throughput depends on the exact configuration:
+	// 
+	//  Number of axis enabled| Throughput 8 bit| Throughout 16 bit
+	//  --- | --- | --- 
+	//  1| 25600Hz| 25600Hz
+	//  2| 25600Hz| 15000Hz
+	//  3| 20000Hz| 10000Hz
+//
+// Associated constants:
+//
+//	* Resolution8bit
+//	* Resolution16bit
+func (device *AccelerometerV2Bricklet) SetContinuousAccelerationConfiguration(enableX bool, enableY bool, enableZ bool, resolution Resolution) (err error) {    
+        var buf bytes.Buffer
+    binary.Write(&buf, binary.LittleEndian, enableX);
+	binary.Write(&buf, binary.LittleEndian, enableY);
+	binary.Write(&buf, binary.LittleEndian, enableZ);
+	binary.Write(&buf, binary.LittleEndian, resolution);
+
+    resultBytes, err := device.device.Set(uint8(FunctionSetContinuousAccelerationConfiguration), buf.Bytes())
+    if err != nil {
+        return err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+        
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return BrickletError(header.ErrorCode)
+        }
+
+        bytes.NewBuffer(resultBytes[8:])
+        
+    }
+    
+    return nil
+}
+
+// Returns the continuous acceleration configuration as set by
+	// SetContinuousAccelerationConfiguration.
+//
+// Associated constants:
+//
+//	* Resolution8bit
+//	* Resolution16bit
+func (device *AccelerometerV2Bricklet) GetContinuousAccelerationConfiguration() (enableX bool, enableY bool, enableZ bool, resolution Resolution, err error) {    
+        var buf bytes.Buffer
+    
+    resultBytes, err := device.device.Get(uint8(FunctionGetContinuousAccelerationConfiguration), buf.Bytes())
+    if err != nil {
+        return enableX, enableY, enableZ, resolution, err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+        
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return enableX, enableY, enableZ, resolution, BrickletError(header.ErrorCode)
+        }
+
+        resultBuf := bytes.NewBuffer(resultBytes[8:])
+        binary.Read(resultBuf, binary.LittleEndian, &enableX)
+	binary.Read(resultBuf, binary.LittleEndian, &enableY)
+	binary.Read(resultBuf, binary.LittleEndian, &enableZ)
+	binary.Read(resultBuf, binary.LittleEndian, &resolution)
+
+    }
+    
+    return enableX, enableY, enableZ, resolution, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -385,7 +631,7 @@ func (device *TemperatureV2Bricklet) GetHeaterConfiguration() (heaterConfig Heat
 	// 
 	// The errors counts are for errors that occur on the Bricklet side. All
 	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *TemperatureV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+func (device *AccelerometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -434,7 +680,7 @@ func (device *TemperatureV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksu
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *TemperatureV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *AccelerometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -467,7 +713,7 @@ func (device *TemperatureV2Bricklet) SetBootloaderMode(mode BootloaderMode) (sta
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *TemperatureV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *AccelerometerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -496,7 +742,7 @@ func (device *TemperatureV2Bricklet) GetBootloaderMode() (mode BootloaderMode, e
 	// 
 	// This function is used by Brick Viewer during flashing. It should not be
 	// necessary to call it in a normal user program.
-func (device *TemperatureV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+func (device *AccelerometerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -527,7 +773,7 @@ func (device *TemperatureV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (er
 	// 
 	// This function is used by Brick Viewer during flashing. It should not be
 	// necessary to call it in a normal user program.
-func (device *TemperatureV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+func (device *AccelerometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -565,7 +811,7 @@ func (device *TemperatureV2Bricklet) WriteFirmware(data [64]uint8) (status uint8
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *TemperatureV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *AccelerometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -596,7 +842,7 @@ func (device *TemperatureV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) 
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *TemperatureV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *AccelerometerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -625,7 +871,7 @@ func (device *TemperatureV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfi
 	// The temperature is only proportional to the real temperature and it has bad
 	// accuracy. Practically it is only useful as an indicator for
 	// temperature changes.
-func (device *TemperatureV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+func (device *AccelerometerV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -654,7 +900,7 @@ func (device *TemperatureV2Bricklet) GetChipTemperature() (temperature int16, er
 	// After a reset you have to create new device objects,
 	// calling functions on the existing ones will result in
 	// undefined behavior!
-func (device *TemperatureV2Bricklet) Reset() (err error) {    
+func (device *AccelerometerV2Bricklet) Reset() (err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -681,7 +927,7 @@ func (device *TemperatureV2Bricklet) Reset() (err error) {
 	// integer first.
 	// 
 	// We recommend that you use Brick Viewer to change the UID.
-func (device *TemperatureV2Bricklet) WriteUID(uid uint32) (err error) {    
+func (device *AccelerometerV2Bricklet) WriteUID(uid uint32) (err error) {    
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -706,7 +952,7 @@ func (device *TemperatureV2Bricklet) WriteUID(uid uint32) (err error) {
 
 // Returns the current UID as an integer. Encode as
 	// Base58 to get the usual string version.
-func (device *TemperatureV2Bricklet) ReadUID() (uid uint32, err error) {    
+func (device *AccelerometerV2Bricklet) ReadUID() (uid uint32, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -737,7 +983,7 @@ func (device *TemperatureV2Bricklet) ReadUID() (uid uint32, err error) {
 	// 
 	// The device identifier numbers can be found `here <device_identifier>`.
 	// |device_identifier_constant|
-func (device *TemperatureV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+func (device *AccelerometerV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())

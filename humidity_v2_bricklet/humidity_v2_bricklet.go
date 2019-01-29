@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-07.      *
+ * This file was automatically generated on 2019-01-29.      *
  *                                                           *
- * Go Bindings Version 2.0.1                                 *
+ * Go Bindings Version 2.0.2                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -620,7 +620,7 @@ func (device *HumidityV2Bricklet) GetMovingAverageConfiguration() (movingAverage
 // Sets the samples per second that are gathered by the humidity/temperature sensor HDC1080.
 	// 
 	// We added this function since we found out that a high measurement frequency can lead to
-	// self-heating of the sensor. Which can distort the temperature measurement. 
+	// self-heating of the sensor. Which can distort the temperature measurement.
 	// 
 	// If you don't need a lot of measurements, you can use the lowest available measurement
 	// frequency of 0.1 samples per second for the least amount of self-heating.
