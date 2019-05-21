@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -51,17 +51,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RGBLEDBricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *RGBLEDBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -70,7 +70,7 @@ func (device *RGBLEDBricklet) GetResponseExpected(functionID Function) (bool, er
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -89,8 +89,8 @@ func (device *RGBLEDBricklet) GetAPIVersion() [3]uint8 {
     return device.device.GetAPIVersion()
 }
 
-// Sets the *rgb* value for the LED. The value can be between 0 and 255.
-func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error) {    
+// Sets the *r*, *g* and *b* values for the LED. Each value can be between 0 and 255.
+func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, r);
 	binary.Write(&buf, binary.LittleEndian, g);
@@ -102,7 +102,7 @@ func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -111,12 +111,12 @@ func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
-// Returns the *rgb* value of the LED as set by SetRGBValue.
-func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err error) {    
+// Returns the *r*, *g* and *b* values of the LED as set by SetRGBValue.
+func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetRGBValue), buf.Bytes())
@@ -125,7 +125,7 @@ func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return r, g, b, BrickletError(header.ErrorCode)
@@ -137,19 +137,19 @@ func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err erro
 	binary.Read(resultBuf, binary.LittleEndian, &b)
 
     }
-    
+
     return r, g, b, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *RGBLEDBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *RGBLEDBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -158,7 +158,7 @@ func (device *RGBLEDBricklet) GetIdentity() (uid string, connectedUid string, po
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -173,6 +173,6 @@ func (device *RGBLEDBricklet) GetIdentity() (uid string, connectedUid string, po
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

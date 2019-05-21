@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -77,17 +77,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MoistureBricklet, error)
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MoistureBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -96,7 +96,7 @@ func (device *MoistureBricklet) GetResponseExpected(functionID Function) (bool, 
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -116,11 +116,11 @@ func (device *MoistureBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetMoistureCallbackPeriod. The parameter is the
-	// moisture value of the sensor.
-	// 
-	// The RegisterMoistureCallback callback is only triggered if the moisture value has changed
-	// since the last triggering.
+// SetMoistureCallbackPeriod. The parameter is the
+// moisture value of the sensor.
+// 
+// The RegisterMoistureCallback callback is only triggered if the moisture value has changed
+// since the last triggering.
 func (device *MoistureBricklet) RegisterMoistureCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -132,17 +132,17 @@ func (device *MoistureBricklet) RegisterMoistureCallback(fn func(uint16)) uint64
 }
 
 //Remove a registered Moisture callback.
-func (device *MoistureBricklet) DeregisterMoistureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMoisture), callbackID)
+func (device *MoistureBricklet) DeregisterMoistureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackMoisture), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetMoistureCallbackThreshold is reached.
-	// The parameter is the moisture value of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetMoistureCallbackThreshold is reached.
+// The parameter is the moisture value of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *MoistureBricklet) RegisterMoistureReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -154,19 +154,19 @@ func (device *MoistureBricklet) RegisterMoistureReachedCallback(fn func(uint16))
 }
 
 //Remove a registered Moisture Reached callback.
-func (device *MoistureBricklet) DeregisterMoistureReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMoistureReached), callbackID)
+func (device *MoistureBricklet) DeregisterMoistureReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackMoistureReached), registrationID)
 }
 
 
 // Returns the current moisture value. The value has a range of
-	// 0 to 4095. A small value corresponds to little moisture, a big
-	// value corresponds to much moisture.
-	// 
-	// If you want to get the moisture value periodically, it is recommended
-	// to use the RegisterMoistureCallback callback and set the period with
-	// SetMoistureCallbackPeriod.
-func (device *MoistureBricklet) GetMoistureValue() (moisture uint16, err error) {    
+// 0 to 4095. A small value corresponds to little moisture, a big
+// value corresponds to much moisture.
+// 
+// If you want to get the moisture value periodically, it is recommended
+// to use the RegisterMoistureCallback callback and set the period with
+// SetMoistureCallbackPeriod.
+func (device *MoistureBricklet) GetMoistureValue() (moisture uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMoistureValue), buf.Bytes())
@@ -175,7 +175,7 @@ func (device *MoistureBricklet) GetMoistureValue() (moisture uint16, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return moisture, BrickletError(header.ErrorCode)
@@ -185,18 +185,18 @@ func (device *MoistureBricklet) GetMoistureValue() (moisture uint16, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &moisture)
 
     }
-    
+
     return moisture, nil
 }
 
 // Sets the period in ms with which the RegisterMoistureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterMoistureCallback callback is only triggered if the moisture value has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-func (device *MoistureBricklet) SetMoistureCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterMoistureCallback callback is only triggered if the moisture value has changed
+// since the last triggering.
+// 
+// The default value is 0.
+func (device *MoistureBricklet) SetMoistureCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -206,7 +206,7 @@ func (device *MoistureBricklet) SetMoistureCallbackPeriod(period uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -215,12 +215,12 @@ func (device *MoistureBricklet) SetMoistureCallbackPeriod(period uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetMoistureCallbackPeriod.
-func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err error) {    
+func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMoistureCallbackPeriod), buf.Bytes())
@@ -229,7 +229,7 @@ func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -239,23 +239,23 @@ func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err 
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterMoistureReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the moisture value is *outside* the min and max values
-	//  'i'|    Callback is triggered when the moisture value is *inside* the min and max values
-	//  '<'|    Callback is triggered when the moisture value is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the moisture value is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the moisture value is *outside* the min and max values
+//  'i'|    Callback is triggered when the moisture value is *inside* the min and max values
+//  '<'|    Callback is triggered when the moisture value is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the moisture value is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -264,7 +264,7 @@ func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err 
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MoistureBricklet) SetMoistureCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *MoistureBricklet) SetMoistureCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -276,7 +276,7 @@ func (device *MoistureBricklet) SetMoistureCallbackThreshold(option ThresholdOpt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -285,7 +285,7 @@ func (device *MoistureBricklet) SetMoistureCallbackThreshold(option ThresholdOpt
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -298,7 +298,7 @@ func (device *MoistureBricklet) SetMoistureCallbackThreshold(option ThresholdOpt
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMoistureCallbackThreshold), buf.Bytes())
@@ -307,7 +307,7 @@ func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option Threshold
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -319,22 +319,22 @@ func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option Threshold
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
-	// 
-	// * RegisterMoistureReachedCallback
-	// 
-	// is triggered, if the threshold
-	// 
-	// * SetMoistureCallbackThreshold
-	// 
-	// keeps being reached.
-	// 
-	// The default value is 100.
-func (device *MoistureBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterMoistureReachedCallback
+// 
+// is triggered, if the threshold
+// 
+// * SetMoistureCallbackThreshold
+// 
+// keeps being reached.
+// 
+// The default value is 100.
+func (device *MoistureBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -344,7 +344,7 @@ func (device *MoistureBricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -353,12 +353,12 @@ func (device *MoistureBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *MoistureBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *MoistureBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -367,7 +367,7 @@ func (device *MoistureBricklet) GetDebouncePeriod() (debounce uint32, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -377,20 +377,20 @@ func (device *MoistureBricklet) GetDebouncePeriod() (debounce uint32, err error)
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
-	// for the moisture value.
-	// 
-	// Setting the length to 0 will turn the averaging completely off. With less
-	// averaging, there is more noise on the data.
-	// 
-	// The range for the averaging is 0-100.
-	// 
-	// The default value is 100.
-func (device *MoistureBricklet) SetMovingAverage(average uint8) (err error) {    
+// for the moisture value.
+// 
+// Setting the length to 0 will turn the averaging completely off. With less
+// averaging, there is more noise on the data.
+// 
+// The range for the averaging is 0-100.
+// 
+// The default value is 100.
+func (device *MoistureBricklet) SetMovingAverage(average uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, average);
 
@@ -400,7 +400,7 @@ func (device *MoistureBricklet) SetMovingAverage(average uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -409,12 +409,12 @@ func (device *MoistureBricklet) SetMovingAverage(average uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the length moving average as set by SetMovingAverage.
-func (device *MoistureBricklet) GetMovingAverage() (average uint8, err error) {    
+func (device *MoistureBricklet) GetMovingAverage() (average uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverage), buf.Bytes())
@@ -423,7 +423,7 @@ func (device *MoistureBricklet) GetMovingAverage() (average uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return average, BrickletError(header.ErrorCode)
@@ -433,19 +433,19 @@ func (device *MoistureBricklet) GetMovingAverage() (average uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &average)
 
     }
-    
+
     return average, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *MoistureBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *MoistureBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -454,7 +454,7 @@ func (device *MoistureBricklet) GetIdentity() (uid string, connectedUid string, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -469,6 +469,6 @@ func (device *MoistureBricklet) GetIdentity() (uid string, connectedUid string, 
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

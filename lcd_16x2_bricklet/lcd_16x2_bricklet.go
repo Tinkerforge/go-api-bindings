@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -69,17 +69,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LCD16x2Bricklet, error) 
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LCD16x2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -88,7 +88,7 @@ func (device *LCD16x2Bricklet) GetResponseExpected(functionID Function) (bool, e
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -108,7 +108,7 @@ func (device *LCD16x2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when a button is pressed. The parameter is
-	// the number of the button (0 to 2).
+// the number of the button (0 to 2).
 func (device *LCD16x2Bricklet) RegisterButtonPressedCallback(fn func(uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -120,13 +120,13 @@ func (device *LCD16x2Bricklet) RegisterButtonPressedCallback(fn func(uint8)) uin
 }
 
 //Remove a registered Button Pressed callback.
-func (device *LCD16x2Bricklet) DeregisterButtonPressedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackButtonPressed), callbackID)
+func (device *LCD16x2Bricklet) DeregisterButtonPressedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackButtonPressed), registrationID)
 }
 
 
 // This callback is triggered when a button is released. The parameter is
-	// the number of the button (0 to 2).
+// the number of the button (0 to 2).
 func (device *LCD16x2Bricklet) RegisterButtonReleasedCallback(fn func(uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -138,23 +138,23 @@ func (device *LCD16x2Bricklet) RegisterButtonReleasedCallback(fn func(uint8)) ui
 }
 
 //Remove a registered Button Released callback.
-func (device *LCD16x2Bricklet) DeregisterButtonReleasedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackButtonReleased), callbackID)
+func (device *LCD16x2Bricklet) DeregisterButtonReleasedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackButtonReleased), registrationID)
 }
 
 
 // Writes text to a specific line (0 to 1) with a specific position
-	// (0 to 15). The text can have a maximum of 16 characters.
-	// 
-	// For example: (0, 5, Hello) will write *Hello* in the middle of the
-	// first line of the display.
-	// 
-	// The display uses a special charset that includes all ASCII characters except
-	// backslash and tilde. The LCD charset also includes several other non-ASCII characters, see
-	// the https://github.com/Tinkerforge/lcd-16x2-bricklet/raw/master/datasheets/standard_charset.pdf
-	// for details. The Unicode example above shows how to specify non-ASCII characters
-	// and how to translate from Unicode to the LCD charset.
-func (device *LCD16x2Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {    
+// (0 to 15). The text can have a maximum of 16 characters.
+// 
+// For example: (0, 5, Hello) will write *Hello* in the middle of the
+// first line of the display.
+// 
+// The display uses a special charset that includes all ASCII characters except
+// backslash and tilde. The LCD charset also includes several other non-ASCII characters, see
+// the https://github.com/Tinkerforge/lcd-16x2-bricklet/raw/master/datasheets/standard_charset.pdf
+// for details. The Unicode example above shows how to specify non-ASCII characters
+// and how to translate from Unicode to the LCD charset.
+func (device *LCD16x2Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, line);
 	binary.Write(&buf, binary.LittleEndian, position);
@@ -168,7 +168,7 @@ func (device *LCD16x2Bricklet) WriteLine(line uint8, position uint8, text string
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -177,12 +177,12 @@ func (device *LCD16x2Bricklet) WriteLine(line uint8, position uint8, text string
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Deletes all characters from the display.
-func (device *LCD16x2Bricklet) ClearDisplay() (err error) {    
+func (device *LCD16x2Bricklet) ClearDisplay() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionClearDisplay), buf.Bytes())
@@ -191,7 +191,7 @@ func (device *LCD16x2Bricklet) ClearDisplay() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -200,12 +200,12 @@ func (device *LCD16x2Bricklet) ClearDisplay() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Turns the backlight on.
-func (device *LCD16x2Bricklet) BacklightOn() (err error) {    
+func (device *LCD16x2Bricklet) BacklightOn() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionBacklightOn), buf.Bytes())
@@ -214,7 +214,7 @@ func (device *LCD16x2Bricklet) BacklightOn() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -223,12 +223,12 @@ func (device *LCD16x2Bricklet) BacklightOn() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Turns the backlight off.
-func (device *LCD16x2Bricklet) BacklightOff() (err error) {    
+func (device *LCD16x2Bricklet) BacklightOff() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionBacklightOff), buf.Bytes())
@@ -237,7 +237,7 @@ func (device *LCD16x2Bricklet) BacklightOff() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -246,12 +246,12 @@ func (device *LCD16x2Bricklet) BacklightOff() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the backlight is on and *false* otherwise.
-func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {    
+func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsBacklightOn), buf.Bytes())
@@ -260,7 +260,7 @@ func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return backlight, BrickletError(header.ErrorCode)
@@ -270,17 +270,17 @@ func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &backlight)
 
     }
-    
+
     return backlight, nil
 }
 
 // Configures if the cursor (shown as _) should be visible and if it
-	// should be blinking (shown as a blinking block). The cursor position
-	// is one character behind the the last text written with
-	// WriteLine.
-	// 
-	// The default is (false, false).
-func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error) {    
+// should be blinking (shown as a blinking block). The cursor position
+// is one character behind the the last text written with
+// WriteLine.
+// 
+// The default is (false, false).
+func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, cursor);
 	binary.Write(&buf, binary.LittleEndian, blinking);
@@ -291,7 +291,7 @@ func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -300,12 +300,12 @@ func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetConfig.
-func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err error) {    
+func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfig), buf.Bytes())
@@ -314,7 +314,7 @@ func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return cursor, blinking, BrickletError(header.ErrorCode)
@@ -325,15 +325,15 @@ func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err erro
 	binary.Read(resultBuf, binary.LittleEndian, &blinking)
 
     }
-    
+
     return cursor, blinking, nil
 }
 
 // Returns *true* if the button (0 to 2) is pressed.
-	// 
-	// If you want to react on button presses and releases it is recommended to use the
-	// RegisterButtonPressedCallback and RegisterButtonReleasedCallback callbacks.
-func (device *LCD16x2Bricklet) IsButtonPressed(button uint8) (pressed bool, err error) {    
+// 
+// If you want to react on button presses and releases it is recommended to use the
+// RegisterButtonPressedCallback and RegisterButtonReleasedCallback callbacks.
+func (device *LCD16x2Bricklet) IsButtonPressed(button uint8) (pressed bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, button);
 
@@ -343,7 +343,7 @@ func (device *LCD16x2Bricklet) IsButtonPressed(button uint8) (pressed bool, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return pressed, BrickletError(header.ErrorCode)
@@ -353,35 +353,35 @@ func (device *LCD16x2Bricklet) IsButtonPressed(button uint8) (pressed bool, err 
         binary.Read(resultBuf, binary.LittleEndian, &pressed)
 
     }
-    
+
     return pressed, nil
 }
 
 // The LCD 16x2 Bricklet can store up to 8 custom characters. The characters
-	// consist of 5x8 pixels and can be addressed with the index 0-7. To describe
-	// the pixels, the first 5 bits of 8 bytes are used. For example, to make
-	// a custom character H, you should transfer the following:
-	// 
-	// * ``character[0] = 0b00010001`` (decimal value 17)
-	// * ``character[1] = 0b00010001`` (decimal value 17)
-	// * ``character[2] = 0b00010001`` (decimal value 17)
-	// * ``character[3] = 0b00011111`` (decimal value 31)
-	// * ``character[4] = 0b00010001`` (decimal value 17)
-	// * ``character[5] = 0b00010001`` (decimal value 17)
-	// * ``character[6] = 0b00010001`` (decimal value 17)
-	// * ``character[7] = 0b00000000`` (decimal value 0)
-	// 
-	// The characters can later be written with WriteLine by using the
-	// characters with the byte representation 8 to 15.
-	// 
-	// You can play around with the custom characters in Brick Viewer since
-	// version 2.0.1.
-	// 
-	// Custom characters are stored by the LCD in RAM, so they have to be set
-	// after each startup.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
-func (device *LCD16x2Bricklet) SetCustomCharacter(index uint8, character [8]uint8) (err error) {    
+// consist of 5x8 pixels and can be addressed with the index 0-7. To describe
+// the pixels, the first 5 bits of 8 bytes are used. For example, to make
+// a custom character H, you should transfer the following:
+// 
+// * ``character[0] = 0b00010001`` (decimal value 17)
+// * ``character[1] = 0b00010001`` (decimal value 17)
+// * ``character[2] = 0b00010001`` (decimal value 17)
+// * ``character[3] = 0b00011111`` (decimal value 31)
+// * ``character[4] = 0b00010001`` (decimal value 17)
+// * ``character[5] = 0b00010001`` (decimal value 17)
+// * ``character[6] = 0b00010001`` (decimal value 17)
+// * ``character[7] = 0b00000000`` (decimal value 0)
+// 
+// The characters can later be written with WriteLine by using the
+// characters with the byte representation 8 to 15.
+// 
+// You can play around with the custom characters in Brick Viewer since
+// version 2.0.1.
+// 
+// Custom characters are stored by the LCD in RAM, so they have to be set
+// after each startup.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *LCD16x2Bricklet) SetCustomCharacter(index uint8, character [8]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, character);
@@ -392,7 +392,7 @@ func (device *LCD16x2Bricklet) SetCustomCharacter(index uint8, character [8]uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -401,15 +401,15 @@ func (device *LCD16x2Bricklet) SetCustomCharacter(index uint8, character [8]uint
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the custom character for a given index, as set with
-	// SetCustomCharacter.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
-func (device *LCD16x2Bricklet) GetCustomCharacter(index uint8) (character [8]uint8, err error) {    
+// SetCustomCharacter.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *LCD16x2Bricklet) GetCustomCharacter(index uint8) (character [8]uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -419,7 +419,7 @@ func (device *LCD16x2Bricklet) GetCustomCharacter(index uint8) (character [8]uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return character, BrickletError(header.ErrorCode)
@@ -429,19 +429,19 @@ func (device *LCD16x2Bricklet) GetCustomCharacter(index uint8) (character [8]uin
         binary.Read(resultBuf, binary.LittleEndian, &character)
 
     }
-    
+
     return character, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *LCD16x2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *LCD16x2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -450,7 +450,7 @@ func (device *LCD16x2Bricklet) GetIdentity() (uid string, connectedUid string, p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -465,6 +465,6 @@ func (device *LCD16x2Bricklet) GetIdentity() (uid string, connectedUid string, p
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

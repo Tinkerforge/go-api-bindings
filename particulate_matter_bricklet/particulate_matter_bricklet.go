@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -119,17 +119,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ParticulateMatterBrickle
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ParticulateMatterBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -138,7 +138,7 @@ func (device *ParticulateMatterBricklet) GetResponseExpected(functionID Function
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -158,9 +158,9 @@ func (device *ParticulateMatterBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetPMConcentrationCallbackConfiguration.
-	// 
-	// The parameters are the same as GetPMConcentration.
+// SetPMConcentrationCallbackConfiguration.
+// 
+// The parameters are the same as GetPMConcentration.
 func (device *ParticulateMatterBricklet) RegisterPMConcentrationCallback(fn func(uint16, uint16, uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -176,15 +176,15 @@ binary.Read(buf, binary.LittleEndian, &pm100)
 }
 
 //Remove a registered PM Concentration callback.
-func (device *ParticulateMatterBricklet) DeregisterPMConcentrationCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPMConcentration), callbackID)
+func (device *ParticulateMatterBricklet) DeregisterPMConcentrationCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackPMConcentration), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetPMCountCallbackConfiguration.
-	// 
-	// The parameters are the same as GetPMCount.
+// SetPMCountCallbackConfiguration.
+// 
+// The parameters are the same as GetPMCount.
 func (device *ParticulateMatterBricklet) RegisterPMCountCallback(fn func(uint16, uint16, uint16, uint16, uint16, uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -206,20 +206,20 @@ binary.Read(buf, binary.LittleEndian, &greater100um)
 }
 
 //Remove a registered PM Count callback.
-func (device *ParticulateMatterBricklet) DeregisterPMCountCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPMCount), callbackID)
+func (device *ParticulateMatterBricklet) DeregisterPMCountCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackPMCount), registrationID)
 }
 
 
 // Returns the particulate matter concentration in µg/m³, broken down as:
-	// 
-	// * PM\ :sub:`1.0`\ ,
-	// * PM\ :sub:`2.5`\  and
-	// * PM\ :sub:`10.0`\ .
-	// 
-	// If the sensor is disabled (see SetEnable) then the last known good
-	// values from the sensor are returned.
-func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25 uint16, pm100 uint16, err error) {    
+// 
+// * PM\ :sub:`1.0`\ ,
+// * PM\ :sub:`2.5`\  and
+// * PM\ :sub:`10.0`\ .
+// 
+// If the sensor is disabled (see SetEnable) then the last known good
+// values from the sensor are returned.
+func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25 uint16, pm100 uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPMConcentration), buf.Bytes())
@@ -228,7 +228,7 @@ func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return pm10, pm25, pm100, BrickletError(header.ErrorCode)
@@ -240,23 +240,23 @@ func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25
 	binary.Read(resultBuf, binary.LittleEndian, &pm100)
 
     }
-    
+
     return pm10, pm25, pm100, nil
 }
 
 // Returns the number of particulates in 100 ml of air, broken down by their
-	// diameter:
-	// 
-	// * greater 0.3µm,
-	// * greater 0.5µm,
-	// * greater 1.0µm,
-	// * greater 2.5µm,
-	// * greater 5.0µm and
-	// * greater 10.0µm.
-	// 
-	// If the sensor is disabled (see SetEnable) then the last known good
-	// value from the sensor is returned.
-func (device *ParticulateMatterBricklet) GetPMCount() (greater03um uint16, greater05um uint16, greater10um uint16, greater25um uint16, greater50um uint16, greater100um uint16, err error) {    
+// diameter:
+// 
+// * greater 0.3µm,
+// * greater 0.5µm,
+// * greater 1.0µm,
+// * greater 2.5µm,
+// * greater 5.0µm and
+// * greater 10.0µm.
+// 
+// If the sensor is disabled (see SetEnable) then the last known good
+// value from the sensor is returned.
+func (device *ParticulateMatterBricklet) GetPMCount() (greater03um uint16, greater05um uint16, greater10um uint16, greater25um uint16, greater50um uint16, greater100um uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPMCount), buf.Bytes())
@@ -265,7 +265,7 @@ func (device *ParticulateMatterBricklet) GetPMCount() (greater03um uint16, great
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return greater03um, greater05um, greater10um, greater25um, greater50um, greater100um, BrickletError(header.ErrorCode)
@@ -280,20 +280,20 @@ func (device *ParticulateMatterBricklet) GetPMCount() (greater03um uint16, great
 	binary.Read(resultBuf, binary.LittleEndian, &greater100um)
 
     }
-    
+
     return greater03um, greater05um, greater10um, greater25um, greater50um, greater100um, nil
 }
 
 // Enables/Disables the fan and the laser diode of the sensors. The sensor is
-	// enabled by default.
-	// 
-	// The sensor takes about 30 seconds after it is enabled to settle and produce stable
-	// values.
-	// 
-	// The laser diode has a lifetime of about 8000 hours. If you want to measure in
-	// an interval with a long idle time (e.g. hourly) you should turn the
-	// laser diode off between the measurements.
-func (device *ParticulateMatterBricklet) SetEnable(enable bool) (err error) {    
+// enabled by default.
+// 
+// The sensor takes about 30 seconds after it is enabled to settle and produce stable
+// values.
+// 
+// The laser diode has a lifetime of about 8000 hours. If you want to measure in
+// an interval with a long idle time (e.g. hourly) you should turn the
+// laser diode off between the measurements.
+func (device *ParticulateMatterBricklet) SetEnable(enable bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enable);
 
@@ -303,7 +303,7 @@ func (device *ParticulateMatterBricklet) SetEnable(enable bool) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -312,12 +312,12 @@ func (device *ParticulateMatterBricklet) SetEnable(enable bool) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the state of the sensor as set by SetEnable.
-func (device *ParticulateMatterBricklet) GetEnable() (enable bool, err error) {    
+func (device *ParticulateMatterBricklet) GetEnable() (enable bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEnable), buf.Bytes())
@@ -326,7 +326,7 @@ func (device *ParticulateMatterBricklet) GetEnable() (enable bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enable, BrickletError(header.ErrorCode)
@@ -336,17 +336,17 @@ func (device *ParticulateMatterBricklet) GetEnable() (enable bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enable)
 
     }
-    
+
     return enable, nil
 }
 
 // Returns information about the sensor:
-	// 
-	// * the sensor version number,
-	// * the last error code reported by the sensor (0 means no error) and
-	// * the number of framing and checksum errors that occurred in the communication
-	//   with the sensor.
-func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, lastErrorCode uint8, framingErrorCount uint8, checksumErrorCount uint8, err error) {    
+// 
+// * the sensor version number,
+// * the last error code reported by the sensor (0 means no error) and
+// * the number of framing and checksum errors that occurred in the communication
+//   with the sensor.
+func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, lastErrorCode uint8, framingErrorCount uint8, checksumErrorCount uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorInfo), buf.Bytes())
@@ -355,7 +355,7 @@ func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, l
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return sensorVersion, lastErrorCode, framingErrorCount, checksumErrorCount, BrickletError(header.ErrorCode)
@@ -368,22 +368,22 @@ func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, l
 	binary.Read(resultBuf, binary.LittleEndian, &checksumErrorCount)
 
     }
-    
+
     return sensorVersion, lastErrorCode, framingErrorCount, checksumErrorCount, nil
 }
 
 // The period in ms is the period with which the RegisterPMConcentrationCallback
-	// callback is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *ParticulateMatterBricklet) SetPMConcentrationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *ParticulateMatterBricklet) SetPMConcentrationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -394,7 +394,7 @@ func (device *ParticulateMatterBricklet) SetPMConcentrationCallbackConfiguration
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -403,13 +403,13 @@ func (device *ParticulateMatterBricklet) SetPMConcentrationCallbackConfiguration
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetPMConcentrationCallbackConfiguration.
-func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetPMConcentrationCallbackConfiguration.
+func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPMConcentrationCallbackConfiguration), buf.Bytes())
@@ -418,7 +418,7 @@ func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -429,22 +429,22 @@ func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // The period in ms is the period with which the RegisterPMCountCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *ParticulateMatterBricklet) SetPMCountCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *ParticulateMatterBricklet) SetPMCountCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -455,7 +455,7 @@ func (device *ParticulateMatterBricklet) SetPMCountCallbackConfiguration(period 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -464,13 +464,13 @@ func (device *ParticulateMatterBricklet) SetPMCountCallbackConfiguration(period 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetPMCountCallbackConfiguration.
-func (device *ParticulateMatterBricklet) GetPMCountCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetPMCountCallbackConfiguration.
+func (device *ParticulateMatterBricklet) GetPMCountCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPMCountCallbackConfiguration), buf.Bytes())
@@ -479,7 +479,7 @@ func (device *ParticulateMatterBricklet) GetPMCountCallbackConfiguration() (peri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -490,22 +490,22 @@ func (device *ParticulateMatterBricklet) GetPMCountCallbackConfiguration() (peri
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *ParticulateMatterBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *ParticulateMatterBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -514,7 +514,7 @@ func (device *ParticulateMatterBricklet) GetSPITFPErrorCount() (errorCountAckChe
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -527,19 +527,19 @@ func (device *ParticulateMatterBricklet) GetSPITFPErrorCount() (errorCountAckChe
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -554,7 +554,7 @@ func (device *ParticulateMatterBricklet) GetSPITFPErrorCount() (errorCountAckChe
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *ParticulateMatterBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *ParticulateMatterBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -564,7 +564,7 @@ func (device *ParticulateMatterBricklet) SetBootloaderMode(mode BootloaderMode) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -574,7 +574,7 @@ func (device *ParticulateMatterBricklet) SetBootloaderMode(mode BootloaderMode) 
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -587,7 +587,7 @@ func (device *ParticulateMatterBricklet) SetBootloaderMode(mode BootloaderMode) 
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *ParticulateMatterBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *ParticulateMatterBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -596,7 +596,7 @@ func (device *ParticulateMatterBricklet) GetBootloaderMode() (mode BootloaderMod
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -606,17 +606,17 @@ func (device *ParticulateMatterBricklet) GetBootloaderMode() (mode BootloaderMod
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *ParticulateMatterBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ParticulateMatterBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -626,7 +626,7 @@ func (device *ParticulateMatterBricklet) SetWriteFirmwarePointer(pointer uint32)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -635,19 +635,19 @@ func (device *ParticulateMatterBricklet) SetWriteFirmwarePointer(pointer uint32)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *ParticulateMatterBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ParticulateMatterBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -657,7 +657,7 @@ func (device *ParticulateMatterBricklet) WriteFirmware(data [64]uint8) (status u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -667,17 +667,17 @@ func (device *ParticulateMatterBricklet) WriteFirmware(data [64]uint8) (status u
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -685,7 +685,7 @@ func (device *ParticulateMatterBricklet) WriteFirmware(data [64]uint8) (status u
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *ParticulateMatterBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *ParticulateMatterBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -695,7 +695,7 @@ func (device *ParticulateMatterBricklet) SetStatusLEDConfig(config StatusLEDConf
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -704,7 +704,7 @@ func (device *ParticulateMatterBricklet) SetStatusLEDConfig(config StatusLEDConf
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -716,7 +716,7 @@ func (device *ParticulateMatterBricklet) SetStatusLEDConfig(config StatusLEDConf
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *ParticulateMatterBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *ParticulateMatterBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -725,7 +725,7 @@ func (device *ParticulateMatterBricklet) GetStatusLEDConfig() (config StatusLEDC
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -735,17 +735,17 @@ func (device *ParticulateMatterBricklet) GetStatusLEDConfig() (config StatusLEDC
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *ParticulateMatterBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *ParticulateMatterBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -754,7 +754,7 @@ func (device *ParticulateMatterBricklet) GetChipTemperature() (temperature int16
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -764,17 +764,17 @@ func (device *ParticulateMatterBricklet) GetChipTemperature() (temperature int16
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *ParticulateMatterBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *ParticulateMatterBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -783,7 +783,7 @@ func (device *ParticulateMatterBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -792,16 +792,16 @@ func (device *ParticulateMatterBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *ParticulateMatterBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *ParticulateMatterBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -811,7 +811,7 @@ func (device *ParticulateMatterBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -820,13 +820,13 @@ func (device *ParticulateMatterBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *ParticulateMatterBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *ParticulateMatterBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -835,7 +835,7 @@ func (device *ParticulateMatterBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -845,19 +845,19 @@ func (device *ParticulateMatterBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *ParticulateMatterBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *ParticulateMatterBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -866,7 +866,7 @@ func (device *ParticulateMatterBricklet) GetIdentity() (uid string, connectedUid
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -881,6 +881,6 @@ func (device *ParticulateMatterBricklet) GetIdentity() (uid string, connectedUid
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -132,17 +132,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (OneWireBricklet, error) 
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *OneWireBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -151,7 +151,7 @@ func (device *OneWireBricklet) GetResponseExpected(functionID Function) (bool, e
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -171,12 +171,12 @@ func (device *OneWireBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // Returns a list of up to 64 identifiers of the connected 1-Wire devices.
-	// Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
-	// 8-bit CRC.
-	// 
-	// To get these identifiers the Bricklet runs the
-	// https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
-	// as defined by Maxim.
+// Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
+// 8-bit CRC.
+// 
+// To get these identifiers the Bricklet runs the
+// https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
+// as defined by Maxim.
 //
 // Associated constants:
 //
@@ -185,7 +185,7 @@ func (device *OneWireBricklet) GetAPIVersion() [3]uint8 {
 //	* StatusNoPresence
 //	* StatusTimeout
 //	* StatusError
-func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, identifierChunkOffset uint16, identifierChunkData [7]uint64, status Status, err error) {    
+func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, identifierChunkOffset uint16, identifierChunkData [7]uint64, status Status, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionSearchBusLowLevel), buf.Bytes())
@@ -194,7 +194,7 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return identifierLength, identifierChunkOffset, identifierChunkData, status, BrickletError(header.ErrorCode)
@@ -207,20 +207,20 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
 	binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return identifierLength, identifierChunkOffset, identifierChunkData, status, nil
 }
 
 // Returns a list of up to 64 identifiers of the connected 1-Wire devices.
-	// Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
-	// 8-bit CRC.
-	// 
-	// To get these identifiers the Bricklet runs the
-	// https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
-	// as defined by Maxim.
+// Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
+// 8-bit CRC.
+// 
+// To get these identifiers the Bricklet runs the
+// https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
+// as defined by Maxim.
 	func (device *OneWireBricklet) SearchBus() (identifier []uint64, status Status, err error) {
         buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            identifierLength, identifierChunkOffset, identifierChunkData, status, err := device.SearchBusLowLevel()            
+            identifierLength, identifierChunkOffset, identifierChunkData, status, err := device.SearchBusLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -254,7 +254,7 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
 //	* StatusNoPresence
 //	* StatusTimeout
 //	* StatusError
-func (device *OneWireBricklet) ResetBus() (status Status, err error) {    
+func (device *OneWireBricklet) ResetBus() (status Status, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionResetBus), buf.Bytes())
@@ -263,7 +263,7 @@ func (device *OneWireBricklet) ResetBus() (status Status, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -273,7 +273,7 @@ func (device *OneWireBricklet) ResetBus() (status Status, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -286,7 +286,7 @@ func (device *OneWireBricklet) ResetBus() (status Status, err error) {
 //	* StatusNoPresence
 //	* StatusTimeout
 //	* StatusError
-func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {    
+func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -296,7 +296,7 @@ func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -306,7 +306,7 @@ func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -319,7 +319,7 @@ func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
 //	* StatusNoPresence
 //	* StatusTimeout
 //	* StatusError
-func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {    
+func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionRead), buf.Bytes())
@@ -328,7 +328,7 @@ func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return data, status, BrickletError(header.ErrorCode)
@@ -339,17 +339,17 @@ func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
 	binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return data, status, nil
 }
 
 // Writes a command to the 1-Wire device with the given identifier. You can obtain
-	// the identifier by calling SearchBus. The MATCH ROM operation is used to
-	// write the command.
-	// 
-	// If you only have one device connected or want to broadcast to all devices
-	// you can set the identifier to 0. In this case the SKIP ROM operation is used to
-	// write the command.
+// the identifier by calling SearchBus. The MATCH ROM operation is used to
+// write the command.
+// 
+// If you only have one device connected or want to broadcast to all devices
+// you can set the identifier to 0. In this case the SKIP ROM operation is used to
+// write the command.
 //
 // Associated constants:
 //
@@ -358,7 +358,7 @@ func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
 //	* StatusNoPresence
 //	* StatusTimeout
 //	* StatusError
-func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (status Status, err error) {    
+func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (status Status, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, identifier);
 	binary.Write(&buf, binary.LittleEndian, command);
@@ -369,7 +369,7 @@ func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (s
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -379,16 +379,16 @@ func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (s
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the communication LED configuration. By default the LED shows 1-wire
-	// communication traffic by flickering.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is off.
+// communication traffic by flickering.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
 //
@@ -396,7 +396,7 @@ func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (s
 //	* CommunicationLEDConfigOn
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
-func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {    
+func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -406,7 +406,7 @@ func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLED
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -415,7 +415,7 @@ func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLED
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -427,7 +427,7 @@ func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLED
 //	* CommunicationLEDConfigOn
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
-func (device *OneWireBricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {    
+func (device *OneWireBricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
@@ -436,7 +436,7 @@ func (device *OneWireBricklet) GetCommunicationLEDConfig() (config Communication
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -446,22 +446,22 @@ func (device *OneWireBricklet) GetCommunicationLEDConfig() (config Communication
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -470,7 +470,7 @@ func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -483,19 +483,19 @@ func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -510,7 +510,7 @@ func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -520,7 +520,7 @@ func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -530,7 +530,7 @@ func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -543,7 +543,7 @@ func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -552,7 +552,7 @@ func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -562,17 +562,17 @@ func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err err
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -582,7 +582,7 @@ func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -591,19 +591,19 @@ func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -613,7 +613,7 @@ func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -623,17 +623,17 @@ func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err 
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -641,7 +641,7 @@ func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -651,7 +651,7 @@ func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -660,7 +660,7 @@ func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -672,7 +672,7 @@ func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -681,7 +681,7 @@ func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -691,17 +691,17 @@ func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -710,7 +710,7 @@ func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -720,17 +720,17 @@ func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err erro
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *OneWireBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *OneWireBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -739,7 +739,7 @@ func (device *OneWireBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -748,16 +748,16 @@ func (device *OneWireBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -767,7 +767,7 @@ func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -776,13 +776,13 @@ func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -791,7 +791,7 @@ func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -801,19 +801,19 @@ func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *OneWireBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *OneWireBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -822,7 +822,7 @@ func (device *OneWireBricklet) GetIdentity() (uid string, connectedUid string, p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -837,6 +837,6 @@ func (device *OneWireBricklet) GetIdentity() (uid string, connectedUid string, p
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

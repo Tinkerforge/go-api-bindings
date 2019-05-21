@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -115,17 +115,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (PTCBricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *PTCBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -134,7 +134,7 @@ func (device *PTCBricklet) GetResponseExpected(functionID Function) (bool, error
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -154,11 +154,11 @@ func (device *PTCBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetTemperatureCallbackPeriod. The parameter is the
-	// temperature of the connected sensor.
-	// 
-	// The RegisterTemperatureCallback callback is only triggered if the temperature has changed
-	// since the last triggering.
+// SetTemperatureCallbackPeriod. The parameter is the
+// temperature of the connected sensor.
+// 
+// The RegisterTemperatureCallback callback is only triggered if the temperature has changed
+// since the last triggering.
 func (device *PTCBricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -170,17 +170,17 @@ func (device *PTCBricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
 }
 
 //Remove a registered Temperature callback.
-func (device *PTCBricklet) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+func (device *PTCBricklet) DeregisterTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetTemperatureCallbackThreshold is reached.
-	// The parameter is the temperature of the connected sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetTemperatureCallbackThreshold is reached.
+// The parameter is the temperature of the connected sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *PTCBricklet) RegisterTemperatureReachedCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -192,17 +192,17 @@ func (device *PTCBricklet) RegisterTemperatureReachedCallback(fn func(int32)) ui
 }
 
 //Remove a registered Temperature Reached callback.
-func (device *PTCBricklet) DeregisterTemperatureReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureReached), callbackID)
+func (device *PTCBricklet) DeregisterTemperatureReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureReached), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetResistanceCallbackPeriod. The parameter is the resistance
-	// of the connected sensor.
-	// 
-	// The RegisterResistanceCallback callback is only triggered if the resistance has changed
-	// since the last triggering.
+// SetResistanceCallbackPeriod. The parameter is the resistance
+// of the connected sensor.
+// 
+// The RegisterResistanceCallback callback is only triggered if the resistance has changed
+// since the last triggering.
 func (device *PTCBricklet) RegisterResistanceCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -214,17 +214,17 @@ func (device *PTCBricklet) RegisterResistanceCallback(fn func(int32)) uint64 {
 }
 
 //Remove a registered Resistance callback.
-func (device *PTCBricklet) DeregisterResistanceCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackResistance), callbackID)
+func (device *PTCBricklet) DeregisterResistanceCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackResistance), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetResistanceCallbackThreshold is reached.
-	// The parameter is the resistance of the connected sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetResistanceCallbackThreshold is reached.
+// The parameter is the resistance of the connected sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *PTCBricklet) RegisterResistanceReachedCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -236,17 +236,17 @@ func (device *PTCBricklet) RegisterResistanceReachedCallback(fn func(int32)) uin
 }
 
 //Remove a registered Resistance Reached callback.
-func (device *PTCBricklet) DeregisterResistanceReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackResistanceReached), callbackID)
+func (device *PTCBricklet) DeregisterResistanceReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackResistanceReached), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetSensorConnectedCallbackConfiguration.
-	// 
-	// The parameter is the same as IsSensorConnected.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// SetSensorConnectedCallbackConfiguration.
+// 
+// The parameter is the same as IsSensorConnected.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *PTCBricklet) RegisterSensorConnectedCallback(fn func(bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -258,19 +258,19 @@ func (device *PTCBricklet) RegisterSensorConnectedCallback(fn func(bool)) uint64
 }
 
 //Remove a registered Sensor Connected callback.
-func (device *PTCBricklet) DeregisterSensorConnectedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackSensorConnected), callbackID)
+func (device *PTCBricklet) DeregisterSensorConnectedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackSensorConnected), registrationID)
 }
 
 
 // Returns the temperature of connected sensor. The value
-	// has a range of -246 to 849 °C and is given in °C/100,
-	// e.g. a value of 4223 means that a temperature of 42.23 °C is measured.
-	// 
-	// If you want to get the temperature periodically, it is recommended
-	// to use the RegisterTemperatureCallback callback and set the period with
-	// SetTemperatureCallbackPeriod.
-func (device *PTCBricklet) GetTemperature() (temperature int32, err error) {    
+// has a range of -246 to 849 °C and is given in °C/100,
+// e.g. a value of 4223 means that a temperature of 42.23 °C is measured.
+// 
+// If you want to get the temperature periodically, it is recommended
+// to use the RegisterTemperatureCallback callback and set the period with
+// SetTemperatureCallbackPeriod.
+func (device *PTCBricklet) GetTemperature() (temperature int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
@@ -279,7 +279,7 @@ func (device *PTCBricklet) GetTemperature() (temperature int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -289,21 +289,21 @@ func (device *PTCBricklet) GetTemperature() (temperature int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Returns the value as measured by the MAX31865 precision delta-sigma ADC.
-	// 
-	// The value can be converted with the following formulas:
-	// 
-	// * Pt100:  resistance = (value * 390) / 32768
-	// * Pt1000: resistance = (value * 3900) / 32768
-	// 
-	// If you want to get the resistance periodically, it is recommended
-	// to use the RegisterResistanceCallback callback and set the period with
-	// SetResistanceCallbackPeriod.
-func (device *PTCBricklet) GetResistance() (resistance int32, err error) {    
+// 
+// The value can be converted with the following formulas:
+// 
+// * Pt100:  resistance = (value * 390) / 32768
+// * Pt1000: resistance = (value * 3900) / 32768
+// 
+// If you want to get the resistance periodically, it is recommended
+// to use the RegisterResistanceCallback callback and set the period with
+// SetResistanceCallbackPeriod.
+func (device *PTCBricklet) GetResistance() (resistance int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetResistance), buf.Bytes())
@@ -312,7 +312,7 @@ func (device *PTCBricklet) GetResistance() (resistance int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return resistance, BrickletError(header.ErrorCode)
@@ -322,18 +322,18 @@ func (device *PTCBricklet) GetResistance() (resistance int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &resistance)
 
     }
-    
+
     return resistance, nil
 }
 
 // Sets the period in ms with which the RegisterTemperatureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterTemperatureCallback callback is only triggered if the temperature has
-	// changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *PTCBricklet) SetTemperatureCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterTemperatureCallback callback is only triggered if the temperature has
+// changed since the last triggering.
+// 
+// The default value is 0.
+func (device *PTCBricklet) SetTemperatureCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -343,7 +343,7 @@ func (device *PTCBricklet) SetTemperatureCallbackPeriod(period uint32) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -352,12 +352,12 @@ func (device *PTCBricklet) SetTemperatureCallbackPeriod(period uint32) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetTemperatureCallbackPeriod.
-func (device *PTCBricklet) GetTemperatureCallbackPeriod() (period uint32, err error) {    
+func (device *PTCBricklet) GetTemperatureCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackPeriod), buf.Bytes())
@@ -366,7 +366,7 @@ func (device *PTCBricklet) GetTemperatureCallbackPeriod() (period uint32, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -376,18 +376,18 @@ func (device *PTCBricklet) GetTemperatureCallbackPeriod() (period uint32, err er
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterResistanceCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterResistanceCallback callback is only triggered if the resistance has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-func (device *PTCBricklet) SetResistanceCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterResistanceCallback callback is only triggered if the resistance has changed
+// since the last triggering.
+// 
+// The default value is 0.
+func (device *PTCBricklet) SetResistanceCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -397,7 +397,7 @@ func (device *PTCBricklet) SetResistanceCallbackPeriod(period uint32) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -406,12 +406,12 @@ func (device *PTCBricklet) SetResistanceCallbackPeriod(period uint32) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetResistanceCallbackPeriod.
-func (device *PTCBricklet) GetResistanceCallbackPeriod() (period uint32, err error) {    
+func (device *PTCBricklet) GetResistanceCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetResistanceCallbackPeriod), buf.Bytes())
@@ -420,7 +420,7 @@ func (device *PTCBricklet) GetResistanceCallbackPeriod() (period uint32, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -430,23 +430,23 @@ func (device *PTCBricklet) GetResistanceCallbackPeriod() (period uint32, err err
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterTemperatureReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
-	//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
-	//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
+//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
+//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -455,7 +455,7 @@ func (device *PTCBricklet) GetResistanceCallbackPeriod() (period uint32, err err
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *PTCBricklet) SetTemperatureCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {    
+func (device *PTCBricklet) SetTemperatureCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -467,7 +467,7 @@ func (device *PTCBricklet) SetTemperatureCallbackThreshold(option ThresholdOptio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -476,7 +476,7 @@ func (device *PTCBricklet) SetTemperatureCallbackThreshold(option ThresholdOptio
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -489,7 +489,7 @@ func (device *PTCBricklet) SetTemperatureCallbackThreshold(option ThresholdOptio
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *PTCBricklet) GetTemperatureCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {    
+func (device *PTCBricklet) GetTemperatureCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackThreshold), buf.Bytes())
@@ -498,7 +498,7 @@ func (device *PTCBricklet) GetTemperatureCallbackThreshold() (option ThresholdOp
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -510,23 +510,23 @@ func (device *PTCBricklet) GetTemperatureCallbackThreshold() (option ThresholdOp
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterResistanceReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
-	//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
-	//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
+//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
+//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -535,7 +535,7 @@ func (device *PTCBricklet) GetTemperatureCallbackThreshold() (option ThresholdOp
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *PTCBricklet) SetResistanceCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {    
+func (device *PTCBricklet) SetResistanceCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -547,7 +547,7 @@ func (device *PTCBricklet) SetResistanceCallbackThreshold(option ThresholdOption
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -556,7 +556,7 @@ func (device *PTCBricklet) SetResistanceCallbackThreshold(option ThresholdOption
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -569,7 +569,7 @@ func (device *PTCBricklet) SetResistanceCallbackThreshold(option ThresholdOption
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *PTCBricklet) GetResistanceCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {    
+func (device *PTCBricklet) GetResistanceCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetResistanceCallbackThreshold), buf.Bytes())
@@ -578,7 +578,7 @@ func (device *PTCBricklet) GetResistanceCallbackThreshold() (option ThresholdOpt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -590,24 +590,24 @@ func (device *PTCBricklet) GetResistanceCallbackThreshold() (option ThresholdOpt
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
-	// 
-	// * RegisterTemperatureReachedCallback,
-	// * RegisterResistanceReachedCallback
-	// 
-	// is triggered, if the threshold
-	// 
-	// * SetTemperatureCallbackThreshold,
-	// * SetResistanceCallbackThreshold
-	// 
-	// keeps being reached.
-	// 
-	// The default value is 100.
-func (device *PTCBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterTemperatureReachedCallback,
+// * RegisterResistanceReachedCallback
+// 
+// is triggered, if the threshold
+// 
+// * SetTemperatureCallbackThreshold,
+// * SetResistanceCallbackThreshold
+// 
+// keeps being reached.
+// 
+// The default value is 100.
+func (device *PTCBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -617,7 +617,7 @@ func (device *PTCBricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -626,12 +626,12 @@ func (device *PTCBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *PTCBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *PTCBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -640,7 +640,7 @@ func (device *PTCBricklet) GetDebouncePeriod() (debounce uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -650,22 +650,22 @@ func (device *PTCBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Sets the noise rejection filter to either 50Hz (0) or 60Hz (1).
-	// Noise from 50Hz or 60Hz power sources (including
-	// harmonics of the AC power's fundamental frequency) is
-	// attenuated by 82dB.
-	// 
-	// Default value is 0 = 50Hz.
+// Noise from 50Hz or 60Hz power sources (including
+// harmonics of the AC power's fundamental frequency) is
+// attenuated by 82dB.
+// 
+// Default value is 0 = 50Hz.
 //
 // Associated constants:
 //
 //	* FilterOption50Hz
 //	* FilterOption60Hz
-func (device *PTCBricklet) SetNoiseRejectionFilter(filter FilterOption) (err error) {    
+func (device *PTCBricklet) SetNoiseRejectionFilter(filter FilterOption) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, filter);
 
@@ -675,7 +675,7 @@ func (device *PTCBricklet) SetNoiseRejectionFilter(filter FilterOption) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -684,18 +684,18 @@ func (device *PTCBricklet) SetNoiseRejectionFilter(filter FilterOption) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the noise rejection filter option as set by
-	// SetNoiseRejectionFilter
+// SetNoiseRejectionFilter
 //
 // Associated constants:
 //
 //	* FilterOption50Hz
 //	* FilterOption60Hz
-func (device *PTCBricklet) GetNoiseRejectionFilter() (filter FilterOption, err error) {    
+func (device *PTCBricklet) GetNoiseRejectionFilter() (filter FilterOption, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetNoiseRejectionFilter), buf.Bytes())
@@ -704,7 +704,7 @@ func (device *PTCBricklet) GetNoiseRejectionFilter() (filter FilterOption, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return filter, BrickletError(header.ErrorCode)
@@ -714,16 +714,16 @@ func (device *PTCBricklet) GetNoiseRejectionFilter() (filter FilterOption, err e
         binary.Read(resultBuf, binary.LittleEndian, &filter)
 
     }
-    
+
     return filter, nil
 }
 
 // Returns *true* if the sensor is connected correctly.
-	// 
-	// If this function
-	// returns *false*, there is either no Pt100 or Pt1000 sensor connected,
-	// the sensor is connected incorrectly or the sensor itself is faulty.
-func (device *PTCBricklet) IsSensorConnected() (connected bool, err error) {    
+// 
+// If this function
+// returns *false*, there is either no Pt100 or Pt1000 sensor connected,
+// the sensor is connected incorrectly or the sensor itself is faulty.
+func (device *PTCBricklet) IsSensorConnected() (connected bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsSensorConnected), buf.Bytes())
@@ -732,7 +732,7 @@ func (device *PTCBricklet) IsSensorConnected() (connected bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return connected, BrickletError(header.ErrorCode)
@@ -742,22 +742,22 @@ func (device *PTCBricklet) IsSensorConnected() (connected bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &connected)
 
     }
-    
+
     return connected, nil
 }
 
 // Sets the wire mode of the sensor. Possible values are 2, 3 and 4 which
-	// correspond to 2-, 3- and 4-wire sensors. The value has to match the jumper
-	// configuration on the Bricklet.
-	// 
-	// The default value is 2 = 2-wire.
+// correspond to 2-, 3- and 4-wire sensors. The value has to match the jumper
+// configuration on the Bricklet.
+// 
+// The default value is 2 = 2-wire.
 //
 // Associated constants:
 //
 //	* WireMode2
 //	* WireMode3
 //	* WireMode4
-func (device *PTCBricklet) SetWireMode(mode WireMode) (err error) {    
+func (device *PTCBricklet) SetWireMode(mode WireMode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -767,7 +767,7 @@ func (device *PTCBricklet) SetWireMode(mode WireMode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -776,7 +776,7 @@ func (device *PTCBricklet) SetWireMode(mode WireMode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -787,7 +787,7 @@ func (device *PTCBricklet) SetWireMode(mode WireMode) (err error) {
 //	* WireMode2
 //	* WireMode3
 //	* WireMode4
-func (device *PTCBricklet) GetWireMode() (mode WireMode, err error) {    
+func (device *PTCBricklet) GetWireMode() (mode WireMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWireMode), buf.Bytes())
@@ -796,7 +796,7 @@ func (device *PTCBricklet) GetWireMode() (mode WireMode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -806,17 +806,17 @@ func (device *PTCBricklet) GetWireMode() (mode WireMode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // If you enable this callback, the RegisterSensorConnectedCallback callback is triggered
-	// every time a Pt sensor is connected/disconnected.
-	// 
-	// By default this callback is disabled.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *PTCBricklet) SetSensorConnectedCallbackConfiguration(enabled bool) (err error) {    
+// every time a Pt sensor is connected/disconnected.
+// 
+// By default this callback is disabled.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *PTCBricklet) SetSensorConnectedCallbackConfiguration(enabled bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enabled);
 
@@ -826,7 +826,7 @@ func (device *PTCBricklet) SetSensorConnectedCallbackConfiguration(enabled bool)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -835,14 +835,14 @@ func (device *PTCBricklet) SetSensorConnectedCallbackConfiguration(enabled bool)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetSensorConnectedCallbackConfiguration.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *PTCBricklet) GetSensorConnectedCallbackConfiguration() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *PTCBricklet) GetSensorConnectedCallbackConfiguration() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorConnectedCallbackConfiguration), buf.Bytes())
@@ -851,7 +851,7 @@ func (device *PTCBricklet) GetSensorConnectedCallbackConfiguration() (enabled bo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -861,19 +861,19 @@ func (device *PTCBricklet) GetSensorConnectedCallbackConfiguration() (enabled bo
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *PTCBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *PTCBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -882,7 +882,7 @@ func (device *PTCBricklet) GetIdentity() (uid string, connectedUid string, posit
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -897,6 +897,6 @@ func (device *PTCBricklet) GetIdentity() (uid string, connectedUid string, posit
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

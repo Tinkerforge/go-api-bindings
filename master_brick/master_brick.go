@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -457,17 +457,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MasterBrick, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MasterBrick) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -476,7 +476,7 @@ func (device *MasterBrick) GetResponseExpected(functionID Function) (bool, error
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -496,13 +496,13 @@ func (device *MasterBrick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetStackCurrentCallbackPeriod. The parameter is the current
-	// of the sensor.
-	// 
-	// The RegisterStackCurrentCallback callback is only triggered if the current has changed
-	// since the last triggering.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetStackCurrentCallbackPeriod. The parameter is the current
+// of the sensor.
+// 
+// The RegisterStackCurrentCallback callback is only triggered if the current has changed
+// since the last triggering.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterStackCurrentCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -514,19 +514,19 @@ func (device *MasterBrick) RegisterStackCurrentCallback(fn func(uint16)) uint64 
 }
 
 //Remove a registered Stack Current callback.
-func (device *MasterBrick) DeregisterStackCurrentCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStackCurrent), callbackID)
+func (device *MasterBrick) DeregisterStackCurrentCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackStackCurrent), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetStackVoltageCallbackPeriod. The parameter is the voltage
-	// of the sensor.
-	// 
-	// The RegisterStackVoltageCallback callback is only triggered if the voltage has changed
-	// since the last triggering.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetStackVoltageCallbackPeriod. The parameter is the voltage
+// of the sensor.
+// 
+// The RegisterStackVoltageCallback callback is only triggered if the voltage has changed
+// since the last triggering.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterStackVoltageCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -538,21 +538,21 @@ func (device *MasterBrick) RegisterStackVoltageCallback(fn func(uint16)) uint64 
 }
 
 //Remove a registered Stack Voltage callback.
-func (device *MasterBrick) DeregisterStackVoltageCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStackVoltage), callbackID)
+func (device *MasterBrick) DeregisterStackVoltageCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackStackVoltage), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetUSBVoltageCallbackPeriod. The parameter is the USB
-	// voltage in mV.
-	// 
-	// The RegisterUSBVoltageCallback callback is only triggered if the USB voltage has changed
-	// since the last triggering.
-	// 
-	// Does not work with hardware version 2.1.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetUSBVoltageCallbackPeriod. The parameter is the USB
+// voltage in mV.
+// 
+// The RegisterUSBVoltageCallback callback is only triggered if the USB voltage has changed
+// since the last triggering.
+// 
+// Does not work with hardware version 2.1.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterUSBVoltageCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -564,19 +564,19 @@ func (device *MasterBrick) RegisterUSBVoltageCallback(fn func(uint16)) uint64 {
 }
 
 //Remove a registered USB Voltage callback.
-func (device *MasterBrick) DeregisterUSBVoltageCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUSBVoltage), callbackID)
+func (device *MasterBrick) DeregisterUSBVoltageCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUSBVoltage), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetStackCurrentCallbackThreshold is reached.
-	// The parameter is the stack current in mA.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetStackCurrentCallbackThreshold is reached.
+// The parameter is the stack current in mA.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterStackCurrentReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -588,19 +588,19 @@ func (device *MasterBrick) RegisterStackCurrentReachedCallback(fn func(uint16)) 
 }
 
 //Remove a registered Stack Current Reached callback.
-func (device *MasterBrick) DeregisterStackCurrentReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStackCurrentReached), callbackID)
+func (device *MasterBrick) DeregisterStackCurrentReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackStackCurrentReached), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetStackVoltageCallbackThreshold is reached.
-	// The parameter is the stack voltage in mV.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetStackVoltageCallbackThreshold is reached.
+// The parameter is the stack voltage in mV.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterStackVoltageReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -612,19 +612,19 @@ func (device *MasterBrick) RegisterStackVoltageReachedCallback(fn func(uint16)) 
 }
 
 //Remove a registered Stack Voltage Reached callback.
-func (device *MasterBrick) DeregisterStackVoltageReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStackVoltageReached), callbackID)
+func (device *MasterBrick) DeregisterStackVoltageReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackStackVoltageReached), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetUSBVoltageCallbackThreshold is reached.
-	// The parameter is the voltage of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// SetUSBVoltageCallbackThreshold is reached.
+// The parameter is the voltage of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterUSBVoltageReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -636,15 +636,15 @@ func (device *MasterBrick) RegisterUSBVoltageReachedCallback(fn func(uint16)) ui
 }
 
 //Remove a registered USB Voltage Reached callback.
-func (device *MasterBrick) DeregisterUSBVoltageReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUSBVoltageReached), callbackID)
+func (device *MasterBrick) DeregisterUSBVoltageReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUSBVoltageReached), registrationID)
 }
 
 
 // Returns the stack voltage in mV. The stack voltage is the
-	// voltage that is supplied via the stack, i.e. it is given by a
-	// Step-Down or Step-Up Power Supply.
-func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {    
+// voltage that is supplied via the stack, i.e. it is given by a
+// Step-Down or Step-Up Power Supply.
+func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackVoltage), buf.Bytes())
@@ -653,7 +653,7 @@ func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -663,14 +663,14 @@ func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Returns the stack current in mA. The stack current is the
-	// current that is drawn via the stack, i.e. it is given by a
-	// Step-Down or Step-Up Power Supply.
-func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {    
+// current that is drawn via the stack, i.e. it is given by a
+// Step-Down or Step-Up Power Supply.
+func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackCurrent), buf.Bytes())
@@ -679,7 +679,7 @@ func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return current, BrickletError(header.ErrorCode)
@@ -689,26 +689,26 @@ func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &current)
 
     }
-    
+
     return current, nil
 }
 
 // Writes the extension type to the EEPROM of a specified extension.
-	// The extension is either 0 or 1 (0 is the on the bottom, 1 is the one on top,
-	// if only one extension is present use 0).
-	// 
-	// Possible extension types:
-	// 
-	//  Type| Description
-	//  --- | --- 
-	//  1|    Chibi
-	//  2|    RS485
-	//  3|    WIFI
-	//  4|    Ethernet
-	//  5|    WIFI 2.0
-	// 
-	// The extension type is already set when bought and it can be set with the
-	// Brick Viewer, it is unlikely that you need this function.
+// The extension is either 0 or 1 (0 is the on the bottom, 1 is the one on top,
+// if only one extension is present use 0).
+// 
+// Possible extension types:
+// 
+//  Type| Description
+//  --- | --- 
+//  1|    Chibi
+//  2|    RS485
+//  3|    WIFI
+//  4|    Ethernet
+//  5|    WIFI 2.0
+// 
+// The extension type is already set when bought and it can be set with the
+// Brick Viewer, it is unlikely that you need this function.
 //
 // Associated constants:
 //
@@ -717,7 +717,7 @@ func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
 //	* ExtensionTypeWifi
 //	* ExtensionTypeEthernet
 //	* ExtensionTypeWifi2
-func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionType) (err error) {    
+func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionType) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, extension);
 	binary.Write(&buf, binary.LittleEndian, exttype);
@@ -728,7 +728,7 @@ func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionTy
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -737,7 +737,7 @@ func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionTy
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -750,7 +750,7 @@ func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionTy
 //	* ExtensionTypeWifi
 //	* ExtensionTypeEthernet
 //	* ExtensionTypeWifi2
-func (device *MasterBrick) GetExtensionType(extension uint8) (exttype ExtensionType, err error) {    
+func (device *MasterBrick) GetExtensionType(extension uint8) (exttype ExtensionType, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, extension);
 
@@ -760,7 +760,7 @@ func (device *MasterBrick) GetExtensionType(extension uint8) (exttype ExtensionT
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return exttype, BrickletError(header.ErrorCode)
@@ -770,12 +770,13 @@ func (device *MasterBrick) GetExtensionType(extension uint8) (exttype ExtensionT
         binary.Read(resultBuf, binary.LittleEndian, &exttype)
 
     }
-    
+
     return exttype, nil
 }
 
-// Returns *true* if a Chibi Extension is available to be used by the Master Brick.
-func (device *MasterBrick) IsChibiPresent() (present bool, err error) {    
+// Returns *true* if the Master Brick is at position 0 in the stack and a Chibi
+// Extension is available.
+func (device *MasterBrick) IsChibiPresent() (present bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsChibiPresent), buf.Bytes())
@@ -784,7 +785,7 @@ func (device *MasterBrick) IsChibiPresent() (present bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return present, BrickletError(header.ErrorCode)
@@ -794,16 +795,16 @@ func (device *MasterBrick) IsChibiPresent() (present bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &present)
 
     }
-    
+
     return present, nil
 }
 
 // Sets the address (1-255) belonging to the Chibi Extension.
-	// 
-	// It is possible to set the address with the Brick Viewer and it will be
-	// saved in the EEPROM of the Chibi Extension, it does not
-	// have to be set on every startup.
-func (device *MasterBrick) SetChibiAddress(address uint8) (err error) {    
+// 
+// It is possible to set the address with the Brick Viewer and it will be
+// saved in the EEPROM of the Chibi Extension, it does not
+// have to be set on every startup.
+func (device *MasterBrick) SetChibiAddress(address uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, address);
 
@@ -813,7 +814,7 @@ func (device *MasterBrick) SetChibiAddress(address uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -822,12 +823,12 @@ func (device *MasterBrick) SetChibiAddress(address uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the address as set by SetChibiAddress.
-func (device *MasterBrick) GetChibiAddress() (address uint8, err error) {    
+func (device *MasterBrick) GetChibiAddress() (address uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiAddress), buf.Bytes())
@@ -836,7 +837,7 @@ func (device *MasterBrick) GetChibiAddress() (address uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return address, BrickletError(header.ErrorCode)
@@ -846,17 +847,17 @@ func (device *MasterBrick) GetChibiAddress() (address uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &address)
 
     }
-    
+
     return address, nil
 }
 
 // Sets the address (1-255) of the Chibi Master. This address is used if the
-	// Chibi Extension is used as slave (i.e. it does not have a USB connection).
-	// 
-	// It is possible to set the address with the Brick Viewer and it will be
-	// saved in the EEPROM of the Chibi Extension, it does not
-	// have to be set on every startup.
-func (device *MasterBrick) SetChibiMasterAddress(address uint8) (err error) {    
+// Chibi Extension is used as slave (i.e. it does not have a USB connection).
+// 
+// It is possible to set the address with the Brick Viewer and it will be
+// saved in the EEPROM of the Chibi Extension, it does not
+// have to be set on every startup.
+func (device *MasterBrick) SetChibiMasterAddress(address uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, address);
 
@@ -866,7 +867,7 @@ func (device *MasterBrick) SetChibiMasterAddress(address uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -875,12 +876,12 @@ func (device *MasterBrick) SetChibiMasterAddress(address uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the address as set by SetChibiMasterAddress.
-func (device *MasterBrick) GetChibiMasterAddress() (address uint8, err error) {    
+func (device *MasterBrick) GetChibiMasterAddress() (address uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiMasterAddress), buf.Bytes())
@@ -889,7 +890,7 @@ func (device *MasterBrick) GetChibiMasterAddress() (address uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return address, BrickletError(header.ErrorCode)
@@ -899,26 +900,26 @@ func (device *MasterBrick) GetChibiMasterAddress() (address uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &address)
 
     }
-    
+
     return address, nil
 }
 
 // Sets up to 254 slave addresses. Valid addresses are in range 1-255. 0 has a
-	// special meaning, it is used as list terminator and not allowed as normal slave
-	// address. The address numeration (via \c num parameter) has to be used
-	// ascending from 0. For example: If you use the Chibi Extension in Master mode
-	// (i.e. the stack has an USB connection) and you want to talk to three other
-	// Chibi stacks with the slave addresses 17, 23, and 42, you should call with
-	// ``(0, 17)``, ``(1, 23)``, ``(2, 42)`` and ``(3, 0)``. The last call with
-	// ``(3, 0)`` is a list terminator and indicates that the Chibi slave address
-	// list contains 3 addresses in this case.
-	// 
-	// It is possible to set the addresses with the Brick Viewer, that will take care
-	// of correct address numeration and list termination.
-	// 
-	// The slave addresses will be saved in the EEPROM of the Chibi Extension, they
-	// don't have to be set on every startup.
-func (device *MasterBrick) SetChibiSlaveAddress(num uint8, address uint8) (err error) {    
+// special meaning, it is used as list terminator and not allowed as normal slave
+// address. The address numeration (via \c num parameter) has to be used
+// ascending from 0. For example: If you use the Chibi Extension in Master mode
+// (i.e. the stack has an USB connection) and you want to talk to three other
+// Chibi stacks with the slave addresses 17, 23, and 42, you should call with
+// ``(0, 17)``, ``(1, 23)``, ``(2, 42)`` and ``(3, 0)``. The last call with
+// ``(3, 0)`` is a list terminator and indicates that the Chibi slave address
+// list contains 3 addresses in this case.
+// 
+// It is possible to set the addresses with the Brick Viewer, that will take care
+// of correct address numeration and list termination.
+// 
+// The slave addresses will be saved in the EEPROM of the Chibi Extension, they
+// don't have to be set on every startup.
+func (device *MasterBrick) SetChibiSlaveAddress(num uint8, address uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, num);
 	binary.Write(&buf, binary.LittleEndian, address);
@@ -929,7 +930,7 @@ func (device *MasterBrick) SetChibiSlaveAddress(num uint8, address uint8) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -938,13 +939,13 @@ func (device *MasterBrick) SetChibiSlaveAddress(num uint8, address uint8) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the slave address for a given \c num as set by
-	// SetChibiSlaveAddress.
-func (device *MasterBrick) GetChibiSlaveAddress(num uint8) (address uint8, err error) {    
+// SetChibiSlaveAddress.
+func (device *MasterBrick) GetChibiSlaveAddress(num uint8) (address uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, num);
 
@@ -954,7 +955,7 @@ func (device *MasterBrick) GetChibiSlaveAddress(num uint8) (address uint8, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return address, BrickletError(header.ErrorCode)
@@ -964,13 +965,13 @@ func (device *MasterBrick) GetChibiSlaveAddress(num uint8) (address uint8, err e
         binary.Read(resultBuf, binary.LittleEndian, &address)
 
     }
-    
+
     return address, nil
 }
 
 // Returns the signal strength in dBm. The signal strength updates every time a
-	// packet is received.
-func (device *MasterBrick) GetChibiSignalStrength() (signalStrength uint8, err error) {    
+// packet is received.
+func (device *MasterBrick) GetChibiSignalStrength() (signalStrength uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiSignalStrength), buf.Bytes())
@@ -979,7 +980,7 @@ func (device *MasterBrick) GetChibiSignalStrength() (signalStrength uint8, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return signalStrength, BrickletError(header.ErrorCode)
@@ -989,15 +990,15 @@ func (device *MasterBrick) GetChibiSignalStrength() (signalStrength uint8, err e
         binary.Read(resultBuf, binary.LittleEndian, &signalStrength)
 
     }
-    
+
     return signalStrength, nil
 }
 
 // Returns underrun, CRC error, no ACK and overflow error counts of the Chibi
-	// communication. If these errors start rising, it is likely that either the
-	// distance between two Chibi stacks is becoming too big or there are
-	// interferences.
-func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16, noAck uint16, overflow uint16, err error) {    
+// communication. If these errors start rising, it is likely that either the
+// distance between two Chibi stacks is becoming too big or there are
+// interferences.
+func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16, noAck uint16, overflow uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiErrorLog), buf.Bytes())
@@ -1006,7 +1007,7 @@ func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return underrun, crcError, noAck, overflow, BrickletError(header.ErrorCode)
@@ -1019,22 +1020,22 @@ func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16,
 	binary.Read(resultBuf, binary.LittleEndian, &overflow)
 
     }
-    
+
     return underrun, crcError, noAck, overflow, nil
 }
 
 // Sets the Chibi frequency range for the Chibi Extension. Possible values are:
-	// 
-	//  Type| Description
-	//  --- | --- 
-	//  0|    OQPSK 868MHz (Europe)
-	//  1|    OQPSK 915MHz (US)
-	//  2|    OQPSK 780MHz (China)
-	//  3|    BPSK40 915MHz
-	// 
-	// It is possible to set the frequency with the Brick Viewer and it will be
-	// saved in the EEPROM of the Chibi Extension, it does not
-	// have to be set on every startup.
+// 
+//  Type| Description
+//  --- | --- 
+//  0|    OQPSK 868MHz (Europe)
+//  1|    OQPSK 915MHz (US)
+//  2|    OQPSK 780MHz (China)
+//  3|    BPSK40 915MHz
+// 
+// It is possible to set the frequency with the Brick Viewer and it will be
+// saved in the EEPROM of the Chibi Extension, it does not
+// have to be set on every startup.
 //
 // Associated constants:
 //
@@ -1042,7 +1043,7 @@ func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16,
 //	* ChibiFrequencyOQPSK915MHz
 //	* ChibiFrequencyOQPSK780MHz
 //	* ChibiFrequencyBPSK40915MHz
-func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err error) {    
+func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, frequency);
 
@@ -1052,7 +1053,7 @@ func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1061,7 +1062,7 @@ func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1073,7 +1074,7 @@ func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err erro
 //	* ChibiFrequencyOQPSK915MHz
 //	* ChibiFrequencyOQPSK780MHz
 //	* ChibiFrequencyBPSK40915MHz
-func (device *MasterBrick) GetChibiFrequency() (frequency ChibiFrequency, err error) {    
+func (device *MasterBrick) GetChibiFrequency() (frequency ChibiFrequency, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiFrequency), buf.Bytes())
@@ -1082,7 +1083,7 @@ func (device *MasterBrick) GetChibiFrequency() (frequency ChibiFrequency, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return frequency, BrickletError(header.ErrorCode)
@@ -1092,24 +1093,24 @@ func (device *MasterBrick) GetChibiFrequency() (frequency ChibiFrequency, err er
         binary.Read(resultBuf, binary.LittleEndian, &frequency)
 
     }
-    
+
     return frequency, nil
 }
 
 // Sets the channel used by the Chibi Extension. Possible channels are
-	// different for different frequencies:
-	// 
-	//  Frequency|             Possible Channels
-	//  --- | --- 
-	//  OQPSK 868MHz (Europe)| 0
-	//  OQPSK 915MHz (US)|     1| 2| 3| 4| 5| 6| 7| 8| 9| 10
-	//  OQPSK 780MHz (China)|  0| 1| 2| 3
-	//  BPSK40 915MHz|         1| 2| 3| 4| 5| 6| 7| 8| 9| 10
-	// 
-	// It is possible to set the channel with the Brick Viewer and it will be
-	// saved in the EEPROM of the Chibi Extension, it does not
-	// have to be set on every startup.
-func (device *MasterBrick) SetChibiChannel(channel uint8) (err error) {    
+// different for different frequencies:
+// 
+//  Frequency|             Possible Channels
+//  --- | --- 
+//  OQPSK 868MHz (Europe)| 0
+//  OQPSK 915MHz (US)|     1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+//  OQPSK 780MHz (China)|  0| 1| 2| 3
+//  BPSK40 915MHz|         1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+// 
+// It is possible to set the channel with the Brick Viewer and it will be
+// saved in the EEPROM of the Chibi Extension, it does not
+// have to be set on every startup.
+func (device *MasterBrick) SetChibiChannel(channel uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -1119,7 +1120,7 @@ func (device *MasterBrick) SetChibiChannel(channel uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1128,12 +1129,12 @@ func (device *MasterBrick) SetChibiChannel(channel uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the channel as set by SetChibiChannel.
-func (device *MasterBrick) GetChibiChannel() (channel uint8, err error) {    
+func (device *MasterBrick) GetChibiChannel() (channel uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChibiChannel), buf.Bytes())
@@ -1142,7 +1143,7 @@ func (device *MasterBrick) GetChibiChannel() (channel uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return channel, BrickletError(header.ErrorCode)
@@ -1152,12 +1153,13 @@ func (device *MasterBrick) GetChibiChannel() (channel uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &channel)
 
     }
-    
+
     return channel, nil
 }
 
-// Returns *true* if a RS485 Extension is available to be used by the Master Brick.
-func (device *MasterBrick) IsRS485Present() (present bool, err error) {    
+// Returns *true* if the Master Brick is at position 0 in the stack and a RS485
+// Extension is available.
+func (device *MasterBrick) IsRS485Present() (present bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsRS485Present), buf.Bytes())
@@ -1166,7 +1168,7 @@ func (device *MasterBrick) IsRS485Present() (present bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return present, BrickletError(header.ErrorCode)
@@ -1176,19 +1178,19 @@ func (device *MasterBrick) IsRS485Present() (present bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &present)
 
     }
-    
+
     return present, nil
 }
 
 // Sets the address (0-255) belonging to the RS485 Extension.
-	// 
-	// Set to 0 if the RS485 Extension should be the RS485 Master (i.e.
-	// connected to a PC via USB).
-	// 
-	// It is possible to set the address with the Brick Viewer and it will be
-	// saved in the EEPROM of the RS485 Extension, it does not
-	// have to be set on every startup.
-func (device *MasterBrick) SetRS485Address(address uint8) (err error) {    
+// 
+// Set to 0 if the RS485 Extension should be the RS485 Master (i.e.
+// connected to a PC via USB).
+// 
+// It is possible to set the address with the Brick Viewer and it will be
+// saved in the EEPROM of the RS485 Extension, it does not
+// have to be set on every startup.
+func (device *MasterBrick) SetRS485Address(address uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, address);
 
@@ -1198,7 +1200,7 @@ func (device *MasterBrick) SetRS485Address(address uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1207,12 +1209,12 @@ func (device *MasterBrick) SetRS485Address(address uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the address as set by SetRS485Address.
-func (device *MasterBrick) GetRS485Address() (address uint8, err error) {    
+func (device *MasterBrick) GetRS485Address() (address uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetRS485Address), buf.Bytes())
@@ -1221,7 +1223,7 @@ func (device *MasterBrick) GetRS485Address() (address uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return address, BrickletError(header.ErrorCode)
@@ -1231,26 +1233,26 @@ func (device *MasterBrick) GetRS485Address() (address uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &address)
 
     }
-    
+
     return address, nil
 }
 
 // Sets up to 255 slave addresses. Valid addresses are in range 1-255. 0 has a
-	// special meaning, it is used as list terminator and not allowed as normal slave
-	// address. The address numeration (via ``num`` parameter) has to be used
-	// ascending from 0. For example: If you use the RS485 Extension in Master mode
-	// (i.e. the stack has an USB connection) and you want to talk to three other
-	// RS485 stacks with the addresses 17, 23, and 42, you should call with
-	// ``(0, 17)``, ``(1, 23)``, ``(2, 42)`` and ``(3, 0)``. The last call with
-	// ``(3, 0)`` is a list terminator and indicates that the RS485 slave address list
-	// contains 3 addresses in this case.
-	// 
-	// It is possible to set the addresses with the Brick Viewer, that will take care
-	// of correct address numeration and list termination.
-	// 
-	// The slave addresses will be saved in the EEPROM of the Chibi Extension, they
-	// don't have to be set on every startup.
-func (device *MasterBrick) SetRS485SlaveAddress(num uint8, address uint8) (err error) {    
+// special meaning, it is used as list terminator and not allowed as normal slave
+// address. The address numeration (via ``num`` parameter) has to be used
+// ascending from 0. For example: If you use the RS485 Extension in Master mode
+// (i.e. the stack has an USB connection) and you want to talk to three other
+// RS485 stacks with the addresses 17, 23, and 42, you should call with
+// ``(0, 17)``, ``(1, 23)``, ``(2, 42)`` and ``(3, 0)``. The last call with
+// ``(3, 0)`` is a list terminator and indicates that the RS485 slave address list
+// contains 3 addresses in this case.
+// 
+// It is possible to set the addresses with the Brick Viewer, that will take care
+// of correct address numeration and list termination.
+// 
+// The slave addresses will be saved in the EEPROM of the Chibi Extension, they
+// don't have to be set on every startup.
+func (device *MasterBrick) SetRS485SlaveAddress(num uint8, address uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, num);
 	binary.Write(&buf, binary.LittleEndian, address);
@@ -1261,7 +1263,7 @@ func (device *MasterBrick) SetRS485SlaveAddress(num uint8, address uint8) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1270,13 +1272,13 @@ func (device *MasterBrick) SetRS485SlaveAddress(num uint8, address uint8) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the slave address for a given ``num`` as set by
-	// SetRS485SlaveAddress.
-func (device *MasterBrick) GetRS485SlaveAddress(num uint8) (address uint8, err error) {    
+// SetRS485SlaveAddress.
+func (device *MasterBrick) GetRS485SlaveAddress(num uint8) (address uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, num);
 
@@ -1286,7 +1288,7 @@ func (device *MasterBrick) GetRS485SlaveAddress(num uint8) (address uint8, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return address, BrickletError(header.ErrorCode)
@@ -1296,15 +1298,15 @@ func (device *MasterBrick) GetRS485SlaveAddress(num uint8) (address uint8, err e
         binary.Read(resultBuf, binary.LittleEndian, &address)
 
     }
-    
+
     return address, nil
 }
 
 // Returns CRC error counts of the RS485 communication.
-	// If this counter starts rising, it is likely that the distance
-	// between the RS485 nodes is too big or there is some kind of
-	// interference.
-func (device *MasterBrick) GetRS485ErrorLog() (crcError uint16, err error) {    
+// If this counter starts rising, it is likely that the distance
+// between the RS485 nodes is too big or there is some kind of
+// interference.
+func (device *MasterBrick) GetRS485ErrorLog() (crcError uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetRS485ErrorLog), buf.Bytes())
@@ -1313,7 +1315,7 @@ func (device *MasterBrick) GetRS485ErrorLog() (crcError uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return crcError, BrickletError(header.ErrorCode)
@@ -1323,29 +1325,29 @@ func (device *MasterBrick) GetRS485ErrorLog() (crcError uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &crcError)
 
     }
-    
+
     return crcError, nil
 }
 
 // Sets the configuration of the RS485 Extension. Speed is given in baud. The
-	// Master Brick will try to match the given baud rate as exactly as possible.
-	// The maximum recommended baud rate is 2000000 (2Mbit/s).
-	// Possible values for parity are 'n' (none), 'e' (even) and 'o' (odd).
-	// Possible values for stop bits are 1 and 2.
-	// 
-	// If your RS485 is unstable (lost messages etc.), the first thing you should
-	// try is to decrease the speed. On very large bus (e.g. 1km), you probably
-	// should use a value in the range of 100000 (100kbit/s).
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
+// Master Brick will try to match the given baud rate as exactly as possible.
+// The maximum recommended baud rate is 2000000 (2Mbit/s).
+// Possible values for parity are 'n' (none), 'e' (even) and 'o' (odd).
+// Possible values for stop bits are 1 and 2.
+// 
+// If your RS485 is unstable (lost messages etc.), the first thing you should
+// try is to decrease the speed. On very large bus (e.g. 1km), you probably
+// should use a value in the range of 100000 (100kbit/s).
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
 //
 // Associated constants:
 //
 //	* RS485ParityNone
 //	* RS485ParityEven
 //	* RS485ParityOdd
-func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parity, stopbits uint8) (err error) {    
+func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parity, stopbits uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, speed);
 	binary.Write(&buf, binary.LittleEndian, parity);
@@ -1357,7 +1359,7 @@ func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parit
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1366,7 +1368,7 @@ func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parit
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1377,7 +1379,7 @@ func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parit
 //	* RS485ParityNone
 //	* RS485ParityEven
 //	* RS485ParityOdd
-func (device *MasterBrick) GetRS485Configuration() (speed uint32, parity RS485Parity, stopbits uint8, err error) {    
+func (device *MasterBrick) GetRS485Configuration() (speed uint32, parity RS485Parity, stopbits uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetRS485Configuration), buf.Bytes())
@@ -1386,7 +1388,7 @@ func (device *MasterBrick) GetRS485Configuration() (speed uint32, parity RS485Pa
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return speed, parity, stopbits, BrickletError(header.ErrorCode)
@@ -1398,12 +1400,13 @@ func (device *MasterBrick) GetRS485Configuration() (speed uint32, parity RS485Pa
 	binary.Read(resultBuf, binary.LittleEndian, &stopbits)
 
     }
-    
+
     return speed, parity, stopbits, nil
 }
 
-// Returns *true* if a WIFI Extension is available to be used by the Master Brick.
-func (device *MasterBrick) IsWifiPresent() (present bool, err error) {    
+// Returns *true* if the Master Brick is at position 0 in the stack and a WIFI
+// Extension is available.
+func (device *MasterBrick) IsWifiPresent() (present bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsWifiPresent), buf.Bytes())
@@ -1412,7 +1415,7 @@ func (device *MasterBrick) IsWifiPresent() (present bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return present, BrickletError(header.ErrorCode)
@@ -1422,35 +1425,35 @@ func (device *MasterBrick) IsWifiPresent() (present bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &present)
 
     }
-    
+
     return present, nil
 }
 
 // Sets the configuration of the WIFI Extension. The ``ssid`` can have a max length
-	// of 32 characters. Possible values for ``connection`` are:
-	// 
-	//  Value| Description
-	//  --- | --- 
-	//  0| DHCP
-	//  1| Static IP
-	//  2| Access Point: DHCP
-	//  3| Access Point: Static IP
-	//  4| Ad Hoc: DHCP
-	//  5| Ad Hoc: Static IP
-	// 
-	// If you set ``connection`` to one of the static IP options then you have to
-	// supply ``ip``, ``subnet_mask`` and ``gateway`` as an array of size 4 (first
-	// element of the array is the least significant byte of the address). If
-	// ``connection`` is set to one of the DHCP options then ``ip``, ``subnet_mask``
-	// and ``gateway`` are ignored, you can set them to 0.
-	// 
-	// The last parameter is the port that your program will connect to. The
-	// default port, that is used by brickd, is 4223.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the WIFI configuration.
+// of 32 characters. Possible values for ``connection`` are:
+// 
+//  Value| Description
+//  --- | --- 
+//  0| DHCP
+//  1| Static IP
+//  2| Access Point: DHCP
+//  3| Access Point: Static IP
+//  4| Ad Hoc: DHCP
+//  5| Ad Hoc: Static IP
+// 
+// If you set ``connection`` to one of the static IP options then you have to
+// supply ``ip``, ``subnet_mask`` and ``gateway`` as an array of size 4 (first
+// element of the array is the least significant byte of the address). If
+// ``connection`` is set to one of the DHCP options then ``ip``, ``subnet_mask``
+// and ``gateway`` are ignored, you can set them to 0.
+// 
+// The last parameter is the port that your program will connect to. The
+// default port, that is used by brickd, is 4223.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the WIFI configuration.
 //
 // Associated constants:
 //
@@ -1460,7 +1463,7 @@ func (device *MasterBrick) IsWifiPresent() (present bool, err error) {
 //	* WifiConnectionAccessPointStaticIP
 //	* WifiConnectionAdHocDHCP
 //	* WifiConnectionAdHocStaticIP
-func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16) (err error) {    
+func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16) (err error) {
         var buf bytes.Buffer
     ssid_byte_slice, err := StringToByteSlice(ssid, 32)
 	if err != nil { return }
@@ -1477,7 +1480,7 @@ func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConn
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1486,7 +1489,7 @@ func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConn
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1500,7 +1503,7 @@ func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConn
 //	* WifiConnectionAccessPointStaticIP
 //	* WifiConnectionAdHocDHCP
 //	* WifiConnectionAdHocStaticIP
-func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16, err error) {    
+func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiConfiguration), buf.Bytes())
@@ -1509,7 +1512,7 @@ func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiC
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ssid, connection, ip, subnetMask, gateway, port, BrickletError(header.ErrorCode)
@@ -1524,49 +1527,49 @@ func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiC
 	binary.Read(resultBuf, binary.LittleEndian, &port)
 
     }
-    
+
     return ssid, connection, ip, subnetMask, gateway, port, nil
 }
 
 // Sets the encryption of the WIFI Extension. The first parameter is the
-	// type of the encryption. Possible values are:
-	// 
-	//  Value| Description
-	//  --- | --- 
-	//  0| WPA/WPA2
-	//  1| WPA Enterprise (EAP-FAST| EAP-TLS| EAP-TTLS| PEAP)
-	//  2| WEP
-	//  3| No Encryption
-	// 
-	// The ``key`` has a max length of 50 characters and is used if ``encryption``
-	// is set to 0 or 2 (WPA/WPA2 or WEP). Otherwise the value is ignored.
-	// 
-	// For WPA/WPA2 the key has to be at least 8 characters long. If you want to set
-	// a key with more than 50 characters, see SetLongWifiKey.
-	// 
-	// For WEP the key has to be either 10 or 26 hexadecimal digits long. It is
-	// possible to set the WEP ``key_index`` (1-4). If you don't know your
-	// ``key_index``, it is likely 1.
-	// 
-	// If you choose WPA Enterprise as encryption, you have to set ``eap_options`` and
-	// the length of the certificates (for other encryption types these parameters
-	// are ignored). The certificate length are given in byte and the certificates
-	// themselves can be set with SetWifiCertificate. ``eap_options`` consist
-	// of the outer authentication (bits 1-2), inner authentication (bit 3) and
-	// certificate type (bits 4-5):
-	// 
-	//  Option| Bits| Description
-	//  --- | --- | --- 
-	//  outer authentication| 1-2| 0=EAP-FAST| 1=EAP-TLS| 2=EAP-TTLS| 3=EAP-PEAP
-	//  inner authentication| 3| 0=EAP-MSCHAP| 1=EAP-GTC
-	//  certificate type| 4-5| 0=CA Certificate| 1=Client Certificate| 2=Private Key
-	// 
-	// Example for EAP-TTLS + EAP-GTC + Private Key: ``option = 2 | (1 << 2) | (2 << 3)``.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the Wi-Fi encryption.
+// type of the encryption. Possible values are:
+// 
+//  Value| Description
+//  --- | --- 
+//  0| WPA/WPA2
+//  1| WPA Enterprise (EAP-FAST| EAP-TLS| EAP-TTLS| PEAP)
+//  2| WEP
+//  3| No Encryption
+// 
+// The ``key`` has a max length of 50 characters and is used if ``encryption``
+// is set to 0 or 2 (WPA/WPA2 or WEP). Otherwise the value is ignored.
+// 
+// For WPA/WPA2 the key has to be at least 8 characters long. If you want to set
+// a key with more than 50 characters, see SetLongWifiKey.
+// 
+// For WEP the key has to be either 10 or 26 hexadecimal digits long. It is
+// possible to set the WEP ``key_index`` (1-4). If you don't know your
+// ``key_index``, it is likely 1.
+// 
+// If you choose WPA Enterprise as encryption, you have to set ``eap_options`` and
+// the length of the certificates (for other encryption types these parameters
+// are ignored). The certificate length are given in byte and the certificates
+// themselves can be set with SetWifiCertificate. ``eap_options`` consist
+// of the outer authentication (bits 1-2), inner authentication (bit 3) and
+// certificate type (bits 4-5):
+// 
+//  Option| Bits| Description
+//  --- | --- | --- 
+//  outer authentication| 1-2| 0=EAP-FAST| 1=EAP-TLS| 2=EAP-TTLS| 3=EAP-PEAP
+//  inner authentication| 3| 0=EAP-MSCHAP| 1=EAP-GTC
+//  certificate type| 4-5| 0=CA Certificate| 1=Client Certificate| 2=Private Key
+// 
+// Example for EAP-TTLS + EAP-GTC + Private Key: ``option = 2 | (1 << 2) | (2 << 3)``.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the Wi-Fi encryption.
 //
 // Associated constants:
 //
@@ -1583,7 +1586,7 @@ func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiC
 //	* WifiEAPOptionCertTypeCACert
 //	* WifiEAPOptionCertTypeClientCert
 //	* WifiEAPOptionCertTypePrivateKey
-func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key string, keyIndex uint8, eapOptions WifiEAPOption, caCertificateLength uint16, clientCertificateLength uint16, privateKeyLength uint16) (err error) {    
+func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key string, keyIndex uint8, eapOptions WifiEAPOption, caCertificateLength uint16, clientCertificateLength uint16, privateKeyLength uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, encryption);
 	key_byte_slice, err := StringToByteSlice(key, 50)
@@ -1601,7 +1604,7 @@ func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key stri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1610,14 +1613,14 @@ func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key stri
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the encryption as set by SetWifiEncryption.
-	// 
-	// Note
-	//  Since Master Brick Firmware version 2.4.4 the key is not returned anymore.
+// 
+// Note
+//  Since Master Brick Firmware version 2.4.4 the key is not returned anymore.
 //
 // Associated constants:
 //
@@ -1634,7 +1637,7 @@ func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key stri
 //	* WifiEAPOptionCertTypeCACert
 //	* WifiEAPOptionCertTypeClientCert
 //	* WifiEAPOptionCertTypePrivateKey
-func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key string, keyIndex uint8, eapOptions WifiEAPOption, caCertificateLength uint16, clientCertificateLength uint16, privateKeyLength uint16, err error) {    
+func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key string, keyIndex uint8, eapOptions WifiEAPOption, caCertificateLength uint16, clientCertificateLength uint16, privateKeyLength uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiEncryption), buf.Bytes())
@@ -1643,7 +1646,7 @@ func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key s
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, BrickletError(header.ErrorCode)
@@ -1659,23 +1662,23 @@ func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key s
 	binary.Read(resultBuf, binary.LittleEndian, &privateKeyLength)
 
     }
-    
+
     return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, nil
 }
 
 // Returns the status of the WIFI Extension. The ``state`` is updated automatically,
-	// all of the other parameters are updated on startup and every time
-	// RefreshWifiStatus is called.
-	// 
-	// Possible states are:
-	// 
-	//  State| Description
-	//  --- | --- 
-	//  0| Disassociated
-	//  1| Associated
-	//  2| Associating
-	//  3| Error
-	//  255| Not initialized yet
+// all of the other parameters are updated on startup and every time
+// RefreshWifiStatus is called.
+// 
+// Possible states are:
+// 
+//  State| Description
+//  --- | --- 
+//  0| Disassociated
+//  1| Associated
+//  2| Associating
+//  3| Error
+//  255| Not initialized yet
 //
 // Associated constants:
 //
@@ -1684,7 +1687,7 @@ func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key s
 //	* WifiStateAssociating
 //	* WifiStateError
 //	* WifiStateNotInitializedYet
-func (device *MasterBrick) GetWifiStatus() (macAddress [6]uint8, bssid [6]uint8, channel uint8, rssi int16, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, rxCount uint32, txCount uint32, state WifiState, err error) {    
+func (device *MasterBrick) GetWifiStatus() (macAddress [6]uint8, bssid [6]uint8, channel uint8, rssi int16, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, rxCount uint32, txCount uint32, state WifiState, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiStatus), buf.Bytes())
@@ -1693,7 +1696,7 @@ func (device *MasterBrick) GetWifiStatus() (macAddress [6]uint8, bssid [6]uint8,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, BrickletError(header.ErrorCode)
@@ -1712,17 +1715,17 @@ func (device *MasterBrick) GetWifiStatus() (macAddress [6]uint8, bssid [6]uint8,
 	binary.Read(resultBuf, binary.LittleEndian, &state)
 
     }
-    
+
     return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, nil
 }
 
 // Refreshes the Wi-Fi status (see GetWifiStatus). To read the status
-	// of the Wi-Fi module, the Master Brick has to change from data mode to
-	// command mode and back. This transaction and the readout itself is
-	// unfortunately time consuming. This means, that it might take some ms
-	// until the stack with attached WIFI Extension reacts again after this
-	// function is called.
-func (device *MasterBrick) RefreshWifiStatus() (err error) {    
+// of the Wi-Fi module, the Master Brick has to change from data mode to
+// command mode and back. This transaction and the readout itself is
+// unfortunately time consuming. This means, that it might take some ms
+// until the stack with attached WIFI Extension reacts again after this
+// function is called.
+func (device *MasterBrick) RefreshWifiStatus() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionRefreshWifiStatus), buf.Bytes())
@@ -1731,7 +1734,7 @@ func (device *MasterBrick) RefreshWifiStatus() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1740,29 +1743,29 @@ func (device *MasterBrick) RefreshWifiStatus() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // This function is used to set the certificate as well as password and username
-	// for WPA Enterprise. To set the username use index 0xFFFF,
-	// to set the password use index 0xFFFE. The max length of username and
-	// password is 32.
-	// 
-	// The certificate is written in chunks of size 32 and the index is used as
-	// the index of the chunk. ``data_length`` should nearly always be 32. Only
-	// the last chunk can have a length that is not equal to 32.
-	// 
-	// The starting index of the CA Certificate is 0, of the Client Certificate
-	// 10000 and for the Private Key 20000. Maximum sizes are 1312, 1312 and
-	// 4320 byte respectively.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after uploading the certificate.
-	// 
-	// It is recommended to use the Brick Viewer to set the certificate, username
-	// and password.
-func (device *MasterBrick) SetWifiCertificate(index uint16, data [32]uint8, dataLength uint8) (err error) {    
+// for WPA Enterprise. To set the username use index 0xFFFF,
+// to set the password use index 0xFFFE. The max length of username and
+// password is 32.
+// 
+// The certificate is written in chunks of size 32 and the index is used as
+// the index of the chunk. ``data_length`` should nearly always be 32. Only
+// the last chunk can have a length that is not equal to 32.
+// 
+// The starting index of the CA Certificate is 0, of the Client Certificate
+// 10000 and for the Private Key 20000. Maximum sizes are 1312, 1312 and
+// 4320 byte respectively.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after uploading the certificate.
+// 
+// It is recommended to use the Brick Viewer to set the certificate, username
+// and password.
+func (device *MasterBrick) SetWifiCertificate(index uint16, data [32]uint8, dataLength uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, data);
@@ -1774,7 +1777,7 @@ func (device *MasterBrick) SetWifiCertificate(index uint16, data [32]uint8, data
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1783,12 +1786,12 @@ func (device *MasterBrick) SetWifiCertificate(index uint16, data [32]uint8, data
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the certificate for a given index as set by SetWifiCertificate.
-func (device *MasterBrick) GetWifiCertificate(index uint16) (data [32]uint8, dataLength uint8, err error) {    
+func (device *MasterBrick) GetWifiCertificate(index uint16) (data [32]uint8, dataLength uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1798,7 +1801,7 @@ func (device *MasterBrick) GetWifiCertificate(index uint16) (data [32]uint8, dat
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return data, dataLength, BrickletError(header.ErrorCode)
@@ -1809,24 +1812,24 @@ func (device *MasterBrick) GetWifiCertificate(index uint16) (data [32]uint8, dat
 	binary.Read(resultBuf, binary.LittleEndian, &dataLength)
 
     }
-    
+
     return data, dataLength, nil
 }
 
 // Sets the power mode of the WIFI Extension. Possible modes are:
-	// 
-	//  Mode| Description
-	//  --- | --- 
-	//  0| Full Speed (high power consumption| high throughput)
-	//  1| Low Power (low power consumption| low throughput)
-	// 
-	// The default value is 0 (Full Speed).
+// 
+//  Mode| Description
+//  --- | --- 
+//  0| Full Speed (high power consumption| high throughput)
+//  1| Low Power (low power consumption| low throughput)
+// 
+// The default value is 0 (Full Speed).
 //
 // Associated constants:
 //
 //	* WifiPowerModeFullSpeed
 //	* WifiPowerModeLowPower
-func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {    
+func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -1836,7 +1839,7 @@ func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1845,7 +1848,7 @@ func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1855,7 +1858,7 @@ func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {
 //
 //	* WifiPowerModeFullSpeed
 //	* WifiPowerModeLowPower
-func (device *MasterBrick) GetWifiPowerMode() (mode WifiPowerMode, err error) {    
+func (device *MasterBrick) GetWifiPowerMode() (mode WifiPowerMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiPowerMode), buf.Bytes())
@@ -1864,7 +1867,7 @@ func (device *MasterBrick) GetWifiPowerMode() (mode WifiPowerMode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1874,25 +1877,25 @@ func (device *MasterBrick) GetWifiPowerMode() (mode WifiPowerMode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Returns informations about the Wi-Fi receive buffer. The Wi-Fi
-	// receive buffer has a max size of 1500 byte and if data is transfered
-	// too fast, it might overflow.
-	// 
-	// The return values are the number of overflows, the low watermark
-	// (i.e. the smallest number of bytes that were free in the buffer) and
-	// the bytes that are currently used.
-	// 
-	// You should always try to keep the buffer empty, otherwise you will
-	// have a permanent latency. A good rule of thumb is, that you can transfer
-	// 1000 messages per second without problems.
-	// 
-	// Try to not send more then 50 messages at a time without any kind of
-	// break between them.
-func (device *MasterBrick) GetWifiBufferInfo() (overflow uint32, lowWatermark uint16, used uint16, err error) {    
+// receive buffer has a max size of 1500 byte and if data is transfered
+// too fast, it might overflow.
+// 
+// The return values are the number of overflows, the low watermark
+// (i.e. the smallest number of bytes that were free in the buffer) and
+// the bytes that are currently used.
+// 
+// You should always try to keep the buffer empty, otherwise you will
+// have a permanent latency. A good rule of thumb is, that you can transfer
+// 1000 messages per second without problems.
+// 
+// Try to not send more then 50 messages at a time without any kind of
+// break between them.
+func (device *MasterBrick) GetWifiBufferInfo() (overflow uint32, lowWatermark uint16, used uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiBufferInfo), buf.Bytes())
@@ -1901,7 +1904,7 @@ func (device *MasterBrick) GetWifiBufferInfo() (overflow uint32, lowWatermark ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return overflow, lowWatermark, used, BrickletError(header.ErrorCode)
@@ -1913,26 +1916,26 @@ func (device *MasterBrick) GetWifiBufferInfo() (overflow uint32, lowWatermark ui
 	binary.Read(resultBuf, binary.LittleEndian, &used)
 
     }
-    
+
     return overflow, lowWatermark, used, nil
 }
 
 // Sets the regulatory domain of the WIFI Extension. Possible domains are:
-	// 
-	//  Domain| Description
-	//  --- | --- 
-	//  0| FCC: Channel 1-11 (N/S America| Australia| New Zealand)
-	//  1| ETSI: Channel 1-13 (Europe| Middle East| Africa)
-	//  2| TELEC: Channel 1-14 (Japan)
-	// 
-	// The default value is 1 (ETSI).
+// 
+//  Domain| Description
+//  --- | --- 
+//  0| FCC: Channel 1-11 (N/S America| Australia| New Zealand)
+//  1| ETSI: Channel 1-13 (Europe| Middle East| Africa)
+//  2| TELEC: Channel 1-14 (Japan)
+// 
+// The default value is 1 (ETSI).
 //
 // Associated constants:
 //
 //	* WifiDomainChannel1To11
 //	* WifiDomainChannel1To13
 //	* WifiDomainChannel1To14
-func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error) {    
+func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, domain);
 
@@ -1942,7 +1945,7 @@ func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1951,7 +1954,7 @@ func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1962,7 +1965,7 @@ func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error
 //	* WifiDomainChannel1To11
 //	* WifiDomainChannel1To13
 //	* WifiDomainChannel1To14
-func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err error) {    
+func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiRegulatoryDomain), buf.Bytes())
@@ -1971,7 +1974,7 @@ func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return domain, BrickletError(header.ErrorCode)
@@ -1981,12 +1984,12 @@ func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err err
         binary.Read(resultBuf, binary.LittleEndian, &domain)
 
     }
-    
+
     return domain, nil
 }
 
 // Returns the USB voltage in mV. Does not work with hardware version 2.1.
-func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {    
+func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUSBVoltage), buf.Bytes())
@@ -1995,7 +1998,7 @@ func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -2005,20 +2008,20 @@ func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets a long Wi-Fi key (up to 63 chars, at least 8 chars) for WPA encryption.
-	// This key will be used
-	// if the key in SetWifiEncryption is set to -. In the old protocol,
-	// a payload of size 63 was not possible, so the maximum key length was 50 chars.
-	// 
-	// With the new protocol this is possible, since we didn't want to break API,
-	// this function was added additionally.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Firmware)
-func (device *MasterBrick) SetLongWifiKey(key string) (err error) {    
+// This key will be used
+// if the key in SetWifiEncryption is set to -. In the old protocol,
+// a payload of size 63 was not possible, so the maximum key length was 50 chars.
+// 
+// With the new protocol this is possible, since we didn't want to break API,
+// this function was added additionally.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Firmware)
+func (device *MasterBrick) SetLongWifiKey(key string) (err error) {
         var buf bytes.Buffer
     key_byte_slice, err := StringToByteSlice(key, 64)
 	if err != nil { return }
@@ -2030,7 +2033,7 @@ func (device *MasterBrick) SetLongWifiKey(key string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2039,17 +2042,17 @@ func (device *MasterBrick) SetLongWifiKey(key string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the encryption key as set by SetLongWifiKey.
-	// 
-	// Note
-	//  Since Master Brick firmware version 2.4.4 the key is not returned anymore.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Firmware)
-func (device *MasterBrick) GetLongWifiKey() (key string, err error) {    
+// 
+// Note
+//  Since Master Brick firmware version 2.4.4 the key is not returned anymore.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Firmware)
+func (device *MasterBrick) GetLongWifiKey() (key string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetLongWifiKey), buf.Bytes())
@@ -2058,7 +2061,7 @@ func (device *MasterBrick) GetLongWifiKey() (key string, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return key, BrickletError(header.ErrorCode)
@@ -2068,17 +2071,17 @@ func (device *MasterBrick) GetLongWifiKey() (key string, err error) {
         key = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return key, nil
 }
 
 // Sets the hostname of the WIFI Extension. The hostname will be displayed
-	// by access points as the hostname in the DHCP clients table.
-	// 
-	// Setting an empty String will restore the default hostname.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) SetWifiHostname(hostname string) (err error) {    
+// by access points as the hostname in the DHCP clients table.
+// 
+// Setting an empty String will restore the default hostname.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) SetWifiHostname(hostname string) (err error) {
         var buf bytes.Buffer
     hostname_byte_slice, err := StringToByteSlice(hostname, 16)
 	if err != nil { return }
@@ -2090,7 +2093,7 @@ func (device *MasterBrick) SetWifiHostname(hostname string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2099,16 +2102,16 @@ func (device *MasterBrick) SetWifiHostname(hostname string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the hostname as set by SetWifiHostname.
-	// 
-	// An empty String means, that the default hostname is used.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {    
+// 
+// An empty String means, that the default hostname is used.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiHostname), buf.Bytes())
@@ -2117,7 +2120,7 @@ func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return hostname, BrickletError(header.ErrorCode)
@@ -2127,20 +2130,20 @@ func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {
         hostname = ByteSliceToString(resultBuf.Next(16))
 
     }
-    
+
     return hostname, nil
 }
 
 // Sets the period in ms with which the RegisterStackCurrentCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterStackCurrentCallback callback is only triggered if the current has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterStackCurrentCallback callback is only triggered if the current has changed
+// since the last triggering.
+// 
+// The default value is 0.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -2150,7 +2153,7 @@ func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2159,14 +2162,14 @@ func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetStackCurrentCallbackPeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err error) {    
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackCurrentCallbackPeriod), buf.Bytes())
@@ -2175,7 +2178,7 @@ func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -2185,20 +2188,20 @@ func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err e
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterStackVoltageCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterStackVoltageCallback callback is only triggered if the voltage has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterStackVoltageCallback callback is only triggered if the voltage has changed
+// since the last triggering.
+// 
+// The default value is 0.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -2208,7 +2211,7 @@ func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2217,14 +2220,14 @@ func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetStackVoltageCallbackPeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err error) {    
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackVoltageCallbackPeriod), buf.Bytes())
@@ -2233,7 +2236,7 @@ func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -2243,20 +2246,20 @@ func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err e
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterUSBVoltageCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterUSBVoltageCallback callback is only triggered if the voltage has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterUSBVoltageCallback callback is only triggered if the voltage has changed
+// since the last triggering.
+// 
+// The default value is 0.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -2266,7 +2269,7 @@ func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2275,14 +2278,14 @@ func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetUSBVoltageCallbackPeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err error) {    
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUSBVoltageCallbackPeriod), buf.Bytes())
@@ -2291,7 +2294,7 @@ func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -2301,25 +2304,25 @@ func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err err
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterStackCurrentReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the current is *outside* the min and max values
-	//  'i'|    Callback is triggered when the current is *inside* the min and max values
-	//  '<'|    Callback is triggered when the current is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the current is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the current is *outside* the min and max values
+//  'i'|    Callback is triggered when the current is *inside* the min and max values
+//  '<'|    Callback is triggered when the current is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the current is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2328,7 +2331,7 @@ func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err err
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -2340,7 +2343,7 @@ func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOpti
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2349,13 +2352,13 @@ func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOpti
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the threshold as set by SetStackCurrentCallbackThreshold.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2364,7 +2367,7 @@ func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOpti
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackCurrentCallbackThreshold), buf.Bytes())
@@ -2373,7 +2376,7 @@ func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdO
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -2385,25 +2388,25 @@ func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdO
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterStackVoltageReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the voltage is *outside* the min and max values
-	//  'i'|    Callback is triggered when the voltage is *inside* the min and max values
-	//  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the voltage is *outside* the min and max values
+//  'i'|    Callback is triggered when the voltage is *inside* the min and max values
+//  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2412,7 +2415,7 @@ func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdO
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -2424,7 +2427,7 @@ func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOpti
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2433,13 +2436,13 @@ func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOpti
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the threshold as set by SetStackVoltageCallbackThreshold.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2448,7 +2451,7 @@ func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOpti
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackVoltageCallbackThreshold), buf.Bytes())
@@ -2457,7 +2460,7 @@ func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdO
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -2469,25 +2472,25 @@ func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdO
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterUSBVoltageReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the voltage is *outside* the min and max values
-	//  'i'|    Callback is triggered when the voltage is *inside* the min and max values
-	//  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the voltage is *outside* the min and max values
+//  'i'|    Callback is triggered when the voltage is *inside* the min and max values
+//  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2496,7 +2499,7 @@ func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdO
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -2508,7 +2511,7 @@ func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2517,13 +2520,13 @@ func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the threshold as set by SetUSBVoltageCallbackThreshold.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -2532,7 +2535,7 @@ func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUSBVoltageCallbackThreshold), buf.Bytes())
@@ -2541,7 +2544,7 @@ func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOpt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -2553,28 +2556,28 @@ func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOpt
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterStackCurrentReachedCallback,
-	// * RegisterStackVoltageReachedCallback,
-	// * RegisterUSBVoltageReachedCallback
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetStackCurrentCallbackThreshold,
-	// * SetStackVoltageCallbackThreshold,
-	// * SetUSBVoltageCallbackThreshold
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterStackCurrentReachedCallback,
+// * RegisterStackVoltageReachedCallback,
+// * RegisterUSBVoltageReachedCallback
+// 
+// are triggered, if the thresholds
+// 
+// * SetStackCurrentCallbackThreshold,
+// * SetStackVoltageCallbackThreshold,
+// * SetUSBVoltageCallbackThreshold
+// 
+// keep being reached.
+// 
+// The default value is 100.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -2584,7 +2587,7 @@ func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2593,14 +2596,14 @@ func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *MasterBrick) GetDebouncePeriod() (debounce uint32, err error) {    
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *MasterBrick) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -2609,7 +2612,7 @@ func (device *MasterBrick) GetDebouncePeriod() (debounce uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -2619,15 +2622,15 @@ func (device *MasterBrick) GetDebouncePeriod() (debounce uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
-// Returns *true* if a Ethernet Extension is available to be used by the Master
-	// Brick.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
-func (device *MasterBrick) IsEthernetPresent() (present bool, err error) {    
+// Returns *true* if the Master Brick is at position 0 in the stack and an Ethernet
+// Extension is available.
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
+func (device *MasterBrick) IsEthernetPresent() (present bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsEthernetPresent), buf.Bytes())
@@ -2636,7 +2639,7 @@ func (device *MasterBrick) IsEthernetPresent() (present bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return present, BrickletError(header.ErrorCode)
@@ -2646,39 +2649,39 @@ func (device *MasterBrick) IsEthernetPresent() (present bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &present)
 
     }
-    
+
     return present, nil
 }
 
 // Sets the configuration of the Ethernet Extension. Possible values for
-	// ``connection`` are:
-	// 
-	//  Value| Description
-	//  --- | --- 
-	//  0| DHCP
-	//  1| Static IP
-	// 
-	// If you set ``connection`` to static IP options then you have to supply ``ip``,
-	// ``subnet_mask`` and ``gateway`` as an array of size 4 (first element of the
-	// array is the least significant byte of the address). If ``connection`` is set
-	// to the DHCP options then ``ip``, ``subnet_mask`` and ``gateway`` are ignored,
-	// you can set them to 0.
-	// 
-	// The last parameter is the port that your program will connect to. The
-	// default port, that is used by brickd, is 4223.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the Ethernet configuration.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
+// ``connection`` are:
+// 
+//  Value| Description
+//  --- | --- 
+//  0| DHCP
+//  1| Static IP
+// 
+// If you set ``connection`` to static IP options then you have to supply ``ip``,
+// ``subnet_mask`` and ``gateway`` as an array of size 4 (first element of the
+// array is the least significant byte of the address). If ``connection`` is set
+// to the DHCP options then ``ip``, ``subnet_mask`` and ``gateway`` are ignored,
+// you can set them to 0.
+// 
+// The last parameter is the port that your program will connect to. The
+// default port, that is used by brickd, is 4223.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the Ethernet configuration.
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
 //	* EthernetConnectionDHCP
 //	* EthernetConnectionStaticIP
-func (device *MasterBrick) SetEthernetConfiguration(connection EthernetConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16) (err error) {    
+func (device *MasterBrick) SetEthernetConfiguration(connection EthernetConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, connection);
 	binary.Write(&buf, binary.LittleEndian, ip);
@@ -2692,7 +2695,7 @@ func (device *MasterBrick) SetEthernetConfiguration(connection EthernetConnectio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2701,19 +2704,19 @@ func (device *MasterBrick) SetEthernetConfiguration(connection EthernetConnectio
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetEthernetConfiguration.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
 //	* EthernetConnectionDHCP
 //	* EthernetConnectionStaticIP
-func (device *MasterBrick) GetEthernetConfiguration() (connection EthernetConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16, err error) {    
+func (device *MasterBrick) GetEthernetConfiguration() (connection EthernetConnection, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, port uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEthernetConfiguration), buf.Bytes())
@@ -2722,7 +2725,7 @@ func (device *MasterBrick) GetEthernetConfiguration() (connection EthernetConnec
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return connection, ip, subnetMask, gateway, port, BrickletError(header.ErrorCode)
@@ -2736,22 +2739,22 @@ func (device *MasterBrick) GetEthernetConfiguration() (connection EthernetConnec
 	binary.Read(resultBuf, binary.LittleEndian, &port)
 
     }
-    
+
     return connection, ip, subnetMask, gateway, port, nil
 }
 
 // Returns the status of the Ethernet Extension.
-	// 
-	// ``mac_address``, ``ip``, ``subnet_mask`` and ``gateway`` are given as an array.
-	// The first element of the array is the least significant byte of the address.
-	// 
-	// ``rx_count`` and ``tx_count`` are the number of bytes that have been
-	// received/send since last restart.
-	// 
-	// ``hostname`` is the currently used hostname.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
-func (device *MasterBrick) GetEthernetStatus() (macAddress [6]uint8, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, rxCount uint32, txCount uint32, hostname string, err error) {    
+// 
+// ``mac_address``, ``ip``, ``subnet_mask`` and ``gateway`` are given as an array.
+// The first element of the array is the least significant byte of the address.
+// 
+// ``rx_count`` and ``tx_count`` are the number of bytes that have been
+// received/send since last restart.
+// 
+// ``hostname`` is the currently used hostname.
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
+func (device *MasterBrick) GetEthernetStatus() (macAddress [6]uint8, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, rxCount uint32, txCount uint32, hostname string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEthernetStatus), buf.Bytes())
@@ -2760,7 +2763,7 @@ func (device *MasterBrick) GetEthernetStatus() (macAddress [6]uint8, ip [4]uint8
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, BrickletError(header.ErrorCode)
@@ -2776,19 +2779,19 @@ func (device *MasterBrick) GetEthernetStatus() (macAddress [6]uint8, ip [4]uint8
 	hostname = ByteSliceToString(resultBuf.Next(32))
 
     }
-    
+
     return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, nil
 }
 
 // Sets the hostname of the Ethernet Extension. The hostname will be displayed
-	// by access points as the hostname in the DHCP clients table.
-	// 
-	// Setting an empty String will restore the default hostname.
-	// 
-	// The current hostname can be discovered with GetEthernetStatus.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
-func (device *MasterBrick) SetEthernetHostname(hostname string) (err error) {    
+// by access points as the hostname in the DHCP clients table.
+// 
+// Setting an empty String will restore the default hostname.
+// 
+// The current hostname can be discovered with GetEthernetStatus.
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
+func (device *MasterBrick) SetEthernetHostname(hostname string) (err error) {
         var buf bytes.Buffer
     hostname_byte_slice, err := StringToByteSlice(hostname, 32)
 	if err != nil { return }
@@ -2800,7 +2803,7 @@ func (device *MasterBrick) SetEthernetHostname(hostname string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2809,18 +2812,18 @@ func (device *MasterBrick) SetEthernetHostname(hostname string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the MAC address of the Ethernet Extension. The Ethernet Extension should
-	// come configured with a valid MAC address, that is also written on a
-	// sticker of the extension itself.
-	// 
-	// The MAC address can be read out again with GetEthernetStatus.
-	// 
-	// .. versionadded:: 2.1.0$nbsp;(Firmware)
-func (device *MasterBrick) SetEthernetMACAddress(macAddress [6]uint8) (err error) {    
+// come configured with a valid MAC address, that is also written on a
+// sticker of the extension itself.
+// 
+// The MAC address can be read out again with GetEthernetStatus.
+// 
+// .. versionadded:: 2.1.0$nbsp;(Firmware)
+func (device *MasterBrick) SetEthernetMACAddress(macAddress [6]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, macAddress);
 
@@ -2830,7 +2833,7 @@ func (device *MasterBrick) SetEthernetMACAddress(macAddress [6]uint8) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2839,27 +2842,27 @@ func (device *MasterBrick) SetEthernetMACAddress(macAddress [6]uint8) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the Ethernet WebSocket configuration. The first parameter sets the number of socket
-	// connections that are reserved for WebSockets. The range is 0-7. The connections
-	// are shared with the plain sockets. Example: If you set the connections to 3,
-	// there will be 3 WebSocket and 4 plain socket connections available.
-	// 
-	// The second parameter is the port for the WebSocket connections. The port can
-	// not be the same as the port for the plain socket connections.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the Ethernet configuration.
-	// 
-	// The default values are 3 for the socket connections and 4280 for the port.
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) SetEthernetWebsocketConfiguration(sockets uint8, port uint16) (err error) {    
+// connections that are reserved for WebSockets. The range is 0-7. The connections
+// are shared with the plain sockets. Example: If you set the connections to 3,
+// there will be 3 WebSocket and 4 plain socket connections available.
+// 
+// The second parameter is the port for the WebSocket connections. The port can
+// not be the same as the port for the plain socket connections.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the Ethernet configuration.
+// 
+// The default values are 3 for the socket connections and 4280 for the port.
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) SetEthernetWebsocketConfiguration(sockets uint8, port uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, sockets);
 	binary.Write(&buf, binary.LittleEndian, port);
@@ -2870,7 +2873,7 @@ func (device *MasterBrick) SetEthernetWebsocketConfiguration(sockets uint8, port
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2879,14 +2882,14 @@ func (device *MasterBrick) SetEthernetWebsocketConfiguration(sockets uint8, port
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetEthernetConfiguration.
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) GetEthernetWebsocketConfiguration() (sockets uint8, port uint16, err error) {    
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) GetEthernetWebsocketConfiguration() (sockets uint8, port uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEthernetWebsocketConfiguration), buf.Bytes())
@@ -2895,7 +2898,7 @@ func (device *MasterBrick) GetEthernetWebsocketConfiguration() (sockets uint8, p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return sockets, port, BrickletError(header.ErrorCode)
@@ -2906,25 +2909,25 @@ func (device *MasterBrick) GetEthernetWebsocketConfiguration() (sockets uint8, p
 	binary.Read(resultBuf, binary.LittleEndian, &port)
 
     }
-    
+
     return sockets, port, nil
 }
 
 // Sets the Ethernet authentication secret. The secret can be a string of up to 64
-	// characters. An empty string disables the authentication.
-	// 
-	// See the `authentication tutorial <tutorial_authentication>` for more
-	// information.
-	// 
-	// The secret is stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the Ethernet authentication secret.
-	// 
-	// The default value is an empty string (authentication disabled).
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) SetEthernetAuthenticationSecret(secret string) (err error) {    
+// characters. An empty string disables the authentication.
+// 
+// See the `authentication tutorial <tutorial_authentication>` for more
+// information.
+// 
+// The secret is stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the Ethernet authentication secret.
+// 
+// The default value is an empty string (authentication disabled).
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) SetEthernetAuthenticationSecret(secret string) (err error) {
         var buf bytes.Buffer
     secret_byte_slice, err := StringToByteSlice(secret, 64)
 	if err != nil { return }
@@ -2936,7 +2939,7 @@ func (device *MasterBrick) SetEthernetAuthenticationSecret(secret string) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2945,15 +2948,15 @@ func (device *MasterBrick) SetEthernetAuthenticationSecret(secret string) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the authentication secret as set by
-	// SetEthernetAuthenticationSecret.
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) GetEthernetAuthenticationSecret() (secret string, err error) {    
+// SetEthernetAuthenticationSecret.
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) GetEthernetAuthenticationSecret() (secret string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEthernetAuthenticationSecret), buf.Bytes())
@@ -2962,7 +2965,7 @@ func (device *MasterBrick) GetEthernetAuthenticationSecret() (secret string, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return secret, BrickletError(header.ErrorCode)
@@ -2972,25 +2975,25 @@ func (device *MasterBrick) GetEthernetAuthenticationSecret() (secret string, err
         secret = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return secret, nil
 }
 
 // Sets the WIFI authentication secret. The secret can be a string of up to 64
-	// characters. An empty string disables the authentication.
-	// 
-	// See the `authentication tutorial <tutorial_authentication>` for more
-	// information.
-	// 
-	// The secret is stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// It is recommended to use the Brick Viewer to set the WIFI authentication secret.
-	// 
-	// The default value is an empty string (authentication disabled).
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifiAuthenticationSecret(secret string) (err error) {    
+// characters. An empty string disables the authentication.
+// 
+// See the `authentication tutorial <tutorial_authentication>` for more
+// information.
+// 
+// The secret is stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// It is recommended to use the Brick Viewer to set the WIFI authentication secret.
+// 
+// The default value is an empty string (authentication disabled).
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifiAuthenticationSecret(secret string) (err error) {
         var buf bytes.Buffer
     secret_byte_slice, err := StringToByteSlice(secret, 64)
 	if err != nil { return }
@@ -3002,7 +3005,7 @@ func (device *MasterBrick) SetWifiAuthenticationSecret(secret string) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3011,15 +3014,15 @@ func (device *MasterBrick) SetWifiAuthenticationSecret(secret string) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the authentication secret as set by
-	// SetWifiAuthenticationSecret.
-	// 
-	// .. versionadded:: 2.2.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err error) {    
+// SetWifiAuthenticationSecret.
+// 
+// .. versionadded:: 2.2.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifiAuthenticationSecret), buf.Bytes())
@@ -3028,7 +3031,7 @@ func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return secret, BrickletError(header.ErrorCode)
@@ -3038,13 +3041,13 @@ func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err err
         secret = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return secret, nil
 }
 
 // Returns the type of the connection over which this function was called.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -3056,7 +3059,7 @@ func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err err
 //	* ConnectionTypeWifi
 //	* ConnectionTypeEthernet
 //	* ConnectionTypeWifi2
-func (device *MasterBrick) GetConnectionType() (connectionType ConnectionType, err error) {    
+func (device *MasterBrick) GetConnectionType() (connectionType ConnectionType, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConnectionType), buf.Bytes())
@@ -3065,7 +3068,7 @@ func (device *MasterBrick) GetConnectionType() (connectionType ConnectionType, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return connectionType, BrickletError(header.ErrorCode)
@@ -3075,15 +3078,15 @@ func (device *MasterBrick) GetConnectionType() (connectionType ConnectionType, e
         binary.Read(resultBuf, binary.LittleEndian, &connectionType)
 
     }
-    
+
     return connectionType, nil
 }
 
-// Returns *true* if a WIFI Extension 2.0 is available to be used by the Master
-	// Brick.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) IsWifi2Present() (present bool, err error) {    
+// Returns *true* if the Master Brick is at position 0 in the stack and a WIFI
+// Extension 2.0 is available.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) IsWifi2Present() (present bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsWifi2Present), buf.Bytes())
@@ -3092,7 +3095,7 @@ func (device *MasterBrick) IsWifi2Present() (present bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return present, BrickletError(header.ErrorCode)
@@ -3102,23 +3105,23 @@ func (device *MasterBrick) IsWifi2Present() (present bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &present)
 
     }
-    
+
     return present, nil
 }
 
 // Starts the bootloader of the WIFI Extension 2.0. Returns 0 on success.
-	// Afterwards the WriteWifi2SerialPort and ReadWifi2SerialPort
-	// functions can be used to communicate with the bootloader to flash a new
-	// firmware.
-	// 
-	// The bootloader should only be started over a USB connection. It cannot be
-	// started over a WIFI2 connection, see the GetConnectionType function.
-	// 
-	// It is recommended to use the Brick Viewer to update the firmware of the WIFI
-	// Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) StartWifi2Bootloader() (result int8, err error) {    
+// Afterwards the WriteWifi2SerialPort and ReadWifi2SerialPort
+// functions can be used to communicate with the bootloader to flash a new
+// firmware.
+// 
+// The bootloader should only be started over a USB connection. It cannot be
+// started over a WIFI2 connection, see the GetConnectionType function.
+// 
+// It is recommended to use the Brick Viewer to update the firmware of the WIFI
+// Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) StartWifi2Bootloader() (result int8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionStartWifi2Bootloader), buf.Bytes())
@@ -3127,7 +3130,7 @@ func (device *MasterBrick) StartWifi2Bootloader() (result int8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return result, BrickletError(header.ErrorCode)
@@ -3137,22 +3140,22 @@ func (device *MasterBrick) StartWifi2Bootloader() (result int8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &result)
 
     }
-    
+
     return result, nil
 }
 
 // Writes up to 60 bytes (number of bytes to be written specified by ``length``)
-	// to the serial port of the bootloader of the WIFI Extension 2.0. Returns 0 on
-	// success.
-	// 
-	// Before this function can be used the bootloader has to be started using the
-	// StartWifi2Bootloader function.
-	// 
-	// It is recommended to use the Brick Viewer to update the firmware of the WIFI
-	// Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) WriteWifi2SerialPort(data [60]uint8, length uint8) (result int8, err error) {    
+// to the serial port of the bootloader of the WIFI Extension 2.0. Returns 0 on
+// success.
+// 
+// Before this function can be used the bootloader has to be started using the
+// StartWifi2Bootloader function.
+// 
+// It is recommended to use the Brick Viewer to update the firmware of the WIFI
+// Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) WriteWifi2SerialPort(data [60]uint8, length uint8) (result int8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 	binary.Write(&buf, binary.LittleEndian, length);
@@ -3163,7 +3166,7 @@ func (device *MasterBrick) WriteWifi2SerialPort(data [60]uint8, length uint8) (r
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return result, BrickletError(header.ErrorCode)
@@ -3173,22 +3176,22 @@ func (device *MasterBrick) WriteWifi2SerialPort(data [60]uint8, length uint8) (r
         binary.Read(resultBuf, binary.LittleEndian, &result)
 
     }
-    
+
     return result, nil
 }
 
 // Reads up to 60 bytes (number of bytes to be read specified by ``length``)
-	// from the serial port of the bootloader of the WIFI Extension 2.0.
-	// Returns the number of actually read bytes.
-	// 
-	// Before this function can be used the bootloader has to be started using the
-	// StartWifi2Bootloader function.
-	// 
-	// It is recommended to use the Brick Viewer to update the firmware of the WIFI
-	// Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) ReadWifi2SerialPort(length uint8) (data [60]uint8, result uint8, err error) {    
+// from the serial port of the bootloader of the WIFI Extension 2.0.
+// Returns the number of actually read bytes.
+// 
+// Before this function can be used the bootloader has to be started using the
+// StartWifi2Bootloader function.
+// 
+// It is recommended to use the Brick Viewer to update the firmware of the WIFI
+// Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) ReadWifi2SerialPort(length uint8) (data [60]uint8, result uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, length);
 
@@ -3198,7 +3201,7 @@ func (device *MasterBrick) ReadWifi2SerialPort(length uint8) (data [60]uint8, re
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return data, result, BrickletError(header.ErrorCode)
@@ -3209,25 +3212,25 @@ func (device *MasterBrick) ReadWifi2SerialPort(length uint8) (data [60]uint8, re
 	binary.Read(resultBuf, binary.LittleEndian, &result)
 
     }
-    
+
     return data, result, nil
 }
 
 // Sets the WIFI authentication secret. The secret can be a string of up to 64
-	// characters. An empty string disables the authentication. The default value is
-	// an empty string (authentication disabled).
-	// 
-	// See the `authentication tutorial <tutorial_authentication>` for more
-	// information.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2AuthenticationSecret(secret string) (err error) {    
+// characters. An empty string disables the authentication. The default value is
+// an empty string (authentication disabled).
+// 
+// See the `authentication tutorial <tutorial_authentication>` for more
+// information.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2AuthenticationSecret(secret string) (err error) {
         var buf bytes.Buffer
     secret_byte_slice, err := StringToByteSlice(secret, 64)
 	if err != nil { return }
@@ -3239,7 +3242,7 @@ func (device *MasterBrick) SetWifi2AuthenticationSecret(secret string) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3248,15 +3251,15 @@ func (device *MasterBrick) SetWifi2AuthenticationSecret(secret string) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the WIFI authentication secret as set by
-	// SetWifi2AuthenticationSecret.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2AuthenticationSecret() (secret string, err error) {    
+// SetWifi2AuthenticationSecret.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2AuthenticationSecret() (secret string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2AuthenticationSecret), buf.Bytes())
@@ -3265,7 +3268,7 @@ func (device *MasterBrick) GetWifi2AuthenticationSecret() (secret string, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return secret, BrickletError(header.ErrorCode)
@@ -3275,48 +3278,48 @@ func (device *MasterBrick) GetWifi2AuthenticationSecret() (secret string, err er
         secret = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return secret, nil
 }
 
 // Sets the general configuration of the WIFI Extension 2.0.
-	// 
-	// The ``port`` parameter sets the port number that your programm will connect
-	// to. The default value is 4223.
-	// 
-	// The ``websocket_port`` parameter sets the WebSocket port number that your
-	// JavaScript programm will connect to. The default value is 4280.
-	// 
-	// The ``website_port`` parameter sets the port number for the website of the
-	// WIFI Extension 2.0. The default value is 80.
-	// 
-	// The ``phy_mode`` parameter sets the specific wireless network mode to be used.
-	// Possible values are B, G and N. The default value is G.
-	// 
-	// The ``sleep_mode`` parameter is currently unused.
-	// 
-	// The ``website`` parameter is used to enable or disable the web interface of
-	// the WIFI Extension 2.0, which is available from firmware version 2.0.1. Note
-	// that, for firmware version 2.0.3 and older, to disable the the web interface
-	// the ``website_port`` parameter must be set to 1 and greater than 1 to enable
-	// the web interface. For firmware version 2.0.4 and later, setting this parameter
-	// to 1 will enable the web interface and setting it to 0 will disable the web
-	// interface.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// The ``port`` parameter sets the port number that your programm will connect
+// to. The default value is 4223.
+// 
+// The ``websocket_port`` parameter sets the WebSocket port number that your
+// JavaScript programm will connect to. The default value is 4280.
+// 
+// The ``website_port`` parameter sets the port number for the website of the
+// WIFI Extension 2.0. The default value is 80.
+// 
+// The ``phy_mode`` parameter sets the specific wireless network mode to be used.
+// Possible values are B, G and N. The default value is G.
+// 
+// The ``sleep_mode`` parameter is currently unused.
+// 
+// The ``website`` parameter is used to enable or disable the web interface of
+// the WIFI Extension 2.0, which is available from firmware version 2.0.1. Note
+// that, for firmware version 2.0.3 and older, to disable the the web interface
+// the ``website_port`` parameter must be set to 1 and greater than 1 to enable
+// the web interface. For firmware version 2.0.4 and later, setting this parameter
+// to 1 will enable the web interface and setting it to 0 will disable the web
+// interface.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
 //	* Wifi2PHYModeB
 //	* Wifi2PHYModeG
 //	* Wifi2PHYModeN
-func (device *MasterBrick) SetWifi2Configuration(port uint16, websocketPort uint16, websitePort uint16, phyMode Wifi2PHYMode, sleepMode uint8, website uint8) (err error) {    
+func (device *MasterBrick) SetWifi2Configuration(port uint16, websocketPort uint16, websitePort uint16, phyMode Wifi2PHYMode, sleepMode uint8, website uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, port);
 	binary.Write(&buf, binary.LittleEndian, websocketPort);
@@ -3331,7 +3334,7 @@ func (device *MasterBrick) SetWifi2Configuration(port uint16, websocketPort uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3340,20 +3343,20 @@ func (device *MasterBrick) SetWifi2Configuration(port uint16, websocketPort uint
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the general configuration as set by SetWifi2Configuration.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
 //	* Wifi2PHYModeB
 //	* Wifi2PHYModeG
 //	* Wifi2PHYModeN
-func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort uint16, websitePort uint16, phyMode Wifi2PHYMode, sleepMode uint8, website uint8, err error) {    
+func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort uint16, websitePort uint16, phyMode Wifi2PHYMode, sleepMode uint8, website uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2Configuration), buf.Bytes())
@@ -3362,7 +3365,7 @@ func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return port, websocketPort, websitePort, phyMode, sleepMode, website, BrickletError(header.ErrorCode)
@@ -3377,13 +3380,13 @@ func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort u
 	binary.Read(resultBuf, binary.LittleEndian, &website)
 
     }
-    
+
     return port, websocketPort, websitePort, phyMode, sleepMode, website, nil
 }
 
 // Returns the client and access point status of the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -3394,7 +3397,7 @@ func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort u
 //	* Wifi2ClientStatusConnectFailed
 //	* Wifi2ClientStatusGotIP
 //	* Wifi2ClientStatusUnknown
-func (device *MasterBrick) GetWifi2Status() (clientEnabled bool, clientStatus Wifi2ClientStatus, clientIP [4]uint8, clientSubnetMask [4]uint8, clientGateway [4]uint8, clientMACAddress [6]uint8, clientRXCount uint32, clientTXCount uint32, clientRSSI int8, apEnabled bool, apIP [4]uint8, apSubnetMask [4]uint8, apGateway [4]uint8, apMACAddress [6]uint8, apRXCount uint32, apTXCount uint32, apConnectedCount uint8, err error) {    
+func (device *MasterBrick) GetWifi2Status() (clientEnabled bool, clientStatus Wifi2ClientStatus, clientIP [4]uint8, clientSubnetMask [4]uint8, clientGateway [4]uint8, clientMACAddress [6]uint8, clientRXCount uint32, clientTXCount uint32, clientRSSI int8, apEnabled bool, apIP [4]uint8, apSubnetMask [4]uint8, apGateway [4]uint8, apMACAddress [6]uint8, apRXCount uint32, apTXCount uint32, apConnectedCount uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2Status), buf.Bytes())
@@ -3403,7 +3406,7 @@ func (device *MasterBrick) GetWifi2Status() (clientEnabled bool, clientStatus Wi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, BrickletError(header.ErrorCode)
@@ -3429,40 +3432,40 @@ func (device *MasterBrick) GetWifi2Status() (clientEnabled bool, clientStatus Wi
 	binary.Read(resultBuf, binary.LittleEndian, &apConnectedCount)
 
     }
-    
+
     return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, nil
 }
 
 // Sets the client specific configuration of the WIFI Extension 2.0.
-	// 
-	// The ``enable`` parameter enables or disables the client part of the
-	// WIFI Extension 2.0. The default value is *true*.
-	// 
-	// The ``ssid`` parameter sets the SSID (up to 32 characters) of the access point
-	// to connect to.
-	// 
-	// If the ``ip`` parameter is set to all zero then ``subnet_mask`` and ``gateway``
-	// parameters are also set to all zero and DHCP is used for IP address configuration.
-	// Otherwise those three parameters can be used to configure a static IP address.
-	// The default configuration is DHCP.
-	// 
-	// If the ``mac_address`` parameter is set to all zero then the factory MAC
-	// address is used. Otherwise this parameter can be used to set a custom MAC
-	// address.
-	// 
-	// If the ``bssid`` parameter is set to all zero then WIFI Extension 2.0 will
-	// connect to any access point that matches the configured SSID. Otherwise this
-	// parameter can be used to make the WIFI Extension 2.0 only connect to an
-	// access point if SSID and BSSID match.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2ClientConfiguration(enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, bssid [6]uint8) (err error) {    
+// 
+// The ``enable`` parameter enables or disables the client part of the
+// WIFI Extension 2.0. The default value is *true*.
+// 
+// The ``ssid`` parameter sets the SSID (up to 32 characters) of the access point
+// to connect to.
+// 
+// If the ``ip`` parameter is set to all zero then ``subnet_mask`` and ``gateway``
+// parameters are also set to all zero and DHCP is used for IP address configuration.
+// Otherwise those three parameters can be used to configure a static IP address.
+// The default configuration is DHCP.
+// 
+// If the ``mac_address`` parameter is set to all zero then the factory MAC
+// address is used. Otherwise this parameter can be used to set a custom MAC
+// address.
+// 
+// If the ``bssid`` parameter is set to all zero then WIFI Extension 2.0 will
+// connect to any access point that matches the configured SSID. Otherwise this
+// parameter can be used to make the WIFI Extension 2.0 only connect to an
+// access point if SSID and BSSID match.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2ClientConfiguration(enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, bssid [6]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enable);
 	ssid_byte_slice, err := StringToByteSlice(ssid, 32)
@@ -3480,7 +3483,7 @@ func (device *MasterBrick) SetWifi2ClientConfiguration(enable bool, ssid string,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3489,14 +3492,14 @@ func (device *MasterBrick) SetWifi2ClientConfiguration(enable bool, ssid string,
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the client configuration as set by SetWifi2ClientConfiguration.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2ClientConfiguration() (enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, bssid [6]uint8, err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2ClientConfiguration() (enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, bssid [6]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2ClientConfiguration), buf.Bytes())
@@ -3505,7 +3508,7 @@ func (device *MasterBrick) GetWifi2ClientConfiguration() (enable bool, ssid stri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, BrickletError(header.ErrorCode)
@@ -3521,22 +3524,22 @@ func (device *MasterBrick) GetWifi2ClientConfiguration() (enable bool, ssid stri
 	binary.Read(resultBuf, binary.LittleEndian, &bssid)
 
     }
-    
+
     return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, nil
 }
 
 // Sets the client hostname (up to 32 characters) of the WIFI Extension 2.0. The
-	// hostname will be displayed by access points as the hostname in the DHCP clients
-	// table.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2ClientHostname(hostname string) (err error) {    
+// hostname will be displayed by access points as the hostname in the DHCP clients
+// table.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2ClientHostname(hostname string) (err error) {
         var buf bytes.Buffer
     hostname_byte_slice, err := StringToByteSlice(hostname, 32)
 	if err != nil { return }
@@ -3548,7 +3551,7 @@ func (device *MasterBrick) SetWifi2ClientHostname(hostname string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3557,14 +3560,14 @@ func (device *MasterBrick) SetWifi2ClientHostname(hostname string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the client hostname as set by SetWifi2ClientHostname.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2ClientHostname() (hostname string, err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2ClientHostname() (hostname string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2ClientHostname), buf.Bytes())
@@ -3573,7 +3576,7 @@ func (device *MasterBrick) GetWifi2ClientHostname() (hostname string, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return hostname, BrickletError(header.ErrorCode)
@@ -3583,20 +3586,20 @@ func (device *MasterBrick) GetWifi2ClientHostname() (hostname string, err error)
         hostname = ByteSliceToString(resultBuf.Next(32))
 
     }
-    
+
     return hostname, nil
 }
 
 // Sets the client password (up to 63 chars) for WPA/WPA2 encryption.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2ClientPassword(password string) (err error) {    
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2ClientPassword(password string) (err error) {
         var buf bytes.Buffer
     password_byte_slice, err := StringToByteSlice(password, 64)
 	if err != nil { return }
@@ -3608,7 +3611,7 @@ func (device *MasterBrick) SetWifi2ClientPassword(password string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3617,18 +3620,18 @@ func (device *MasterBrick) SetWifi2ClientPassword(password string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the client password as set by SetWifi2ClientPassword.
-	// 
-	// Note
-	//  Since WIFI Extension 2.0 firmware version 2.1.3 the password is not
-	//  returned anymore.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error) {    
+// 
+// Note
+//  Since WIFI Extension 2.0 firmware version 2.1.3 the password is not
+//  returned anymore.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2ClientPassword), buf.Bytes())
@@ -3637,7 +3640,7 @@ func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return password, BrickletError(header.ErrorCode)
@@ -3647,44 +3650,44 @@ func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error)
         password = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return password, nil
 }
 
 // Sets the access point specific configuration of the WIFI Extension 2.0.
-	// 
-	// The ``enable`` parameter enables or disables the access point part of the
-	// WIFI Extension 2.0. The default value is true.
-	// 
-	// The ``ssid`` parameter sets the SSID (up to 32 characters) of the access point.
-	// 
-	// If the ``ip`` parameter is set to all zero then ``subnet_mask`` and ``gateway``
-	// parameters are also set to all zero and DHCP is used for IP address configuration.
-	// Otherwise those three parameters can be used to configure a static IP address.
-	// The default configuration is DHCP.
-	// 
-	// The ``encryption`` parameter sets the encryption mode to be used. Possible
-	// values are Open (no encryption), WEP or WPA/WPA2 PSK. The default value is
-	// WPA/WPA2 PSK. Use the SetWifi2APPassword function to set the encryption
-	// password.
-	// 
-	// The ``hidden`` parameter makes the access point hide or show its SSID.
-	// The default value is *false*.
-	// 
-	// The ``channel`` parameter sets the channel (1 to 13) of the access point.
-	// The default value is 1.
-	// 
-	// If the ``mac_address`` parameter is set to all zero then the factory MAC
-	// address is used. Otherwise this parameter can be used to set a custom MAC
-	// address.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// The ``enable`` parameter enables or disables the access point part of the
+// WIFI Extension 2.0. The default value is true.
+// 
+// The ``ssid`` parameter sets the SSID (up to 32 characters) of the access point.
+// 
+// If the ``ip`` parameter is set to all zero then ``subnet_mask`` and ``gateway``
+// parameters are also set to all zero and DHCP is used for IP address configuration.
+// Otherwise those three parameters can be used to configure a static IP address.
+// The default configuration is DHCP.
+// 
+// The ``encryption`` parameter sets the encryption mode to be used. Possible
+// values are Open (no encryption), WEP or WPA/WPA2 PSK. The default value is
+// WPA/WPA2 PSK. Use the SetWifi2APPassword function to set the encryption
+// password.
+// 
+// The ``hidden`` parameter makes the access point hide or show its SSID.
+// The default value is *false*.
+// 
+// The ``channel`` parameter sets the channel (1 to 13) of the access point.
+// The default value is 1.
+// 
+// If the ``mac_address`` parameter is set to all zero then the factory MAC
+// address is used. Otherwise this parameter can be used to set a custom MAC
+// address.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -3693,7 +3696,7 @@ func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error)
 //	* Wifi2APEncryptionWPAPSK
 //	* Wifi2APEncryptionWPA2PSK
 //	* Wifi2APEncryptionWPAWPA2PSK
-func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, encryption Wifi2APEncryption, hidden bool, channel uint8, macAddress [6]uint8) (err error) {    
+func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, encryption Wifi2APEncryption, hidden bool, channel uint8, macAddress [6]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enable);
 	ssid_byte_slice, err := StringToByteSlice(ssid, 32)
@@ -3713,7 +3716,7 @@ func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3722,13 +3725,13 @@ func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the access point configuration as set by SetWifi2APConfiguration.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -3737,7 +3740,7 @@ func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip 
 //	* Wifi2APEncryptionWPAPSK
 //	* Wifi2APEncryptionWPA2PSK
 //	* Wifi2APEncryptionWPAWPA2PSK
-func (device *MasterBrick) GetWifi2APConfiguration() (enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, encryption Wifi2APEncryption, hidden bool, channel uint8, macAddress [6]uint8, err error) {    
+func (device *MasterBrick) GetWifi2APConfiguration() (enable bool, ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, encryption Wifi2APEncryption, hidden bool, channel uint8, macAddress [6]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2APConfiguration), buf.Bytes())
@@ -3746,7 +3749,7 @@ func (device *MasterBrick) GetWifi2APConfiguration() (enable bool, ssid string, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, BrickletError(header.ErrorCode)
@@ -3764,21 +3767,21 @@ func (device *MasterBrick) GetWifi2APConfiguration() (enable bool, ssid string, 
 	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
 
     }
-    
+
     return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, nil
 }
 
 // Sets the access point password (up to 63 chars) for the configured encryption
-	// mode, see SetWifi2APConfiguration.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2APPassword(password string) (err error) {    
+// mode, see SetWifi2APConfiguration.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2APPassword(password string) (err error) {
         var buf bytes.Buffer
     password_byte_slice, err := StringToByteSlice(password, 64)
 	if err != nil { return }
@@ -3790,7 +3793,7 @@ func (device *MasterBrick) SetWifi2APPassword(password string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3799,18 +3802,18 @@ func (device *MasterBrick) SetWifi2APPassword(password string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the access point password as set by SetWifi2APPassword.
-	// 
-	// Note
-	//  Since WIFI Extension 2.0 firmware version 2.1.3 the password is not
-	//  returned anymore.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2APPassword() (password string, err error) {    
+// 
+// Note
+//  Since WIFI Extension 2.0 firmware version 2.1.3 the password is not
+//  returned anymore.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2APPassword() (password string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2APPassword), buf.Bytes())
@@ -3819,7 +3822,7 @@ func (device *MasterBrick) GetWifi2APPassword() (password string, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return password, BrickletError(header.ErrorCode)
@@ -3829,19 +3832,19 @@ func (device *MasterBrick) GetWifi2APPassword() (password string, err error) {
         password = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return password, nil
 }
 
 // All configuration functions for the WIFI Extension 2.0 do not change the
-	// values permanently. After configuration this function has to be called to
-	// permanently store the values.
-	// 
-	// The values are stored in the EEPROM and only applied on startup. That means
-	// you have to restart the Master Brick after configuration.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) SaveWifi2Configuration() (result uint8, err error) {    
+// values permanently. After configuration this function has to be called to
+// permanently store the values.
+// 
+// The values are stored in the EEPROM and only applied on startup. That means
+// you have to restart the Master Brick after configuration.
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) SaveWifi2Configuration() (result uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionSaveWifi2Configuration), buf.Bytes())
@@ -3850,7 +3853,7 @@ func (device *MasterBrick) SaveWifi2Configuration() (result uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return result, BrickletError(header.ErrorCode)
@@ -3860,14 +3863,14 @@ func (device *MasterBrick) SaveWifi2Configuration() (result uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &result)
 
     }
-    
+
     return result, nil
 }
 
 // Returns the current version of the WIFI Extension 2.0 firmware (major, minor, revision).
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2FirmwareVersion() (firmwareVersion [3]uint8, err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2FirmwareVersion() (firmwareVersion [3]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2FirmwareVersion), buf.Bytes())
@@ -3876,7 +3879,7 @@ func (device *MasterBrick) GetWifi2FirmwareVersion() (firmwareVersion [3]uint8, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return firmwareVersion, BrickletError(header.ErrorCode)
@@ -3886,14 +3889,14 @@ func (device *MasterBrick) GetWifi2FirmwareVersion() (firmwareVersion [3]uint8, 
         binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 
     }
-    
+
     return firmwareVersion, nil
 }
 
 // Turns the green status LED of the WIFI Extension 2.0 on.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) EnableWifi2StatusLED() (err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) EnableWifi2StatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableWifi2StatusLED), buf.Bytes())
@@ -3902,7 +3905,7 @@ func (device *MasterBrick) EnableWifi2StatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3911,14 +3914,14 @@ func (device *MasterBrick) EnableWifi2StatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Turns the green status LED of the WIFI Extension 2.0 off.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) DisableWifi2StatusLED() (err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) DisableWifi2StatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableWifi2StatusLED), buf.Bytes())
@@ -3927,7 +3930,7 @@ func (device *MasterBrick) DisableWifi2StatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -3936,14 +3939,14 @@ func (device *MasterBrick) DisableWifi2StatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the green status LED of the WIFI Extension 2.0 is turned on.
-	// 
-	// .. versionadded:: 2.4.0$nbsp;(Firmware)
-func (device *MasterBrick) IsWifi2StatusLEDEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.4.0$nbsp;(Firmware)
+func (device *MasterBrick) IsWifi2StatusLEDEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsWifi2StatusLEDEnabled), buf.Bytes())
@@ -3952,7 +3955,7 @@ func (device *MasterBrick) IsWifi2StatusLEDEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -3962,44 +3965,44 @@ func (device *MasterBrick) IsWifi2StatusLEDEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Sets the mesh specific configuration of the WIFI Extension 2.0.
-	// 
-	// The ``enable`` parameter enables or disables the mesh part of the
-	// WIFI Extension 2.0. The default value is *false*. The mesh part cannot be
-	// enabled together with the client and access-point part.
-	// 
-	// If the ``root_ip`` parameter is set to all zero then ``root_subnet_mask``
-	// and ``root_gateway`` parameters are also set to all zero and DHCP is used for
-	// IP address configuration. Otherwise those three parameters can be used to
-	// configure a static IP address. The default configuration is DHCP.
-	// 
-	// If the ``router_bssid`` parameter is set to all zero then the information is
-	// taken from Wi-Fi scan when connecting the SSID as set by
-	// SetWifi2MeshRouterSSID. This only works if the the SSID is not hidden.
-	// In case the router has hidden SSID this parameter must be specified, otherwise
-	// the node will not be able to reach the mesh router.
-	// 
-	// The ``group_id`` and the ``group_ssid_prefix`` parameters identifies a
-	// particular mesh network and nodes configured with same ``group_id`` and the
-	// ``group_ssid_prefix`` are considered to be in the same mesh network.
-	// 
-	// The ``gateway_ip`` and the ``gateway_port`` parameters specifies the location
-	// of the brickd that supports mesh feature.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2MeshConfiguration(enable bool, rootIP [4]uint8, rootSubnetMask [4]uint8, rootGateway [4]uint8, routerBSSID [6]uint8, groupID [6]uint8, groupSSIDPrefix string, gatewayIP [4]uint8, gatewayPort uint16) (err error) {    
+// 
+// Sets the mesh specific configuration of the WIFI Extension 2.0.
+// 
+// The ``enable`` parameter enables or disables the mesh part of the
+// WIFI Extension 2.0. The default value is *false*. The mesh part cannot be
+// enabled together with the client and access-point part.
+// 
+// If the ``root_ip`` parameter is set to all zero then ``root_subnet_mask``
+// and ``root_gateway`` parameters are also set to all zero and DHCP is used for
+// IP address configuration. Otherwise those three parameters can be used to
+// configure a static IP address. The default configuration is DHCP.
+// 
+// If the ``router_bssid`` parameter is set to all zero then the information is
+// taken from Wi-Fi scan when connecting the SSID as set by
+// SetWifi2MeshRouterSSID. This only works if the the SSID is not hidden.
+// In case the router has hidden SSID this parameter must be specified, otherwise
+// the node will not be able to reach the mesh router.
+// 
+// The ``group_id`` and the ``group_ssid_prefix`` parameters identifies a
+// particular mesh network and nodes configured with same ``group_id`` and the
+// ``group_ssid_prefix`` are considered to be in the same mesh network.
+// 
+// The ``gateway_ip`` and the ``gateway_port`` parameters specifies the location
+// of the brickd that supports mesh feature.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2MeshConfiguration(enable bool, rootIP [4]uint8, rootSubnetMask [4]uint8, rootGateway [4]uint8, routerBSSID [6]uint8, groupID [6]uint8, groupSSIDPrefix string, gatewayIP [4]uint8, gatewayPort uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enable);
 	binary.Write(&buf, binary.LittleEndian, rootIP);
@@ -4019,7 +4022,7 @@ func (device *MasterBrick) SetWifi2MeshConfiguration(enable bool, rootIP [4]uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4028,16 +4031,16 @@ func (device *MasterBrick) SetWifi2MeshConfiguration(enable bool, rootIP [4]uint
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the mesh configuration as set by SetWifi2MeshConfiguration.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2MeshConfiguration() (enable bool, rootIP [4]uint8, rootSubnetMask [4]uint8, rootGateway [4]uint8, routerBSSID [6]uint8, groupID [6]uint8, groupSSIDPrefix string, gatewayIP [4]uint8, gatewayPort uint16, err error) {    
+// 
+// Returns the mesh configuration as set by SetWifi2MeshConfiguration.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2MeshConfiguration() (enable bool, rootIP [4]uint8, rootSubnetMask [4]uint8, rootGateway [4]uint8, routerBSSID [6]uint8, groupID [6]uint8, groupSSIDPrefix string, gatewayIP [4]uint8, gatewayPort uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshConfiguration), buf.Bytes())
@@ -4046,7 +4049,7 @@ func (device *MasterBrick) GetWifi2MeshConfiguration() (enable bool, rootIP [4]u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, BrickletError(header.ErrorCode)
@@ -4064,27 +4067,27 @@ func (device *MasterBrick) GetWifi2MeshConfiguration() (enable bool, rootIP [4]u
 	binary.Read(resultBuf, binary.LittleEndian, &gatewayPort)
 
     }
-    
+
     return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Sets the mesh router SSID of the WIFI Extension 2.0.
-	// It is used to specify the mesh router to connect to.
-	// 
-	// Note that even though in the argument of this function a 32 characters long SSID
-	// is allowed, in practice valid SSID should have a maximum of 31 characters. This
-	// is due to a bug in the mesh library that we use in the firmware of the extension.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2MeshRouterSSID(ssid string) (err error) {    
+// 
+// Sets the mesh router SSID of the WIFI Extension 2.0.
+// It is used to specify the mesh router to connect to.
+// 
+// Note that even though in the argument of this function a 32 characters long SSID
+// is allowed, in practice valid SSID should have a maximum of 31 characters. This
+// is due to a bug in the mesh library that we use in the firmware of the extension.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2MeshRouterSSID(ssid string) (err error) {
         var buf bytes.Buffer
     ssid_byte_slice, err := StringToByteSlice(ssid, 32)
 	if err != nil { return }
@@ -4096,7 +4099,7 @@ func (device *MasterBrick) SetWifi2MeshRouterSSID(ssid string) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4105,16 +4108,16 @@ func (device *MasterBrick) SetWifi2MeshRouterSSID(ssid string) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the mesh router SSID as set by SetWifi2MeshRouterSSID.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2MeshRouterSSID() (ssid string, err error) {    
+// 
+// Returns the mesh router SSID as set by SetWifi2MeshRouterSSID.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2MeshRouterSSID() (ssid string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshRouterSSID), buf.Bytes())
@@ -4123,7 +4126,7 @@ func (device *MasterBrick) GetWifi2MeshRouterSSID() (ssid string, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ssid, BrickletError(header.ErrorCode)
@@ -4133,23 +4136,23 @@ func (device *MasterBrick) GetWifi2MeshRouterSSID() (ssid string, err error) {
         ssid = ByteSliceToString(resultBuf.Next(32))
 
     }
-    
+
     return ssid, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Sets the mesh router password (up to 64 characters) for WPA/WPA2 encryption.
-	// The password will be used to connect to the mesh router.
-	// 
-	// To apply configuration changes to the WIFI Extension 2.0 the
-	// SaveWifi2Configuration function has to be called and the Master Brick
-	// has to be restarted afterwards.
-	// 
-	// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) SetWifi2MeshRouterPassword(password string) (err error) {    
+// 
+// Sets the mesh router password (up to 64 characters) for WPA/WPA2 encryption.
+// The password will be used to connect to the mesh router.
+// 
+// To apply configuration changes to the WIFI Extension 2.0 the
+// SaveWifi2Configuration function has to be called and the Master Brick
+// has to be restarted afterwards.
+// 
+// It is recommended to use the Brick Viewer to configure the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) SetWifi2MeshRouterPassword(password string) (err error) {
         var buf bytes.Buffer
     password_byte_slice, err := StringToByteSlice(password, 64)
 	if err != nil { return }
@@ -4161,7 +4164,7 @@ func (device *MasterBrick) SetWifi2MeshRouterPassword(password string) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4170,16 +4173,16 @@ func (device *MasterBrick) SetWifi2MeshRouterPassword(password string) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the mesh router password as set by SetWifi2MeshRouterPassword.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err error) {    
+// 
+// Returns the mesh router password as set by SetWifi2MeshRouterPassword.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshRouterPassword), buf.Bytes())
@@ -4188,7 +4191,7 @@ func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return password, BrickletError(header.ErrorCode)
@@ -4198,15 +4201,15 @@ func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err er
         password = ByteSliceToString(resultBuf.Next(64))
 
     }
-    
+
     return password, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the common mesh status of the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
+// 
+// Returns the common mesh status of the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -4218,7 +4221,7 @@ func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err er
 //	* Wifi2MeshStatusAPAvailable
 //	* Wifi2MeshStatusAPSetup
 //	* Wifi2MeshStatusLeafAvailable
-func (device *MasterBrick) GetWifi2MeshCommonStatus() (status Wifi2MeshStatus, rootNode bool, rootCandidate bool, connectedNodes uint16, rxCount uint32, txCount uint32, err error) {    
+func (device *MasterBrick) GetWifi2MeshCommonStatus() (status Wifi2MeshStatus, rootNode bool, rootCandidate bool, connectedNodes uint16, rxCount uint32, txCount uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshCommonStatus), buf.Bytes())
@@ -4227,7 +4230,7 @@ func (device *MasterBrick) GetWifi2MeshCommonStatus() (status Wifi2MeshStatus, r
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, BrickletError(header.ErrorCode)
@@ -4242,16 +4245,16 @@ func (device *MasterBrick) GetWifi2MeshCommonStatus() (status Wifi2MeshStatus, r
 	binary.Read(resultBuf, binary.LittleEndian, &txCount)
 
     }
-    
+
     return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the mesh client status of the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2MeshClientStatus() (hostname string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, err error) {    
+// 
+// Returns the mesh client status of the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2MeshClientStatus() (hostname string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshClientStatus), buf.Bytes())
@@ -4260,7 +4263,7 @@ func (device *MasterBrick) GetWifi2MeshClientStatus() (hostname string, ip [4]ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return hostname, ip, subnetMask, gateway, macAddress, BrickletError(header.ErrorCode)
@@ -4274,16 +4277,16 @@ func (device *MasterBrick) GetWifi2MeshClientStatus() (hostname string, ip [4]ui
 	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
 
     }
-    
+
     return hostname, ip, subnetMask, gateway, macAddress, nil
 }
 
 // Requires WIFI Extension 2.0 firmware 2.1.0.
-	// 
-	// Returns the mesh AP status of the WIFI Extension 2.0.
-	// 
-	// .. versionadded:: 2.4.2$nbsp;(Firmware)
-func (device *MasterBrick) GetWifi2MeshAPStatus() (ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, err error) {    
+// 
+// Returns the mesh AP status of the WIFI Extension 2.0.
+// 
+// .. versionadded:: 2.4.2$nbsp;(Firmware)
+func (device *MasterBrick) GetWifi2MeshAPStatus() (ssid string, ip [4]uint8, subnetMask [4]uint8, gateway [4]uint8, macAddress [6]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWifi2MeshAPStatus), buf.Bytes())
@@ -4292,7 +4295,7 @@ func (device *MasterBrick) GetWifi2MeshAPStatus() (ssid string, ip [4]uint8, sub
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ssid, ip, subnetMask, gateway, macAddress, BrickletError(header.ErrorCode)
@@ -4306,35 +4309,35 @@ func (device *MasterBrick) GetWifi2MeshAPStatus() (ssid string, ip [4]uint8, sub
 	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
 
     }
-    
+
     return ssid, ip, subnetMask, gateway, macAddress, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
-	// enabled, the Brick will try to adapt the baudrate for the communication
-	// between Bricks and Bricklets according to the amount of data that is transferred.
-	// 
-	// The baudrate will be increased exponentially if lots of data is send/received and
-	// decreased linearly if little data is send/received.
-	// 
-	// This lowers the baudrate in applications where little data is transferred (e.g.
-	// a weather station) and increases the robustness. If there is lots of data to transfer
-	// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
-	// 
-	// In cases where some data has to transferred as fast as possible every few seconds
-	// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
-	// the dynamic baudrate off to get the highest possible performance.
-	// 
-	// The maximum value of the baudrate can be set per port with the function
-	// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
-	// as set by SetSPITFPBaudrate will be used statically.
-	// 
-	// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-	// 
-	// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-	// 
-	// .. versionadded:: 2.4.6$nbsp;(Firmware)
-func (device *MasterBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {    
+// enabled, the Brick will try to adapt the baudrate for the communication
+// between Bricks and Bricklets according to the amount of data that is transferred.
+// 
+// The baudrate will be increased exponentially if lots of data is send/received and
+// decreased linearly if little data is send/received.
+// 
+// This lowers the baudrate in applications where little data is transferred (e.g.
+// a weather station) and increases the robustness. If there is lots of data to transfer
+// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
+// 
+// In cases where some data has to transferred as fast as possible every few seconds
+// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
+// the dynamic baudrate off to get the highest possible performance.
+// 
+// The maximum value of the baudrate can be set per port with the function
+// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
+// as set by SetSPITFPBaudrate will be used statically.
+// 
+// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
+// 
+// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
+// 
+// .. versionadded:: 2.4.6$nbsp;(Firmware)
+func (device *MasterBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
@@ -4345,7 +4348,7 @@ func (device *MasterBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, m
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4354,14 +4357,14 @@ func (device *MasterBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, m
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
-	// 
-	// .. versionadded:: 2.4.6$nbsp;(Firmware)
-func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.4.6$nbsp;(Firmware)
+func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
@@ -4370,7 +4373,7 @@ func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
@@ -4381,18 +4384,18 @@ func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
     }
-    
+
     return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
-	// 
-	// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
-	// 
-	// This function is mostly used for debugging during development, in normal operation
-	// the counters should nearly always stay at 0.
-	// 
-	// .. versionadded:: 2.4.3$nbsp;(Firmware)
+// 
+// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
+// 
+// This function is mostly used for debugging during development, in normal operation
+// the counters should nearly always stay at 0.
+// 
+// .. versionadded:: 2.4.3$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -4404,7 +4407,7 @@ func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool
 //	* CommunicationMethodWIFI
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
-func (device *MasterBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {    
+func (device *MasterBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
@@ -4414,7 +4417,7 @@ func (device *MasterBrick) GetSendTimeoutCount(communicationMethod Communication
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return timeoutCount, BrickletError(header.ErrorCode)
@@ -4424,29 +4427,29 @@ func (device *MasterBrick) GetSendTimeoutCount(communicationMethod Communication
         binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
     }
-    
+
     return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-	// baudrate can be in the range 400000 to 2000000.
-	// 
-	// If you want to increase the throughput of Bricklets you can increase
-	// the baudrate. If you get a high error count because of high
-	// interference (see GetSPITFPErrorCount) you can decrease the
-	// baudrate.
-	// 
-	// If the dynamic baudrate feature is enabled, the baudrate set by this
-	// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
-	// 
-	// Regulatory testing is done with the default baudrate. If CE compatibility
-	// or similar is necessary in you applications we recommend to not change
-	// the baudrate.
-	// 
-	// The default baudrate for all ports is 1400000.
-	// 
-	// .. versionadded:: 2.4.3$nbsp;(Firmware)
-func (device *MasterBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {    
+// baudrate can be in the range 400000 to 2000000.
+// 
+// If you want to increase the throughput of Bricklets you can increase
+// the baudrate. If you get a high error count because of high
+// interference (see GetSPITFPErrorCount) you can decrease the
+// baudrate.
+// 
+// If the dynamic baudrate feature is enabled, the baudrate set by this
+// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
+// 
+// Regulatory testing is done with the default baudrate. If CE compatibility
+// or similar is necessary in you applications we recommend to not change
+// the baudrate.
+// 
+// The default baudrate for all ports is 1400000.
+// 
+// .. versionadded:: 2.4.3$nbsp;(Firmware)
+func (device *MasterBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
@@ -4457,7 +4460,7 @@ func (device *MasterBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4466,14 +4469,14 @@ func (device *MasterBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
-	// 
-	// .. versionadded:: 2.4.3$nbsp;(Firmware)
-func (device *MasterBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.4.3$nbsp;(Firmware)
+func (device *MasterBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -4483,7 +4486,7 @@ func (device *MasterBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudrate, BrickletError(header.ErrorCode)
@@ -4493,24 +4496,24 @@ func (device *MasterBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32
         binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
     }
-    
+
     return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Brick side. All
-	// Bricklets have a similar function that returns the errors on the Bricklet side.
-	// 
-	// .. versionadded:: 2.4.3$nbsp;(Firmware)
-func (device *MasterBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Brick side. All
+// Bricklets have a similar function that returns the errors on the Bricklet side.
+// 
+// .. versionadded:: 2.4.3$nbsp;(Firmware)
+func (device *MasterBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -4520,7 +4523,7 @@ func (device *MasterBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACK
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -4533,19 +4536,19 @@ func (device *MasterBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACK
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *MasterBrick) EnableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *MasterBrick) EnableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
@@ -4554,7 +4557,7 @@ func (device *MasterBrick) EnableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4563,19 +4566,19 @@ func (device *MasterBrick) EnableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *MasterBrick) DisableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *MasterBrick) DisableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
@@ -4584,7 +4587,7 @@ func (device *MasterBrick) DisableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4593,14 +4596,14 @@ func (device *MasterBrick) DisableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *MasterBrick) IsStatusLEDEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *MasterBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
@@ -4609,7 +4612,7 @@ func (device *MasterBrick) IsStatusLEDEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -4619,16 +4622,16 @@ func (device *MasterBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
-	// given port.
-	// 
-	// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
-	// plugins.
-func (device *MasterBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {    
+// given port.
+// 
+// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
+// plugins.
+func (device *MasterBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, port);
 
@@ -4638,7 +4641,7 @@ func (device *MasterBrick) GetProtocol1BrickletName(port rune) (protocolVersion 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
@@ -4650,17 +4653,17 @@ func (device *MasterBrick) GetProtocol1BrickletName(port rune) (protocolVersion 
 	name = ByteSliceToString(resultBuf.Next(40))
 
     }
-    
+
     return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has an
-	// accuracy of +-15%. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *MasterBrick) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has an
+// accuracy of +-15%. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *MasterBrick) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -4669,7 +4672,7 @@ func (device *MasterBrick) GetChipTemperature() (temperature int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -4679,17 +4682,17 @@ func (device *MasterBrick) GetChipTemperature() (temperature int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
-	// on a Brick inside of a stack will reset the whole stack.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *MasterBrick) Reset() (err error) {    
+// on a Brick inside of a stack will reset the whole stack.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *MasterBrick) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -4698,7 +4701,7 @@ func (device *MasterBrick) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -4707,19 +4710,19 @@ func (device *MasterBrick) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be '0'-'8' (stack position).
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *MasterBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be '0'-'8' (stack position).
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *MasterBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -4728,7 +4731,7 @@ func (device *MasterBrick) GetIdentity() (uid string, connectedUid string, posit
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -4743,6 +4746,6 @@ func (device *MasterBrick) GetIdentity() (uid string, connectedUid string, posit
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

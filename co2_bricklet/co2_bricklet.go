@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -73,17 +73,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (CO2Bricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *CO2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -92,7 +92,7 @@ func (device *CO2Bricklet) GetResponseExpected(functionID Function) (bool, error
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -112,11 +112,11 @@ func (device *CO2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetCO2ConcentrationCallbackPeriod. The parameter is the CO2
-	// concentration of the sensor.
-	// 
-	// The RegisterCO2ConcentrationCallback callback is only triggered if the CO2 concentration
-	// has changed since the last triggering.
+// SetCO2ConcentrationCallbackPeriod. The parameter is the CO2
+// concentration of the sensor.
+// 
+// The RegisterCO2ConcentrationCallback callback is only triggered if the CO2 concentration
+// has changed since the last triggering.
 func (device *CO2Bricklet) RegisterCO2ConcentrationCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -128,17 +128,17 @@ func (device *CO2Bricklet) RegisterCO2ConcentrationCallback(fn func(uint16)) uin
 }
 
 //Remove a registered CO2 Concentration callback.
-func (device *CO2Bricklet) DeregisterCO2ConcentrationCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCO2Concentration), callbackID)
+func (device *CO2Bricklet) DeregisterCO2ConcentrationCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCO2Concentration), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetCO2ConcentrationCallbackThreshold is reached.
-	// The parameter is the CO2 concentration.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetCO2ConcentrationCallbackThreshold is reached.
+// The parameter is the CO2 concentration.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *CO2Bricklet) RegisterCO2ConcentrationReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -150,19 +150,19 @@ func (device *CO2Bricklet) RegisterCO2ConcentrationReachedCallback(fn func(uint1
 }
 
 //Remove a registered CO2 Concentration Reached callback.
-func (device *CO2Bricklet) DeregisterCO2ConcentrationReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCO2ConcentrationReached), callbackID)
+func (device *CO2Bricklet) DeregisterCO2ConcentrationReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCO2ConcentrationReached), registrationID)
 }
 
 
 // Returns the measured CO2 concentration. The value is in
-	// https://en.wikipedia.org/wiki/Parts-per_notation
-	// and between 0 to 10000.
-	// 
-	// If you want to get the CO2 concentration periodically, it is recommended to use
-	// the RegisterCO2ConcentrationCallback callback and set the period with
-	// SetCO2ConcentrationCallbackPeriod.
-func (device *CO2Bricklet) GetCO2Concentration() (co2Concentration uint16, err error) {    
+// https://en.wikipedia.org/wiki/Parts-per_notation
+// and between 0 to 10000.
+// 
+// If you want to get the CO2 concentration periodically, it is recommended to use
+// the RegisterCO2ConcentrationCallback callback and set the period with
+// SetCO2ConcentrationCallbackPeriod.
+func (device *CO2Bricklet) GetCO2Concentration() (co2Concentration uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCO2Concentration), buf.Bytes())
@@ -171,7 +171,7 @@ func (device *CO2Bricklet) GetCO2Concentration() (co2Concentration uint16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return co2Concentration, BrickletError(header.ErrorCode)
@@ -181,18 +181,18 @@ func (device *CO2Bricklet) GetCO2Concentration() (co2Concentration uint16, err e
         binary.Read(resultBuf, binary.LittleEndian, &co2Concentration)
 
     }
-    
+
     return co2Concentration, nil
 }
 
 // Sets the period in ms with which the RegisterCO2ConcentrationCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterCO2ConcentrationCallback callback is only triggered if the CO2 concentration
-	// has changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *CO2Bricklet) SetCO2ConcentrationCallbackPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+// 
+// The RegisterCO2ConcentrationCallback callback is only triggered if the CO2 concentration
+// has changed since the last triggering.
+// 
+// The default value is 0.
+func (device *CO2Bricklet) SetCO2ConcentrationCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -202,7 +202,7 @@ func (device *CO2Bricklet) SetCO2ConcentrationCallbackPeriod(period uint32) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -211,12 +211,12 @@ func (device *CO2Bricklet) SetCO2ConcentrationCallbackPeriod(period uint32) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetCO2ConcentrationCallbackPeriod.
-func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, err error) {    
+func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCO2ConcentrationCallbackPeriod), buf.Bytes())
@@ -225,7 +225,7 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -235,23 +235,23 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, e
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterCO2ConcentrationReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the CO2 concentration is *outside* the min and max values
-	//  'i'|    Callback is triggered when the CO2 concentration is *inside* the min and max values
-	//  '<'|    Callback is triggered when the CO2 concentration is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the CO2 concentration is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the CO2 concentration is *outside* the min and max values
+//  'i'|    Callback is triggered when the CO2 concentration is *inside* the min and max values
+//  '<'|    Callback is triggered when the CO2 concentration is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the CO2 concentration is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -260,7 +260,7 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, e
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *CO2Bricklet) SetCO2ConcentrationCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *CO2Bricklet) SetCO2ConcentrationCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -272,7 +272,7 @@ func (device *CO2Bricklet) SetCO2ConcentrationCallbackThreshold(option Threshold
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -281,7 +281,7 @@ func (device *CO2Bricklet) SetCO2ConcentrationCallbackThreshold(option Threshold
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -294,7 +294,7 @@ func (device *CO2Bricklet) SetCO2ConcentrationCallbackThreshold(option Threshold
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCO2ConcentrationCallbackThreshold), buf.Bytes())
@@ -303,7 +303,7 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option Thresh
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -315,22 +315,22 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option Thresh
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterCO2ConcentrationReachedCallback,
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetCO2ConcentrationCallbackThreshold,
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-func (device *CO2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterCO2ConcentrationReachedCallback,
+// 
+// are triggered, if the thresholds
+// 
+// * SetCO2ConcentrationCallbackThreshold,
+// 
+// keep being reached.
+// 
+// The default value is 100.
+func (device *CO2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -340,7 +340,7 @@ func (device *CO2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -349,12 +349,12 @@ func (device *CO2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *CO2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *CO2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -363,7 +363,7 @@ func (device *CO2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -373,19 +373,19 @@ func (device *CO2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *CO2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *CO2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -394,7 +394,7 @@ func (device *CO2Bricklet) GetIdentity() (uid string, connectedUid string, posit
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -409,6 +409,6 @@ func (device *CO2Bricklet) GetIdentity() (uid string, connectedUid string, posit
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

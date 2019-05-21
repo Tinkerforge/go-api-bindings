@@ -162,18 +162,8 @@ func RuneSliceToByteSlice(slice []rune) []byte {
 }
 
 func ByteSliceToString(slice []byte) string {
-	result := make([]rune, len(slice))
-
-	last := 0
-	for i, b := range slice {
-		if b == 0 {
-			continue
-		}
-		last = i
-		result[i] = rune(b)
-	}
-
-	return string(result[:last])
+	n := bytes.IndexByte(slice, 0)
+	return string(slice[:n])
 }
 
 func StringToByteSlice(str string, maxLen uint64) ([]byte, error) {
@@ -181,7 +171,7 @@ func StringToByteSlice(str string, maxLen uint64) ([]byte, error) {
 	bytes := make([]byte, maxLen, maxLen)
 
 	if uint64(len(runes)) > maxLen {
-		return nil, fmt.Errorf("invalid parameter: string was %d runes long, but only %d are allowed", len(runes), maxLen)
+		return nil, fmt.Errorf("invalid parameter: string is %d runes long, but only %d are allowed", len(runes), maxLen)
 	}
 
 	for i, r := range runes {

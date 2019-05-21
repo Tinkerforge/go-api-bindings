@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -261,17 +261,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LCD128x64Bricklet, error
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LCD128x64Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -280,7 +280,7 @@ func (device *LCD128x64Bricklet) GetResponseExpected(functionID Function) (bool,
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -300,8 +300,8 @@ func (device *LCD128x64Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetTouchPositionCallbackConfiguration. The parameters are the
-	// same as for GetTouchPosition.
+// SetTouchPositionCallbackConfiguration. The parameters are the
+// same as for GetTouchPosition.
 func (device *LCD128x64Bricklet) RegisterTouchPositionCallback(fn func(uint16, uint16, uint16, uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -319,14 +319,14 @@ binary.Read(buf, binary.LittleEndian, &age)
 }
 
 //Remove a registered Touch Position callback.
-func (device *LCD128x64Bricklet) DeregisterTouchPositionCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTouchPosition), callbackID)
+func (device *LCD128x64Bricklet) DeregisterTouchPositionCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTouchPosition), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetTouchGestureCallbackConfiguration. The parameters are the
-	// same as for GetTouchGesture.
+// SetTouchGestureCallbackConfiguration. The parameters are the
+// same as for GetTouchGesture.
 func (device *LCD128x64Bricklet) RegisterTouchGestureCallback(fn func(Gesture, uint32, uint16, uint16, uint16, uint16, uint16, uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -352,16 +352,16 @@ binary.Read(buf, binary.LittleEndian, &age)
 }
 
 //Remove a registered Touch Gesture callback.
-func (device *LCD128x64Bricklet) DeregisterTouchGestureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTouchGesture), callbackID)
+func (device *LCD128x64Bricklet) DeregisterTouchGestureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTouchGesture), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetGUIButtonPressedCallbackConfiguration. The parameters are the
-	// same as for GetGUIButtonPressed.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// SetGUIButtonPressedCallbackConfiguration. The parameters are the
+// same as for GetGUIButtonPressed.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) RegisterGUIButtonPressedCallback(fn func(uint8, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -375,16 +375,16 @@ binary.Read(buf, binary.LittleEndian, &pressed)
 }
 
 //Remove a registered GUI Button Pressed callback.
-func (device *LCD128x64Bricklet) DeregisterGUIButtonPressedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackGUIButtonPressed), callbackID)
+func (device *LCD128x64Bricklet) DeregisterGUIButtonPressedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackGUIButtonPressed), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetGUISliderValueCallbackConfiguration. The parameters are the
-	// same as for GetGUISliderValue.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// SetGUISliderValueCallbackConfiguration. The parameters are the
+// same as for GetGUISliderValue.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) RegisterGUISliderValueCallback(fn func(uint8, uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -398,16 +398,16 @@ binary.Read(buf, binary.LittleEndian, &value)
 }
 
 //Remove a registered GUI Slider Value callback.
-func (device *LCD128x64Bricklet) DeregisterGUISliderValueCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackGUISliderValue), callbackID)
+func (device *LCD128x64Bricklet) DeregisterGUISliderValueCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackGUISliderValue), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetGUITabSelectedCallbackConfiguration. The parameters are the
-	// same as for GetGUITabSelected.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// SetGUITabSelectedCallbackConfiguration. The parameters are the
+// same as for GetGUITabSelected.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) RegisterGUITabSelectedCallback(fn func(int8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -419,29 +419,29 @@ func (device *LCD128x64Bricklet) RegisterGUITabSelectedCallback(fn func(int8)) u
 }
 
 //Remove a registered GUI Tab Selected callback.
-func (device *LCD128x64Bricklet) DeregisterGUITabSelectedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackGUITabSelected), callbackID)
+func (device *LCD128x64Bricklet) DeregisterGUITabSelectedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackGUITabSelected), registrationID)
 }
 
 
 // Writes pixels to the specified window.
-	// 
-	// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-	// into the window line by line top to bottom and each line is written from left to
-	// right.
-	// 
-	// If automatic draw is enabled (default) the pixels are directly written to
-	// the screen. Only pixels that have actually changed are updated on the screen,
-	// the rest stays the same.
-	// 
-	// If automatic draw is disabled the pixels are written to an internal buffer and
-	// the buffer is transferred to the display only after DrawBufferedFrame
-	// is called. This can be used to avoid flicker when drawing a complex frame in
-	// multiple steps.
-	// 
-	// Automatic draw can be configured with the SetDisplayConfiguration
-	// function.
-func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8, pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [448]bool) (err error) {    
+// 
+// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
+// into the window line by line top to bottom and each line is written from left to
+// right.
+// 
+// If automatic draw is enabled (default) the pixels are directly written to
+// the screen. Only pixels that have actually changed are updated on the screen,
+// the rest stays the same.
+// 
+// If automatic draw is disabled the pixels are written to an internal buffer and
+// the buffer is transferred to the display only after DrawBufferedFrame
+// is called. This can be used to avoid flicker when drawing a complex frame in
+// multiple steps.
+// 
+// Automatic draw can be configured with the SetDisplayConfiguration
+// function.
+func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8, pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [448]bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
@@ -457,7 +457,7 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -466,28 +466,28 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes pixels to the specified window.
-	// 
-	// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-	// into the window line by line top to bottom and each line is written from left to
-	// right.
-	// 
-	// If automatic draw is enabled (default) the pixels are directly written to
-	// the screen. Only pixels that have actually changed are updated on the screen,
-	// the rest stays the same.
-	// 
-	// If automatic draw is disabled the pixels are written to an internal buffer and
-	// the buffer is transferred to the display only after DrawBufferedFrame
-	// is called. This can be used to avoid flicker when drawing a complex frame in
-	// multiple steps.
-	// 
-	// Automatic draw can be configured with the SetDisplayConfiguration
-	// function.
-	func (device *LCD128x64Bricklet) WritePixels(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8, pixels []bool) (err error) {            
+// 
+// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
+// into the window line by line top to bottom and each line is written from left to
+// right.
+// 
+// If automatic draw is enabled (default) the pixels are directly written to
+// the screen. Only pixels that have actually changed are updated on the screen,
+// the rest stays the same.
+// 
+// If automatic draw is disabled the pixels are written to an internal buffer and
+// the buffer is transferred to the display only after DrawBufferedFrame
+// is called. This can be used to avoid flicker when drawing a complex frame in
+// multiple steps.
+// 
+// Automatic draw can be configured with the SetDisplayConfiguration
+// function.
+	func (device *LCD128x64Bricklet) WritePixels(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8, pixels []bool) (err error) {
         _, err = device.device.SetHighLevel(func(pixelsLength uint64, pixelsChunkOffset uint64, pixelsChunkData []byte) (LowLevelWriteResult, error) {
             arr := [448]bool{}
             copy(arr[:], ByteSliceToBoolSlice(pixelsChunkData))
@@ -500,7 +500,7 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
             return LowLevelWriteResult{
                 uint64(448),
                 lowLevelResults.Bytes()}, err
-        }, 0, 1, 448, BoolSliceToByteSlice(pixels))   
+        }, 0, 1, 448, BoolSliceToByteSlice(pixels))
 
          if err != nil {
             return
@@ -513,20 +513,20 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
     }
 
 // Reads pixels from the specified window.
-	// 
-	// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-	// from the window line by line top to bottom and each line is read from left to
-	// right.
-	// 
-	// If automatic draw is enabled (default) the pixels that are read are always the
-	// same that are shown on the display.
-	// 
-	// If automatic draw is disabled the pixels are read from the internal buffer
-	// (see DrawBufferedFrame).
-	// 
-	// Automatic draw can be configured with the SetDisplayConfiguration
-	// function.
-func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8) (pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [480]bool, err error) {    
+// 
+// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
+// from the window line by line top to bottom and each line is read from left to
+// right.
+// 
+// If automatic draw is enabled (default) the pixels that are read are always the
+// same that are shown on the display.
+// 
+// If automatic draw is disabled the pixels are read from the internal buffer
+// (see DrawBufferedFrame).
+// 
+// Automatic draw can be configured with the SetDisplayConfiguration
+// function.
+func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8) (pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [480]bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
@@ -539,7 +539,7 @@ func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return pixelsLength, pixelsChunkOffset, pixelsChunkData, BrickletError(header.ErrorCode)
@@ -551,27 +551,27 @@ func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, 
 	copy(pixelsChunkData[:], ByteSliceToBoolSlice(resultBuf.Next(1 * 480/8)))
 
     }
-    
+
     return pixelsLength, pixelsChunkOffset, pixelsChunkData, nil
 }
 
 // Reads pixels from the specified window.
-	// 
-	// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-	// from the window line by line top to bottom and each line is read from left to
-	// right.
-	// 
-	// If automatic draw is enabled (default) the pixels that are read are always the
-	// same that are shown on the display.
-	// 
-	// If automatic draw is disabled the pixels are read from the internal buffer
-	// (see DrawBufferedFrame).
-	// 
-	// Automatic draw can be configured with the SetDisplayConfiguration
-	// function.
+// 
+// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
+// from the window line by line top to bottom and each line is read from left to
+// right.
+// 
+// If automatic draw is enabled (default) the pixels that are read are always the
+// same that are shown on the display.
+// 
+// If automatic draw is disabled the pixels are read from the internal buffer
+// (see DrawBufferedFrame).
+// 
+// Automatic draw can be configured with the SetDisplayConfiguration
+// function.
 	func (device *LCD128x64Bricklet) ReadPixels(xStart uint8, yStart uint8, xEnd uint8, yEnd uint8) (pixels []bool, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadPixelsLowLevel(xStart, yStart, xEnd, yEnd)            
+            pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadPixelsLowLevel(xStart, yStart, xEnd, yEnd)
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -597,7 +597,7 @@ func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, 
     }
 
 // Clears the complete content of the display.
-func (device *LCD128x64Bricklet) ClearDisplay() (err error) {    
+func (device *LCD128x64Bricklet) ClearDisplay() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionClearDisplay), buf.Bytes())
@@ -606,7 +606,7 @@ func (device *LCD128x64Bricklet) ClearDisplay() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -615,23 +615,23 @@ func (device *LCD128x64Bricklet) ClearDisplay() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the configuration of the display.
-	// 
-	// You can set a contrast value from 0 to 63, a backlight intensity value
-	// from 0 to 100 and you can invert the color (white/black) of the display.
-	// 
-	// If automatic draw is set to *true*, the display is automatically updated with every
-	// call of WritePixels and WriteLine. If it is set to false, the
-	// changes are written into an internal buffer and only shown on the display after
-	// a call of DrawBufferedFrame.
-	// 
-	// The default values are contrast 14, backlight intensity 100, inverting off
-	// and automatic draw on.
-func (device *LCD128x64Bricklet) SetDisplayConfiguration(contrast uint8, backlight uint8, invert bool, automaticDraw bool) (err error) {    
+// 
+// You can set a contrast value from 0 to 63, a backlight intensity value
+// from 0 to 100 and you can invert the color (white/black) of the display.
+// 
+// If automatic draw is set to *true*, the display is automatically updated with every
+// call of WritePixels and WriteLine. If it is set to false, the
+// changes are written into an internal buffer and only shown on the display after
+// a call of DrawBufferedFrame.
+// 
+// The default values are contrast 14, backlight intensity 100, inverting off
+// and automatic draw on.
+func (device *LCD128x64Bricklet) SetDisplayConfiguration(contrast uint8, backlight uint8, invert bool, automaticDraw bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, contrast);
 	binary.Write(&buf, binary.LittleEndian, backlight);
@@ -644,7 +644,7 @@ func (device *LCD128x64Bricklet) SetDisplayConfiguration(contrast uint8, backlig
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -653,12 +653,12 @@ func (device *LCD128x64Bricklet) SetDisplayConfiguration(contrast uint8, backlig
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetDisplayConfiguration.
-func (device *LCD128x64Bricklet) GetDisplayConfiguration() (contrast uint8, backlight uint8, invert bool, automaticDraw bool, err error) {    
+func (device *LCD128x64Bricklet) GetDisplayConfiguration() (contrast uint8, backlight uint8, invert bool, automaticDraw bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDisplayConfiguration), buf.Bytes())
@@ -667,7 +667,7 @@ func (device *LCD128x64Bricklet) GetDisplayConfiguration() (contrast uint8, back
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return contrast, backlight, invert, automaticDraw, BrickletError(header.ErrorCode)
@@ -680,23 +680,23 @@ func (device *LCD128x64Bricklet) GetDisplayConfiguration() (contrast uint8, back
 	binary.Read(resultBuf, binary.LittleEndian, &automaticDraw)
 
     }
-    
+
     return contrast, backlight, invert, automaticDraw, nil
 }
 
 // Writes text to a specific line (0 to 7) with a specific position
-	// (0 to 21). The text can have a maximum of 22 characters.
-	// 
-	// For example: (1, 10, Hello) will write *Hello* in the middle of the
-	// second line of the display.
-	// 
-	// The display uses a special 5x7 pixel charset. You can view the characters
-	// of the charset in Brick Viewer.
-	// 
-	// This function is a 1:1 replacement for the function with the same name
-	// in the LCD 20x4 Bricklet. You can draw text at a specific pixel position
-	// and with different font sizes with the DrawText function.
-func (device *LCD128x64Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {    
+// (0 to 21). The text can have a maximum of 22 characters.
+// 
+// For example: (1, 10, Hello) will write *Hello* in the middle of the
+// second line of the display.
+// 
+// The display uses a special 5x7 pixel charset. You can view the characters
+// of the charset in Brick Viewer.
+// 
+// This function is a 1:1 replacement for the function with the same name
+// in the LCD 20x4 Bricklet. You can draw text at a specific pixel position
+// and with different font sizes with the DrawText function.
+func (device *LCD128x64Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, line);
 	binary.Write(&buf, binary.LittleEndian, position);
@@ -710,7 +710,7 @@ func (device *LCD128x64Bricklet) WriteLine(line uint8, position uint8, text stri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -719,20 +719,20 @@ func (device *LCD128x64Bricklet) WriteLine(line uint8, position uint8, text stri
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Draws the currently buffered frame. Normally each call of WritePixels and
-	// WriteLine draws directly onto the display. If you turn automatic draw off
-	// (SetDisplayConfiguration), the data is written in an internal buffer and
-	// only transferred to the display by calling this function. This can be used to
-	// avoid flicker when drawing a complex frame in multiple steps.
-	// 
-	// Set the `force complete redraw` to *true* to redraw the whole display
-	// instead of only the changed parts. Normally it should not be necessary to set this to
-	// *true*. It may only become necessary in case of stuck pixels because of errors.
-func (device *LCD128x64Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) (err error) {    
+// WriteLine draws directly onto the display. If you turn automatic draw off
+// (SetDisplayConfiguration), the data is written in an internal buffer and
+// only transferred to the display by calling this function. This can be used to
+// avoid flicker when drawing a complex frame in multiple steps.
+// 
+// Set the `force complete redraw` to *true* to redraw the whole display
+// instead of only the changed parts. Normally it should not be necessary to set this to
+// *true*. It may only become necessary in case of stuck pixels because of errors.
+func (device *LCD128x64Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, forceCompleteRedraw);
 
@@ -742,7 +742,7 @@ func (device *LCD128x64Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) (er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -751,17 +751,17 @@ func (device *LCD128x64Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) (er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the last valid touch position:
-	// 
-	// * Pressure: Amount of pressure applied by the user (0-300)
-	// * X: Touch position on x-axis (0-127)
-	// * Y: Touch position on y-axis (0-63)
-	// * Age: Age of touch press in ms (how long ago it was)
-func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, y uint16, age uint32, err error) {    
+// 
+// * Pressure: Amount of pressure applied by the user (0-300)
+// * X: Touch position on x-axis (0-127)
+// * Y: Touch position on y-axis (0-63)
+// * Age: Age of touch press in ms (how long ago it was)
+func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, y uint16, age uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTouchPosition), buf.Bytes())
@@ -770,7 +770,7 @@ func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return pressure, x, y, age, BrickletError(header.ErrorCode)
@@ -783,22 +783,22 @@ func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, 
 	binary.Read(resultBuf, binary.LittleEndian, &age)
 
     }
-    
+
     return pressure, x, y, age, nil
 }
 
 // The period in ms is the period with which the RegisterTouchPositionCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *LCD128x64Bricklet) SetTouchPositionCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *LCD128x64Bricklet) SetTouchPositionCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -809,7 +809,7 @@ func (device *LCD128x64Bricklet) SetTouchPositionCallbackConfiguration(period ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -818,13 +818,13 @@ func (device *LCD128x64Bricklet) SetTouchPositionCallbackConfiguration(period ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetTouchPositionCallbackConfiguration.
-func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetTouchPositionCallbackConfiguration.
+func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTouchPositionCallbackConfiguration), buf.Bytes())
@@ -833,7 +833,7 @@ func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -844,19 +844,19 @@ func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns one of four touch gestures that can be automatically detected by the Bricklet.
-	// 
-	// The gestures are swipes from left to right, right to left, top to bottom and bottom to top.
-	// 
-	// Additionally to the gestures a vector with a start and end position of the gesture is
-	// provided. You can use this vector do determine a more exact location of the gesture (e.g.
-	// the swipe from top to bottom was on the left or right part of the screen).
-	// 
-	// The age parameter corresponds to the age of gesture in ms (how long ago it was).
+// 
+// The gestures are swipes from left to right, right to left, top to bottom and bottom to top.
+// 
+// Additionally to the gestures a vector with a start and end position of the gesture is
+// provided. You can use this vector do determine a more exact location of the gesture (e.g.
+// the swipe from top to bottom was on the left or right part of the screen).
+// 
+// The age parameter corresponds to the age of gesture in ms (how long ago it was).
 //
 // Associated constants:
 //
@@ -864,7 +864,7 @@ func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period
 //	* GestureRightToLeft
 //	* GestureTopToBottom
 //	* GestureBottomToTop
-func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration uint32, pressureMax uint16, xStart uint16, yStart uint16, xEnd uint16, yEnd uint16, age uint32, err error) {    
+func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration uint32, pressureMax uint16, xStart uint16, yStart uint16, xEnd uint16, yEnd uint16, age uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTouchGesture), buf.Bytes())
@@ -873,7 +873,7 @@ func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return gesture, duration, pressureMax, xStart, yStart, xEnd, yEnd, age, BrickletError(header.ErrorCode)
@@ -890,22 +890,22 @@ func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration ui
 	binary.Read(resultBuf, binary.LittleEndian, &age)
 
     }
-    
+
     return gesture, duration, pressureMax, xStart, yStart, xEnd, yEnd, age, nil
 }
 
 // The period in ms is the period with which the RegisterTouchGestureCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *LCD128x64Bricklet) SetTouchGestureCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *LCD128x64Bricklet) SetTouchGestureCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -916,7 +916,7 @@ func (device *LCD128x64Bricklet) SetTouchGestureCallbackConfiguration(period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -925,13 +925,13 @@ func (device *LCD128x64Bricklet) SetTouchGestureCallbackConfiguration(period uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetTouchGestureCallbackConfiguration.
-func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetTouchGestureCallbackConfiguration.
+func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTouchGestureCallbackConfiguration), buf.Bytes())
@@ -940,7 +940,7 @@ func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -951,21 +951,21 @@ func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period 
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Draws a white or black line from (x, y)-start to (x, y)-end.
-	// The x values have to be within the range of 0 to 127 and the y
-	// values have t be within the range of 0 to 63.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// The x values have to be within the range of 0 to 127 and the y
+// values have t be within the range of 0 to 63.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* ColorWhite
 //	* ColorBlack
-func (device *LCD128x64Bricklet) DrawLine(positionXStart uint8, positionYStart uint8, positionXEnd uint8, positionYEnd uint8, color Color) (err error) {    
+func (device *LCD128x64Bricklet) DrawLine(positionXStart uint8, positionYStart uint8, positionXEnd uint8, positionYEnd uint8, color Color) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, positionXStart);
 	binary.Write(&buf, binary.LittleEndian, positionYStart);
@@ -979,7 +979,7 @@ func (device *LCD128x64Bricklet) DrawLine(positionXStart uint8, positionYStart u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -988,24 +988,24 @@ func (device *LCD128x64Bricklet) DrawLine(positionXStart uint8, positionYStart u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Draws a white or black box from (x, y)-start to (x, y)-end.
-	// The x values have to be within the range of 0 to 127 and the y
-	// values have to be within the range of 0 to 63.
-	// 
-	// If you set fill to true, the box will be filled with the
-	// color. Otherwise only the outline will be drawn.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// The x values have to be within the range of 0 to 127 and the y
+// values have to be within the range of 0 to 63.
+// 
+// If you set fill to true, the box will be filled with the
+// color. Otherwise only the outline will be drawn.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* ColorWhite
 //	* ColorBlack
-func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart uint8, positionXEnd uint8, positionYEnd uint8, fill bool, color Color) (err error) {    
+func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart uint8, positionXEnd uint8, positionYEnd uint8, fill bool, color Color) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, positionXStart);
 	binary.Write(&buf, binary.LittleEndian, positionYStart);
@@ -1020,7 +1020,7 @@ func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1029,18 +1029,18 @@ func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Draws a text with up to 22 characters at the pixel position (x, y).
-	// 
-	// The x values have to be within the range of 0 to 127 and the y
-	// values have to be within the range of 0 to 63.
-	// 
-	// You can use one of 9 different font sizes and draw the text in white or black.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// The x values have to be within the range of 0 to 127 and the y
+// values have to be within the range of 0 to 63.
+// 
+// You can use one of 9 different font sizes and draw the text in white or black.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
@@ -1056,7 +1056,7 @@ func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart ui
 //	* Font24x32
 //	* ColorWhite
 //	* ColorBlack
-func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font Font, color Color, text string) (err error) {    
+func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font Font, color Color, text string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, positionX);
 	binary.Write(&buf, binary.LittleEndian, positionY);
@@ -1072,7 +1072,7 @@ func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1081,33 +1081,33 @@ func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Draws a clickable button at position (x, y) with the given text
-	// of up to 16 characters.
-	// 
-	// You can use up to 12 buttons (index 0-11).
-	// 
-	// The x position + width has to be within the range of 1 to 128 and the y
-	// position + height has to be within the range of 1 to 64.
-	// 
-	// The minimum useful width/height of a button is 3.
-	// 
-	// You can enable a callback for a button press with
-	// SetGUIButtonPressedCallbackConfiguration. The callback will
-	// be triggered for press and release-events.
-	// 
-	// The button is drawn in a separate GUI buffer and the button-frame will
-	// always stay on top of the graphics drawn with WritePixels. To
-	// remove the button use RemoveGUIButton.
-	// 
-	// If you want an icon instead of text, you can draw the icon inside of the
-	// button with WritePixels.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUIButton(index uint8, positionX uint8, positionY uint8, width uint8, height uint8, text string) (err error) {    
+// of up to 16 characters.
+// 
+// You can use up to 12 buttons (index 0-11).
+// 
+// The x position + width has to be within the range of 1 to 128 and the y
+// position + height has to be within the range of 1 to 64.
+// 
+// The minimum useful width/height of a button is 3.
+// 
+// You can enable a callback for a button press with
+// SetGUIButtonPressedCallbackConfiguration. The callback will
+// be triggered for press and release-events.
+// 
+// The button is drawn in a separate GUI buffer and the button-frame will
+// always stay on top of the graphics drawn with WritePixels. To
+// remove the button use RemoveGUIButton.
+// 
+// If you want an icon instead of text, you can draw the icon inside of the
+// button with WritePixels.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUIButton(index uint8, positionX uint8, positionY uint8, width uint8, height uint8, text string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, positionX);
@@ -1124,7 +1124,7 @@ func (device *LCD128x64Bricklet) SetGUIButton(index uint8, positionX uint8, posi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1133,17 +1133,17 @@ func (device *LCD128x64Bricklet) SetGUIButton(index uint8, positionX uint8, posi
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the button properties for a given `Index` as set by SetGUIButton.
-	// 
-	// Additionally the `Active` parameter shows if a button is currently active/visible
-	// or not.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUIButton(index uint8) (active bool, positionX uint8, positionY uint8, width uint8, height uint8, text string, err error) {    
+// 
+// Additionally the `Active` parameter shows if a button is currently active/visible
+// or not.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUIButton(index uint8) (active bool, positionX uint8, positionY uint8, width uint8, height uint8, text string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1153,7 +1153,7 @@ func (device *LCD128x64Bricklet) GetGUIButton(index uint8) (active bool, positio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return active, positionX, positionY, width, height, text, BrickletError(header.ErrorCode)
@@ -1168,16 +1168,16 @@ func (device *LCD128x64Bricklet) GetGUIButton(index uint8) (active bool, positio
 	text = ByteSliceToString(resultBuf.Next(16))
 
     }
-    
+
     return active, positionX, positionY, width, height, text, nil
 }
 
 // Removes the button with the given index.
-	// 
-	// You can use index 255 to remove all buttons.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {    
+// 
+// You can use index 255 to remove all buttons.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1187,7 +1187,7 @@ func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1196,24 +1196,24 @@ func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // The period in ms is the period with which the RegisterGUIButtonPressedCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUIButtonPressedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUIButtonPressedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -1224,7 +1224,7 @@ func (device *LCD128x64Bricklet) SetGUIButtonPressedCallbackConfiguration(period
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1233,15 +1233,15 @@ func (device *LCD128x64Bricklet) SetGUIButtonPressedCallbackConfiguration(period
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetGUIButtonPressedCallbackConfiguration.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUIButtonPressedCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetGUIButtonPressedCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUIButtonPressedCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGUIButtonPressedCallbackConfiguration), buf.Bytes())
@@ -1250,7 +1250,7 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressedCallbackConfiguration() (per
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -1261,16 +1261,16 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressedCallbackConfiguration() (per
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the state of the button for the given index.
-	// 
-	// The state can either be pressed (true) or released (false).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool, err error) {    
+// 
+// The state can either be pressed (true) or released (false).
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1280,7 +1280,7 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return pressed, BrickletError(header.ErrorCode)
@@ -1290,41 +1290,41 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool,
         binary.Read(resultBuf, binary.LittleEndian, &pressed)
 
     }
-    
+
     return pressed, nil
 }
 
 // Draws a slider at position (x, y) with the given length.
-	// 
-	// You can use up to 6 sliders (index 0-5).
-	// 
-	// If you use the horizontal direction, the x position + length has to be
-	// within the range of 1 to 128 and the y position has to be within
-	// the range of 0 to 46.
-	// 
-	// If you use the vertical direction, the y position + length has to be
-	// within the range of 1 to 64 and the x position has to be within
-	// the range of 0 to 110.
-	// 
-	// The minimum length of a slider is 8.
-	// 
-	// The parameter value is the start-position of the slider, it can
-	// be between 0 and length-8.
-	// 
-	// You can enable a callback for the slider value with
-	// SetGUISliderValueCallbackConfiguration.
-	// 
-	// The slider is drawn in a separate GUI buffer and it will
-	// always stay on top of the graphics drawn with WritePixels. To
-	// remove the button use RemoveGUISlider.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// You can use up to 6 sliders (index 0-5).
+// 
+// If you use the horizontal direction, the x position + length has to be
+// within the range of 1 to 128 and the y position has to be within
+// the range of 0 to 46.
+// 
+// If you use the vertical direction, the y position + length has to be
+// within the range of 1 to 64 and the x position has to be within
+// the range of 0 to 110.
+// 
+// The minimum length of a slider is 8.
+// 
+// The parameter value is the start-position of the slider, it can
+// be between 0 and length-8.
+// 
+// You can enable a callback for the slider value with
+// SetGUISliderValueCallbackConfiguration.
+// 
+// The slider is drawn in a separate GUI buffer and it will
+// always stay on top of the graphics drawn with WritePixels. To
+// remove the button use RemoveGUISlider.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* DirectionHorizontal
 //	* DirectionVertical
-func (device *LCD128x64Bricklet) SetGUISlider(index uint8, positionX uint8, positionY uint8, length uint8, direction Direction, value uint8) (err error) {    
+func (device *LCD128x64Bricklet) SetGUISlider(index uint8, positionX uint8, positionY uint8, length uint8, direction Direction, value uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, positionX);
@@ -1339,7 +1339,7 @@ func (device *LCD128x64Bricklet) SetGUISlider(index uint8, positionX uint8, posi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1348,22 +1348,22 @@ func (device *LCD128x64Bricklet) SetGUISlider(index uint8, positionX uint8, posi
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the slider properties for a given `Index` as set by SetGUISlider.
-	// 
-	// Additionally the `Active` parameter shows if a button is currently active/visible
-	// or not.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// Additionally the `Active` parameter shows if a button is currently active/visible
+// or not.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* DirectionHorizontal
 //	* DirectionVertical
-func (device *LCD128x64Bricklet) GetGUISlider(index uint8) (active bool, positionX uint8, positionY uint8, length uint8, direction Direction, value uint8, err error) {    
+func (device *LCD128x64Bricklet) GetGUISlider(index uint8) (active bool, positionX uint8, positionY uint8, length uint8, direction Direction, value uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1373,7 +1373,7 @@ func (device *LCD128x64Bricklet) GetGUISlider(index uint8) (active bool, positio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return active, positionX, positionY, length, direction, value, BrickletError(header.ErrorCode)
@@ -1388,16 +1388,16 @@ func (device *LCD128x64Bricklet) GetGUISlider(index uint8) (active bool, positio
 	binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return active, positionX, positionY, length, direction, value, nil
 }
 
 // Removes the slider with the given index.
-	// 
-	// You can use index 255 to remove all slider.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {    
+// 
+// You can use index 255 to remove all slider.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1407,7 +1407,7 @@ func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1416,24 +1416,24 @@ func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // The period in ms is the period with which the RegisterGUISliderValueCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUISliderValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUISliderValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -1444,7 +1444,7 @@ func (device *LCD128x64Bricklet) SetGUISliderValueCallbackConfiguration(period u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1453,15 +1453,15 @@ func (device *LCD128x64Bricklet) SetGUISliderValueCallbackConfiguration(period u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetGUISliderValueCallbackConfiguration.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUISliderValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetGUISliderValueCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUISliderValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGUISliderValueCallbackConfiguration), buf.Bytes())
@@ -1470,7 +1470,7 @@ func (device *LCD128x64Bricklet) GetGUISliderValueCallbackConfiguration() (perio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -1481,14 +1481,14 @@ func (device *LCD128x64Bricklet) GetGUISliderValueCallbackConfiguration() (perio
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the current slider value for the given index.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, err error) {    
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1498,7 +1498,7 @@ func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return value, BrickletError(header.ErrorCode)
@@ -1508,26 +1508,26 @@ func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, er
         binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return value, nil
 }
 
 // Sets the general configuration for tabs. You can configure the tabs to only
-	// accept clicks or only swipes (gesture left/right and right/left) or both.
-	// 
-	// Additionally, if you set `Clear GUI` to true, all of the GUI elements (buttons,
-	// slider, graphs) will automatically be removed on every tab change.
-	// 
-	// By default click and swipe as well as automatic GUI clear is enabled.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// accept clicks or only swipes (gesture left/right and right/left) or both.
+// 
+// Additionally, if you set `Clear GUI` to true, all of the GUI elements (buttons,
+// slider, graphs) will automatically be removed on every tab change.
+// 
+// By default click and swipe as well as automatic GUI clear is enabled.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* ChangeTabOnClick
 //	* ChangeTabOnSwipe
 //	* ChangeTabOnClickAndSwipe
-func (device *LCD128x64Bricklet) SetGUITabConfiguration(changeTabConfig ChangeTabOn, clearGUI bool) (err error) {    
+func (device *LCD128x64Bricklet) SetGUITabConfiguration(changeTabConfig ChangeTabOn, clearGUI bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, changeTabConfig);
 	binary.Write(&buf, binary.LittleEndian, clearGUI);
@@ -1538,7 +1538,7 @@ func (device *LCD128x64Bricklet) SetGUITabConfiguration(changeTabConfig ChangeTa
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1547,20 +1547,20 @@ func (device *LCD128x64Bricklet) SetGUITabConfiguration(changeTabConfig ChangeTa
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the tab configuration as set by SetGUITabConfiguration.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* ChangeTabOnClick
 //	* ChangeTabOnSwipe
 //	* ChangeTabOnClickAndSwipe
-func (device *LCD128x64Bricklet) GetGUITabConfiguration() (changeTabConfig ChangeTabOn, clearGUI bool, err error) {    
+func (device *LCD128x64Bricklet) GetGUITabConfiguration() (changeTabConfig ChangeTabOn, clearGUI bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGUITabConfiguration), buf.Bytes())
@@ -1569,7 +1569,7 @@ func (device *LCD128x64Bricklet) GetGUITabConfiguration() (changeTabConfig Chang
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return changeTabConfig, clearGUI, BrickletError(header.ErrorCode)
@@ -1580,18 +1580,18 @@ func (device *LCD128x64Bricklet) GetGUITabConfiguration() (changeTabConfig Chang
 	binary.Read(resultBuf, binary.LittleEndian, &clearGUI)
 
     }
-    
+
     return changeTabConfig, clearGUI, nil
 }
 
 // Adds a text-tab with the given index. The text can have a length of up to 5 characters.
-	// 
-	// You can use up to 10 tabs (index 0-9).
-	// 
-	// A text-tab with the same index as a icon-tab will overwrite the icon-tab.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUITabText(index uint8, text string) (err error) {    
+// 
+// You can use up to 10 tabs (index 0-9).
+// 
+// A text-tab with the same index as a icon-tab will overwrite the icon-tab.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUITabText(index uint8, text string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	text_byte_slice, err := StringToByteSlice(text, 5)
@@ -1604,7 +1604,7 @@ func (device *LCD128x64Bricklet) SetGUITabText(index uint8, text string) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1613,17 +1613,17 @@ func (device *LCD128x64Bricklet) SetGUITabText(index uint8, text string) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the text for a given index as set by SetGUITabText.
-	// 
-	// Additionally the `Active` parameter shows if the tab is currently active/visible
-	// or not.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUITabText(index uint8) (active bool, text string, err error) {    
+// 
+// Additionally the `Active` parameter shows if the tab is currently active/visible
+// or not.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUITabText(index uint8) (active bool, text string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1633,7 +1633,7 @@ func (device *LCD128x64Bricklet) GetGUITabText(index uint8) (active bool, text s
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return active, text, BrickletError(header.ErrorCode)
@@ -1644,19 +1644,19 @@ func (device *LCD128x64Bricklet) GetGUITabText(index uint8) (active bool, text s
 	text = ByteSliceToString(resultBuf.Next(5))
 
     }
-    
+
     return active, text, nil
 }
 
 // Adds a icon-tab with the given index. The icon can have a width of 28 pixels
-	// with a height of 6 pixels. It is drawn line-by-line from left to right.
-	// 
-	// You can use up to 10 tabs (index 0-9).
-	// 
-	// A icon-tab with the same index as a text-tab will overwrite the text-tab.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUITabIcon(index uint8, icon [168]bool) (err error) {    
+// with a height of 6 pixels. It is drawn line-by-line from left to right.
+// 
+// You can use up to 10 tabs (index 0-9).
+// 
+// A icon-tab with the same index as a text-tab will overwrite the text-tab.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUITabIcon(index uint8, icon [168]bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, icon);
@@ -1667,7 +1667,7 @@ func (device *LCD128x64Bricklet) SetGUITabIcon(index uint8, icon [168]bool) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1676,17 +1676,17 @@ func (device *LCD128x64Bricklet) SetGUITabIcon(index uint8, icon [168]bool) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the icon for a given index as set by SetGUITabIcon.
-	// 
-	// Additionally the `Active` parameter shows if the tab is currently active/visible
-	// or not.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUITabIcon(index uint8) (active bool, icon [168]bool, err error) {    
+// 
+// Additionally the `Active` parameter shows if the tab is currently active/visible
+// or not.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUITabIcon(index uint8) (active bool, icon [168]bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1696,7 +1696,7 @@ func (device *LCD128x64Bricklet) GetGUITabIcon(index uint8) (active bool, icon [
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return active, icon, BrickletError(header.ErrorCode)
@@ -1707,16 +1707,16 @@ func (device *LCD128x64Bricklet) GetGUITabIcon(index uint8) (active bool, icon [
 	binary.Read(resultBuf, binary.LittleEndian, &icon)
 
     }
-    
+
     return active, icon, nil
 }
 
 // Removes the tab with the given index.
-	// 
-	// You can use index 255 to remove all tabs.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) RemoveGUITab(index uint8) (err error) {    
+// 
+// You can use index 255 to remove all tabs.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) RemoveGUITab(index uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1726,7 +1726,7 @@ func (device *LCD128x64Bricklet) RemoveGUITab(index uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1735,14 +1735,14 @@ func (device *LCD128x64Bricklet) RemoveGUITab(index uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the tab with the given index as selected (drawn as selected on the display).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {    
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1752,7 +1752,7 @@ func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1761,24 +1761,24 @@ func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // The period in ms is the period with which the RegisterGUITabSelectedCallback callback
-	// is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUITabSelectedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUITabSelectedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -1789,7 +1789,7 @@ func (device *LCD128x64Bricklet) SetGUITabSelectedCallbackConfiguration(period u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1798,15 +1798,15 @@ func (device *LCD128x64Bricklet) SetGUITabSelectedCallbackConfiguration(period u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetGUITabSelectedCallbackConfiguration.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUITabSelectedCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetGUITabSelectedCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUITabSelectedCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGUITabSelectedCallbackConfiguration), buf.Bytes())
@@ -1815,7 +1815,7 @@ func (device *LCD128x64Bricklet) GetGUITabSelectedCallbackConfiguration() (perio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -1826,15 +1826,15 @@ func (device *LCD128x64Bricklet) GetGUITabSelectedCallbackConfiguration() (perio
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the index of the currently selected tab.
-	// If there are not tabs, the returned index is -1.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUITabSelected() (index int8, err error) {    
+// If there are not tabs, the returned index is -1.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUITabSelected() (index int8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGUITabSelected), buf.Bytes())
@@ -1843,7 +1843,7 @@ func (device *LCD128x64Bricklet) GetGUITabSelected() (index int8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return index, BrickletError(header.ErrorCode)
@@ -1853,38 +1853,38 @@ func (device *LCD128x64Bricklet) GetGUITabSelected() (index int8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &index)
 
     }
-    
+
     return index, nil
 }
 
 // Sets the configuration for up to four graphs (index 0-3).
-	// 
-	// The graph type can be dot-, line- or bar-graph.
-	// 
-	// The x and y position are pixel positions. They have to be within
-	// the range of (0, 0) to (127, 63). The maximum width is 118 and the
-	// maximum height is 63.
-	// 
-	// You can add a text for the x and y axis with at most 4 characters each.
-	// The text is drawn at the inside of the graph and it can overwrite some
-	// of the graph data. If you need the text outside of the graph you can
-	// leave this text here empty and use DrawText to draw the caption
-	// outside of the graph.
-	// 
-	// The data of the graph can be set and updated with SetGUIGraphData.
-	// 
-	// The graph is drawn in a separate GUI buffer and the graph-frame and data will
-	// always stay on top of the graphics drawn with WritePixels. To
-	// remove the graph use RemoveGUIGraph.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// The graph type can be dot-, line- or bar-graph.
+// 
+// The x and y position are pixel positions. They have to be within
+// the range of (0, 0) to (127, 63). The maximum width is 118 and the
+// maximum height is 63.
+// 
+// You can add a text for the x and y axis with at most 4 characters each.
+// The text is drawn at the inside of the graph and it can overwrite some
+// of the graph data. If you need the text outside of the graph you can
+// leave this text here empty and use DrawText to draw the caption
+// outside of the graph.
+// 
+// The data of the graph can be set and updated with SetGUIGraphData.
+// 
+// The graph is drawn in a separate GUI buffer and the graph-frame and data will
+// always stay on top of the graphics drawn with WritePixels. To
+// remove the graph use RemoveGUIGraph.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* GraphTypeDot
 //	* GraphTypeLine
 //	* GraphTypeBar
-func (device *LCD128x64Bricklet) SetGUIGraphConfiguration(index uint8, graphType GraphType, positionX uint8, positionY uint8, width uint8, height uint8, textX string, textY string) (err error) {    
+func (device *LCD128x64Bricklet) SetGUIGraphConfiguration(index uint8, graphType GraphType, positionX uint8, positionY uint8, width uint8, height uint8, textX string, textY string) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, graphType);
@@ -1905,7 +1905,7 @@ func (device *LCD128x64Bricklet) SetGUIGraphConfiguration(index uint8, graphType
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1914,23 +1914,23 @@ func (device *LCD128x64Bricklet) SetGUIGraphConfiguration(index uint8, graphType
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the graph properties for a given `Index` as set by SetGUIGraphConfiguration.
-	// 
-	// Additionally the `Active` parameter shows if a graph is currently active/visible
-	// or not.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// Additionally the `Active` parameter shows if a graph is currently active/visible
+// or not.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* GraphTypeDot
 //	* GraphTypeLine
 //	* GraphTypeBar
-func (device *LCD128x64Bricklet) GetGUIGraphConfiguration(index uint8) (active bool, graphType GraphType, positionX uint8, positionY uint8, width uint8, height uint8, textX string, textY string, err error) {    
+func (device *LCD128x64Bricklet) GetGUIGraphConfiguration(index uint8) (active bool, graphType GraphType, positionX uint8, positionY uint8, width uint8, height uint8, textX string, textY string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -1940,7 +1940,7 @@ func (device *LCD128x64Bricklet) GetGUIGraphConfiguration(index uint8) (active b
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return active, graphType, positionX, positionY, width, height, textX, textY, BrickletError(header.ErrorCode)
@@ -1957,25 +1957,25 @@ func (device *LCD128x64Bricklet) GetGUIGraphConfiguration(index uint8) (active b
 	textY = ByteSliceToString(resultBuf.Next(4))
 
     }
-    
+
     return active, graphType, positionX, positionY, width, height, textX, textY, nil
 }
 
 // Sets the data for a graph with the given index. You have to configure the graph with
-	// SetGUIGraphConfiguration before you can set the first data.
-	// 
-	// The graph will show the first n values of the data that you set, where
-	// n is the width set with SetGUIGraphConfiguration. If you set
-	// less then n values it will show the rest of the values as zero.
-	// 
-	// The maximum number of data-points you can set is 118 (which also corresponds to the
-	// maximum width of the graph).
-	// 
-	// You have to scale your values to be between 0 and 255. 0 will be shown
-	// at the bottom of the graph and 255 at the top.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength uint16, dataChunkOffset uint16, dataChunkData [59]uint8) (err error) {    
+// SetGUIGraphConfiguration before you can set the first data.
+// 
+// The graph will show the first n values of the data that you set, where
+// n is the width set with SetGUIGraphConfiguration. If you set
+// less then n values it will show the rest of the values as zero.
+// 
+// The maximum number of data-points you can set is 118 (which also corresponds to the
+// maximum width of the graph).
+// 
+// You have to scale your values to be between 0 and 255. 0 will be shown
+// at the bottom of the graph and 255 at the top.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength uint16, dataChunkOffset uint16, dataChunkData [59]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, dataLength);
@@ -1988,7 +1988,7 @@ func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1997,25 +1997,25 @@ func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the data for a graph with the given index. You have to configure the graph with
-	// SetGUIGraphConfiguration before you can set the first data.
-	// 
-	// The graph will show the first n values of the data that you set, where
-	// n is the width set with SetGUIGraphConfiguration. If you set
-	// less then n values it will show the rest of the values as zero.
-	// 
-	// The maximum number of data-points you can set is 118 (which also corresponds to the
-	// maximum width of the graph).
-	// 
-	// You have to scale your values to be between 0 and 255. 0 will be shown
-	// at the bottom of the graph and 255 at the top.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-	func (device *LCD128x64Bricklet) SetGUIGraphData(index uint8, data []uint8) (err error) {            
+// SetGUIGraphConfiguration before you can set the first data.
+// 
+// The graph will show the first n values of the data that you set, where
+// n is the width set with SetGUIGraphConfiguration. If you set
+// less then n values it will show the rest of the values as zero.
+// 
+// The maximum number of data-points you can set is 118 (which also corresponds to the
+// maximum width of the graph).
+// 
+// You have to scale your values to be between 0 and 255. 0 will be shown
+// at the bottom of the graph and 255 at the top.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+	func (device *LCD128x64Bricklet) SetGUIGraphData(index uint8, data []uint8) (err error) {
         _, err = device.device.SetHighLevel(func(dataLength uint64, dataChunkOffset uint64, dataChunkData []byte) (LowLevelWriteResult, error) {
             arr := [59]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(dataChunkData))
@@ -2028,7 +2028,7 @@ func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength
             return LowLevelWriteResult{
                 uint64(59),
                 lowLevelResults.Bytes()}, err
-        }, 2, 8, 472, Uint8SliceToByteSlice(data))   
+        }, 2, 8, 472, Uint8SliceToByteSlice(data))
 
          if err != nil {
             return
@@ -2041,9 +2041,9 @@ func (device *LCD128x64Bricklet) SetGUIGraphDataLowLevel(index uint8, dataLength
     }
 
 // Returns the graph data for a given index as set by SetGUIGraphData.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) GetGUIGraphDataLowLevel(index uint8) (dataLength uint16, dataChunkOffset uint16, dataChunkData [59]uint8, err error) {    
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) GetGUIGraphDataLowLevel(index uint8) (dataLength uint16, dataChunkOffset uint16, dataChunkData [59]uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -2053,7 +2053,7 @@ func (device *LCD128x64Bricklet) GetGUIGraphDataLowLevel(index uint8) (dataLengt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return dataLength, dataChunkOffset, dataChunkData, BrickletError(header.ErrorCode)
@@ -2065,16 +2065,16 @@ func (device *LCD128x64Bricklet) GetGUIGraphDataLowLevel(index uint8) (dataLengt
 	copy(dataChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 59/8)))
 
     }
-    
+
     return dataLength, dataChunkOffset, dataChunkData, nil
 }
 
 // Returns the graph data for a given index as set by SetGUIGraphData.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 	func (device *LCD128x64Bricklet) GetGUIGraphData(index uint8) (data []uint8, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            dataLength, dataChunkOffset, dataChunkData, err := device.GetGUIGraphDataLowLevel(index)            
+            dataLength, dataChunkOffset, dataChunkData, err := device.GetGUIGraphDataLowLevel(index)
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -2100,11 +2100,11 @@ func (device *LCD128x64Bricklet) GetGUIGraphDataLowLevel(index uint8) (dataLengt
     }
 
 // Removes the graph with the given index.
-	// 
-	// You can use index 255 to remove all graphs.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) RemoveGUIGraph(index uint8) (err error) {    
+// 
+// You can use index 255 to remove all graphs.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) RemoveGUIGraph(index uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, index);
 
@@ -2114,7 +2114,7 @@ func (device *LCD128x64Bricklet) RemoveGUIGraph(index uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2123,14 +2123,14 @@ func (device *LCD128x64Bricklet) RemoveGUIGraph(index uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Removes all GUI elements (buttons, slider, graphs, tabs).
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-func (device *LCD128x64Bricklet) RemoveAllGUI() (err error) {    
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *LCD128x64Bricklet) RemoveAllGUI() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionRemoveAllGUI), buf.Bytes())
@@ -2139,7 +2139,7 @@ func (device *LCD128x64Bricklet) RemoveAllGUI() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2148,18 +2148,18 @@ func (device *LCD128x64Bricklet) RemoveAllGUI() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the touch LED configuration. By default the LED is on if the
-	// LCD is touched.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is off.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// LCD is touched.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is off.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
@@ -2167,7 +2167,7 @@ func (device *LCD128x64Bricklet) RemoveAllGUI() (err error) {
 //	* TouchLEDConfigOn
 //	* TouchLEDConfigShowHeartbeat
 //	* TouchLEDConfigShowTouch
-func (device *LCD128x64Bricklet) SetTouchLEDConfig(config TouchLEDConfig) (err error) {    
+func (device *LCD128x64Bricklet) SetTouchLEDConfig(config TouchLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -2177,7 +2177,7 @@ func (device *LCD128x64Bricklet) SetTouchLEDConfig(config TouchLEDConfig) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2186,13 +2186,13 @@ func (device *LCD128x64Bricklet) SetTouchLEDConfig(config TouchLEDConfig) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetTouchLEDConfig
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
 //
@@ -2200,7 +2200,7 @@ func (device *LCD128x64Bricklet) SetTouchLEDConfig(config TouchLEDConfig) (err e
 //	* TouchLEDConfigOn
 //	* TouchLEDConfigShowHeartbeat
 //	* TouchLEDConfigShowTouch
-func (device *LCD128x64Bricklet) GetTouchLEDConfig() (config TouchLEDConfig, err error) {    
+func (device *LCD128x64Bricklet) GetTouchLEDConfig() (config TouchLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTouchLEDConfig), buf.Bytes())
@@ -2209,7 +2209,7 @@ func (device *LCD128x64Bricklet) GetTouchLEDConfig() (config TouchLEDConfig, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -2219,22 +2219,22 @@ func (device *LCD128x64Bricklet) GetTouchLEDConfig() (config TouchLEDConfig, err
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *LCD128x64Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *LCD128x64Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -2243,7 +2243,7 @@ func (device *LCD128x64Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -2256,19 +2256,19 @@ func (device *LCD128x64Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -2283,7 +2283,7 @@ func (device *LCD128x64Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *LCD128x64Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *LCD128x64Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -2293,7 +2293,7 @@ func (device *LCD128x64Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -2303,7 +2303,7 @@ func (device *LCD128x64Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -2316,7 +2316,7 @@ func (device *LCD128x64Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *LCD128x64Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *LCD128x64Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -2325,7 +2325,7 @@ func (device *LCD128x64Bricklet) GetBootloaderMode() (mode BootloaderMode, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -2335,17 +2335,17 @@ func (device *LCD128x64Bricklet) GetBootloaderMode() (mode BootloaderMode, err e
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *LCD128x64Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *LCD128x64Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -2355,7 +2355,7 @@ func (device *LCD128x64Bricklet) SetWriteFirmwarePointer(pointer uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2364,19 +2364,19 @@ func (device *LCD128x64Bricklet) SetWriteFirmwarePointer(pointer uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *LCD128x64Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *LCD128x64Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -2386,7 +2386,7 @@ func (device *LCD128x64Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -2396,17 +2396,17 @@ func (device *LCD128x64Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -2414,7 +2414,7 @@ func (device *LCD128x64Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *LCD128x64Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *LCD128x64Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -2424,7 +2424,7 @@ func (device *LCD128x64Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2433,7 +2433,7 @@ func (device *LCD128x64Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -2445,7 +2445,7 @@ func (device *LCD128x64Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *LCD128x64Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *LCD128x64Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -2454,7 +2454,7 @@ func (device *LCD128x64Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -2464,17 +2464,17 @@ func (device *LCD128x64Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, e
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *LCD128x64Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *LCD128x64Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -2483,7 +2483,7 @@ func (device *LCD128x64Bricklet) GetChipTemperature() (temperature int16, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -2493,17 +2493,17 @@ func (device *LCD128x64Bricklet) GetChipTemperature() (temperature int16, err er
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *LCD128x64Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *LCD128x64Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -2512,7 +2512,7 @@ func (device *LCD128x64Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2521,16 +2521,16 @@ func (device *LCD128x64Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *LCD128x64Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *LCD128x64Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -2540,7 +2540,7 @@ func (device *LCD128x64Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -2549,13 +2549,13 @@ func (device *LCD128x64Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *LCD128x64Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *LCD128x64Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -2564,7 +2564,7 @@ func (device *LCD128x64Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -2574,19 +2574,19 @@ func (device *LCD128x64Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *LCD128x64Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *LCD128x64Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -2595,7 +2595,7 @@ func (device *LCD128x64Bricklet) GetIdentity() (uid string, connectedUid string,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -2610,6 +2610,6 @@ func (device *LCD128x64Bricklet) GetIdentity() (uid string, connectedUid string,
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -74,17 +74,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (HallEffectBricklet, erro
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *HallEffectBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -93,7 +93,7 @@ func (device *HallEffectBricklet) GetResponseExpected(functionID Function) (bool
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -113,12 +113,12 @@ func (device *HallEffectBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetEdgeCountCallbackPeriod. The parameters are the
-	// current count and the current value (see GetValue and
-	// GetEdgeCount).
-	// 
-	// The RegisterEdgeCountCallback callback is only triggered if the count or value changed
-	// since the last triggering.
+// SetEdgeCountCallbackPeriod. The parameters are the
+// current count and the current value (see GetValue and
+// GetEdgeCount).
+// 
+// The RegisterEdgeCountCallback callback is only triggered if the count or value changed
+// since the last triggering.
 func (device *HallEffectBricklet) RegisterEdgeCountCallback(fn func(uint32, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -132,13 +132,13 @@ binary.Read(buf, binary.LittleEndian, &value)
 }
 
 //Remove a registered Edge Count callback.
-func (device *HallEffectBricklet) DeregisterEdgeCountCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackEdgeCount), callbackID)
+func (device *HallEffectBricklet) DeregisterEdgeCountCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackEdgeCount), registrationID)
 }
 
 
 // Returns *true* if a magnetic field of 35 Gauss (3.5mT) or greater is detected.
-func (device *HallEffectBricklet) GetValue() (value bool, err error) {    
+func (device *HallEffectBricklet) GetValue() (value bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetValue), buf.Bytes())
@@ -147,7 +147,7 @@ func (device *HallEffectBricklet) GetValue() (value bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return value, BrickletError(header.ErrorCode)
@@ -157,17 +157,17 @@ func (device *HallEffectBricklet) GetValue() (value bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return value, nil
 }
 
 // Returns the current value of the edge counter. You can configure
-	// edge type (rising, falling, both) that is counted with
-	// SetEdgeCountConfig.
-	// 
-	// If you set the reset counter to *true*, the count is set back to 0
-	// directly after it is read.
-func (device *HallEffectBricklet) GetEdgeCount(resetCounter bool) (count uint32, err error) {    
+// edge type (rising, falling, both) that is counted with
+// SetEdgeCountConfig.
+// 
+// If you set the reset counter to *true*, the count is set back to 0
+// directly after it is read.
+func (device *HallEffectBricklet) GetEdgeCount(resetCounter bool) (count uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, resetCounter);
 
@@ -177,7 +177,7 @@ func (device *HallEffectBricklet) GetEdgeCount(resetCounter bool) (count uint32,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return count, BrickletError(header.ErrorCode)
@@ -187,38 +187,38 @@ func (device *HallEffectBricklet) GetEdgeCount(resetCounter bool) (count uint32,
         binary.Read(resultBuf, binary.LittleEndian, &count)
 
     }
-    
+
     return count, nil
 }
 
 // The edge type parameter configures if rising edges, falling edges or
-	// both are counted. Possible edge types are:
-	// 
-	// * 0 = rising (default)
-	// * 1 = falling
-	// * 2 = both
-	// 
-	// A magnetic field of 35 Gauss (3.5mT) or greater causes a falling edge and a
-	// magnetic field of 25 Gauss (2.5mT) or smaller causes a rising edge.
-	// 
-	// If a magnet comes near the Bricklet the signal goes low (falling edge), if
-	// a magnet is removed from the vicinity the signal goes high (rising edge).
-	// 
-	// The debounce time is given in ms.
-	// 
-	// Configuring an edge counter resets its value to 0.
-	// 
-	// If you don't know what any of this means, just leave it at default. The
-	// default configuration is very likely OK for you.
-	// 
-	// Default values: 0 (edge type) and 100ms (debounce time)
+// both are counted. Possible edge types are:
+// 
+// * 0 = rising (default)
+// * 1 = falling
+// * 2 = both
+// 
+// A magnetic field of 35 Gauss (3.5mT) or greater causes a falling edge and a
+// magnetic field of 25 Gauss (2.5mT) or smaller causes a rising edge.
+// 
+// If a magnet comes near the Bricklet the signal goes low (falling edge), if
+// a magnet is removed from the vicinity the signal goes high (rising edge).
+// 
+// The debounce time is given in ms.
+// 
+// Configuring an edge counter resets its value to 0.
+// 
+// If you don't know what any of this means, just leave it at default. The
+// default configuration is very likely OK for you.
+// 
+// Default values: 0 (edge type) and 100ms (debounce time)
 //
 // Associated constants:
 //
 //	* EdgeTypeRising
 //	* EdgeTypeFalling
 //	* EdgeTypeBoth
-func (device *HallEffectBricklet) SetEdgeCountConfig(edgeType EdgeType, debounce uint8) (err error) {    
+func (device *HallEffectBricklet) SetEdgeCountConfig(edgeType EdgeType, debounce uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, edgeType);
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -229,7 +229,7 @@ func (device *HallEffectBricklet) SetEdgeCountConfig(edgeType EdgeType, debounce
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -238,7 +238,7 @@ func (device *HallEffectBricklet) SetEdgeCountConfig(edgeType EdgeType, debounce
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -249,7 +249,7 @@ func (device *HallEffectBricklet) SetEdgeCountConfig(edgeType EdgeType, debounce
 //	* EdgeTypeRising
 //	* EdgeTypeFalling
 //	* EdgeTypeBoth
-func (device *HallEffectBricklet) GetEdgeCountConfig() (edgeType EdgeType, debounce uint8, err error) {    
+func (device *HallEffectBricklet) GetEdgeCountConfig() (edgeType EdgeType, debounce uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCountConfig), buf.Bytes())
@@ -258,7 +258,7 @@ func (device *HallEffectBricklet) GetEdgeCountConfig() (edgeType EdgeType, debou
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return edgeType, debounce, BrickletError(header.ErrorCode)
@@ -269,18 +269,18 @@ func (device *HallEffectBricklet) GetEdgeCountConfig() (edgeType EdgeType, debou
 	binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return edgeType, debounce, nil
 }
 
 // Sets the number of edges until an interrupt is invoked.
-	// 
-	// If *edges* is set to n, an interrupt is invoked for every n-th detected edge.
-	// 
-	// If *edges* is set to 0, the interrupt is disabled.
-	// 
-	// Default value is 0.
-func (device *HallEffectBricklet) SetEdgeInterrupt(edges uint32) (err error) {    
+// 
+// If *edges* is set to n, an interrupt is invoked for every n-th detected edge.
+// 
+// If *edges* is set to 0, the interrupt is disabled.
+// 
+// Default value is 0.
+func (device *HallEffectBricklet) SetEdgeInterrupt(edges uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, edges);
 
@@ -290,7 +290,7 @@ func (device *HallEffectBricklet) SetEdgeInterrupt(edges uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -299,12 +299,12 @@ func (device *HallEffectBricklet) SetEdgeInterrupt(edges uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the edges as set by SetEdgeInterrupt.
-func (device *HallEffectBricklet) GetEdgeInterrupt() (edges uint32, err error) {    
+func (device *HallEffectBricklet) GetEdgeInterrupt() (edges uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEdgeInterrupt), buf.Bytes())
@@ -313,7 +313,7 @@ func (device *HallEffectBricklet) GetEdgeInterrupt() (edges uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return edges, BrickletError(header.ErrorCode)
@@ -323,18 +323,18 @@ func (device *HallEffectBricklet) GetEdgeInterrupt() (edges uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &edges)
 
     }
-    
+
     return edges, nil
 }
 
 // Sets the period in ms with which the RegisterEdgeCountCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterEdgeCountCallback callback is only triggered if the edge count has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-func (device *HallEffectBricklet) SetEdgeCountCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterEdgeCountCallback callback is only triggered if the edge count has changed
+// since the last triggering.
+// 
+// The default value is 0.
+func (device *HallEffectBricklet) SetEdgeCountCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -344,7 +344,7 @@ func (device *HallEffectBricklet) SetEdgeCountCallbackPeriod(period uint32) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -353,12 +353,12 @@ func (device *HallEffectBricklet) SetEdgeCountCallbackPeriod(period uint32) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetEdgeCountCallbackPeriod.
-func (device *HallEffectBricklet) GetEdgeCountCallbackPeriod() (period uint32, err error) {    
+func (device *HallEffectBricklet) GetEdgeCountCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCountCallbackPeriod), buf.Bytes())
@@ -367,7 +367,7 @@ func (device *HallEffectBricklet) GetEdgeCountCallbackPeriod() (period uint32, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -377,15 +377,15 @@ func (device *HallEffectBricklet) GetEdgeCountCallbackPeriod() (period uint32, e
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // This callback is triggered every n-th count, as configured with
-	// SetEdgeInterrupt. The parameters are the
-	// current count and the current value (see GetValue and
-	// GetEdgeCount).
-func (device *HallEffectBricklet) EdgeInterrupt() (count uint32, value bool, err error) {    
+// SetEdgeInterrupt. The parameters are the
+// current count and the current value (see GetValue and
+// GetEdgeCount).
+func (device *HallEffectBricklet) EdgeInterrupt() (count uint32, value bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionEdgeInterrupt), buf.Bytes())
@@ -394,7 +394,7 @@ func (device *HallEffectBricklet) EdgeInterrupt() (count uint32, value bool, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return count, value, BrickletError(header.ErrorCode)
@@ -405,19 +405,19 @@ func (device *HallEffectBricklet) EdgeInterrupt() (count uint32, value bool, err
 	binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return count, value, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *HallEffectBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *HallEffectBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -426,7 +426,7 @@ func (device *HallEffectBricklet) GetIdentity() (uid string, connectedUid string
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -441,6 +441,6 @@ func (device *HallEffectBricklet) GetIdentity() (uid string, connectedUid string
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -73,17 +73,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (UVLightBricklet, error) 
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *UVLightBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -92,7 +92,7 @@ func (device *UVLightBricklet) GetResponseExpected(functionID Function) (bool, e
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -112,11 +112,11 @@ func (device *UVLightBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetUVLightCallbackPeriod. The parameter is the UV Light
-	// intensity of the sensor.
-	// 
-	// The RegisterUVLightCallback callback is only triggered if the intensity has changed
-	// since the last triggering.
+// SetUVLightCallbackPeriod. The parameter is the UV Light
+// intensity of the sensor.
+// 
+// The RegisterUVLightCallback callback is only triggered if the intensity has changed
+// since the last triggering.
 func (device *UVLightBricklet) RegisterUVLightCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -128,17 +128,17 @@ func (device *UVLightBricklet) RegisterUVLightCallback(fn func(uint32)) uint64 {
 }
 
 //Remove a registered UV Light callback.
-func (device *UVLightBricklet) DeregisterUVLightCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUVLight), callbackID)
+func (device *UVLightBricklet) DeregisterUVLightCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUVLight), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetUVLightCallbackThreshold is reached.
-	// The parameter is the UV Light intensity of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetUVLightCallbackThreshold is reached.
+// The parameter is the UV Light intensity of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *UVLightBricklet) RegisterUVLightReachedCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -150,22 +150,22 @@ func (device *UVLightBricklet) RegisterUVLightReachedCallback(fn func(uint32)) u
 }
 
 //Remove a registered UV Light Reached callback.
-func (device *UVLightBricklet) DeregisterUVLightReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUVLightReached), callbackID)
+func (device *UVLightBricklet) DeregisterUVLightReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUVLightReached), registrationID)
 }
 
 
 // Returns the UV light intensity of the sensor, the intensity is given
-	// in 1/10 mW/m². The sensor has already weighted the intensity with the erythemal
-	// action spectrum to get the skin-affecting irradiation.
-	// 
-	// To get UV index you just have to divide the value by 250. For example, a UV
-	// light intensity of 500 is equivalent to an UV index of 2.
-	// 
-	// If you want to get the intensity periodically, it is recommended to use the
-	// RegisterUVLightCallback callback and set the period with
-	// SetUVLightCallbackPeriod.
-func (device *UVLightBricklet) GetUVLight() (uvLight uint32, err error) {    
+// in 1/10 mW/m². The sensor has already weighted the intensity with the erythemal
+// action spectrum to get the skin-affecting irradiation.
+// 
+// To get UV index you just have to divide the value by 250. For example, a UV
+// light intensity of 500 is equivalent to an UV index of 2.
+// 
+// If you want to get the intensity periodically, it is recommended to use the
+// RegisterUVLightCallback callback and set the period with
+// SetUVLightCallbackPeriod.
+func (device *UVLightBricklet) GetUVLight() (uvLight uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVLight), buf.Bytes())
@@ -174,7 +174,7 @@ func (device *UVLightBricklet) GetUVLight() (uvLight uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uvLight, BrickletError(header.ErrorCode)
@@ -184,18 +184,18 @@ func (device *UVLightBricklet) GetUVLight() (uvLight uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uvLight)
 
     }
-    
+
     return uvLight, nil
 }
 
 // Sets the period in ms with which the RegisterUVLightCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterUVLightCallback callback is only triggered if the intensity has changed since
-	// the last triggering.
-	// 
-	// The default value is 0.
-func (device *UVLightBricklet) SetUVLightCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterUVLightCallback callback is only triggered if the intensity has changed since
+// the last triggering.
+// 
+// The default value is 0.
+func (device *UVLightBricklet) SetUVLightCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -205,7 +205,7 @@ func (device *UVLightBricklet) SetUVLightCallbackPeriod(period uint32) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -214,12 +214,12 @@ func (device *UVLightBricklet) SetUVLightCallbackPeriod(period uint32) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetUVLightCallbackPeriod.
-func (device *UVLightBricklet) GetUVLightCallbackPeriod() (period uint32, err error) {    
+func (device *UVLightBricklet) GetUVLightCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVLightCallbackPeriod), buf.Bytes())
@@ -228,7 +228,7 @@ func (device *UVLightBricklet) GetUVLightCallbackPeriod() (period uint32, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -238,23 +238,23 @@ func (device *UVLightBricklet) GetUVLightCallbackPeriod() (period uint32, err er
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterUVLightReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the intensity is *outside* the min and max values
-	//  'i'|    Callback is triggered when the intensity is *inside* the min and max values
-	//  '<'|    Callback is triggered when the intensity is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the intensity is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the intensity is *outside* the min and max values
+//  'i'|    Callback is triggered when the intensity is *inside* the min and max values
+//  '<'|    Callback is triggered when the intensity is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the intensity is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -263,7 +263,7 @@ func (device *UVLightBricklet) GetUVLightCallbackPeriod() (period uint32, err er
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightBricklet) SetUVLightCallbackThreshold(option ThresholdOption, min uint32, max uint32) (err error) {    
+func (device *UVLightBricklet) SetUVLightCallbackThreshold(option ThresholdOption, min uint32, max uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -275,7 +275,7 @@ func (device *UVLightBricklet) SetUVLightCallbackThreshold(option ThresholdOptio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -284,7 +284,7 @@ func (device *UVLightBricklet) SetUVLightCallbackThreshold(option ThresholdOptio
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -297,7 +297,7 @@ func (device *UVLightBricklet) SetUVLightCallbackThreshold(option ThresholdOptio
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightBricklet) GetUVLightCallbackThreshold() (option ThresholdOption, min uint32, max uint32, err error) {    
+func (device *UVLightBricklet) GetUVLightCallbackThreshold() (option ThresholdOption, min uint32, max uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVLightCallbackThreshold), buf.Bytes())
@@ -306,7 +306,7 @@ func (device *UVLightBricklet) GetUVLightCallbackThreshold() (option ThresholdOp
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -318,22 +318,22 @@ func (device *UVLightBricklet) GetUVLightCallbackThreshold() (option ThresholdOp
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterUVLightReachedCallback,
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetUVLightCallbackThreshold,
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-func (device *UVLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterUVLightReachedCallback,
+// 
+// are triggered, if the thresholds
+// 
+// * SetUVLightCallbackThreshold,
+// 
+// keep being reached.
+// 
+// The default value is 100.
+func (device *UVLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -343,7 +343,7 @@ func (device *UVLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -352,12 +352,12 @@ func (device *UVLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *UVLightBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *UVLightBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -366,7 +366,7 @@ func (device *UVLightBricklet) GetDebouncePeriod() (debounce uint32, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -376,19 +376,19 @@ func (device *UVLightBricklet) GetDebouncePeriod() (debounce uint32, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *UVLightBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *UVLightBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -397,7 +397,7 @@ func (device *UVLightBricklet) GetIdentity() (uid string, connectedUid string, p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -412,6 +412,6 @@ func (device *UVLightBricklet) GetIdentity() (uid string, connectedUid string, p
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

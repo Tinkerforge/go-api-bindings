@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -73,17 +73,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LineBricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LineBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -92,7 +92,7 @@ func (device *LineBricklet) GetResponseExpected(functionID Function) (bool, erro
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -112,11 +112,11 @@ func (device *LineBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetReflectivityCallbackPeriod. The parameter is the
-	// reflectivity of the sensor.
-	// 
-	// The RegisterReflectivityCallback callback is only triggered if the reflectivity has
-	// changed since the last triggering.
+// SetReflectivityCallbackPeriod. The parameter is the
+// reflectivity of the sensor.
+// 
+// The RegisterReflectivityCallback callback is only triggered if the reflectivity has
+// changed since the last triggering.
 func (device *LineBricklet) RegisterReflectivityCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -128,17 +128,17 @@ func (device *LineBricklet) RegisterReflectivityCallback(fn func(uint16)) uint64
 }
 
 //Remove a registered Reflectivity callback.
-func (device *LineBricklet) DeregisterReflectivityCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackReflectivity), callbackID)
+func (device *LineBricklet) DeregisterReflectivityCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackReflectivity), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetReflectivityCallbackThreshold is reached.
-	// The parameter is the reflectivity of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetReflectivityCallbackThreshold is reached.
+// The parameter is the reflectivity of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *LineBricklet) RegisterReflectivityReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -150,21 +150,21 @@ func (device *LineBricklet) RegisterReflectivityReachedCallback(fn func(uint16))
 }
 
 //Remove a registered Reflectivity Reached callback.
-func (device *LineBricklet) DeregisterReflectivityReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackReflectivityReached), callbackID)
+func (device *LineBricklet) DeregisterReflectivityReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackReflectivityReached), registrationID)
 }
 
 
 // Returns the currently measured reflectivity. The reflectivity is
-	// a value between 0 (not reflective) and 4095 (very reflective).
-	// 
-	// Usually black has a low reflectivity while white has a high
-	// reflectivity.
-	// 
-	// If you want to get the reflectivity periodically, it is recommended
-	// to use the RegisterReflectivityCallback callback and set the period with
-	// SetReflectivityCallbackPeriod.
-func (device *LineBricklet) GetReflectivity() (reflectivity uint16, err error) {    
+// a value between 0 (not reflective) and 4095 (very reflective).
+// 
+// Usually black has a low reflectivity while white has a high
+// reflectivity.
+// 
+// If you want to get the reflectivity periodically, it is recommended
+// to use the RegisterReflectivityCallback callback and set the period with
+// SetReflectivityCallbackPeriod.
+func (device *LineBricklet) GetReflectivity() (reflectivity uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetReflectivity), buf.Bytes())
@@ -173,7 +173,7 @@ func (device *LineBricklet) GetReflectivity() (reflectivity uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return reflectivity, BrickletError(header.ErrorCode)
@@ -183,18 +183,18 @@ func (device *LineBricklet) GetReflectivity() (reflectivity uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &reflectivity)
 
     }
-    
+
     return reflectivity, nil
 }
 
 // Sets the period in ms with which the RegisterReflectivityCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterReflectivityCallback callback is only triggered if the reflectivity has
-	// changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *LineBricklet) SetReflectivityCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterReflectivityCallback callback is only triggered if the reflectivity has
+// changed since the last triggering.
+// 
+// The default value is 0.
+func (device *LineBricklet) SetReflectivityCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -204,7 +204,7 @@ func (device *LineBricklet) SetReflectivityCallbackPeriod(period uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -213,12 +213,12 @@ func (device *LineBricklet) SetReflectivityCallbackPeriod(period uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetReflectivityCallbackPeriod.
-func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err error) {    
+func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetReflectivityCallbackPeriod), buf.Bytes())
@@ -227,7 +227,7 @@ func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -237,23 +237,23 @@ func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err 
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterReflectivityReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the reflectivity is *outside* the min and max values
-	//  'i'|    Callback is triggered when the reflectivity is *inside* the min and max values
-	//  '<'|    Callback is triggered when the reflectivity is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the reflectivity is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the reflectivity is *outside* the min and max values
+//  'i'|    Callback is triggered when the reflectivity is *inside* the min and max values
+//  '<'|    Callback is triggered when the reflectivity is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the reflectivity is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -262,7 +262,7 @@ func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err 
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LineBricklet) SetReflectivityCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *LineBricklet) SetReflectivityCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -274,7 +274,7 @@ func (device *LineBricklet) SetReflectivityCallbackThreshold(option ThresholdOpt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -283,7 +283,7 @@ func (device *LineBricklet) SetReflectivityCallbackThreshold(option ThresholdOpt
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -296,7 +296,7 @@ func (device *LineBricklet) SetReflectivityCallbackThreshold(option ThresholdOpt
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LineBricklet) GetReflectivityCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *LineBricklet) GetReflectivityCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetReflectivityCallbackThreshold), buf.Bytes())
@@ -305,7 +305,7 @@ func (device *LineBricklet) GetReflectivityCallbackThreshold() (option Threshold
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -317,22 +317,22 @@ func (device *LineBricklet) GetReflectivityCallbackThreshold() (option Threshold
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
-	// 
-	// * RegisterReflectivityReachedCallback
-	// 
-	// is triggered, if the threshold
-	// 
-	// * SetReflectivityCallbackThreshold
-	// 
-	// keeps being reached.
-	// 
-	// The default value is 100.
-func (device *LineBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterReflectivityReachedCallback
+// 
+// is triggered, if the threshold
+// 
+// * SetReflectivityCallbackThreshold
+// 
+// keeps being reached.
+// 
+// The default value is 100.
+func (device *LineBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -342,7 +342,7 @@ func (device *LineBricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -351,12 +351,12 @@ func (device *LineBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *LineBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *LineBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -365,7 +365,7 @@ func (device *LineBricklet) GetDebouncePeriod() (debounce uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -375,19 +375,19 @@ func (device *LineBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *LineBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *LineBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -396,7 +396,7 @@ func (device *LineBricklet) GetIdentity() (uid string, connectedUid string, posi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -411,6 +411,6 @@ func (device *LineBricklet) GetIdentity() (uid string, connectedUid string, posi
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

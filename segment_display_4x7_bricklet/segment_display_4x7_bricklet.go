@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -56,17 +56,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SegmentDisplay4x7Brickle
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *SegmentDisplay4x7Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -75,7 +75,7 @@ func (device *SegmentDisplay4x7Bricklet) GetResponseExpected(functionID Function
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -95,7 +95,7 @@ func (device *SegmentDisplay4x7Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when the counter (see StartCounter) is
-	// finished.
+// finished.
 func (device *SegmentDisplay4x7Bricklet) RegisterCounterFinishedCallback(fn func()) uint64 {
             wrapper := func(byteSlice []byte) {
                 
@@ -107,25 +107,25 @@ func (device *SegmentDisplay4x7Bricklet) RegisterCounterFinishedCallback(fn func
 }
 
 //Remove a registered Counter Finished callback.
-func (device *SegmentDisplay4x7Bricklet) DeregisterCounterFinishedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCounterFinished), callbackID)
+func (device *SegmentDisplay4x7Bricklet) DeregisterCounterFinishedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCounterFinished), registrationID)
 }
 
 
 // The 7-segment display can be set with bitmaps. Every bit controls one
-	// segment:
-	// 
-	// .. image:: /Images/Bricklets/bricklet_segment_display_4x7_bit_order.png
-	//    :scale: 100 %
-	//    :alt: Bit order of one segment
-	//    :align: center
-	// 
-	// For example to set a 5 you would want to activate segments 0, 2, 3, 5 and 6.
-	// This is represented by the number 0b01101101 = 0x6d = 109.
-	// 
-	// The brightness can be set between 0 (dark) and 7 (bright). The colon
-	// parameter turns the colon of the display on or off.
-func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightness uint8, colon bool) (err error) {    
+// segment:
+// 
+// .. image:: /Images/Bricklets/bricklet_segment_display_4x7_bit_order.png
+//    :scale: 100 %
+//    :alt: Bit order of one segment
+//    :align: center
+// 
+// For example to set a 5 you would want to activate segments 0, 2, 3, 5 and 6.
+// This is represented by the number 0b01101101 = 0x6d = 109.
+// 
+// The brightness can be set between 0 (dark) and 7 (bright). The colon
+// parameter turns the colon of the display on or off.
+func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightness uint8, colon bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, segments);
 	binary.Write(&buf, binary.LittleEndian, brightness);
@@ -137,7 +137,7 @@ func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightne
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -146,13 +146,13 @@ func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightne
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the segment, brightness and color data as set by
-	// SetSegments.
-func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brightness uint8, colon bool, err error) {    
+// SetSegments.
+func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brightness uint8, colon bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSegments), buf.Bytes())
@@ -161,7 +161,7 @@ func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brigh
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return segments, brightness, colon, BrickletError(header.ErrorCode)
@@ -173,25 +173,25 @@ func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brigh
 	binary.Read(resultBuf, binary.LittleEndian, &colon)
 
     }
-    
+
     return segments, brightness, colon, nil
 }
 
 // Starts a counter with the *from* value that counts to the *to*
-	// value with the each step incremented by *increment*.
-	// The *length* of the increment is given in ms.
-	// 
-	// Example: If you set *from* to 0, *to* to 100, *increment* to 1 and
-	// *length* to 1000, a counter that goes from 0 to 100 with one second
-	// pause between each increment will be started.
-	// 
-	// The maximum values for *from*, *to* and *increment* is 9999,
-	// the minimum value is -999.
-	// 
-	// Using a negative increment allows to count backwards.
-	// 
-	// You can stop the counter at every time by calling SetSegments.
-func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo int16, increment int16, length uint32) (err error) {    
+// value with the each step incremented by *increment*.
+// The *length* of the increment is given in ms.
+// 
+// Example: If you set *from* to 0, *to* to 100, *increment* to 1 and
+// *length* to 1000, a counter that goes from 0 to 100 with one second
+// pause between each increment will be started.
+// 
+// The maximum values for *from*, *to* and *increment* is 9999,
+// the minimum value is -999.
+// 
+// Using a negative increment allows to count backwards.
+// 
+// You can stop the counter at every time by calling SetSegments.
+func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo int16, increment int16, length uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, valueFrom);
 	binary.Write(&buf, binary.LittleEndian, valueTo);
@@ -204,7 +204,7 @@ func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo i
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -213,14 +213,14 @@ func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo i
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the counter value that is currently shown on the display.
-	// 
-	// If there is no counter running a 0 will be returned.
-func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err error) {    
+// 
+// If there is no counter running a 0 will be returned.
+func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCounterValue), buf.Bytes())
@@ -229,7 +229,7 @@ func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return value, BrickletError(header.ErrorCode)
@@ -239,19 +239,19 @@ func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err er
         binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return value, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *SegmentDisplay4x7Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *SegmentDisplay4x7Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -260,7 +260,7 @@ func (device *SegmentDisplay4x7Bricklet) GetIdentity() (uid string, connectedUid
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -275,6 +275,6 @@ func (device *SegmentDisplay4x7Bricklet) GetIdentity() (uid string, connectedUid
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

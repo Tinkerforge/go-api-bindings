@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -166,17 +166,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDual020mAV2Bri
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IndustrialDual020mAV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -185,7 +185,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetResponseExpected(functionID Func
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -205,9 +205,9 @@ func (device *IndustrialDual020mAV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetCurrentCallbackConfiguration.
-	// 
-	// The parameter is the same as GetCurrent.
+// SetCurrentCallbackConfiguration.
+// 
+// The parameter is the same as GetCurrent.
 func (device *IndustrialDual020mAV2Bricklet) RegisterCurrentCallback(fn func(uint8, int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -221,26 +221,26 @@ binary.Read(buf, binary.LittleEndian, &current)
 }
 
 //Remove a registered Current callback.
-func (device *IndustrialDual020mAV2Bricklet) DeregisterCurrentCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), callbackID)
+func (device *IndustrialDual020mAV2Bricklet) DeregisterCurrentCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), registrationID)
 }
 
 
 // Returns the current of the specified channel. The value is in nA and between
-	// 0nA and 22505322nA (22.5mA).
-	// 
-	// It is possible to detect if an IEC 60381-1 compatible sensor is connected
-	// and if it works probably.
-	// 
-	// If the returned current is below 4mA, there is likely no sensor connected
-	// or the connected sensor is defective. If the returned current is over 20mA,
-	// there might be a short circuit or the sensor is defective.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterCurrentCallback callback. You can set the callback configuration
-	// with SetCurrentCallbackConfiguration.
-func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current int32, err error) {    
+// 0nA and 22505322nA (22.5mA).
+// 
+// It is possible to detect if an IEC 60381-1 compatible sensor is connected
+// and if it works probably.
+// 
+// If the returned current is below 4mA, there is likely no sensor connected
+// or the connected sensor is defective. If the returned current is over 20mA,
+// there might be a short circuit or the sensor is defective.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterCurrentCallback callback. You can set the callback configuration
+// with SetCurrentCallbackConfiguration.
+func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current int32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -250,7 +250,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return current, BrickletError(header.ErrorCode)
@@ -260,37 +260,37 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current 
         binary.Read(resultBuf, binary.LittleEndian, &current)
 
     }
-    
+
     return current, nil
 }
 
 // The period in ms is the period with which the RegisterCurrentCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterCurrentCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterCurrentCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -299,7 +299,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current 
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *IndustrialDual020mAV2Bricklet) SetCurrentCallbackConfiguration(channel uint8, period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetCurrentCallbackConfiguration(channel uint8, period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -314,7 +314,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetCurrentCallbackConfiguration(cha
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -323,7 +323,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetCurrentCallbackConfiguration(cha
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -336,7 +336,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetCurrentCallbackConfiguration(cha
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(channel uint8) (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(channel uint8) (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -346,7 +346,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(cha
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -360,21 +360,21 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(cha
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the sample rate to either 240, 60, 15 or 4 samples per second.
-	// The resolution for the rates is 12, 14, 16 and 18 bit respectively.
-	// 
-	//  Value| Description
-	//  --- | --- 
-	//  0|    240 samples per second| 12 bit resolution
-	//  1|    60 samples per second| 14 bit resolution
-	//  2|    15 samples per second| 16 bit resolution
-	//  3|    4 samples per second| 18 bit resolution
-	// 
-	// The default value is 3 (4 samples per second with 18 bit resolution).
+// The resolution for the rates is 12, 14, 16 and 18 bit respectively.
+// 
+//  Value| Description
+//  --- | --- 
+//  0|    240 samples per second| 12 bit resolution
+//  1|    60 samples per second| 14 bit resolution
+//  2|    15 samples per second| 16 bit resolution
+//  3|    4 samples per second| 18 bit resolution
+// 
+// The default value is 3 (4 samples per second with 18 bit resolution).
 //
 // Associated constants:
 //
@@ -382,7 +382,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(cha
 //	* SampleRate60SPS
 //	* SampleRate15SPS
 //	* SampleRate4SPS
-func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, rate);
 
@@ -392,7 +392,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -401,7 +401,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -413,7 +413,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err
 //	* SampleRate60SPS
 //	* SampleRate15SPS
 //	* SampleRate4SPS
-func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSampleRate), buf.Bytes())
@@ -422,7 +422,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return rate, BrickletError(header.ErrorCode)
@@ -432,17 +432,17 @@ func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, e
         binary.Read(resultBuf, binary.LittleEndian, &rate)
 
     }
-    
+
     return rate, nil
 }
 
 // Sets a gain between 1x and 8x. If you want to measure a very small current,
-	// you can increase the gain to get some more resolution.
-	// 
-	// Example: If you measure 0.5mA with a gain of 8x the return value will be
-	// 4mA.
-	// 
-	// The default gain is 1x.
+// you can increase the gain to get some more resolution.
+// 
+// Example: If you measure 0.5mA with a gain of 8x the return value will be
+// 4mA.
+// 
+// The default gain is 1x.
 //
 // Associated constants:
 //
@@ -450,7 +450,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, e
 //	* Gain2x
 //	* Gain4x
 //	* Gain8x
-func (device *IndustrialDual020mAV2Bricklet) SetGain(gain Gain) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetGain(gain Gain) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, gain);
 
@@ -460,7 +460,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetGain(gain Gain) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -469,7 +469,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetGain(gain Gain) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -481,7 +481,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetGain(gain Gain) (err error) {
 //	* Gain2x
 //	* Gain4x
 //	* Gain8x
-func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGain), buf.Bytes())
@@ -490,7 +490,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return gain, BrickletError(header.ErrorCode)
@@ -500,18 +500,18 @@ func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &gain)
 
     }
-    
+
     return gain, nil
 }
 
 // Each channel has a corresponding LED. You can turn the LED off, on or show a
-	// heartbeat. You can also set the LED to Channel Status. In this mode the
-	// LED can either be turned on with a pre-defined threshold or the intensity
-	// of the LED can change with the measured value.
-	// 
-	// You can configure the channel status behavior with SetChannelLEDStatusConfig.
-	// 
-	// By default all channel LEDs are configured as Channel Status.
+// heartbeat. You can also set the LED to Channel Status. In this mode the
+// LED can either be turned on with a pre-defined threshold or the intensity
+// of the LED can change with the measured value.
+// 
+// You can configure the channel status behavior with SetChannelLEDStatusConfig.
+// 
+// By default all channel LEDs are configured as Channel Status.
 //
 // Associated constants:
 //
@@ -519,7 +519,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {
 //	* ChannelLEDConfigOn
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDConfig(channel uint8, config ChannelLEDConfig) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDConfig(channel uint8, config ChannelLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, config);
@@ -530,7 +530,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDConfig(channel uint8, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -539,7 +539,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDConfig(channel uint8, 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -551,7 +551,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDConfig(channel uint8, 
 //	* ChannelLEDConfigOn
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDConfig(channel uint8) (config ChannelLEDConfig, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDConfig(channel uint8) (config ChannelLEDConfig, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -561,7 +561,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDConfig(channel uint8) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -571,39 +571,39 @@ func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDConfig(channel uint8) 
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Sets the channel LED status config. This config is used if the channel LED is
-	// configured as Channel Status, see SetChannelLEDConfig.
-	// 
-	// For each channel you can choose between threshold and intensity mode.
-	// 
-	// In threshold mode you can define a positive or a negative threshold.
-	// For a positive threshold set the min parameter to the threshold value in nA
-	// above which the LED should turn on and set the max parameter to 0. Example:
-	// If you set a positive threshold of 10mA, the LED will turn on as soon as the
-	// current exceeds 10mA and turn off again if it goes below 10mA.
-	// For a negative threshold set the max parameter to the threshold value in nA
-	// below which the LED should turn on and set the min parameter to 0. Example:
-	// If you set a negative threshold of 10mA, the LED will turn on as soon as the
-	// current goes below 10mA and the LED will turn off when the current exceeds 10mA.
-	// 
-	// In intensity mode you can define a range in nA that is used to scale the brightness
-	// of the LED. Example with min=4mA and max=20mA: The LED is off at 4mA and below,
-	// on at 20mA and above and the brightness is linearly scaled between the values
-	// 4mA and 20mA. If the min value is greater than the max value, the LED brightness
-	// is scaled the other way around.
-	// 
-	// By default the channel LED status config is set to intensity with min=4mA and
-	// max=20mA.
+// configured as Channel Status, see SetChannelLEDConfig.
+// 
+// For each channel you can choose between threshold and intensity mode.
+// 
+// In threshold mode you can define a positive or a negative threshold.
+// For a positive threshold set the min parameter to the threshold value in nA
+// above which the LED should turn on and set the max parameter to 0. Example:
+// If you set a positive threshold of 10mA, the LED will turn on as soon as the
+// current exceeds 10mA and turn off again if it goes below 10mA.
+// For a negative threshold set the max parameter to the threshold value in nA
+// below which the LED should turn on and set the min parameter to 0. Example:
+// If you set a negative threshold of 10mA, the LED will turn on as soon as the
+// current goes below 10mA and the LED will turn off when the current exceeds 10mA.
+// 
+// In intensity mode you can define a range in nA that is used to scale the brightness
+// of the LED. Example with min=4mA and max=20mA: The LED is off at 4mA and below,
+// on at 20mA and above and the brightness is linearly scaled between the values
+// 4mA and 20mA. If the min value is greater than the max value, the LED brightness
+// is scaled the other way around.
+// 
+// By default the channel LED status config is set to intensity with min=4mA and
+// max=20mA.
 //
 // Associated constants:
 //
 //	* ChannelLEDStatusConfigThreshold
 //	* ChannelLEDStatusConfigIntensity
-func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDStatusConfig(channel uint8, min int32, max int32, config ChannelLEDStatusConfig) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDStatusConfig(channel uint8, min int32, max int32, config ChannelLEDStatusConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -616,7 +616,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDStatusConfig(channel u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -625,18 +625,18 @@ func (device *IndustrialDual020mAV2Bricklet) SetChannelLEDStatusConfig(channel u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the channel LED status configuration as set by
-	// SetChannelLEDStatusConfig.
+// SetChannelLEDStatusConfig.
 //
 // Associated constants:
 //
 //	* ChannelLEDStatusConfigThreshold
 //	* ChannelLEDStatusConfigIntensity
-func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDStatusConfig(channel uint8) (min int32, max int32, config ChannelLEDStatusConfig, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDStatusConfig(channel uint8) (min int32, max int32, config ChannelLEDStatusConfig, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -646,7 +646,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDStatusConfig(channel u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return min, max, config, BrickletError(header.ErrorCode)
@@ -658,22 +658,22 @@ func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDStatusConfig(channel u
 	binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return min, max, config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *IndustrialDual020mAV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *IndustrialDual020mAV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -682,7 +682,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetSPITFPErrorCount() (errorCountAc
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -695,19 +695,19 @@ func (device *IndustrialDual020mAV2Bricklet) GetSPITFPErrorCount() (errorCountAc
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -722,7 +722,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetSPITFPErrorCount() (errorCountAc
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *IndustrialDual020mAV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -732,7 +732,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetBootloaderMode(mode BootloaderMo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -742,7 +742,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetBootloaderMode(mode BootloaderMo
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -755,7 +755,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetBootloaderMode(mode BootloaderMo
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *IndustrialDual020mAV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -764,7 +764,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetBootloaderMode() (mode Bootloade
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -774,17 +774,17 @@ func (device *IndustrialDual020mAV2Bricklet) GetBootloaderMode() (mode Bootloade
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IndustrialDual020mAV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IndustrialDual020mAV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -794,7 +794,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetWriteFirmwarePointer(pointer uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -803,19 +803,19 @@ func (device *IndustrialDual020mAV2Bricklet) SetWriteFirmwarePointer(pointer uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IndustrialDual020mAV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IndustrialDual020mAV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -825,7 +825,7 @@ func (device *IndustrialDual020mAV2Bricklet) WriteFirmware(data [64]uint8) (stat
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -835,17 +835,17 @@ func (device *IndustrialDual020mAV2Bricklet) WriteFirmware(data [64]uint8) (stat
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -853,7 +853,7 @@ func (device *IndustrialDual020mAV2Bricklet) WriteFirmware(data [64]uint8) (stat
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDual020mAV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *IndustrialDual020mAV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -863,7 +863,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetStatusLEDConfig(config StatusLED
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -872,7 +872,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetStatusLEDConfig(config StatusLED
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -884,7 +884,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetStatusLEDConfig(config StatusLED
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDual020mAV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *IndustrialDual020mAV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -893,7 +893,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetStatusLEDConfig() (config Status
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -903,17 +903,17 @@ func (device *IndustrialDual020mAV2Bricklet) GetStatusLEDConfig() (config Status
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *IndustrialDual020mAV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *IndustrialDual020mAV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -922,7 +922,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetChipTemperature() (temperature i
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -932,17 +932,17 @@ func (device *IndustrialDual020mAV2Bricklet) GetChipTemperature() (temperature i
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *IndustrialDual020mAV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *IndustrialDual020mAV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -951,7 +951,7 @@ func (device *IndustrialDual020mAV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -960,16 +960,16 @@ func (device *IndustrialDual020mAV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *IndustrialDual020mAV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *IndustrialDual020mAV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -979,7 +979,7 @@ func (device *IndustrialDual020mAV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -988,13 +988,13 @@ func (device *IndustrialDual020mAV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *IndustrialDual020mAV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *IndustrialDual020mAV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1003,7 +1003,7 @@ func (device *IndustrialDual020mAV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1013,19 +1013,19 @@ func (device *IndustrialDual020mAV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *IndustrialDual020mAV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *IndustrialDual020mAV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1034,7 +1034,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetIdentity() (uid string, connecte
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1049,6 +1049,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetIdentity() (uid string, connecte
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

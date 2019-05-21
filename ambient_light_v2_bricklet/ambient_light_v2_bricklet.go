@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -102,17 +102,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, 
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *AmbientLightV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -121,7 +121,7 @@ func (device *AmbientLightV2Bricklet) GetResponseExpected(functionID Function) (
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -141,11 +141,11 @@ func (device *AmbientLightV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetIlluminanceCallbackPeriod. The parameter is the illuminance of the
-	// ambient light sensor.
-	// 
-	// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed since the
-	// last triggering.
+// SetIlluminanceCallbackPeriod. The parameter is the illuminance of the
+// ambient light sensor.
+// 
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed since the
+// last triggering.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -157,17 +157,17 @@ func (device *AmbientLightV2Bricklet) RegisterIlluminanceCallback(fn func(uint32
 }
 
 //Remove a registered Illuminance callback.
-func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), callbackID)
+func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetIlluminanceCallbackThreshold is reached.
-	// The parameter is the illuminance of the ambient light sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetIlluminanceCallbackThreshold is reached.
+// The parameter is the illuminance of the ambient light sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceReachedCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -179,24 +179,24 @@ func (device *AmbientLightV2Bricklet) RegisterIlluminanceReachedCallback(fn func
 }
 
 //Remove a registered Illuminance Reached callback.
-func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminanceReached), callbackID)
+func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminanceReached), registrationID)
 }
 
 
 // Returns the illuminance of the ambient light sensor. The measurement range goes
-	// up to about 100000lux, but above 64000lux the precision starts to drop.
-	// The illuminance is given in lux/100, i.e. a value of 450000 means that an
-	// illuminance of 4500lux is measured.
-	// 
-	// .. versionchanged:: 2.0.2$nbsp;(Plugin)
-	//   An illuminance of 0lux indicates that the sensor is saturated and the
-	//   configuration should be modified, see SetConfiguration.
-	// 
-	// If you want to get the illuminance periodically, it is recommended to use the
-	// RegisterIlluminanceCallback callback and set the period with
-	// SetIlluminanceCallbackPeriod.
-func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err error) {    
+// up to about 100000lux, but above 64000lux the precision starts to drop.
+// The illuminance is given in lux/100, i.e. a value of 450000 means that an
+// illuminance of 4500lux is measured.
+// 
+// .. versionchanged:: 2.0.2$nbsp;(Plugin)
+//   An illuminance of 0lux indicates that the sensor is saturated and the
+//   configuration should be modified, see SetConfiguration.
+// 
+// If you want to get the illuminance periodically, it is recommended to use the
+// RegisterIlluminanceCallback callback and set the period with
+// SetIlluminanceCallbackPeriod.
+func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
@@ -205,7 +205,7 @@ func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return illuminance, BrickletError(header.ErrorCode)
@@ -215,18 +215,18 @@ func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err 
         binary.Read(resultBuf, binary.LittleEndian, &illuminance)
 
     }
-    
+
     return illuminance, nil
 }
 
 // Sets the period in ms with which the RegisterIlluminanceCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
+// since the last triggering.
+// 
+// The default value is 0.
+func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -236,7 +236,7 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -245,12 +245,12 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetIlluminanceCallbackPeriod.
-func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {    
+func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackPeriod), buf.Bytes())
@@ -259,7 +259,7 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -269,23 +269,23 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterIlluminanceReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the illuminance is *outside* the min and max values
-	//  'i'|    Callback is triggered when the illuminance is *inside* the min and max values
-	//  '<'|    Callback is triggered when the illuminance is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the illuminance is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the illuminance is *outside* the min and max values
+//  'i'|    Callback is triggered when the illuminance is *inside* the min and max values
+//  '<'|    Callback is triggered when the illuminance is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the illuminance is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -294,7 +294,7 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option ThresholdOption, min uint32, max uint32) (err error) {    
+func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option ThresholdOption, min uint32, max uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -306,7 +306,7 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option Thr
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -315,7 +315,7 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option Thr
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -328,7 +328,7 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option Thr
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option ThresholdOption, min uint32, max uint32, err error) {    
+func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option ThresholdOption, min uint32, max uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackThreshold), buf.Bytes())
@@ -337,7 +337,7 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -349,22 +349,22 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option 
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterIlluminanceReachedCallback,
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetIlluminanceCallbackThreshold,
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterIlluminanceReachedCallback,
+// 
+// are triggered, if the thresholds
+// 
+// * SetIlluminanceCallbackThreshold,
+// 
+// keep being reached.
+// 
+// The default value is 100.
+func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -374,7 +374,7 @@ func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -383,12 +383,12 @@ func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -397,7 +397,7 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -407,35 +407,35 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Sets the configuration. It is possible to configure an illuminance range
-	// between 0-600lux and 0-64000lux and an integration time between 50ms and 400ms.
-	// 
-	// .. versionadded:: 2.0.2$nbsp;(Plugin)
-	//   The unlimited illuminance range allows to measure up to about 100000lux, but
-	//   above 64000lux the precision starts to drop.
-	// 
-	// A smaller illuminance range increases the resolution of the data. A longer
-	// integration time will result in less noise on the data.
-	// 
-	// .. versionchanged:: 2.0.2$nbsp;(Plugin)
-	//   If the actual measure illuminance is out-of-range then the current illuminance
-	//   range maximum +0.01lux is reported by GetIlluminance and the
-	//   RegisterIlluminanceCallback callback. For example, 800001 for the 0-8000lux range.
-	// 
-	// .. versionchanged:: 2.0.2$nbsp;(Plugin)
-	//   With a long integration time the sensor might be saturated before the measured
-	//   value reaches the maximum of the selected illuminance range. In this case 0lux
-	//   is reported by GetIlluminance and the RegisterIlluminanceCallback callback.
-	// 
-	// If the measurement is out-of-range or the sensor is saturated then you should
-	// configure the next higher illuminance range. If the highest range is already
-	// in use, then start to reduce the integration time.
-	// 
-	// The default values are 0-8000lux illuminance range and 200ms integration time.
+// between 0-600lux and 0-64000lux and an integration time between 50ms and 400ms.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+//   The unlimited illuminance range allows to measure up to about 100000lux, but
+//   above 64000lux the precision starts to drop.
+// 
+// A smaller illuminance range increases the resolution of the data. A longer
+// integration time will result in less noise on the data.
+// 
+// .. versionchanged:: 2.0.2$nbsp;(Plugin)
+//   If the actual measure illuminance is out-of-range then the current illuminance
+//   range maximum +0.01lux is reported by GetIlluminance and the
+//   RegisterIlluminanceCallback callback. For example, 800001 for the 0-8000lux range.
+// 
+// .. versionchanged:: 2.0.2$nbsp;(Plugin)
+//   With a long integration time the sensor might be saturated before the measured
+//   value reaches the maximum of the selected illuminance range. In this case 0lux
+//   is reported by GetIlluminance and the RegisterIlluminanceCallback callback.
+// 
+// If the measurement is out-of-range or the sensor is saturated then you should
+// configure the next higher illuminance range. If the highest range is already
+// in use, then start to reduce the integration time.
+// 
+// The default values are 0-8000lux illuminance range and 200ms integration time.
 //
 // Associated constants:
 //
@@ -454,7 +454,7 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
 //	* IntegrationTime300ms
 //	* IntegrationTime350ms
 //	* IntegrationTime400ms
-func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange IlluminanceRange, integrationTime IntegrationTime) (err error) {    
+func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange IlluminanceRange, integrationTime IntegrationTime) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, illuminanceRange);
 	binary.Write(&buf, binary.LittleEndian, integrationTime);
@@ -465,7 +465,7 @@ func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange Illumina
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -474,7 +474,7 @@ func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange Illumina
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -497,7 +497,7 @@ func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange Illumina
 //	* IntegrationTime300ms
 //	* IntegrationTime350ms
 //	* IntegrationTime400ms
-func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange IlluminanceRange, integrationTime IntegrationTime, err error) {    
+func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange IlluminanceRange, integrationTime IntegrationTime, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
@@ -506,7 +506,7 @@ func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange Illum
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return illuminanceRange, integrationTime, BrickletError(header.ErrorCode)
@@ -517,19 +517,19 @@ func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange Illum
 	binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
     }
-    
+
     return illuminanceRange, integrationTime, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -538,7 +538,7 @@ func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid st
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -553,6 +553,6 @@ func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid st
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

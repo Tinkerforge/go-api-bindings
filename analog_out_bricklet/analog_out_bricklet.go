@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -64,17 +64,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AnalogOutBricklet, error
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *AnalogOutBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -83,7 +83,7 @@ func (device *AnalogOutBricklet) GetResponseExpected(functionID Function) (bool,
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -103,10 +103,10 @@ func (device *AnalogOutBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // Sets the voltage in mV. The possible range is 0V to 5V (0-5000).
-	// Calling this function will set the mode to 0 (see SetMode).
-	// 
-	// The default value is 0 (with mode 1).
-func (device *AnalogOutBricklet) SetVoltage(voltage uint16) (err error) {    
+// Calling this function will set the mode to 0 (see SetMode).
+// 
+// The default value is 0 (with mode 1).
+func (device *AnalogOutBricklet) SetVoltage(voltage uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltage);
 
@@ -116,7 +116,7 @@ func (device *AnalogOutBricklet) SetVoltage(voltage uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -125,12 +125,12 @@ func (device *AnalogOutBricklet) SetVoltage(voltage uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the voltage as set by SetVoltage.
-func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {    
+func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
@@ -139,7 +139,7 @@ func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -149,21 +149,21 @@ func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets the mode of the analog value. Possible modes:
-	// 
-	// * 0: Normal Mode (Analog value as set by SetVoltage is applied)
-	// * 1: 1k Ohm resistor to ground
-	// * 2: 100k Ohm resistor to ground
-	// * 3: 500k Ohm resistor to ground
-	// 
-	// Setting the mode to 0 will result in an output voltage of 0. You can jump
-	// to a higher output voltage directly by calling SetVoltage.
-	// 
-	// The default mode is 1.
+// 
+// * 0: Normal Mode (Analog value as set by SetVoltage is applied)
+// * 1: 1k Ohm resistor to ground
+// * 2: 100k Ohm resistor to ground
+// * 3: 500k Ohm resistor to ground
+// 
+// Setting the mode to 0 will result in an output voltage of 0. You can jump
+// to a higher output voltage directly by calling SetVoltage.
+// 
+// The default mode is 1.
 //
 // Associated constants:
 //
@@ -171,7 +171,7 @@ func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
 //	* Mode1kToGround
 //	* Mode100kToGround
 //	* Mode500kToGround
-func (device *AnalogOutBricklet) SetMode(mode Mode) (err error) {    
+func (device *AnalogOutBricklet) SetMode(mode Mode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -181,7 +181,7 @@ func (device *AnalogOutBricklet) SetMode(mode Mode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -190,7 +190,7 @@ func (device *AnalogOutBricklet) SetMode(mode Mode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -202,7 +202,7 @@ func (device *AnalogOutBricklet) SetMode(mode Mode) (err error) {
 //	* Mode1kToGround
 //	* Mode100kToGround
 //	* Mode500kToGround
-func (device *AnalogOutBricklet) GetMode() (mode Mode, err error) {    
+func (device *AnalogOutBricklet) GetMode() (mode Mode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMode), buf.Bytes())
@@ -211,7 +211,7 @@ func (device *AnalogOutBricklet) GetMode() (mode Mode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -221,19 +221,19 @@ func (device *AnalogOutBricklet) GetMode() (mode Mode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *AnalogOutBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *AnalogOutBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -242,7 +242,7 @@ func (device *AnalogOutBricklet) GetIdentity() (uid string, connectedUid string,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -257,6 +257,6 @@ func (device *AnalogOutBricklet) GetIdentity() (uid string, connectedUid string,
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

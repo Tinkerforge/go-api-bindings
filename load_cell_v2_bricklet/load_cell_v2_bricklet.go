@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -155,17 +155,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LoadCellV2Bricklet, erro
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LoadCellV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -174,7 +174,7 @@ func (device *LoadCellV2Bricklet) GetResponseExpected(functionID Function) (bool
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -194,9 +194,9 @@ func (device *LoadCellV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetWeightCallbackConfiguration.
-	// 
-	// The parameter is the same as GetWeight.
+// SetWeightCallbackConfiguration.
+// 
+// The parameter is the same as GetWeight.
 func (device *LoadCellV2Bricklet) RegisterWeightCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -208,18 +208,18 @@ func (device *LoadCellV2Bricklet) RegisterWeightCallback(fn func(int32)) uint64 
 }
 
 //Remove a registered Weight callback.
-func (device *LoadCellV2Bricklet) DeregisterWeightCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackWeight), callbackID)
+func (device *LoadCellV2Bricklet) DeregisterWeightCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackWeight), registrationID)
 }
 
 
 // Returns the currently measured weight in grams.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterWeightCallback callback. You can set the callback configuration
-	// with SetWeightCallbackConfiguration.
-func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {    
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterWeightCallback callback. You can set the callback configuration
+// with SetWeightCallbackConfiguration.
+func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWeight), buf.Bytes())
@@ -228,7 +228,7 @@ func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return weight, BrickletError(header.ErrorCode)
@@ -238,37 +238,37 @@ func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &weight)
 
     }
-    
+
     return weight, nil
 }
 
 // The period in ms is the period with which the RegisterWeightCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterWeightCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterWeightCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -277,7 +277,7 @@ func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LoadCellV2Bricklet) SetWeightCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *LoadCellV2Bricklet) SetWeightCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -291,7 +291,7 @@ func (device *LoadCellV2Bricklet) SetWeightCallbackConfiguration(period uint32, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -300,7 +300,7 @@ func (device *LoadCellV2Bricklet) SetWeightCallbackConfiguration(period uint32, 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -313,7 +313,7 @@ func (device *LoadCellV2Bricklet) SetWeightCallbackConfiguration(period uint32, 
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LoadCellV2Bricklet) GetWeightCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *LoadCellV2Bricklet) GetWeightCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetWeightCallbackConfiguration), buf.Bytes())
@@ -322,7 +322,7 @@ func (device *LoadCellV2Bricklet) GetWeightCallbackConfiguration() (period uint3
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -336,20 +336,20 @@ func (device *LoadCellV2Bricklet) GetWeightCallbackConfiguration() (period uint3
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
-	// for the weight value.
-	// 
-	// Setting the length to 1 will turn the averaging off. With less
-	// averaging, there is more noise on the data.
-	// 
-	// The range for the averaging is 1-100.
-	// 
-	// The default value is 4.
-func (device *LoadCellV2Bricklet) SetMovingAverage(average uint16) (err error) {    
+// for the weight value.
+// 
+// Setting the length to 1 will turn the averaging off. With less
+// averaging, there is more noise on the data.
+// 
+// The range for the averaging is 1-100.
+// 
+// The default value is 4.
+func (device *LoadCellV2Bricklet) SetMovingAverage(average uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, average);
 
@@ -359,7 +359,7 @@ func (device *LoadCellV2Bricklet) SetMovingAverage(average uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -368,12 +368,12 @@ func (device *LoadCellV2Bricklet) SetMovingAverage(average uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the length moving average as set by SetMovingAverage.
-func (device *LoadCellV2Bricklet) GetMovingAverage() (average uint16, err error) {    
+func (device *LoadCellV2Bricklet) GetMovingAverage() (average uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverage), buf.Bytes())
@@ -382,7 +382,7 @@ func (device *LoadCellV2Bricklet) GetMovingAverage() (average uint16, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return average, BrickletError(header.ErrorCode)
@@ -392,19 +392,19 @@ func (device *LoadCellV2Bricklet) GetMovingAverage() (average uint16, err error)
         binary.Read(resultBuf, binary.LittleEndian, &average)
 
     }
-    
+
     return average, nil
 }
 
 // Configures the info LED to be either turned off, turned on, or blink in
-	// heartbeat mode.
+// heartbeat mode.
 //
 // Associated constants:
 //
 //	* InfoLEDConfigOff
 //	* InfoLEDConfigOn
 //	* InfoLEDConfigShowHeartbeat
-func (device *LoadCellV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err error) {    
+func (device *LoadCellV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -414,7 +414,7 @@ func (device *LoadCellV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -423,7 +423,7 @@ func (device *LoadCellV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -434,7 +434,7 @@ func (device *LoadCellV2Bricklet) SetInfoLEDConfig(config InfoLEDConfig) (err er
 //	* InfoLEDConfigOff
 //	* InfoLEDConfigOn
 //	* InfoLEDConfigShowHeartbeat
-func (device *LoadCellV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err error) {    
+func (device *LoadCellV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetInfoLEDConfig), buf.Bytes())
@@ -443,7 +443,7 @@ func (device *LoadCellV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -453,22 +453,22 @@ func (device *LoadCellV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err 
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // To calibrate your Load Cell Bricklet 2.0 you have to
-	// 
-	// * empty the scale and call this function with 0 and
-	// * add a known weight to the scale and call this function with the weight in
-	//   grams.
-	// 
-	// The calibration is saved in the flash of the Bricklet and only
-	// needs to be done once.
-	// 
-	// We recommend to use the Brick Viewer for calibration, you don't need
-	// to call this function in your source code.
-func (device *LoadCellV2Bricklet) Calibrate(weight uint32) (err error) {    
+// 
+// * empty the scale and call this function with 0 and
+// * add a known weight to the scale and call this function with the weight in
+//   grams.
+// 
+// The calibration is saved in the flash of the Bricklet and only
+// needs to be done once.
+// 
+// We recommend to use the Brick Viewer for calibration, you don't need
+// to call this function in your source code.
+func (device *LoadCellV2Bricklet) Calibrate(weight uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, weight);
 
@@ -478,7 +478,7 @@ func (device *LoadCellV2Bricklet) Calibrate(weight uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -487,12 +487,12 @@ func (device *LoadCellV2Bricklet) Calibrate(weight uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the currently measured weight as tare weight.
-func (device *LoadCellV2Bricklet) Tare() (err error) {    
+func (device *LoadCellV2Bricklet) Tare() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionTare), buf.Bytes())
@@ -501,7 +501,7 @@ func (device *LoadCellV2Bricklet) Tare() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -510,24 +510,24 @@ func (device *LoadCellV2Bricklet) Tare() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // The measurement rate and gain are configurable.
-	// 
-	// The rate can be either 10Hz or 80Hz. A faster rate will produce more noise.
-	// It is additionally possible to add a moving average
-	// (see SetMovingAverage) to the measurements.
-	// 
-	// The gain can be 128x, 64x or 32x. It represents a measurement range of
-	// ±20mV, ±40mV and ±80mV respectively. The Load Cell Bricklet uses an
-	// excitation voltage of 5V and most load cells use an output of 2mV/V. That
-	// means the voltage range is ±15mV for most load cells (i.e. gain of 128x
-	// is best). If you don't know what all of this means you should keep it at
-	// 128x, it will most likely be correct.
-	// 
-	// The default rate is 10Hz and the default gain is 128x.
+// 
+// The rate can be either 10Hz or 80Hz. A faster rate will produce more noise.
+// It is additionally possible to add a moving average
+// (see SetMovingAverage) to the measurements.
+// 
+// The gain can be 128x, 64x or 32x. It represents a measurement range of
+// ±20mV, ±40mV and ±80mV respectively. The Load Cell Bricklet uses an
+// excitation voltage of 5V and most load cells use an output of 2mV/V. That
+// means the voltage range is ±15mV for most load cells (i.e. gain of 128x
+// is best). If you don't know what all of this means you should keep it at
+// 128x, it will most likely be correct.
+// 
+// The default rate is 10Hz and the default gain is 128x.
 //
 // Associated constants:
 //
@@ -536,7 +536,7 @@ func (device *LoadCellV2Bricklet) Tare() (err error) {
 //	* Gain128x
 //	* Gain64x
 //	* Gain32x
-func (device *LoadCellV2Bricklet) SetConfiguration(rate Rate, gain Gain) (err error) {    
+func (device *LoadCellV2Bricklet) SetConfiguration(rate Rate, gain Gain) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, rate);
 	binary.Write(&buf, binary.LittleEndian, gain);
@@ -547,7 +547,7 @@ func (device *LoadCellV2Bricklet) SetConfiguration(rate Rate, gain Gain) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -556,7 +556,7 @@ func (device *LoadCellV2Bricklet) SetConfiguration(rate Rate, gain Gain) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -569,7 +569,7 @@ func (device *LoadCellV2Bricklet) SetConfiguration(rate Rate, gain Gain) (err er
 //	* Gain128x
 //	* Gain64x
 //	* Gain32x
-func (device *LoadCellV2Bricklet) GetConfiguration() (rate Rate, gain Gain, err error) {    
+func (device *LoadCellV2Bricklet) GetConfiguration() (rate Rate, gain Gain, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
@@ -578,7 +578,7 @@ func (device *LoadCellV2Bricklet) GetConfiguration() (rate Rate, gain Gain, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return rate, gain, BrickletError(header.ErrorCode)
@@ -589,22 +589,22 @@ func (device *LoadCellV2Bricklet) GetConfiguration() (rate Rate, gain Gain, err 
 	binary.Read(resultBuf, binary.LittleEndian, &gain)
 
     }
-    
+
     return rate, gain, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *LoadCellV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *LoadCellV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -613,7 +613,7 @@ func (device *LoadCellV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -626,19 +626,19 @@ func (device *LoadCellV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -653,7 +653,7 @@ func (device *LoadCellV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *LoadCellV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *LoadCellV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -663,7 +663,7 @@ func (device *LoadCellV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -673,7 +673,7 @@ func (device *LoadCellV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -686,7 +686,7 @@ func (device *LoadCellV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *LoadCellV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *LoadCellV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -695,7 +695,7 @@ func (device *LoadCellV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -705,17 +705,17 @@ func (device *LoadCellV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err 
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *LoadCellV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *LoadCellV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -725,7 +725,7 @@ func (device *LoadCellV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -734,19 +734,19 @@ func (device *LoadCellV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *LoadCellV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *LoadCellV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -756,7 +756,7 @@ func (device *LoadCellV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -766,17 +766,17 @@ func (device *LoadCellV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, e
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -784,7 +784,7 @@ func (device *LoadCellV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, e
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *LoadCellV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *LoadCellV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -794,7 +794,7 @@ func (device *LoadCellV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -803,7 +803,7 @@ func (device *LoadCellV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -815,7 +815,7 @@ func (device *LoadCellV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *LoadCellV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *LoadCellV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -824,7 +824,7 @@ func (device *LoadCellV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -834,17 +834,17 @@ func (device *LoadCellV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, 
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *LoadCellV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *LoadCellV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -853,7 +853,7 @@ func (device *LoadCellV2Bricklet) GetChipTemperature() (temperature int16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -863,17 +863,17 @@ func (device *LoadCellV2Bricklet) GetChipTemperature() (temperature int16, err e
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *LoadCellV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *LoadCellV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -882,7 +882,7 @@ func (device *LoadCellV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -891,16 +891,16 @@ func (device *LoadCellV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *LoadCellV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *LoadCellV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -910,7 +910,7 @@ func (device *LoadCellV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -919,13 +919,13 @@ func (device *LoadCellV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *LoadCellV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *LoadCellV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -934,7 +934,7 @@ func (device *LoadCellV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -944,19 +944,19 @@ func (device *LoadCellV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *LoadCellV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *LoadCellV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -965,7 +965,7 @@ func (device *LoadCellV2Bricklet) GetIdentity() (uid string, connectedUid string
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -980,6 +980,6 @@ func (device *LoadCellV2Bricklet) GetIdentity() (uid string, connectedUid string
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

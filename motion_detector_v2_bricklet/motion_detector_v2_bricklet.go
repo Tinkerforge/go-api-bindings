@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Passive infrared (PIR) motion sensor, 12m range.
+//Passive infrared (PIR) motion sensor with 12m range and dimmable backlight.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/MotionDetectorV2_Bricklet_Go.html.
@@ -118,17 +118,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MotionDetectorV2Bricklet
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MotionDetectorV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -137,7 +137,7 @@ func (device *MotionDetectorV2Bricklet) GetResponseExpected(functionID Function)
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -168,14 +168,14 @@ func (device *MotionDetectorV2Bricklet) RegisterMotionDetectedCallback(fn func()
 }
 
 //Remove a registered Motion Detected callback.
-func (device *MotionDetectorV2Bricklet) DeregisterMotionDetectedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMotionDetected), callbackID)
+func (device *MotionDetectorV2Bricklet) DeregisterMotionDetectedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackMotionDetected), registrationID)
 }
 
 
 // This callback is called when the detection cycle ended. When this
-	// callback is called, a new motion can be detected again after approximately 2
-	// seconds.
+// callback is called, a new motion can be detected again after approximately 2
+// seconds.
 func (device *MotionDetectorV2Bricklet) RegisterDetectionCycleEndedCallback(fn func()) uint64 {
             wrapper := func(byteSlice []byte) {
                 
@@ -187,24 +187,22 @@ func (device *MotionDetectorV2Bricklet) RegisterDetectionCycleEndedCallback(fn f
 }
 
 //Remove a registered Detection Cycle Ended callback.
-func (device *MotionDetectorV2Bricklet) DeregisterDetectionCycleEndedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDetectionCycleEnded), callbackID)
+func (device *MotionDetectorV2Bricklet) DeregisterDetectionCycleEndedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackDetectionCycleEnded), registrationID)
 }
 
 
-// Returns 1 if a motion was detected. How long this returns 1 after a motion
-	// was detected can be adjusted with one of the small potentiometers on the
-	// Motion Detector Bricklet, see `here
-	// <motion_detector_bricklet_sensitivity_delay_block_time>`.
-	// 
-	// There is also a blue LED on the Bricklet that is on as long as the Bricklet is
-	// in the motion detected state.
+// Returns 1 if a motion was detected. It returns 1 approx. for 1.8 seconds
+// until the sensor checks for a new movement.
+// 
+// There is also a blue LED on the Bricklet that is on as long as the Bricklet is
+// in the motion detected state.
 //
 // Associated constants:
 //
 //	* MotionNotDetected
 //	* MotionDetected
-func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err error) {    
+func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMotionDetected), buf.Bytes())
@@ -213,7 +211,7 @@ func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return motion, BrickletError(header.ErrorCode)
@@ -223,21 +221,21 @@ func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err 
         binary.Read(resultBuf, binary.LittleEndian, &motion)
 
     }
-    
+
     return motion, nil
 }
 
 // Sets the sensitivity of the PIR sensor. The range is 0-100. At full
-	// sensitivity (100), the Bricklet can detect motion in a range of approximately 12m.
-	// 
-	// The actual range depends on many things in the environment (e.g. reflections) and the
-	// size of the object to be detected. While a big person might be detected in a range
-	// of 10m a cat may only be detected at 2m distance with the same setting.
-	// 
-	// So you will have to find a good sensitivity for your application by trial and error.
-	// 
-	// The default value is 50.
-func (device *MotionDetectorV2Bricklet) SetSensitivity(sensitivity uint8) (err error) {    
+// sensitivity (100), the Bricklet can detect motion in a range of approximately 12m.
+// 
+// The actual range depends on many things in the environment (e.g. reflections) and the
+// size of the object to be detected. While a big person might be detected in a range
+// of 10m a cat may only be detected at 2m distance with the same setting.
+// 
+// So you will have to find a good sensitivity for your application by trial and error.
+// 
+// The default value is 50.
+func (device *MotionDetectorV2Bricklet) SetSensitivity(sensitivity uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, sensitivity);
 
@@ -247,7 +245,7 @@ func (device *MotionDetectorV2Bricklet) SetSensitivity(sensitivity uint8) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -256,12 +254,12 @@ func (device *MotionDetectorV2Bricklet) SetSensitivity(sensitivity uint8) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the sensitivity as set by SetSensitivity.
-func (device *MotionDetectorV2Bricklet) GetSensitivity() (sensitivity uint8, err error) {    
+func (device *MotionDetectorV2Bricklet) GetSensitivity() (sensitivity uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensitivity), buf.Bytes())
@@ -270,7 +268,7 @@ func (device *MotionDetectorV2Bricklet) GetSensitivity() (sensitivity uint8, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return sensitivity, BrickletError(header.ErrorCode)
@@ -280,17 +278,17 @@ func (device *MotionDetectorV2Bricklet) GetSensitivity() (sensitivity uint8, err
         binary.Read(resultBuf, binary.LittleEndian, &sensitivity)
 
     }
-    
+
     return sensitivity, nil
 }
 
 // Sets the blue backlight of the fresnel lens. The backlight consists of
-	// three LEDs. The brightness of each LED can be controlled with a 8-bit value
-	// (0-255). A value of 0 turns the LED off and a value of 255 turns the LED
-	// to full brightness.
-	// 
-	// The default value is 0, 0, 0.
-func (device *MotionDetectorV2Bricklet) SetIndicator(topLeft uint8, topRight uint8, bottom uint8) (err error) {    
+// three LEDs. The brightness of each LED can be controlled with a 8-bit value
+// (0-255). A value of 0 turns the LED off and a value of 255 turns the LED
+// to full brightness.
+// 
+// The default value is 0, 0, 0.
+func (device *MotionDetectorV2Bricklet) SetIndicator(topLeft uint8, topRight uint8, bottom uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, topLeft);
 	binary.Write(&buf, binary.LittleEndian, topRight);
@@ -302,7 +300,7 @@ func (device *MotionDetectorV2Bricklet) SetIndicator(topLeft uint8, topRight uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -311,12 +309,12 @@ func (device *MotionDetectorV2Bricklet) SetIndicator(topLeft uint8, topRight uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the indicator configuration as set by SetIndicator.
-func (device *MotionDetectorV2Bricklet) GetIndicator() (topLeft uint8, topRight uint8, bottom uint8, err error) {    
+func (device *MotionDetectorV2Bricklet) GetIndicator() (topLeft uint8, topRight uint8, bottom uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIndicator), buf.Bytes())
@@ -325,7 +323,7 @@ func (device *MotionDetectorV2Bricklet) GetIndicator() (topLeft uint8, topRight 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return topLeft, topRight, bottom, BrickletError(header.ErrorCode)
@@ -337,22 +335,22 @@ func (device *MotionDetectorV2Bricklet) GetIndicator() (topLeft uint8, topRight 
 	binary.Read(resultBuf, binary.LittleEndian, &bottom)
 
     }
-    
+
     return topLeft, topRight, bottom, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *MotionDetectorV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *MotionDetectorV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -361,7 +359,7 @@ func (device *MotionDetectorV2Bricklet) GetSPITFPErrorCount() (errorCountAckChec
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -374,19 +372,19 @@ func (device *MotionDetectorV2Bricklet) GetSPITFPErrorCount() (errorCountAckChec
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -401,7 +399,7 @@ func (device *MotionDetectorV2Bricklet) GetSPITFPErrorCount() (errorCountAckChec
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *MotionDetectorV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *MotionDetectorV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -411,7 +409,7 @@ func (device *MotionDetectorV2Bricklet) SetBootloaderMode(mode BootloaderMode) (
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -421,7 +419,7 @@ func (device *MotionDetectorV2Bricklet) SetBootloaderMode(mode BootloaderMode) (
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -434,7 +432,7 @@ func (device *MotionDetectorV2Bricklet) SetBootloaderMode(mode BootloaderMode) (
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *MotionDetectorV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *MotionDetectorV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -443,7 +441,7 @@ func (device *MotionDetectorV2Bricklet) GetBootloaderMode() (mode BootloaderMode
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -453,17 +451,17 @@ func (device *MotionDetectorV2Bricklet) GetBootloaderMode() (mode BootloaderMode
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *MotionDetectorV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *MotionDetectorV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -473,7 +471,7 @@ func (device *MotionDetectorV2Bricklet) SetWriteFirmwarePointer(pointer uint32) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -482,19 +480,19 @@ func (device *MotionDetectorV2Bricklet) SetWriteFirmwarePointer(pointer uint32) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *MotionDetectorV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *MotionDetectorV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -504,7 +502,7 @@ func (device *MotionDetectorV2Bricklet) WriteFirmware(data [64]uint8) (status ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -514,17 +512,17 @@ func (device *MotionDetectorV2Bricklet) WriteFirmware(data [64]uint8) (status ui
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -532,7 +530,7 @@ func (device *MotionDetectorV2Bricklet) WriteFirmware(data [64]uint8) (status ui
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *MotionDetectorV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *MotionDetectorV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -542,7 +540,7 @@ func (device *MotionDetectorV2Bricklet) SetStatusLEDConfig(config StatusLEDConfi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -551,7 +549,7 @@ func (device *MotionDetectorV2Bricklet) SetStatusLEDConfig(config StatusLEDConfi
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -563,7 +561,7 @@ func (device *MotionDetectorV2Bricklet) SetStatusLEDConfig(config StatusLEDConfi
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *MotionDetectorV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *MotionDetectorV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -572,7 +570,7 @@ func (device *MotionDetectorV2Bricklet) GetStatusLEDConfig() (config StatusLEDCo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -582,17 +580,17 @@ func (device *MotionDetectorV2Bricklet) GetStatusLEDConfig() (config StatusLEDCo
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *MotionDetectorV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *MotionDetectorV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -601,7 +599,7 @@ func (device *MotionDetectorV2Bricklet) GetChipTemperature() (temperature int16,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -611,17 +609,17 @@ func (device *MotionDetectorV2Bricklet) GetChipTemperature() (temperature int16,
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *MotionDetectorV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *MotionDetectorV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -630,7 +628,7 @@ func (device *MotionDetectorV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -639,16 +637,16 @@ func (device *MotionDetectorV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *MotionDetectorV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *MotionDetectorV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -658,7 +656,7 @@ func (device *MotionDetectorV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -667,13 +665,13 @@ func (device *MotionDetectorV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *MotionDetectorV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *MotionDetectorV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -682,7 +680,7 @@ func (device *MotionDetectorV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -692,19 +690,19 @@ func (device *MotionDetectorV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *MotionDetectorV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *MotionDetectorV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -713,7 +711,7 @@ func (device *MotionDetectorV2Bricklet) GetIdentity() (uid string, connectedUid 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -728,6 +726,6 @@ func (device *MotionDetectorV2Bricklet) GetIdentity() (uid string, connectedUid 
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

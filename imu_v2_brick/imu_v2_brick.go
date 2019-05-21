@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -230,17 +230,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IMUV2Brick, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IMUV2Brick) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -249,7 +249,7 @@ func (device *IMUV2Brick) GetResponseExpected(functionID Function) (bool, error)
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -269,8 +269,8 @@ func (device *IMUV2Brick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetAccelerationPeriod. The parameters are the acceleration
-	// for the x, y and z axis.
+// SetAccelerationPeriod. The parameters are the acceleration
+// for the x, y and z axis.
 func (device *IMUV2Brick) RegisterAccelerationCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -286,14 +286,14 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Acceleration callback.
-func (device *IMUV2Brick) DeregisterAccelerationCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), callbackID)
+func (device *IMUV2Brick) DeregisterAccelerationCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetMagneticFieldPeriod. The parameters are the magnetic
-	// field for the x, y and z axis.
+// SetMagneticFieldPeriod. The parameters are the magnetic
+// field for the x, y and z axis.
 func (device *IMUV2Brick) RegisterMagneticFieldCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -309,14 +309,14 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Magnetic Field callback.
-func (device *IMUV2Brick) DeregisterMagneticFieldCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMagneticField), callbackID)
+func (device *IMUV2Brick) DeregisterMagneticFieldCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackMagneticField), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetAngularVelocityPeriod. The parameters are the angular
-	// velocity for the x, y and z axis.
+// SetAngularVelocityPeriod. The parameters are the angular
+// velocity for the x, y and z axis.
 func (device *IMUV2Brick) RegisterAngularVelocityCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -332,13 +332,13 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Angular Velocity callback.
-func (device *IMUV2Brick) DeregisterAngularVelocityCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAngularVelocity), callbackID)
+func (device *IMUV2Brick) DeregisterAngularVelocityCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAngularVelocity), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetTemperaturePeriod. The parameter is the temperature.
+// SetTemperaturePeriod. The parameter is the temperature.
 func (device *IMUV2Brick) RegisterTemperatureCallback(fn func(int8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -350,14 +350,14 @@ func (device *IMUV2Brick) RegisterTemperatureCallback(fn func(int8)) uint64 {
 }
 
 //Remove a registered Temperature callback.
-func (device *IMUV2Brick) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+func (device *IMUV2Brick) DeregisterTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetLinearAccelerationPeriod. The parameters are the
-	// linear acceleration for the x, y and z axis.
+// SetLinearAccelerationPeriod. The parameters are the
+// linear acceleration for the x, y and z axis.
 func (device *IMUV2Brick) RegisterLinearAccelerationCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -373,14 +373,14 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Linear Acceleration callback.
-func (device *IMUV2Brick) DeregisterLinearAccelerationCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackLinearAcceleration), callbackID)
+func (device *IMUV2Brick) DeregisterLinearAccelerationCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackLinearAcceleration), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetGravityVectorPeriod. The parameters gravity vector
-	// for the x, y and z axis.
+// SetGravityVectorPeriod. The parameters gravity vector
+// for the x, y and z axis.
 func (device *IMUV2Brick) RegisterGravityVectorCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -396,15 +396,15 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Gravity Vector callback.
-func (device *IMUV2Brick) DeregisterGravityVectorCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackGravityVector), callbackID)
+func (device *IMUV2Brick) DeregisterGravityVectorCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackGravityVector), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetOrientationPeriod. The parameters are the orientation
-	// (heading (yaw), roll, pitch) of the IMU Brick in Euler angles. See
-	// GetOrientation for details.
+// SetOrientationPeriod. The parameters are the orientation
+// (heading (yaw), roll, pitch) of the IMU Brick in Euler angles. See
+// GetOrientation for details.
 func (device *IMUV2Brick) RegisterOrientationCallback(fn func(int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -420,15 +420,15 @@ binary.Read(buf, binary.LittleEndian, &pitch)
 }
 
 //Remove a registered Orientation callback.
-func (device *IMUV2Brick) DeregisterOrientationCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackOrientation), callbackID)
+func (device *IMUV2Brick) DeregisterOrientationCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackOrientation), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetQuaternionPeriod. The parameters are the orientation
-	// (x, y, z, w) of the IMU Brick in quaternions. See GetQuaternion
-	// for details.
+// SetQuaternionPeriod. The parameters are the orientation
+// (x, y, z, w) of the IMU Brick in quaternions. See GetQuaternion
+// for details.
 func (device *IMUV2Brick) RegisterQuaternionCallback(fn func(int16, int16, int16, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -446,14 +446,14 @@ binary.Read(buf, binary.LittleEndian, &z)
 }
 
 //Remove a registered Quaternion callback.
-func (device *IMUV2Brick) DeregisterQuaternionCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackQuaternion), callbackID)
+func (device *IMUV2Brick) DeregisterQuaternionCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackQuaternion), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetAllDataPeriod. The parameters are as for
-	// GetAllData.
+// SetAllDataPeriod. The parameters are as for
+// GetAllData.
 func (device *IMUV2Brick) RegisterAllDataCallback(fn func([3]int16, [3]int16, [3]int16, [3]int16, [4]int16, [3]int16, [3]int16, int8, uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -481,18 +481,18 @@ binary.Read(buf, binary.LittleEndian, &calibrationStatus)
 }
 
 //Remove a registered All Data callback.
-func (device *IMUV2Brick) DeregisterAllDataCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllData), callbackID)
+func (device *IMUV2Brick) DeregisterAllDataCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAllData), registrationID)
 }
 
 
 // Returns the calibrated acceleration from the accelerometer for the
-	// x, y and z axis in 1/100 m/s².
-	// 
-	// If you want to get the acceleration periodically, it is recommended
-	// to use the RegisterAccelerationCallback callback and set the period with
-	// SetAccelerationPeriod.
-func (device *IMUV2Brick) GetAcceleration() (x int16, y int16, z int16, err error) {    
+// x, y and z axis in 1/100 m/s².
+// 
+// If you want to get the acceleration periodically, it is recommended
+// to use the RegisterAccelerationCallback callback and set the period with
+// SetAccelerationPeriod.
+func (device *IMUV2Brick) GetAcceleration() (x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
@@ -501,7 +501,7 @@ func (device *IMUV2Brick) GetAcceleration() (x int16, y int16, z int16, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return x, y, z, BrickletError(header.ErrorCode)
@@ -513,17 +513,17 @@ func (device *IMUV2Brick) GetAcceleration() (x int16, y int16, z int16, err erro
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return x, y, z, nil
 }
 
 // Returns the calibrated magnetic field from the magnetometer for the
-	// x, y and z axis in 1/16 µT (Microtesla).
-	// 
-	// If you want to get the magnetic field periodically, it is recommended
-	// to use the RegisterMagneticFieldCallback callback and set the period with
-	// SetMagneticFieldPeriod.
-func (device *IMUV2Brick) GetMagneticField() (x int16, y int16, z int16, err error) {    
+// x, y and z axis in 1/16 µT (Microtesla).
+// 
+// If you want to get the magnetic field periodically, it is recommended
+// to use the RegisterMagneticFieldCallback callback and set the period with
+// SetMagneticFieldPeriod.
+func (device *IMUV2Brick) GetMagneticField() (x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMagneticField), buf.Bytes())
@@ -532,7 +532,7 @@ func (device *IMUV2Brick) GetMagneticField() (x int16, y int16, z int16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return x, y, z, BrickletError(header.ErrorCode)
@@ -544,17 +544,17 @@ func (device *IMUV2Brick) GetMagneticField() (x int16, y int16, z int16, err err
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return x, y, z, nil
 }
 
 // Returns the calibrated angular velocity from the gyroscope for the
-	// x, y and z axis in 1/16 °/s.
-	// 
-	// If you want to get the angular velocity periodically, it is recommended
-	// to use the RegisterAngularVelocityCallback acallback nd set the period with
-	// SetAngularVelocityPeriod.
-func (device *IMUV2Brick) GetAngularVelocity() (x int16, y int16, z int16, err error) {    
+// x, y and z axis in 1/16 °/s.
+// 
+// If you want to get the angular velocity periodically, it is recommended
+// to use the RegisterAngularVelocityCallback acallback nd set the period with
+// SetAngularVelocityPeriod.
+func (device *IMUV2Brick) GetAngularVelocity() (x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAngularVelocity), buf.Bytes())
@@ -563,7 +563,7 @@ func (device *IMUV2Brick) GetAngularVelocity() (x int16, y int16, z int16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return x, y, z, BrickletError(header.ErrorCode)
@@ -575,14 +575,14 @@ func (device *IMUV2Brick) GetAngularVelocity() (x int16, y int16, z int16, err e
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return x, y, z, nil
 }
 
 // Returns the temperature of the IMU Brick. The temperature is given in
-	// °C. The temperature is measured in the core of the BNO055 IC, it is not the
-	// ambient temperature
-func (device *IMUV2Brick) GetTemperature() (temperature int8, err error) {    
+// °C. The temperature is measured in the core of the BNO055 IC, it is not the
+// ambient temperature
+func (device *IMUV2Brick) GetTemperature() (temperature int8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
@@ -591,7 +591,7 @@ func (device *IMUV2Brick) GetTemperature() (temperature int8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -601,26 +601,26 @@ func (device *IMUV2Brick) GetTemperature() (temperature int8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Returns the current orientation (heading, roll, pitch) of the IMU Brick as
-	// independent Euler angles in 1/16 degree. Note that Euler angles always
-	// experience a https://en.wikipedia.org/wiki/Gimbal_lock.
-	// We recommend that you use quaternions instead, if you need the absolute
-	// orientation.
-	// 
-	// The rotation angle has the following ranges:
-	// 
-	// * heading: 0° to 360°
-	// * roll: -90° to +90°
-	// * pitch: -180° to +180°
-	// 
-	// If you want to get the orientation periodically, it is recommended
-	// to use the RegisterOrientationCallback callback and set the period with
-	// SetOrientationPeriod.
-func (device *IMUV2Brick) GetOrientation() (heading int16, roll int16, pitch int16, err error) {    
+// independent Euler angles in 1/16 degree. Note that Euler angles always
+// experience a https://en.wikipedia.org/wiki/Gimbal_lock.
+// We recommend that you use quaternions instead, if you need the absolute
+// orientation.
+// 
+// The rotation angle has the following ranges:
+// 
+// * heading: 0° to 360°
+// * roll: -90° to +90°
+// * pitch: -180° to +180°
+// 
+// If you want to get the orientation periodically, it is recommended
+// to use the RegisterOrientationCallback callback and set the period with
+// SetOrientationPeriod.
+func (device *IMUV2Brick) GetOrientation() (heading int16, roll int16, pitch int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetOrientation), buf.Bytes())
@@ -629,7 +629,7 @@ func (device *IMUV2Brick) GetOrientation() (heading int16, roll int16, pitch int
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return heading, roll, pitch, BrickletError(header.ErrorCode)
@@ -641,23 +641,23 @@ func (device *IMUV2Brick) GetOrientation() (heading int16, roll int16, pitch int
 	binary.Read(resultBuf, binary.LittleEndian, &pitch)
 
     }
-    
+
     return heading, roll, pitch, nil
 }
 
 // Returns the linear acceleration of the IMU Brick for the
-	// x, y and z axis in 1/100 m/s².
-	// 
-	// The linear acceleration is the acceleration in each of the three
-	// axis of the IMU Brick with the influences of gravity removed.
-	// 
-	// It is also possible to get the gravity vector with the influence of linear
-	// acceleration removed, see GetGravityVector.
-	// 
-	// If you want to get the linear acceleration periodically, it is recommended
-	// to use the RegisterLinearAccelerationCallback callback and set the period with
-	// SetLinearAccelerationPeriod.
-func (device *IMUV2Brick) GetLinearAcceleration() (x int16, y int16, z int16, err error) {    
+// x, y and z axis in 1/100 m/s².
+// 
+// The linear acceleration is the acceleration in each of the three
+// axis of the IMU Brick with the influences of gravity removed.
+// 
+// It is also possible to get the gravity vector with the influence of linear
+// acceleration removed, see GetGravityVector.
+// 
+// If you want to get the linear acceleration periodically, it is recommended
+// to use the RegisterLinearAccelerationCallback callback and set the period with
+// SetLinearAccelerationPeriod.
+func (device *IMUV2Brick) GetLinearAcceleration() (x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetLinearAcceleration), buf.Bytes())
@@ -666,7 +666,7 @@ func (device *IMUV2Brick) GetLinearAcceleration() (x int16, y int16, z int16, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return x, y, z, BrickletError(header.ErrorCode)
@@ -678,23 +678,23 @@ func (device *IMUV2Brick) GetLinearAcceleration() (x int16, y int16, z int16, er
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return x, y, z, nil
 }
 
 // Returns the current gravity vector of the IMU Brick for the
-	// x, y and z axis in 1/100 m/s².
-	// 
-	// The gravity vector is the acceleration that occurs due to gravity.
-	// Influences of additional linear acceleration are removed.
-	// 
-	// It is also possible to get the linear acceleration with the influence
-	// of gravity removed, see GetLinearAcceleration.
-	// 
-	// If you want to get the gravity vector periodically, it is recommended
-	// to use the RegisterGravityVectorCallback callback and set the period with
-	// SetGravityVectorPeriod.
-func (device *IMUV2Brick) GetGravityVector() (x int16, y int16, z int16, err error) {    
+// x, y and z axis in 1/100 m/s².
+// 
+// The gravity vector is the acceleration that occurs due to gravity.
+// Influences of additional linear acceleration are removed.
+// 
+// It is also possible to get the linear acceleration with the influence
+// of gravity removed, see GetLinearAcceleration.
+// 
+// If you want to get the gravity vector periodically, it is recommended
+// to use the RegisterGravityVectorCallback callback and set the period with
+// SetGravityVectorPeriod.
+func (device *IMUV2Brick) GetGravityVector() (x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGravityVector), buf.Bytes())
@@ -703,7 +703,7 @@ func (device *IMUV2Brick) GetGravityVector() (x int16, y int16, z int16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return x, y, z, BrickletError(header.ErrorCode)
@@ -715,20 +715,20 @@ func (device *IMUV2Brick) GetGravityVector() (x int16, y int16, z int16, err err
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return x, y, z, nil
 }
 
 // Returns the current orientation (w, x, y, z) of the IMU Brick as
-	// https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation.
-	// 
-	// You have to divide the returns values by 16383 (14 bit) to get
-	// the usual range of -1.0 to +1.0 for quaternions.
-	// 
-	// If you want to get the quaternions periodically, it is recommended
-	// to use the RegisterQuaternionCallback callback and set the period with
-	// SetQuaternionPeriod.
-func (device *IMUV2Brick) GetQuaternion() (w int16, x int16, y int16, z int16, err error) {    
+// https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation.
+// 
+// You have to divide the returns values by 16383 (14 bit) to get
+// the usual range of -1.0 to +1.0 for quaternions.
+// 
+// If you want to get the quaternions periodically, it is recommended
+// to use the RegisterQuaternionCallback callback and set the period with
+// SetQuaternionPeriod.
+func (device *IMUV2Brick) GetQuaternion() (w int16, x int16, y int16, z int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetQuaternion), buf.Bytes())
@@ -737,7 +737,7 @@ func (device *IMUV2Brick) GetQuaternion() (w int16, x int16, y int16, z int16, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return w, x, y, z, BrickletError(header.ErrorCode)
@@ -750,41 +750,41 @@ func (device *IMUV2Brick) GetQuaternion() (w int16, x int16, y int16, z int16, e
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
     }
-    
+
     return w, x, y, z, nil
 }
 
 // Return all of the available data of the IMU Brick.
-	// 
-	// * acceleration in 1/100 m/s² (see GetAcceleration)
-	// * magnetic field in 1/16 µT (see GetMagneticField)
-	// * angular velocity in 1/16 °/s (see GetAngularVelocity)
-	// * Euler angles in 1/16 ° (see GetOrientation)
-	// * quaternion 1/16383 (see GetQuaternion)
-	// * linear acceleration 1/100 m/s² (see GetLinearAcceleration)
-	// * gravity vector 1/100 m/s² (see GetGravityVector)
-	// * temperature in 1 °C (see GetTemperature)
-	// * calibration status (see below)
-	// 
-	// The calibration status consists of four pairs of two bits. Each pair
-	// of bits represents the status of the current calibration.
-	// 
-	// * bit 0-1: Magnetometer
-	// * bit 2-3: Accelerometer
-	// * bit 4-5: Gyroscope
-	// * bit 6-7: System
-	// 
-	// A value of 0 means for not calibrated and a value of 3 means
-	// fully calibrated. In your program you should always be able to
-	// ignore the calibration status, it is used by the calibration
-	// window of the Brick Viewer and it can be ignored after the first
-	// calibration. See the documentation in the calibration window for
-	// more information regarding the calibration of the IMU Brick.
-	// 
-	// If you want to get the data periodically, it is recommended
-	// to use the RegisterAllDataCallback callback and set the period with
-	// SetAllDataPeriod.
-func (device *IMUV2Brick) GetAllData() (acceleration [3]int16, magneticField [3]int16, angularVelocity [3]int16, eulerAngle [3]int16, quaternion [4]int16, linearAcceleration [3]int16, gravityVector [3]int16, temperature int8, calibrationStatus uint8, err error) {    
+// 
+// * acceleration in 1/100 m/s² (see GetAcceleration)
+// * magnetic field in 1/16 µT (see GetMagneticField)
+// * angular velocity in 1/16 °/s (see GetAngularVelocity)
+// * Euler angles in 1/16 ° (see GetOrientation)
+// * quaternion 1/16383 (see GetQuaternion)
+// * linear acceleration 1/100 m/s² (see GetLinearAcceleration)
+// * gravity vector 1/100 m/s² (see GetGravityVector)
+// * temperature in 1 °C (see GetTemperature)
+// * calibration status (see below)
+// 
+// The calibration status consists of four pairs of two bits. Each pair
+// of bits represents the status of the current calibration.
+// 
+// * bit 0-1: Magnetometer
+// * bit 2-3: Accelerometer
+// * bit 4-5: Gyroscope
+// * bit 6-7: System
+// 
+// A value of 0 means for not calibrated and a value of 3 means
+// fully calibrated. In your program you should always be able to
+// ignore the calibration status, it is used by the calibration
+// window of the Brick Viewer and it can be ignored after the first
+// calibration. See the documentation in the calibration window for
+// more information regarding the calibration of the IMU Brick.
+// 
+// If you want to get the data periodically, it is recommended
+// to use the RegisterAllDataCallback callback and set the period with
+// SetAllDataPeriod.
+func (device *IMUV2Brick) GetAllData() (acceleration [3]int16, magneticField [3]int16, angularVelocity [3]int16, eulerAngle [3]int16, quaternion [4]int16, linearAcceleration [3]int16, gravityVector [3]int16, temperature int8, calibrationStatus uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAllData), buf.Bytes())
@@ -793,7 +793,7 @@ func (device *IMUV2Brick) GetAllData() (acceleration [3]int16, magneticField [3]
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return acceleration, magneticField, angularVelocity, eulerAngle, quaternion, linearAcceleration, gravityVector, temperature, calibrationStatus, BrickletError(header.ErrorCode)
@@ -811,12 +811,12 @@ func (device *IMUV2Brick) GetAllData() (acceleration [3]int16, magneticField [3]
 	binary.Read(resultBuf, binary.LittleEndian, &calibrationStatus)
 
     }
-    
+
     return acceleration, magneticField, angularVelocity, eulerAngle, quaternion, linearAcceleration, gravityVector, temperature, calibrationStatus, nil
 }
 
 // Turns the orientation and direction LEDs of the IMU Brick on.
-func (device *IMUV2Brick) LedsOn() (err error) {    
+func (device *IMUV2Brick) LedsOn() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionLedsOn), buf.Bytes())
@@ -825,7 +825,7 @@ func (device *IMUV2Brick) LedsOn() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -834,12 +834,12 @@ func (device *IMUV2Brick) LedsOn() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Turns the orientation and direction LEDs of the IMU Brick off.
-func (device *IMUV2Brick) LedsOff() (err error) {    
+func (device *IMUV2Brick) LedsOff() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionLedsOff), buf.Bytes())
@@ -848,7 +848,7 @@ func (device *IMUV2Brick) LedsOff() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -857,13 +857,13 @@ func (device *IMUV2Brick) LedsOff() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the orientation and direction LEDs of the IMU Brick
-	// are on, *false* otherwise.
-func (device *IMUV2Brick) AreLedsOn() (leds bool, err error) {    
+// are on, *false* otherwise.
+func (device *IMUV2Brick) AreLedsOn() (leds bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionAreLedsOn), buf.Bytes())
@@ -872,7 +872,7 @@ func (device *IMUV2Brick) AreLedsOn() (leds bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return leds, BrickletError(header.ErrorCode)
@@ -882,21 +882,21 @@ func (device *IMUV2Brick) AreLedsOn() (leds bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &leds)
 
     }
-    
+
     return leds, nil
 }
 
 // A call of this function saves the current calibration to be used
-	// as a starting point for the next restart of continuous calibration
-	// of the IMU Brick.
-	// 
-	// A return value of *true* means that the calibration could be used and
-	// *false* means that it could not be used (this happens if the calibration
-	// status is not fully calibrated).
-	// 
-	// This function is used by the calibration window of the Brick Viewer, you
-	// should not need to call it in your program.
-func (device *IMUV2Brick) SaveCalibration() (calibrationDone bool, err error) {    
+// as a starting point for the next restart of continuous calibration
+// of the IMU Brick.
+// 
+// A return value of *true* means that the calibration could be used and
+// *false* means that it could not be used (this happens if the calibration
+// status is not fully calibrated).
+// 
+// This function is used by the calibration window of the Brick Viewer, you
+// should not need to call it in your program.
+func (device *IMUV2Brick) SaveCalibration() (calibrationDone bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionSaveCalibration), buf.Bytes())
@@ -905,7 +905,7 @@ func (device *IMUV2Brick) SaveCalibration() (calibrationDone bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return calibrationDone, BrickletError(header.ErrorCode)
@@ -915,15 +915,15 @@ func (device *IMUV2Brick) SaveCalibration() (calibrationDone bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &calibrationDone)
 
     }
-    
+
     return calibrationDone, nil
 }
 
 // Sets the period in ms with which the RegisterAccelerationCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The default value is 0.
-func (device *IMUV2Brick) SetAccelerationPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The default value is 0.
+func (device *IMUV2Brick) SetAccelerationPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -933,7 +933,7 @@ func (device *IMUV2Brick) SetAccelerationPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -942,12 +942,12 @@ func (device *IMUV2Brick) SetAccelerationPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetAccelerationPeriod.
-func (device *IMUV2Brick) GetAccelerationPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetAccelerationPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationPeriod), buf.Bytes())
@@ -956,7 +956,7 @@ func (device *IMUV2Brick) GetAccelerationPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -966,13 +966,13 @@ func (device *IMUV2Brick) GetAccelerationPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterMagneticFieldCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetMagneticFieldPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetMagneticFieldPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -982,7 +982,7 @@ func (device *IMUV2Brick) SetMagneticFieldPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -991,12 +991,12 @@ func (device *IMUV2Brick) SetMagneticFieldPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetMagneticFieldPeriod.
-func (device *IMUV2Brick) GetMagneticFieldPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetMagneticFieldPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMagneticFieldPeriod), buf.Bytes())
@@ -1005,7 +1005,7 @@ func (device *IMUV2Brick) GetMagneticFieldPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1015,13 +1015,13 @@ func (device *IMUV2Brick) GetMagneticFieldPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterAngularVelocityCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetAngularVelocityPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetAngularVelocityPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1031,7 +1031,7 @@ func (device *IMUV2Brick) SetAngularVelocityPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1040,12 +1040,12 @@ func (device *IMUV2Brick) SetAngularVelocityPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetAngularVelocityPeriod.
-func (device *IMUV2Brick) GetAngularVelocityPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetAngularVelocityPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAngularVelocityPeriod), buf.Bytes())
@@ -1054,7 +1054,7 @@ func (device *IMUV2Brick) GetAngularVelocityPeriod() (period uint32, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1064,13 +1064,13 @@ func (device *IMUV2Brick) GetAngularVelocityPeriod() (period uint32, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterTemperatureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetTemperaturePeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetTemperaturePeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1080,7 +1080,7 @@ func (device *IMUV2Brick) SetTemperaturePeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1089,12 +1089,12 @@ func (device *IMUV2Brick) SetTemperaturePeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetTemperaturePeriod.
-func (device *IMUV2Brick) GetTemperaturePeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetTemperaturePeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperaturePeriod), buf.Bytes())
@@ -1103,7 +1103,7 @@ func (device *IMUV2Brick) GetTemperaturePeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1113,13 +1113,13 @@ func (device *IMUV2Brick) GetTemperaturePeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterOrientationCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetOrientationPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetOrientationPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1129,7 +1129,7 @@ func (device *IMUV2Brick) SetOrientationPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1138,12 +1138,12 @@ func (device *IMUV2Brick) SetOrientationPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetOrientationPeriod.
-func (device *IMUV2Brick) GetOrientationPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetOrientationPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetOrientationPeriod), buf.Bytes())
@@ -1152,7 +1152,7 @@ func (device *IMUV2Brick) GetOrientationPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1162,13 +1162,13 @@ func (device *IMUV2Brick) GetOrientationPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterLinearAccelerationCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetLinearAccelerationPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetLinearAccelerationPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1178,7 +1178,7 @@ func (device *IMUV2Brick) SetLinearAccelerationPeriod(period uint32) (err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1187,12 +1187,12 @@ func (device *IMUV2Brick) SetLinearAccelerationPeriod(period uint32) (err error)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetLinearAccelerationPeriod.
-func (device *IMUV2Brick) GetLinearAccelerationPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetLinearAccelerationPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetLinearAccelerationPeriod), buf.Bytes())
@@ -1201,7 +1201,7 @@ func (device *IMUV2Brick) GetLinearAccelerationPeriod() (period uint32, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1211,13 +1211,13 @@ func (device *IMUV2Brick) GetLinearAccelerationPeriod() (period uint32, err erro
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterGravityVectorCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetGravityVectorPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetGravityVectorPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1227,7 +1227,7 @@ func (device *IMUV2Brick) SetGravityVectorPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1236,12 +1236,12 @@ func (device *IMUV2Brick) SetGravityVectorPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetGravityVectorPeriod.
-func (device *IMUV2Brick) GetGravityVectorPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetGravityVectorPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetGravityVectorPeriod), buf.Bytes())
@@ -1250,7 +1250,7 @@ func (device *IMUV2Brick) GetGravityVectorPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1260,13 +1260,13 @@ func (device *IMUV2Brick) GetGravityVectorPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterQuaternionCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetQuaternionPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetQuaternionPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1276,7 +1276,7 @@ func (device *IMUV2Brick) SetQuaternionPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1285,12 +1285,12 @@ func (device *IMUV2Brick) SetQuaternionPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetQuaternionPeriod.
-func (device *IMUV2Brick) GetQuaternionPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetQuaternionPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetQuaternionPeriod), buf.Bytes())
@@ -1299,7 +1299,7 @@ func (device *IMUV2Brick) GetQuaternionPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1309,13 +1309,13 @@ func (device *IMUV2Brick) GetQuaternionPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterAllDataCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-func (device *IMUV2Brick) SetAllDataPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+func (device *IMUV2Brick) SetAllDataPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -1325,7 +1325,7 @@ func (device *IMUV2Brick) SetAllDataPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1334,12 +1334,12 @@ func (device *IMUV2Brick) SetAllDataPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetAllDataPeriod.
-func (device *IMUV2Brick) GetAllDataPeriod() (period uint32, err error) {    
+func (device *IMUV2Brick) GetAllDataPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAllDataPeriod), buf.Bytes())
@@ -1348,7 +1348,7 @@ func (device *IMUV2Brick) GetAllDataPeriod() (period uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -1358,23 +1358,23 @@ func (device *IMUV2Brick) GetAllDataPeriod() (period uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the available sensor configuration for the Magnetometer, Gyroscope and
-	// Accelerometer. The Accelerometer Range is user selectable in all fusion modes,
-	// all other configurations are auto-controlled in fusion mode.
-	// 
-	// The default values are:
-	// 
-	// * Magnetometer Rate 20Hz
-	// * Gyroscope Range 2000°/s
-	// * Gyroscope Bandwidth 32Hz
-	// * Accelerometer Range +/-4G
-	// * Accelerometer Bandwidth 62.5Hz
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// Accelerometer. The Accelerometer Range is user selectable in all fusion modes,
+// all other configurations are auto-controlled in fusion mode.
+// 
+// The default values are:
+// 
+// * Magnetometer Rate 20Hz
+// * Gyroscope Range 2000°/s
+// * Gyroscope Bandwidth 32Hz
+// * Accelerometer Range +/-4G
+// * Accelerometer Bandwidth 62.5Hz
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1411,7 +1411,7 @@ func (device *IMUV2Brick) GetAllDataPeriod() (period uint32, err error) {
 //	* AccelerometerBandwidth250Hz
 //	* AccelerometerBandwidth500Hz
 //	* AccelerometerBandwidth1000Hz
-func (device *IMUV2Brick) SetSensorConfiguration(magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth) (err error) {    
+func (device *IMUV2Brick) SetSensorConfiguration(magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, magnetometerRate);
 	binary.Write(&buf, binary.LittleEndian, gyroscopeRange);
@@ -1425,7 +1425,7 @@ func (device *IMUV2Brick) SetSensorConfiguration(magnetometerRate MagnetometerRa
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1434,13 +1434,13 @@ func (device *IMUV2Brick) SetSensorConfiguration(magnetometerRate MagnetometerRa
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the sensor configuration as set by SetSensorConfiguration.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1477,7 +1477,7 @@ func (device *IMUV2Brick) SetSensorConfiguration(magnetometerRate MagnetometerRa
 //	* AccelerometerBandwidth250Hz
 //	* AccelerometerBandwidth500Hz
 //	* AccelerometerBandwidth1000Hz
-func (device *IMUV2Brick) GetSensorConfiguration() (magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth, err error) {    
+func (device *IMUV2Brick) GetSensorConfiguration() (magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorConfiguration), buf.Bytes())
@@ -1486,7 +1486,7 @@ func (device *IMUV2Brick) GetSensorConfiguration() (magnetometerRate Magnetomete
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return magnetometerRate, gyroscopeRange, gyroscopeBandwidth, accelerometerRange, accelerometerBandwidth, BrickletError(header.ErrorCode)
@@ -1500,28 +1500,28 @@ func (device *IMUV2Brick) GetSensorConfiguration() (magnetometerRate Magnetomete
 	binary.Read(resultBuf, binary.LittleEndian, &accelerometerBandwidth)
 
     }
-    
+
     return magnetometerRate, gyroscopeRange, gyroscopeBandwidth, accelerometerRange, accelerometerBandwidth, nil
 }
 
 // If the fusion mode is turned off, the functions GetAcceleration,
-	// GetMagneticField and GetAngularVelocity return uncalibrated
-	// and uncompensated sensor data. All other sensor data getters return no data.
-	// 
-	// Since firmware version 2.0.6 you can also use a fusion mode without magnetometer.
-	// In this mode the calculated orientation is relative (with magnetometer it is
-	// absolute with respect to the earth). However, the calculation can't be influenced
-	// by spurious magnetic fields.
-	// 
-	// Since firmware version 2.0.13 you can also use a fusion mode without fast
-	// magnetometer calibration. This mode is the same as the normal fusion mode,
-	// but the fast magnetometer calibration is turned off. So to find the orientation
-	// the first time will likely take longer, but small magnetic influences might
-	// not affect the automatic calibration as much.
-	// 
-	// By default sensor fusion is on.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// GetMagneticField and GetAngularVelocity return uncalibrated
+// and uncompensated sensor data. All other sensor data getters return no data.
+// 
+// Since firmware version 2.0.6 you can also use a fusion mode without magnetometer.
+// In this mode the calculated orientation is relative (with magnetometer it is
+// absolute with respect to the earth). However, the calculation can't be influenced
+// by spurious magnetic fields.
+// 
+// Since firmware version 2.0.13 you can also use a fusion mode without fast
+// magnetometer calibration. This mode is the same as the normal fusion mode,
+// but the fast magnetometer calibration is turned off. So to find the orientation
+// the first time will likely take longer, but small magnetic influences might
+// not affect the automatic calibration as much.
+// 
+// By default sensor fusion is on.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1529,7 +1529,7 @@ func (device *IMUV2Brick) GetSensorConfiguration() (magnetometerRate Magnetomete
 //	* SensorFusionOn
 //	* SensorFusionOnWithoutMagnetometer
 //	* SensorFusionOnWithoutFastMagnetometerCalibration
-func (device *IMUV2Brick) SetSensorFusionMode(mode SensorFusion) (err error) {    
+func (device *IMUV2Brick) SetSensorFusionMode(mode SensorFusion) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -1539,7 +1539,7 @@ func (device *IMUV2Brick) SetSensorFusionMode(mode SensorFusion) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1548,13 +1548,13 @@ func (device *IMUV2Brick) SetSensorFusionMode(mode SensorFusion) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the sensor fusion mode as set by SetSensorFusionMode.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1562,7 +1562,7 @@ func (device *IMUV2Brick) SetSensorFusionMode(mode SensorFusion) (err error) {
 //	* SensorFusionOn
 //	* SensorFusionOnWithoutMagnetometer
 //	* SensorFusionOnWithoutFastMagnetometerCalibration
-func (device *IMUV2Brick) GetSensorFusionMode() (mode SensorFusion, err error) {    
+func (device *IMUV2Brick) GetSensorFusionMode() (mode SensorFusion, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorFusionMode), buf.Bytes())
@@ -1571,7 +1571,7 @@ func (device *IMUV2Brick) GetSensorFusionMode() (mode SensorFusion, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1581,35 +1581,35 @@ func (device *IMUV2Brick) GetSensorFusionMode() (mode SensorFusion, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
-	// enabled, the Brick will try to adapt the baudrate for the communication
-	// between Bricks and Bricklets according to the amount of data that is transferred.
-	// 
-	// The baudrate will be increased exponentially if lots of data is send/received and
-	// decreased linearly if little data is send/received.
-	// 
-	// This lowers the baudrate in applications where little data is transferred (e.g.
-	// a weather station) and increases the robustness. If there is lots of data to transfer
-	// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
-	// 
-	// In cases where some data has to transferred as fast as possible every few seconds
-	// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
-	// the dynamic baudrate off to get the highest possible performance.
-	// 
-	// The maximum value of the baudrate can be set per port with the function
-	// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
-	// as set by SetSPITFPBaudrate will be used statically.
-	// 
-	// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-	// 
-	// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-	// 
-	// .. versionadded:: 2.0.10$nbsp;(Firmware)
-func (device *IMUV2Brick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {    
+// enabled, the Brick will try to adapt the baudrate for the communication
+// between Bricks and Bricklets according to the amount of data that is transferred.
+// 
+// The baudrate will be increased exponentially if lots of data is send/received and
+// decreased linearly if little data is send/received.
+// 
+// This lowers the baudrate in applications where little data is transferred (e.g.
+// a weather station) and increases the robustness. If there is lots of data to transfer
+// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
+// 
+// In cases where some data has to transferred as fast as possible every few seconds
+// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
+// the dynamic baudrate off to get the highest possible performance.
+// 
+// The maximum value of the baudrate can be set per port with the function
+// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
+// as set by SetSPITFPBaudrate will be used statically.
+// 
+// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
+// 
+// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
+// 
+// .. versionadded:: 2.0.10$nbsp;(Firmware)
+func (device *IMUV2Brick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
@@ -1620,7 +1620,7 @@ func (device *IMUV2Brick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1629,14 +1629,14 @@ func (device *IMUV2Brick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
-	// 
-	// .. versionadded:: 2.0.10$nbsp;(Firmware)
-func (device *IMUV2Brick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.0.10$nbsp;(Firmware)
+func (device *IMUV2Brick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
@@ -1645,7 +1645,7 @@ func (device *IMUV2Brick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
@@ -1656,18 +1656,18 @@ func (device *IMUV2Brick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
     }
-    
+
     return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
-	// 
-	// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
-	// 
-	// This function is mostly used for debugging during development, in normal operation
-	// the counters should nearly always stay at 0.
-	// 
-	// .. versionadded:: 2.0.7$nbsp;(Firmware)
+// 
+// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
+// 
+// This function is mostly used for debugging during development, in normal operation
+// the counters should nearly always stay at 0.
+// 
+// .. versionadded:: 2.0.7$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1679,7 +1679,7 @@ func (device *IMUV2Brick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 //	* CommunicationMethodWIFI
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
-func (device *IMUV2Brick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {    
+func (device *IMUV2Brick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
@@ -1689,7 +1689,7 @@ func (device *IMUV2Brick) GetSendTimeoutCount(communicationMethod CommunicationM
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return timeoutCount, BrickletError(header.ErrorCode)
@@ -1699,29 +1699,29 @@ func (device *IMUV2Brick) GetSendTimeoutCount(communicationMethod CommunicationM
         binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
     }
-    
+
     return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-	// baudrate can be in the range 400000 to 2000000.
-	// 
-	// If you want to increase the throughput of Bricklets you can increase
-	// the baudrate. If you get a high error count because of high
-	// interference (see GetSPITFPErrorCount) you can decrease the
-	// baudrate.
-	// 
-	// If the dynamic baudrate feature is enabled, the baudrate set by this
-	// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
-	// 
-	// Regulatory testing is done with the default baudrate. If CE compatibility
-	// or similar is necessary in you applications we recommend to not change
-	// the baudrate.
-	// 
-	// The default baudrate for all ports is 1400000.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *IMUV2Brick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {    
+// baudrate can be in the range 400000 to 2000000.
+// 
+// If you want to increase the throughput of Bricklets you can increase
+// the baudrate. If you get a high error count because of high
+// interference (see GetSPITFPErrorCount) you can decrease the
+// baudrate.
+// 
+// If the dynamic baudrate feature is enabled, the baudrate set by this
+// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
+// 
+// Regulatory testing is done with the default baudrate. If CE compatibility
+// or similar is necessary in you applications we recommend to not change
+// the baudrate.
+// 
+// The default baudrate for all ports is 1400000.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *IMUV2Brick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
@@ -1732,7 +1732,7 @@ func (device *IMUV2Brick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1741,14 +1741,14 @@ func (device *IMUV2Brick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *IMUV2Brick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *IMUV2Brick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1758,7 +1758,7 @@ func (device *IMUV2Brick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudrate, BrickletError(header.ErrorCode)
@@ -1768,24 +1768,24 @@ func (device *IMUV2Brick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
         binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
     }
-    
+
     return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Brick side. All
-	// Bricklets have a similar function that returns the errors on the Bricklet side.
-	// 
-	// .. versionadded:: 2.0.5$nbsp;(Firmware)
-func (device *IMUV2Brick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Brick side. All
+// Bricklets have a similar function that returns the errors on the Bricklet side.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Firmware)
+func (device *IMUV2Brick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1795,7 +1795,7 @@ func (device *IMUV2Brick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -1808,17 +1808,17 @@ func (device *IMUV2Brick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-func (device *IMUV2Brick) EnableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+func (device *IMUV2Brick) EnableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
@@ -1827,7 +1827,7 @@ func (device *IMUV2Brick) EnableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1836,17 +1836,17 @@ func (device *IMUV2Brick) EnableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-func (device *IMUV2Brick) DisableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+func (device *IMUV2Brick) DisableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
@@ -1855,7 +1855,7 @@ func (device *IMUV2Brick) DisableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1864,12 +1864,12 @@ func (device *IMUV2Brick) DisableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
-func (device *IMUV2Brick) IsStatusLEDEnabled() (enabled bool, err error) {    
+func (device *IMUV2Brick) IsStatusLEDEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
@@ -1878,7 +1878,7 @@ func (device *IMUV2Brick) IsStatusLEDEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -1888,16 +1888,16 @@ func (device *IMUV2Brick) IsStatusLEDEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
-	// given port.
-	// 
-	// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
-	// plugins.
-func (device *IMUV2Brick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {    
+// given port.
+// 
+// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
+// plugins.
+func (device *IMUV2Brick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, port);
 
@@ -1907,7 +1907,7 @@ func (device *IMUV2Brick) GetProtocol1BrickletName(port rune) (protocolVersion u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
@@ -1919,17 +1919,17 @@ func (device *IMUV2Brick) GetProtocol1BrickletName(port rune) (protocolVersion u
 	name = ByteSliceToString(resultBuf.Next(40))
 
     }
-    
+
     return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has an
-	// accuracy of +-15%. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *IMUV2Brick) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has an
+// accuracy of +-15%. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *IMUV2Brick) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1938,7 +1938,7 @@ func (device *IMUV2Brick) GetChipTemperature() (temperature int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1948,17 +1948,17 @@ func (device *IMUV2Brick) GetChipTemperature() (temperature int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
-	// on a Brick inside of a stack will reset the whole stack.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *IMUV2Brick) Reset() (err error) {    
+// on a Brick inside of a stack will reset the whole stack.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *IMUV2Brick) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1967,7 +1967,7 @@ func (device *IMUV2Brick) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1976,19 +1976,19 @@ func (device *IMUV2Brick) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be '0'-'8' (stack position).
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *IMUV2Brick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be '0'-'8' (stack position).
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *IMUV2Brick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1997,7 +1997,7 @@ func (device *IMUV2Brick) GetIdentity() (uid string, connectedUid string, positi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -2012,6 +2012,6 @@ func (device *IMUV2Brick) GetIdentity() (uid string, connectedUid string, positi
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

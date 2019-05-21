@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -80,17 +80,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialAnalogOutBrick
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IndustrialAnalogOutBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -99,7 +99,7 @@ func (device *IndustrialAnalogOutBricklet) GetResponseExpected(functionID Functi
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -119,9 +119,9 @@ func (device *IndustrialAnalogOutBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // Enables the output of voltage and current.
-	// 
-	// The default is disabled.
-func (device *IndustrialAnalogOutBricklet) Enable() (err error) {    
+// 
+// The default is disabled.
+func (device *IndustrialAnalogOutBricklet) Enable() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
@@ -130,7 +130,7 @@ func (device *IndustrialAnalogOutBricklet) Enable() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -139,14 +139,14 @@ func (device *IndustrialAnalogOutBricklet) Enable() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the output of voltage and current.
-	// 
-	// The default is disabled.
-func (device *IndustrialAnalogOutBricklet) Disable() (err error) {    
+// 
+// The default is disabled.
+func (device *IndustrialAnalogOutBricklet) Disable() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
@@ -155,7 +155,7 @@ func (device *IndustrialAnalogOutBricklet) Disable() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -164,12 +164,12 @@ func (device *IndustrialAnalogOutBricklet) Disable() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if output of voltage and current is enabled, *false* otherwise.
-func (device *IndustrialAnalogOutBricklet) IsEnabled() (enabled bool, err error) {    
+func (device *IndustrialAnalogOutBricklet) IsEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
@@ -178,7 +178,7 @@ func (device *IndustrialAnalogOutBricklet) IsEnabled() (enabled bool, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -188,15 +188,15 @@ func (device *IndustrialAnalogOutBricklet) IsEnabled() (enabled bool, err error)
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Sets the output voltage in mV.
-	// 
-	// The output voltage and output current are linked. Changing the output voltage
-	// also changes the output current.
-func (device *IndustrialAnalogOutBricklet) SetVoltage(voltage uint16) (err error) {    
+// 
+// The output voltage and output current are linked. Changing the output voltage
+// also changes the output current.
+func (device *IndustrialAnalogOutBricklet) SetVoltage(voltage uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltage);
 
@@ -206,7 +206,7 @@ func (device *IndustrialAnalogOutBricklet) SetVoltage(voltage uint16) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -215,12 +215,12 @@ func (device *IndustrialAnalogOutBricklet) SetVoltage(voltage uint16) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the voltage as set by SetVoltage.
-func (device *IndustrialAnalogOutBricklet) GetVoltage() (voltage uint16, err error) {    
+func (device *IndustrialAnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
@@ -229,7 +229,7 @@ func (device *IndustrialAnalogOutBricklet) GetVoltage() (voltage uint16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -239,15 +239,15 @@ func (device *IndustrialAnalogOutBricklet) GetVoltage() (voltage uint16, err err
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets the output current in µA.
-	// 
-	// The output current and output voltage are linked. Changing the output current
-	// also changes the output voltage.
-func (device *IndustrialAnalogOutBricklet) SetCurrent(current uint16) (err error) {    
+// 
+// The output current and output voltage are linked. Changing the output current
+// also changes the output voltage.
+func (device *IndustrialAnalogOutBricklet) SetCurrent(current uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, current);
 
@@ -257,7 +257,7 @@ func (device *IndustrialAnalogOutBricklet) SetCurrent(current uint16) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -266,12 +266,12 @@ func (device *IndustrialAnalogOutBricklet) SetCurrent(current uint16) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current as set by SetCurrent.
-func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err error) {    
+func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
@@ -280,7 +280,7 @@ func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return current, BrickletError(header.ErrorCode)
@@ -290,25 +290,25 @@ func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err err
         binary.Read(resultBuf, binary.LittleEndian, &current)
 
     }
-    
+
     return current, nil
 }
 
 // Configures the voltage and current range.
-	// 
-	// Possible voltage ranges are:
-	// 
-	// * 0V to 5V
-	// * 0V to 10V (default)
-	// 
-	// Possible current ranges are:
-	// 
-	// * 4mA to 20mA (default)
-	// * 0mA to 20mA
-	// * 0mA to 24mA
-	// 
-	// The resolution will always be 12 bit. This means, that the
-	// precision is higher with a smaller range.
+// 
+// Possible voltage ranges are:
+// 
+// * 0V to 5V
+// * 0V to 10V (default)
+// 
+// Possible current ranges are:
+// 
+// * 4mA to 20mA (default)
+// * 0mA to 20mA
+// * 0mA to 24mA
+// 
+// The resolution will always be 12 bit. This means, that the
+// precision is higher with a smaller range.
 //
 // Associated constants:
 //
@@ -317,7 +317,7 @@ func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err err
 //	* CurrentRange4To20mA
 //	* CurrentRange0To20mA
 //	* CurrentRange0To24ma
-func (device *IndustrialAnalogOutBricklet) SetConfiguration(voltageRange VoltageRange, currentRange CurrentRange) (err error) {    
+func (device *IndustrialAnalogOutBricklet) SetConfiguration(voltageRange VoltageRange, currentRange CurrentRange) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltageRange);
 	binary.Write(&buf, binary.LittleEndian, currentRange);
@@ -328,7 +328,7 @@ func (device *IndustrialAnalogOutBricklet) SetConfiguration(voltageRange Voltage
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -337,7 +337,7 @@ func (device *IndustrialAnalogOutBricklet) SetConfiguration(voltageRange Voltage
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -350,7 +350,7 @@ func (device *IndustrialAnalogOutBricklet) SetConfiguration(voltageRange Voltage
 //	* CurrentRange4To20mA
 //	* CurrentRange0To20mA
 //	* CurrentRange0To24ma
-func (device *IndustrialAnalogOutBricklet) GetConfiguration() (voltageRange VoltageRange, currentRange CurrentRange, err error) {    
+func (device *IndustrialAnalogOutBricklet) GetConfiguration() (voltageRange VoltageRange, currentRange CurrentRange, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
@@ -359,7 +359,7 @@ func (device *IndustrialAnalogOutBricklet) GetConfiguration() (voltageRange Volt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltageRange, currentRange, BrickletError(header.ErrorCode)
@@ -370,19 +370,19 @@ func (device *IndustrialAnalogOutBricklet) GetConfiguration() (voltageRange Volt
 	binary.Read(resultBuf, binary.LittleEndian, &currentRange)
 
     }
-    
+
     return voltageRange, currentRange, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *IndustrialAnalogOutBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *IndustrialAnalogOutBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -391,7 +391,7 @@ func (device *IndustrialAnalogOutBricklet) GetIdentity() (uid string, connectedU
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -406,6 +406,6 @@ func (device *IndustrialAnalogOutBricklet) GetIdentity() (uid string, connectedU
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

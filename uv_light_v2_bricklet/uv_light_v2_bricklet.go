@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -144,17 +144,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (UVLightV2Bricklet, error
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *UVLightV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -163,7 +163,7 @@ func (device *UVLightV2Bricklet) GetResponseExpected(functionID Function) (bool,
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -183,9 +183,9 @@ func (device *UVLightV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetUVACallbackConfiguration.
-	// 
-	// The parameter is the same as GetUVA.
+// SetUVACallbackConfiguration.
+// 
+// The parameter is the same as GetUVA.
 func (device *UVLightV2Bricklet) RegisterUVACallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -197,15 +197,15 @@ func (device *UVLightV2Bricklet) RegisterUVACallback(fn func(int32)) uint64 {
 }
 
 //Remove a registered UVA callback.
-func (device *UVLightV2Bricklet) DeregisterUVACallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUVA), callbackID)
+func (device *UVLightV2Bricklet) DeregisterUVACallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUVA), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetUVBCallbackConfiguration.
-	// 
-	// The parameter is the same as GetUVB.
+// SetUVBCallbackConfiguration.
+// 
+// The parameter is the same as GetUVB.
 func (device *UVLightV2Bricklet) RegisterUVBCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -217,15 +217,15 @@ func (device *UVLightV2Bricklet) RegisterUVBCallback(fn func(int32)) uint64 {
 }
 
 //Remove a registered UVB callback.
-func (device *UVLightV2Bricklet) DeregisterUVBCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUVB), callbackID)
+func (device *UVLightV2Bricklet) DeregisterUVBCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUVB), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetUVICallbackConfiguration.
-	// 
-	// The parameter is the same as GetUVI.
+// SetUVICallbackConfiguration.
+// 
+// The parameter is the same as GetUVI.
 func (device *UVLightV2Bricklet) RegisterUVICallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -237,28 +237,28 @@ func (device *UVLightV2Bricklet) RegisterUVICallback(fn func(int32)) uint64 {
 }
 
 //Remove a registered UVI callback.
-func (device *UVLightV2Bricklet) DeregisterUVICallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUVI), callbackID)
+func (device *UVLightV2Bricklet) DeregisterUVICallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUVI), registrationID)
 }
 
 
 // Returns the UVA intensity of the sensor, the intensity is given
-	// in 1/10 mW/m². The sensor has not weighted the intensity with the erythemal
-	// action spectrum to get the skin-affecting irradiation. Therefore, you cannot
-	// just divide the value by 250 to get the UVA index. To get the UV index use
-	// GetUVI.
-	// 
-	// If the sensor is saturated, then -1 is returned, see SetConfiguration.
-	// 
-	// If you want to get the intensity periodically, it is recommended to use the
-	// RegisterUVACallback callback and set the period with
-	// SetUVACallbackConfiguration.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterUVACallback callback. You can set the callback configuration
-	// with SetUVACallbackConfiguration.
-func (device *UVLightV2Bricklet) GetUVA() (uva int32, err error) {    
+// in 1/10 mW/m². The sensor has not weighted the intensity with the erythemal
+// action spectrum to get the skin-affecting irradiation. Therefore, you cannot
+// just divide the value by 250 to get the UVA index. To get the UV index use
+// GetUVI.
+// 
+// If the sensor is saturated, then -1 is returned, see SetConfiguration.
+// 
+// If you want to get the intensity periodically, it is recommended to use the
+// RegisterUVACallback callback and set the period with
+// SetUVACallbackConfiguration.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterUVACallback callback. You can set the callback configuration
+// with SetUVACallbackConfiguration.
+func (device *UVLightV2Bricklet) GetUVA() (uva int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVA), buf.Bytes())
@@ -267,7 +267,7 @@ func (device *UVLightV2Bricklet) GetUVA() (uva int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uva, BrickletError(header.ErrorCode)
@@ -277,37 +277,37 @@ func (device *UVLightV2Bricklet) GetUVA() (uva int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uva)
 
     }
-    
+
     return uva, nil
 }
 
 // The period in ms is the period with which the RegisterUVACallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterUVACallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterUVACallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -316,7 +316,7 @@ func (device *UVLightV2Bricklet) GetUVA() (uva int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) SetUVACallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *UVLightV2Bricklet) SetUVACallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -330,7 +330,7 @@ func (device *UVLightV2Bricklet) SetUVACallbackConfiguration(period uint32, valu
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -339,7 +339,7 @@ func (device *UVLightV2Bricklet) SetUVACallbackConfiguration(period uint32, valu
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -352,7 +352,7 @@ func (device *UVLightV2Bricklet) SetUVACallbackConfiguration(period uint32, valu
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) GetUVACallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *UVLightV2Bricklet) GetUVACallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVACallbackConfiguration), buf.Bytes())
@@ -361,7 +361,7 @@ func (device *UVLightV2Bricklet) GetUVACallbackConfiguration() (period uint32, v
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -375,27 +375,27 @@ func (device *UVLightV2Bricklet) GetUVACallbackConfiguration() (period uint32, v
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the UVB intensity of the sensor, the intensity is given
-	// in 1/10 mW/m². The sensor has not weighted the intensity with the erythemal
-	// action spectrum to get the skin-affecting irradiation. Therefore, you cannot
-	// just divide the value by 250 to get the UVB index. To get the UV index use
-	// GetUVI.
-	// 
-	// If the sensor is saturated, then -1 is returned, see SetConfiguration.
-	// 
-	// If you want to get the intensity periodically, it is recommended to use the
-	// RegisterUVBCallback callback and set the period with
-	// SetUVBCallbackConfiguration.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterUVBCallback callback. You can set the callback configuration
-	// with SetUVBCallbackConfiguration.
-func (device *UVLightV2Bricklet) GetUVB() (uvb int32, err error) {    
+// in 1/10 mW/m². The sensor has not weighted the intensity with the erythemal
+// action spectrum to get the skin-affecting irradiation. Therefore, you cannot
+// just divide the value by 250 to get the UVB index. To get the UV index use
+// GetUVI.
+// 
+// If the sensor is saturated, then -1 is returned, see SetConfiguration.
+// 
+// If you want to get the intensity periodically, it is recommended to use the
+// RegisterUVBCallback callback and set the period with
+// SetUVBCallbackConfiguration.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterUVBCallback callback. You can set the callback configuration
+// with SetUVBCallbackConfiguration.
+func (device *UVLightV2Bricklet) GetUVB() (uvb int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVB), buf.Bytes())
@@ -404,7 +404,7 @@ func (device *UVLightV2Bricklet) GetUVB() (uvb int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uvb, BrickletError(header.ErrorCode)
@@ -414,37 +414,37 @@ func (device *UVLightV2Bricklet) GetUVB() (uvb int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uvb)
 
     }
-    
+
     return uvb, nil
 }
 
 // The period in ms is the period with which the RegisterUVBCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterUVBCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterUVBCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -453,7 +453,7 @@ func (device *UVLightV2Bricklet) GetUVB() (uvb int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) SetUVBCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *UVLightV2Bricklet) SetUVBCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -467,7 +467,7 @@ func (device *UVLightV2Bricklet) SetUVBCallbackConfiguration(period uint32, valu
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -476,7 +476,7 @@ func (device *UVLightV2Bricklet) SetUVBCallbackConfiguration(period uint32, valu
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -489,7 +489,7 @@ func (device *UVLightV2Bricklet) SetUVBCallbackConfiguration(period uint32, valu
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) GetUVBCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *UVLightV2Bricklet) GetUVBCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVBCallbackConfiguration), buf.Bytes())
@@ -498,7 +498,7 @@ func (device *UVLightV2Bricklet) GetUVBCallbackConfiguration() (period uint32, v
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -512,23 +512,23 @@ func (device *UVLightV2Bricklet) GetUVBCallbackConfiguration() (period uint32, v
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the UV index of the sensor, the index is given in 1/10.
-	// 
-	// If the sensor is saturated, then -1 is returned, see SetConfiguration.
-	// 
-	// If you want to get the intensity periodically, it is recommended to use the
-	// RegisterUVICallback callback and set the period with
-	// SetUVICallbackConfiguration.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterUVICallback callback. You can set the callback configuration
-	// with SetUVICallbackConfiguration.
-func (device *UVLightV2Bricklet) GetUVI() (uvi int32, err error) {    
+// 
+// If the sensor is saturated, then -1 is returned, see SetConfiguration.
+// 
+// If you want to get the intensity periodically, it is recommended to use the
+// RegisterUVICallback callback and set the period with
+// SetUVICallbackConfiguration.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterUVICallback callback. You can set the callback configuration
+// with SetUVICallbackConfiguration.
+func (device *UVLightV2Bricklet) GetUVI() (uvi int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVI), buf.Bytes())
@@ -537,7 +537,7 @@ func (device *UVLightV2Bricklet) GetUVI() (uvi int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uvi, BrickletError(header.ErrorCode)
@@ -547,37 +547,37 @@ func (device *UVLightV2Bricklet) GetUVI() (uvi int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uvi)
 
     }
-    
+
     return uvi, nil
 }
 
 // The period in ms is the period with which the RegisterUVICallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterUVICallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterUVICallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -586,7 +586,7 @@ func (device *UVLightV2Bricklet) GetUVI() (uvi int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) SetUVICallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *UVLightV2Bricklet) SetUVICallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -600,7 +600,7 @@ func (device *UVLightV2Bricklet) SetUVICallbackConfiguration(period uint32, valu
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -609,7 +609,7 @@ func (device *UVLightV2Bricklet) SetUVICallbackConfiguration(period uint32, valu
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -622,7 +622,7 @@ func (device *UVLightV2Bricklet) SetUVICallbackConfiguration(period uint32, valu
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *UVLightV2Bricklet) GetUVICallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *UVLightV2Bricklet) GetUVICallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetUVICallbackConfiguration), buf.Bytes())
@@ -631,7 +631,7 @@ func (device *UVLightV2Bricklet) GetUVICallbackConfiguration() (period uint32, v
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -645,20 +645,20 @@ func (device *UVLightV2Bricklet) GetUVICallbackConfiguration() (period uint32, v
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the configuration of the sensor. The integration time can be configured
-	// between 50 and 800 ms. With a shorter integration time the sensor reading updates
-	// more often but contains more noise. With a longer integration the sensor reading
-	// contains less noise but updates less often.
-	// 
-	// With a longer integration time (especially 800 ms) and a higher UV intensity the
-	// sensor can be saturated. If this happens the UVA/UVB/UVI readings are all -1.
-	// In this case you need to choose a shorter integration time.
-	// 
-	// Default value: 400 ms.
+// between 50 and 800 ms. With a shorter integration time the sensor reading updates
+// more often but contains more noise. With a longer integration the sensor reading
+// contains less noise but updates less often.
+// 
+// With a longer integration time (especially 800 ms) and a higher UV intensity the
+// sensor can be saturated. If this happens the UVA/UVB/UVI readings are all -1.
+// In this case you need to choose a shorter integration time.
+// 
+// Default value: 400 ms.
 //
 // Associated constants:
 //
@@ -667,7 +667,7 @@ func (device *UVLightV2Bricklet) GetUVICallbackConfiguration() (period uint32, v
 //	* IntegrationTime200ms
 //	* IntegrationTime400ms
 //	* IntegrationTime800ms
-func (device *UVLightV2Bricklet) SetConfiguration(integrationTime IntegrationTime) (err error) {    
+func (device *UVLightV2Bricklet) SetConfiguration(integrationTime IntegrationTime) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, integrationTime);
 
@@ -677,7 +677,7 @@ func (device *UVLightV2Bricklet) SetConfiguration(integrationTime IntegrationTim
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -686,7 +686,7 @@ func (device *UVLightV2Bricklet) SetConfiguration(integrationTime IntegrationTim
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -699,7 +699,7 @@ func (device *UVLightV2Bricklet) SetConfiguration(integrationTime IntegrationTim
 //	* IntegrationTime200ms
 //	* IntegrationTime400ms
 //	* IntegrationTime800ms
-func (device *UVLightV2Bricklet) GetConfiguration() (integrationTime IntegrationTime, err error) {    
+func (device *UVLightV2Bricklet) GetConfiguration() (integrationTime IntegrationTime, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
@@ -708,7 +708,7 @@ func (device *UVLightV2Bricklet) GetConfiguration() (integrationTime Integration
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return integrationTime, BrickletError(header.ErrorCode)
@@ -718,22 +718,22 @@ func (device *UVLightV2Bricklet) GetConfiguration() (integrationTime Integration
         binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
     }
-    
+
     return integrationTime, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *UVLightV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *UVLightV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -742,7 +742,7 @@ func (device *UVLightV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -755,19 +755,19 @@ func (device *UVLightV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -782,7 +782,7 @@ func (device *UVLightV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum ui
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *UVLightV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *UVLightV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -792,7 +792,7 @@ func (device *UVLightV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -802,7 +802,7 @@ func (device *UVLightV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -815,7 +815,7 @@ func (device *UVLightV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status 
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *UVLightV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *UVLightV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -824,7 +824,7 @@ func (device *UVLightV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -834,17 +834,17 @@ func (device *UVLightV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err e
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *UVLightV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *UVLightV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -854,7 +854,7 @@ func (device *UVLightV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -863,19 +863,19 @@ func (device *UVLightV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *UVLightV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *UVLightV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -885,7 +885,7 @@ func (device *UVLightV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -895,17 +895,17 @@ func (device *UVLightV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -913,7 +913,7 @@ func (device *UVLightV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *UVLightV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *UVLightV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -923,7 +923,7 @@ func (device *UVLightV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -932,7 +932,7 @@ func (device *UVLightV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -944,7 +944,7 @@ func (device *UVLightV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *UVLightV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *UVLightV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -953,7 +953,7 @@ func (device *UVLightV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -963,17 +963,17 @@ func (device *UVLightV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, e
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *UVLightV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *UVLightV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -982,7 +982,7 @@ func (device *UVLightV2Bricklet) GetChipTemperature() (temperature int16, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -992,17 +992,17 @@ func (device *UVLightV2Bricklet) GetChipTemperature() (temperature int16, err er
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *UVLightV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *UVLightV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1011,7 +1011,7 @@ func (device *UVLightV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1020,16 +1020,16 @@ func (device *UVLightV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *UVLightV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *UVLightV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1039,7 +1039,7 @@ func (device *UVLightV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1048,13 +1048,13 @@ func (device *UVLightV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *UVLightV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *UVLightV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1063,7 +1063,7 @@ func (device *UVLightV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1073,19 +1073,19 @@ func (device *UVLightV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *UVLightV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *UVLightV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1094,7 +1094,7 @@ func (device *UVLightV2Bricklet) GetIdentity() (uid string, connectedUid string,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1109,6 +1109,6 @@ func (device *UVLightV2Bricklet) GetIdentity() (uid string, connectedUid string,
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

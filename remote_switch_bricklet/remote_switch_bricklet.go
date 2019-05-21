@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -78,17 +78,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RemoteSwitchBricklet, er
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *RemoteSwitchBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -97,7 +97,7 @@ func (device *RemoteSwitchBricklet) GetResponseExpected(functionID Function) (bo
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -117,7 +117,7 @@ func (device *RemoteSwitchBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered whenever the switching state changes
-	// from busy to ready, see GetSwitchingState.
+// from busy to ready, see GetSwitchingState.
 func (device *RemoteSwitchBricklet) RegisterSwitchingDoneCallback(fn func()) uint64 {
             wrapper := func(byteSlice []byte) {
                 
@@ -129,8 +129,8 @@ func (device *RemoteSwitchBricklet) RegisterSwitchingDoneCallback(fn func()) uin
 }
 
 //Remove a registered Switching Done callback.
-func (device *RemoteSwitchBricklet) DeregisterSwitchingDoneCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackSwitchingDone), callbackID)
+func (device *RemoteSwitchBricklet) DeregisterSwitchingDoneCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackSwitchingDone), registrationID)
 }
 
 
@@ -140,7 +140,7 @@ func (device *RemoteSwitchBricklet) DeregisterSwitchingDoneCallback(callbackID u
 //
 //	* SwitchToOff
 //	* SwitchToOn
-func (device *RemoteSwitchBricklet) SwitchSocket(houseCode uint8, receiverCode uint8, switchTo SwitchTo) (err error) {    
+func (device *RemoteSwitchBricklet) SwitchSocket(houseCode uint8, receiverCode uint8, switchTo SwitchTo) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, houseCode);
 	binary.Write(&buf, binary.LittleEndian, receiverCode);
@@ -152,7 +152,7 @@ func (device *RemoteSwitchBricklet) SwitchSocket(houseCode uint8, receiverCode u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -161,22 +161,22 @@ func (device *RemoteSwitchBricklet) SwitchSocket(houseCode uint8, receiverCode u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current switching state. If the current state is busy, the
-	// Bricklet is currently sending a code to switch a socket. It will not
-	// accept any calls of SwitchSocket until the state changes to ready.
-	// 
-	// How long the switching takes is dependent on the number of repeats, see
-	// SetRepeats.
+// Bricklet is currently sending a code to switch a socket. It will not
+// accept any calls of SwitchSocket until the state changes to ready.
+// 
+// How long the switching takes is dependent on the number of repeats, see
+// SetRepeats.
 //
 // Associated constants:
 //
 //	* SwitchingStateReady
 //	* SwitchingStateBusy
-func (device *RemoteSwitchBricklet) GetSwitchingState() (state SwitchingState, err error) {    
+func (device *RemoteSwitchBricklet) GetSwitchingState() (state SwitchingState, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSwitchingState), buf.Bytes())
@@ -185,7 +185,7 @@ func (device *RemoteSwitchBricklet) GetSwitchingState() (state SwitchingState, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return state, BrickletError(header.ErrorCode)
@@ -195,19 +195,19 @@ func (device *RemoteSwitchBricklet) GetSwitchingState() (state SwitchingState, e
         binary.Read(resultBuf, binary.LittleEndian, &state)
 
     }
-    
+
     return state, nil
 }
 
 // Sets the number of times the code is send when of the SwitchSocket
-	// functions is called. The repeats basically correspond to the amount of time
-	// that a button of the remote is pressed.
-	// 
-	// Some dimmers are controlled by the length of a button pressed,
-	// this can be simulated by increasing the repeats.
-	// 
-	// The default value is 5.
-func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {    
+// functions is called. The repeats basically correspond to the amount of time
+// that a button of the remote is pressed.
+// 
+// Some dimmers are controlled by the length of a button pressed,
+// this can be simulated by increasing the repeats.
+// 
+// The default value is 5.
+func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, repeats);
 
@@ -217,7 +217,7 @@ func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -226,12 +226,12 @@ func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the number of repeats as set by SetRepeats.
-func (device *RemoteSwitchBricklet) GetRepeats() (repeats uint8, err error) {    
+func (device *RemoteSwitchBricklet) GetRepeats() (repeats uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetRepeats), buf.Bytes())
@@ -240,7 +240,7 @@ func (device *RemoteSwitchBricklet) GetRepeats() (repeats uint8, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return repeats, BrickletError(header.ErrorCode)
@@ -250,25 +250,25 @@ func (device *RemoteSwitchBricklet) GetRepeats() (repeats uint8, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &repeats)
 
     }
-    
+
     return repeats, nil
 }
 
 // To switch a type A socket you have to give the house code, receiver code and the
-	// state (on or off) you want to switch to.
-	// 
-	// The house code and receiver code have a range of 0 to 31 (5bit).
-	// 
-	// A detailed description on how you can figure out the house and receiver code
-	// can be found `here <remote_switch_bricklet_type_a_house_and_receiver_code>`.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
+// state (on or off) you want to switch to.
+// 
+// The house code and receiver code have a range of 0 to 31 (5bit).
+// 
+// A detailed description on how you can figure out the house and receiver code
+// can be found `here <remote_switch_bricklet_type_a_house_and_receiver_code>`.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* SwitchToOff
 //	* SwitchToOn
-func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode uint8, switchTo SwitchTo) (err error) {    
+func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode uint8, switchTo SwitchTo) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, houseCode);
 	binary.Write(&buf, binary.LittleEndian, receiverCode);
@@ -280,7 +280,7 @@ func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -289,27 +289,27 @@ func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // To switch a type B socket you have to give the address, unit and the state
-	// (on or off) you want to switch to.
-	// 
-	// The address has a range of 0 to 67108863 (26bit) and the unit has a range
-	// of 0 to 15 (4bit). To switch all devices with the same address use 255 for
-	// the unit.
-	// 
-	// A detailed description on how you can teach a socket the address and unit can
-	// be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
+// (on or off) you want to switch to.
+// 
+// The address has a range of 0 to 67108863 (26bit) and the unit has a range
+// of 0 to 15 (4bit). To switch all devices with the same address use 255 for
+// the unit.
+// 
+// A detailed description on how you can teach a socket the address and unit can
+// be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* SwitchToOff
 //	* SwitchToOn
-func (device *RemoteSwitchBricklet) SwitchSocketB(address uint32, unit uint8, switchTo SwitchTo) (err error) {    
+func (device *RemoteSwitchBricklet) SwitchSocketB(address uint32, unit uint8, switchTo SwitchTo) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, address);
 	binary.Write(&buf, binary.LittleEndian, unit);
@@ -321,7 +321,7 @@ func (device *RemoteSwitchBricklet) SwitchSocketB(address uint32, unit uint8, sw
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -330,21 +330,21 @@ func (device *RemoteSwitchBricklet) SwitchSocketB(address uint32, unit uint8, sw
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // To control a type B dimmer you have to give the address, unit and the
-	// dim value you want to set the dimmer to.
-	// 
-	// The address has a range of 0 to 67108863 (26bit), the unit and the dim value
-	// has a range of 0 to 15 (4bit).
-	// 
-	// A detailed description on how you can teach a dimmer the address and unit can
-	// be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
-func (device *RemoteSwitchBricklet) DimSocketB(address uint32, unit uint8, dimValue uint8) (err error) {    
+// dim value you want to set the dimmer to.
+// 
+// The address has a range of 0 to 67108863 (26bit), the unit and the dim value
+// has a range of 0 to 15 (4bit).
+// 
+// A detailed description on how you can teach a dimmer the address and unit can
+// be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *RemoteSwitchBricklet) DimSocketB(address uint32, unit uint8, dimValue uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, address);
 	binary.Write(&buf, binary.LittleEndian, unit);
@@ -356,7 +356,7 @@ func (device *RemoteSwitchBricklet) DimSocketB(address uint32, unit uint8, dimVa
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -365,26 +365,26 @@ func (device *RemoteSwitchBricklet) DimSocketB(address uint32, unit uint8, dimVa
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // To switch a type C socket you have to give the system code, device code and the
-	// state (on or off) you want to switch to.
-	// 
-	// The system code has a range of 'A' to 'P' (4bit) and the device code has a
-	// range of 1 to 16 (4bit).
-	// 
-	// A detailed description on how you can figure out the system and device code
-	// can be found `here <remote_switch_bricklet_type_c_system_and_device_code>`.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
+// state (on or off) you want to switch to.
+// 
+// The system code has a range of 'A' to 'P' (4bit) and the device code has a
+// range of 1 to 16 (4bit).
+// 
+// A detailed description on how you can figure out the system and device code
+// can be found `here <remote_switch_bricklet_type_c_system_and_device_code>`.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* SwitchToOff
 //	* SwitchToOn
-func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode uint8, switchTo SwitchTo) (err error) {    
+func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode uint8, switchTo SwitchTo) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, systemCode);
 	binary.Write(&buf, binary.LittleEndian, deviceCode);
@@ -396,7 +396,7 @@ func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -405,19 +405,19 @@ func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *RemoteSwitchBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *RemoteSwitchBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -426,7 +426,7 @@ func (device *RemoteSwitchBricklet) GetIdentity() (uid string, connectedUid stri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -441,6 +441,6 @@ func (device *RemoteSwitchBricklet) GetIdentity() (uid string, connectedUid stri
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -270,17 +270,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (NFCBricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *NFCBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -289,7 +289,7 @@ func (device *NFCBricklet) GetResponseExpected(functionID Function) (bool, error
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -309,7 +309,7 @@ func (device *NFCBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is called if the reader state of the NFC Bricklet changes.
-	// See ReaderGetState for more information about the possible states.
+// See ReaderGetState for more information about the possible states.
 func (device *NFCBricklet) RegisterReaderStateChangedCallback(fn func(ReaderState, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -323,13 +323,13 @@ binary.Read(buf, binary.LittleEndian, &idle)
 }
 
 //Remove a registered Reader State Changed callback.
-func (device *NFCBricklet) DeregisterReaderStateChangedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackReaderStateChanged), callbackID)
+func (device *NFCBricklet) DeregisterReaderStateChangedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackReaderStateChanged), registrationID)
 }
 
 
 // This callback is called if the cardemu state of the NFC Bricklet changes.
-	// See CardemuGetState for more information about the possible states.
+// See CardemuGetState for more information about the possible states.
 func (device *NFCBricklet) RegisterCardemuStateChangedCallback(fn func(CardemuState, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -343,13 +343,13 @@ binary.Read(buf, binary.LittleEndian, &idle)
 }
 
 //Remove a registered Cardemu State Changed callback.
-func (device *NFCBricklet) DeregisterCardemuStateChangedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCardemuStateChanged), callbackID)
+func (device *NFCBricklet) DeregisterCardemuStateChangedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCardemuStateChanged), registrationID)
 }
 
 
 // This callback is called if the P2P state of the NFC Bricklet changes.
-	// See P2PGetState for more information about the possible states.
+// See P2PGetState for more information about the possible states.
 func (device *NFCBricklet) RegisterP2PStateChangedCallback(fn func(P2PState, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -363,23 +363,23 @@ binary.Read(buf, binary.LittleEndian, &idle)
 }
 
 //Remove a registered P2P State Changed callback.
-func (device *NFCBricklet) DeregisterP2PStateChangedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackP2PStateChanged), callbackID)
+func (device *NFCBricklet) DeregisterP2PStateChangedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackP2PStateChanged), registrationID)
 }
 
 
 // Sets the mode. The NFC Bricklet supports four modes:
-	// 
-	// * Off
-	// * Card Emulation (Cardemu): Emulates a tag for other readers
-	// * Peer to Peer (P2P): Exchange data with other readers
-	// * Reader: Reads and writes tags
-	// 
-	// If you change a mode, the Bricklet will reconfigure the hardware for this mode.
-	// Therefore, you can only use functions corresponding to the current mode. For
-	// example, in Reader mode you can only use Reader functions.
-	// 
-	// The default mode is off.
+// 
+// * Off
+// * Card Emulation (Cardemu): Emulates a tag for other readers
+// * Peer to Peer (P2P): Exchange data with other readers
+// * Reader: Reads and writes tags
+// 
+// If you change a mode, the Bricklet will reconfigure the hardware for this mode.
+// Therefore, you can only use functions corresponding to the current mode. For
+// example, in Reader mode you can only use Reader functions.
+// 
+// The default mode is off.
 //
 // Associated constants:
 //
@@ -387,7 +387,7 @@ func (device *NFCBricklet) DeregisterP2PStateChangedCallback(callbackID uint64) 
 //	* ModeCardemu
 //	* ModeP2P
 //	* ModeReader
-func (device *NFCBricklet) SetMode(mode Mode) (err error) {    
+func (device *NFCBricklet) SetMode(mode Mode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -397,7 +397,7 @@ func (device *NFCBricklet) SetMode(mode Mode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -406,7 +406,7 @@ func (device *NFCBricklet) SetMode(mode Mode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -418,7 +418,7 @@ func (device *NFCBricklet) SetMode(mode Mode) (err error) {
 //	* ModeCardemu
 //	* ModeP2P
 //	* ModeReader
-func (device *NFCBricklet) GetMode() (mode Mode, err error) {    
+func (device *NFCBricklet) GetMode() (mode Mode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMode), buf.Bytes())
@@ -427,7 +427,7 @@ func (device *NFCBricklet) GetMode() (mode Mode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -437,41 +437,41 @@ func (device *NFCBricklet) GetMode() (mode Mode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // To read or write a tag that is in proximity of the NFC Bricklet you
-	// first have to call this function with the expected tag type as parameter.
-	// It is no problem if you don't know the tag type. You can cycle through
-	// the available tag types until the tag answers the request.
-	// 
-	// Currently the following tag types are supported:
-	// 
-	// * Mifare Classic
-	// * NFC Forum Type 1
-	// * NFC Forum Type 2
-	// * NFC Forum Type 3
-	// * NFC Forum Type 4
-	// 
-	// After you call ReaderRequestTagID the NFC Bricklet will try to read
-	// the tag ID from the tag. After this process is done the state will change.
-	// You can either register the RegisterReaderStateChangedCallback callback or you can poll
-	// ReaderGetState to find out about the state change.
-	// 
-	// If the state changes to *ReaderRequestTagIDError* it means that either there was
-	// no tag present or that the tag has an incompatible type. If the state
-	// changes to *ReaderRequestTagIDReady* it means that a compatible tag was found
-	// and that the tag ID has been saved. You can now read out the tag ID by
-	// calling ReaderGetTagID.
-	// 
-	// If two tags are in the proximity of the NFC Bricklet, this
-	// function will cycle through the tags. To select a specific tag you have
-	// to call ReaderRequestTagID until the correct tag ID is found.
-	// 
-	// In case of any *ReaderError* state the selection is lost and you have to
-	// start again by calling ReaderRequestTagID.
-func (device *NFCBricklet) ReaderRequestTagID() (err error) {    
+// first have to call this function with the expected tag type as parameter.
+// It is no problem if you don't know the tag type. You can cycle through
+// the available tag types until the tag answers the request.
+// 
+// Currently the following tag types are supported:
+// 
+// * Mifare Classic
+// * NFC Forum Type 1
+// * NFC Forum Type 2
+// * NFC Forum Type 3
+// * NFC Forum Type 4
+// 
+// After you call ReaderRequestTagID the NFC Bricklet will try to read
+// the tag ID from the tag. After this process is done the state will change.
+// You can either register the RegisterReaderStateChangedCallback callback or you can poll
+// ReaderGetState to find out about the state change.
+// 
+// If the state changes to *ReaderRequestTagIDError* it means that either there was
+// no tag present or that the tag has an incompatible type. If the state
+// changes to *ReaderRequestTagIDReady* it means that a compatible tag was found
+// and that the tag ID has been saved. You can now read out the tag ID by
+// calling ReaderGetTagID.
+// 
+// If two tags are in the proximity of the NFC Bricklet, this
+// function will cycle through the tags. To select a specific tag you have
+// to call ReaderRequestTagID until the correct tag ID is found.
+// 
+// In case of any *ReaderError* state the selection is lost and you have to
+// start again by calling ReaderRequestTagID.
+func (device *NFCBricklet) ReaderRequestTagID() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReaderRequestTagID), buf.Bytes())
@@ -480,7 +480,7 @@ func (device *NFCBricklet) ReaderRequestTagID() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -489,20 +489,20 @@ func (device *NFCBricklet) ReaderRequestTagID() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the tag type and the tag ID. This function can only be called if the
-	// NFC Bricklet is currently in one of the *ReaderReady* states. The returned tag ID
-	// is the tag ID that was saved through the last call of ReaderRequestTagID.
-	// 
-	// To get the tag ID of a tag the approach is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 3. Call ReaderGetTagID
+// NFC Bricklet is currently in one of the *ReaderReady* states. The returned tag ID
+// is the tag ID that was saved through the last call of ReaderRequestTagID.
+// 
+// To get the tag ID of a tag the approach is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 3. Call ReaderGetTagID
 //
 // Associated constants:
 //
@@ -511,7 +511,7 @@ func (device *NFCBricklet) ReaderRequestTagID() (err error) {
 //	* TagTypeType2
 //	* TagTypeType3
 //	* TagTypeType4
-func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLength uint8, tagIDData [32]uint8, err error) {    
+func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLength uint8, tagIDData [32]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReaderGetTagIDLowLevel), buf.Bytes())
@@ -520,7 +520,7 @@ func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLengt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return tagType, tagIDLength, tagIDData, BrickletError(header.ErrorCode)
@@ -532,23 +532,23 @@ func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLengt
 	copy(tagIDData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 32/8)))
 
     }
-    
+
     return tagType, tagIDLength, tagIDData, nil
 }
 
 // Returns the tag type and the tag ID. This function can only be called if the
-	// NFC Bricklet is currently in one of the *ReaderReady* states. The returned tag ID
-	// is the tag ID that was saved through the last call of ReaderRequestTagID.
-	// 
-	// To get the tag ID of a tag the approach is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 3. Call ReaderGetTagID
+// NFC Bricklet is currently in one of the *ReaderReady* states. The returned tag ID
+// is the tag ID that was saved through the last call of ReaderRequestTagID.
+// 
+// To get the tag ID of a tag the approach is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 3. Call ReaderGetTagID
 	func (device *NFCBricklet) ReaderGetTagID() (tagID []uint8, tagType TagType, err error) {
         buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            tagType, tagIDLength, tagIDData, err := device.ReaderGetTagIDLowLevel()            
+            tagType, tagIDLength, tagIDData, err := device.ReaderGetTagIDLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -574,21 +574,21 @@ func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLengt
     }
 
 // Returns the current reader state of the NFC Bricklet.
-	// 
-	// On startup the Bricklet will be in the *ReaderInitialization* state. The
-	// initialization will only take about 20ms. After that it changes to *ReaderIdle*.
-	// 
-	// The Bricklet is also reinitialized if the mode is changed, see SetMode.
-	// 
-	// The functions of this Bricklet can be called in the *ReaderIdle* state and all of
-	// the *ReaderReady* and *ReaderError* states.
-	// 
-	// Example: If you call ReaderRequestPage, the state will change to
-	// *ReaderRequestPage* until the reading of the page is finished. Then it will change
-	// to either *ReaderRequestPageReady* if it worked or to *ReaderRequestPageError* if it
-	// didn't. If the request worked you can get the page by calling ReaderReadPage.
-	// 
-	// The same approach is used analogously for the other API functions.
+// 
+// On startup the Bricklet will be in the *ReaderInitialization* state. The
+// initialization will only take about 20ms. After that it changes to *ReaderIdle*.
+// 
+// The Bricklet is also reinitialized if the mode is changed, see SetMode.
+// 
+// The functions of this Bricklet can be called in the *ReaderIdle* state and all of
+// the *ReaderReady* and *ReaderError* states.
+// 
+// Example: If you call ReaderRequestPage, the state will change to
+// *ReaderRequestPage* until the reading of the page is finished. Then it will change
+// to either *ReaderRequestPageReady* if it worked or to *ReaderRequestPageError* if it
+// didn't. If the request worked you can get the page by calling ReaderReadPage.
+// 
+// The same approach is used analogously for the other API functions.
 //
 // Associated constants:
 //
@@ -613,7 +613,7 @@ func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLengt
 //	* ReaderStateRequestNDEF
 //	* ReaderStateRequestNDEFReady
 //	* ReaderStateRequestNDEFError
-func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err error) {    
+func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReaderGetState), buf.Bytes())
@@ -622,7 +622,7 @@ func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return state, idle, BrickletError(header.ErrorCode)
@@ -633,25 +633,25 @@ func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err e
 	binary.Read(resultBuf, binary.LittleEndian, &idle)
 
     }
-    
+
     return state, idle, nil
 }
 
 // Writes NDEF formated data with a maximum of 255 bytes.
-	// 
-	// This function currently supports NFC Forum Type 2 and 4.
-	// 
-	// The general approach for writing a NDEF message is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see
-	//    ReaderGetState or RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check
-	//    if the expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderWriteNDEF with the NDEF message that you want to write
-	// 5. Wait for state to change to *ReaderWriteNDEFReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {    
+// 
+// This function currently supports NFC Forum Type 2 and 4.
+// 
+// The general approach for writing a NDEF message is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see
+//    ReaderGetState or RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check
+//    if the expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderWriteNDEF with the NDEF message that you want to write
+// 5. Wait for state to change to *ReaderWriteNDEFReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, ndefLength);
 	binary.Write(&buf, binary.LittleEndian, ndefChunkOffset);
@@ -663,7 +663,7 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -672,25 +672,25 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes NDEF formated data with a maximum of 255 bytes.
-	// 
-	// This function currently supports NFC Forum Type 2 and 4.
-	// 
-	// The general approach for writing a NDEF message is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see
-	//    ReaderGetState or RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check
-	//    if the expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderWriteNDEF with the NDEF message that you want to write
-	// 5. Wait for state to change to *ReaderWriteNDEFReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	func (device *NFCBricklet) ReaderWriteNDEF(ndef []uint8) (err error) {            
+// 
+// This function currently supports NFC Forum Type 2 and 4.
+// 
+// The general approach for writing a NDEF message is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see
+//    ReaderGetState or RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check
+//    if the expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderWriteNDEF with the NDEF message that you want to write
+// 5. Wait for state to change to *ReaderWriteNDEFReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+	func (device *NFCBricklet) ReaderWriteNDEF(ndef []uint8) (err error) {
         _, err = device.device.SetHighLevel(func(ndefLength uint64, ndefChunkOffset uint64, ndefChunkData []byte) (LowLevelWriteResult, error) {
             arr := [60]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(ndefChunkData))
@@ -703,7 +703,7 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
             return LowLevelWriteResult{
                 uint64(60),
                 lowLevelResults.Bytes()}, err
-        }, 1, 8, 480, Uint8SliceToByteSlice(ndef))   
+        }, 1, 8, 480, Uint8SliceToByteSlice(ndef))
 
          if err != nil {
             return
@@ -716,21 +716,21 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
     }
 
 // Reads NDEF formated data from a tag.
-	// 
-	// This function currently supports NFC Forum Type 1, 2, 3 and 4.
-	// 
-	// The general approach for reading a NDEF message is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *RequestTagIDReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check if the
-	//    expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderRequestNDEF
-	// 5. Wait for state to change to *ReaderRequestNDEFReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	// 6. Call ReaderReadNDEF to retrieve the NDEF message from the buffer
-func (device *NFCBricklet) ReaderRequestNDEF() (err error) {    
+// 
+// This function currently supports NFC Forum Type 1, 2, 3 and 4.
+// 
+// The general approach for reading a NDEF message is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *RequestTagIDReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check if the
+//    expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderRequestNDEF
+// 5. Wait for state to change to *ReaderRequestNDEFReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+// 6. Call ReaderReadNDEF to retrieve the NDEF message from the buffer
+func (device *NFCBricklet) ReaderRequestNDEF() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReaderRequestNDEF), buf.Bytes())
@@ -739,7 +739,7 @@ func (device *NFCBricklet) ReaderRequestNDEF() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -748,15 +748,15 @@ func (device *NFCBricklet) ReaderRequestNDEF() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the NDEF data from an internal buffer. To fill the buffer
-	// with a NDEF message you have to call ReaderRequestNDEF beforehand.
-	// 
-	// The buffer can have a size of up to 8192 bytes.
-func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8, err error) {    
+// with a NDEF message you have to call ReaderRequestNDEF beforehand.
+// 
+// The buffer can have a size of up to 8192 bytes.
+func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReaderReadNDEFLowLevel), buf.Bytes())
@@ -765,7 +765,7 @@ func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChun
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ndefLength, ndefChunkOffset, ndefChunkData, BrickletError(header.ErrorCode)
@@ -777,17 +777,17 @@ func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChun
 	copy(ndefChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 60/8)))
 
     }
-    
+
     return ndefLength, ndefChunkOffset, ndefChunkData, nil
 }
 
 // Returns the NDEF data from an internal buffer. To fill the buffer
-	// with a NDEF message you have to call ReaderRequestNDEF beforehand.
-	// 
-	// The buffer can have a size of up to 8192 bytes.
+// with a NDEF message you have to call ReaderRequestNDEF beforehand.
+// 
+// The buffer can have a size of up to 8192 bytes.
 	func (device *NFCBricklet) ReaderReadNDEF() (ndef []uint8, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            ndefLength, ndefChunkOffset, ndefChunkData, err := device.ReaderReadNDEFLowLevel()            
+            ndefLength, ndefChunkOffset, ndefChunkData, err := device.ReaderReadNDEFLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -813,31 +813,31 @@ func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChun
     }
 
 // Mifare Classic tags use authentication. If you want to read from or write to
-	// a Mifare Classic page you have to authenticate it beforehand.
-	// Each page can be authenticated with two keys: A (``key_number`` = 0) and B
-	// (``key_number`` = 1). A new Mifare Classic
-	// tag that has not yet been written to can be accessed with key A
-	// and the default key ``[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]``.
-	// 
-	// The approach to read or write a Mifare Classic page is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check if the
-	//    expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderAuthenticateMifareClassicPage with page and key for the page
-	// 5. Wait for state to change to *ReaderAuthenticatingMifareClassicPageReady* (see
-	//    ReaderGetState or RegisterReaderStateChangedCallback callback)
-	// 6. Call ReaderRequestPage or ReaderWritePage to read/write page
-	// 
-	// The authentication will always work for one whole sector (4 pages).
+// a Mifare Classic page you have to authenticate it beforehand.
+// Each page can be authenticated with two keys: A (``key_number`` = 0) and B
+// (``key_number`` = 1). A new Mifare Classic
+// tag that has not yet been written to can be accessed with key A
+// and the default key ``[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]``.
+// 
+// The approach to read or write a Mifare Classic page is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check if the
+//    expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderAuthenticateMifareClassicPage with page and key for the page
+// 5. Wait for state to change to *ReaderAuthenticatingMifareClassicPageReady* (see
+//    ReaderGetState or RegisterReaderStateChangedCallback callback)
+// 6. Call ReaderRequestPage or ReaderWritePage to read/write page
+// 
+// The authentication will always work for one whole sector (4 pages).
 //
 // Associated constants:
 //
 //	* KeyA
 //	* KeyB
-func (device *NFCBricklet) ReaderAuthenticateMifareClassicPage(page uint16, keyNumber Key, key [6]uint8) (err error) {    
+func (device *NFCBricklet) ReaderAuthenticateMifareClassicPage(page uint16, keyNumber Key, key [6]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, page);
 	binary.Write(&buf, binary.LittleEndian, keyNumber);
@@ -849,7 +849,7 @@ func (device *NFCBricklet) ReaderAuthenticateMifareClassicPage(page uint16, keyN
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -858,43 +858,43 @@ func (device *NFCBricklet) ReaderAuthenticateMifareClassicPage(page uint16, keyN
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a maximum of 8192 bytes starting from the given page. How many pages are written
-	// depends on the tag type. The page sizes are as follows:
-	// 
-	// * Mifare Classic page size: 16 byte
-	// * NFC Forum Type 1 page size: 8 byte
-	// * NFC Forum Type 2 page size: 4 byte
-	// * NFC Forum Type 3 page size: 16 byte
-	// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
-	// 
-	// The general approach for writing to a tag is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check if the
-	//    expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderWritePage with page number and data
-	// 5. Wait for state to change to *ReaderWritePageReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 
-	// If you use a Mifare Classic tag you have to authenticate a page before you
-	// can write to it. See ReaderAuthenticateMifareClassicPage.
-	// 
-	// NFC Forum Type 4 tags are not organized into pages but different files. We currently
-	// support two files: Capability Container file (CC) and NDEF file.
-	// 
-	// Choose CC by setting page to 3 or NDEF by setting page to 4.
+// depends on the tag type. The page sizes are as follows:
+// 
+// * Mifare Classic page size: 16 byte
+// * NFC Forum Type 1 page size: 8 byte
+// * NFC Forum Type 2 page size: 4 byte
+// * NFC Forum Type 3 page size: 16 byte
+// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// 
+// The general approach for writing to a tag is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check if the
+//    expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderWritePage with page number and data
+// 5. Wait for state to change to *ReaderWritePageReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 
+// If you use a Mifare Classic tag you have to authenticate a page before you
+// can write to it. See ReaderAuthenticateMifareClassicPage.
+// 
+// NFC Forum Type 4 tags are not organized into pages but different files. We currently
+// support two files: Capability Container file (CC) and NDEF file.
+// 
+// Choose CC by setting page to 3 or NDEF by setting page to 4.
 //
 // Associated constants:
 //
 //	* ReaderWriteType4CapabilityContainer
 //	* ReaderWriteType4NDEF
-func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength uint16, dataChunkOffset uint16, dataChunkData [58]uint8) (err error) {    
+func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength uint16, dataChunkOffset uint16, dataChunkData [58]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, page);
 	binary.Write(&buf, binary.LittleEndian, dataLength);
@@ -907,7 +907,7 @@ func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -916,38 +916,38 @@ func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a maximum of 8192 bytes starting from the given page. How many pages are written
-	// depends on the tag type. The page sizes are as follows:
-	// 
-	// * Mifare Classic page size: 16 byte
-	// * NFC Forum Type 1 page size: 8 byte
-	// * NFC Forum Type 2 page size: 4 byte
-	// * NFC Forum Type 3 page size: 16 byte
-	// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
-	// 
-	// The general approach for writing to a tag is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check if the
-	//    expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderWritePage with page number and data
-	// 5. Wait for state to change to *ReaderWritePageReady* (see ReaderGetState or
-	//    RegisterReaderStateChangedCallback callback)
-	// 
-	// If you use a Mifare Classic tag you have to authenticate a page before you
-	// can write to it. See ReaderAuthenticateMifareClassicPage.
-	// 
-	// NFC Forum Type 4 tags are not organized into pages but different files. We currently
-	// support two files: Capability Container file (CC) and NDEF file.
-	// 
-	// Choose CC by setting page to 3 or NDEF by setting page to 4.
-	func (device *NFCBricklet) ReaderWritePage(page ReaderWrite, data []uint8) (err error) {            
+// depends on the tag type. The page sizes are as follows:
+// 
+// * Mifare Classic page size: 16 byte
+// * NFC Forum Type 1 page size: 8 byte
+// * NFC Forum Type 2 page size: 4 byte
+// * NFC Forum Type 3 page size: 16 byte
+// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// 
+// The general approach for writing to a tag is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *ReaderRequestTagIDReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check if the
+//    expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderWritePage with page number and data
+// 5. Wait for state to change to *ReaderWritePageReady* (see ReaderGetState or
+//    RegisterReaderStateChangedCallback callback)
+// 
+// If you use a Mifare Classic tag you have to authenticate a page before you
+// can write to it. See ReaderAuthenticateMifareClassicPage.
+// 
+// NFC Forum Type 4 tags are not organized into pages but different files. We currently
+// support two files: Capability Container file (CC) and NDEF file.
+// 
+// Choose CC by setting page to 3 or NDEF by setting page to 4.
+	func (device *NFCBricklet) ReaderWritePage(page ReaderWrite, data []uint8) (err error) {
         _, err = device.device.SetHighLevel(func(dataLength uint64, dataChunkOffset uint64, dataChunkData []byte) (LowLevelWriteResult, error) {
             arr := [58]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(dataChunkData))
@@ -960,7 +960,7 @@ func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength 
             return LowLevelWriteResult{
                 uint64(58),
                 lowLevelResults.Bytes()}, err
-        }, 3, 8, 464, Uint8SliceToByteSlice(data))   
+        }, 3, 8, 464, Uint8SliceToByteSlice(data))
 
          if err != nil {
             return
@@ -973,41 +973,41 @@ func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength 
     }
 
 // Reads a maximum of 8192 bytes starting from the given page and stores them into a buffer.
-	// The buffer can then be read out with ReaderReadPage.
-	// How many pages are read depends on the tag type. The page sizes are
-	// as follows:
-	// 
-	// * Mifare Classic page size: 16 byte
-	// * NFC Forum Type 1 page size: 8 byte
-	// * NFC Forum Type 2 page size: 4 byte
-	// * NFC Forum Type 3 page size: 16 byte
-	// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
-	// 
-	// The general approach for reading a tag is as follows:
-	// 
-	// 1. Call ReaderRequestTagID
-	// 2. Wait for state to change to *RequestTagIDReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	// 3. If looking for a specific tag then call ReaderGetTagID and check if the
-	//    expected tag was found, if it was not found got back to step 1
-	// 4. Call ReaderRequestPage with page number
-	// 5. Wait for state to change to *ReaderRequestPageReady* (see ReaderGetState
-	//    or RegisterReaderStateChangedCallback callback)
-	// 6. Call ReaderReadPage to retrieve the page from the buffer
-	// 
-	// If you use a Mifare Classic tag you have to authenticate a page before you
-	// can read it. See ReaderAuthenticateMifareClassicPage.
-	// 
-	// NFC Forum Type 4 tags are not organized into pages but different files. We currently
-	// support two files: Capability Container file (CC) and NDEF file.
-	// 
-	// Choose CC by setting page to 3 or NDEF by setting page to 4.
+// The buffer can then be read out with ReaderReadPage.
+// How many pages are read depends on the tag type. The page sizes are
+// as follows:
+// 
+// * Mifare Classic page size: 16 byte
+// * NFC Forum Type 1 page size: 8 byte
+// * NFC Forum Type 2 page size: 4 byte
+// * NFC Forum Type 3 page size: 16 byte
+// * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// 
+// The general approach for reading a tag is as follows:
+// 
+// 1. Call ReaderRequestTagID
+// 2. Wait for state to change to *RequestTagIDReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+// 3. If looking for a specific tag then call ReaderGetTagID and check if the
+//    expected tag was found, if it was not found got back to step 1
+// 4. Call ReaderRequestPage with page number
+// 5. Wait for state to change to *ReaderRequestPageReady* (see ReaderGetState
+//    or RegisterReaderStateChangedCallback callback)
+// 6. Call ReaderReadPage to retrieve the page from the buffer
+// 
+// If you use a Mifare Classic tag you have to authenticate a page before you
+// can read it. See ReaderAuthenticateMifareClassicPage.
+// 
+// NFC Forum Type 4 tags are not organized into pages but different files. We currently
+// support two files: Capability Container file (CC) and NDEF file.
+// 
+// Choose CC by setting page to 3 or NDEF by setting page to 4.
 //
 // Associated constants:
 //
 //	* ReaderRequestType4CapabilityContainer
 //	* ReaderRequestType4NDEF
-func (device *NFCBricklet) ReaderRequestPage(page ReaderRequest, length uint16) (err error) {    
+func (device *NFCBricklet) ReaderRequestPage(page ReaderRequest, length uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, page);
 	binary.Write(&buf, binary.LittleEndian, length);
@@ -1018,7 +1018,7 @@ func (device *NFCBricklet) ReaderRequestPage(page ReaderRequest, length uint16) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1027,15 +1027,15 @@ func (device *NFCBricklet) ReaderRequestPage(page ReaderRequest, length uint16) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the page data from an internal buffer. To fill the buffer
-	// with specific pages you have to call ReaderRequestPage beforehand.
-	// 
-	// The buffer can have a size of up to 8192 bytes.
-func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChunkOffset uint16, dataChunkData [60]uint8, err error) {    
+// with specific pages you have to call ReaderRequestPage beforehand.
+// 
+// The buffer can have a size of up to 8192 bytes.
+func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChunkOffset uint16, dataChunkData [60]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReaderReadPageLowLevel), buf.Bytes())
@@ -1044,7 +1044,7 @@ func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChun
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return dataLength, dataChunkOffset, dataChunkData, BrickletError(header.ErrorCode)
@@ -1056,17 +1056,17 @@ func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChun
 	copy(dataChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 60/8)))
 
     }
-    
+
     return dataLength, dataChunkOffset, dataChunkData, nil
 }
 
 // Returns the page data from an internal buffer. To fill the buffer
-	// with specific pages you have to call ReaderRequestPage beforehand.
-	// 
-	// The buffer can have a size of up to 8192 bytes.
+// with specific pages you have to call ReaderRequestPage beforehand.
+// 
+// The buffer can have a size of up to 8192 bytes.
 	func (device *NFCBricklet) ReaderReadPage() (data []uint8, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            dataLength, dataChunkOffset, dataChunkData, err := device.ReaderReadPageLowLevel()            
+            dataLength, dataChunkOffset, dataChunkData, err := device.ReaderReadPageLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -1092,21 +1092,21 @@ func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChun
     }
 
 // Returns the current cardemu state of the NFC Bricklet.
-	// 
-	// On startup the Bricklet will be in the *CardemuInitialization* state. The
-	// initialization will only take about 20ms. After that it changes to *CardemuIdle*.
-	// 
-	// The Bricklet is also reinitialized if the mode is changed, see SetMode.
-	// 
-	// The functions of this Bricklet can be called in the *CardemuIdle* state and all of
-	// the *CardemuReady* and *CardemuError* states.
-	// 
-	// Example: If you call CardemuStartDiscovery, the state will change to
-	// *CardemuDiscover* until the discovery is finished. Then it will change
-	// to either *CardemuDiscoverReady* if it worked or to *CardemuDiscoverError* if it
-	// didn't.
-	// 
-	// The same approach is used analogously for the other API functions.
+// 
+// On startup the Bricklet will be in the *CardemuInitialization* state. The
+// initialization will only take about 20ms. After that it changes to *CardemuIdle*.
+// 
+// The Bricklet is also reinitialized if the mode is changed, see SetMode.
+// 
+// The functions of this Bricklet can be called in the *CardemuIdle* state and all of
+// the *CardemuReady* and *CardemuError* states.
+// 
+// Example: If you call CardemuStartDiscovery, the state will change to
+// *CardemuDiscover* until the discovery is finished. Then it will change
+// to either *CardemuDiscoverReady* if it worked or to *CardemuDiscoverError* if it
+// didn't.
+// 
+// The same approach is used analogously for the other API functions.
 //
 // Associated constants:
 //
@@ -1119,7 +1119,7 @@ func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChun
 //	* CardemuStateTransferNDEF
 //	* CardemuStateTransferNDEFReady
 //	* CardemuStateTransferNDEFError
-func (device *NFCBricklet) CardemuGetState() (state CardemuState, idle bool, err error) {    
+func (device *NFCBricklet) CardemuGetState() (state CardemuState, idle bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionCardemuGetState), buf.Bytes())
@@ -1128,7 +1128,7 @@ func (device *NFCBricklet) CardemuGetState() (state CardemuState, idle bool, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return state, idle, BrickletError(header.ErrorCode)
@@ -1139,21 +1139,21 @@ func (device *NFCBricklet) CardemuGetState() (state CardemuState, idle bool, err
 	binary.Read(resultBuf, binary.LittleEndian, &idle)
 
     }
-    
+
     return state, idle, nil
 }
 
 // Starts the discovery process. If you call this function while a NFC
-	// reader device is near to the NFC Bricklet the state will change from
-	// *CardemuDiscovery* to *CardemuDiscoveryReady*.
-	// 
-	// If no NFC reader device can be found or if there is an error during
-	// discovery the cardemu state will change to *CardemuDiscoveryError*. In this case you
-	// have to restart the discovery process.
-	// 
-	// If the cardemu state changes to *CardemuDiscoveryReady* you can start the NDEF message
-	// transfer with CardemuWriteNDEF and CardemuStartTransfer.
-func (device *NFCBricklet) CardemuStartDiscovery() (err error) {    
+// reader device is near to the NFC Bricklet the state will change from
+// *CardemuDiscovery* to *CardemuDiscoveryReady*.
+// 
+// If no NFC reader device can be found or if there is an error during
+// discovery the cardemu state will change to *CardemuDiscoveryError*. In this case you
+// have to restart the discovery process.
+// 
+// If the cardemu state changes to *CardemuDiscoveryReady* you can start the NDEF message
+// transfer with CardemuWriteNDEF and CardemuStartTransfer.
+func (device *NFCBricklet) CardemuStartDiscovery() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionCardemuStartDiscovery), buf.Bytes())
@@ -1162,7 +1162,7 @@ func (device *NFCBricklet) CardemuStartDiscovery() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1171,18 +1171,18 @@ func (device *NFCBricklet) CardemuStartDiscovery() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes the NDEF messages that is to be transferred to the NFC peer.
-	// 
-	// The maximum supported NDEF message size in Cardemu mode is 255 byte.
-	// 
-	// You can call this function at any time in Cardemu mode. The internal buffer
-	// will not be overwritten until you call this function again or change the
-	// mode.
-func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {    
+// 
+// The maximum supported NDEF message size in Cardemu mode is 255 byte.
+// 
+// You can call this function at any time in Cardemu mode. The internal buffer
+// will not be overwritten until you call this function again or change the
+// mode.
+func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, ndefLength);
 	binary.Write(&buf, binary.LittleEndian, ndefChunkOffset);
@@ -1194,7 +1194,7 @@ func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunk
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1203,18 +1203,18 @@ func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunk
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes the NDEF messages that is to be transferred to the NFC peer.
-	// 
-	// The maximum supported NDEF message size in Cardemu mode is 255 byte.
-	// 
-	// You can call this function at any time in Cardemu mode. The internal buffer
-	// will not be overwritten until you call this function again or change the
-	// mode.
-	func (device *NFCBricklet) CardemuWriteNDEF(ndef []uint8) (err error) {            
+// 
+// The maximum supported NDEF message size in Cardemu mode is 255 byte.
+// 
+// You can call this function at any time in Cardemu mode. The internal buffer
+// will not be overwritten until you call this function again or change the
+// mode.
+	func (device *NFCBricklet) CardemuWriteNDEF(ndef []uint8) (err error) {
         _, err = device.device.SetHighLevel(func(ndefLength uint64, ndefChunkOffset uint64, ndefChunkData []byte) (LowLevelWriteResult, error) {
             arr := [60]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(ndefChunkData))
@@ -1227,7 +1227,7 @@ func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunk
             return LowLevelWriteResult{
                 uint64(60),
                 lowLevelResults.Bytes()}, err
-        }, 5, 8, 480, Uint8SliceToByteSlice(ndef))   
+        }, 5, 8, 480, Uint8SliceToByteSlice(ndef))
 
          if err != nil {
             return
@@ -1240,19 +1240,19 @@ func (device *NFCBricklet) CardemuWriteNDEFLowLevel(ndefLength uint16, ndefChunk
     }
 
 // You can start the transfer of a NDEF message if the cardemu state is *CardemuDiscoveryReady*.
-	// 
-	// Before you call this function to start a write transfer, the NDEF message that
-	// is to be transferred has to be written via CardemuWriteNDEF first.
-	// 
-	// After you call this function the state will change to *CardemuTransferNDEF*. It will
-	// change to *CardemuTransferNDEFReady* if the transfer was successful or
-	// *CardemuTransferNDEFError* if it wasn't.
+// 
+// Before you call this function to start a write transfer, the NDEF message that
+// is to be transferred has to be written via CardemuWriteNDEF first.
+// 
+// After you call this function the state will change to *CardemuTransferNDEF*. It will
+// change to *CardemuTransferNDEFReady* if the transfer was successful or
+// *CardemuTransferNDEFError* if it wasn't.
 //
 // Associated constants:
 //
 //	* CardemuTransferAbort
 //	* CardemuTransferWrite
-func (device *NFCBricklet) CardemuStartTransfer(transfer CardemuTransfer) (err error) {    
+func (device *NFCBricklet) CardemuStartTransfer(transfer CardemuTransfer) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, transfer);
 
@@ -1262,7 +1262,7 @@ func (device *NFCBricklet) CardemuStartTransfer(transfer CardemuTransfer) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1271,26 +1271,26 @@ func (device *NFCBricklet) CardemuStartTransfer(transfer CardemuTransfer) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current P2P state of the NFC Bricklet.
-	// 
-	// On startup the Bricklet will be in the *P2PInitialization* state. The
-	// initialization will only take about 20ms. After that it changes to *P2PIdle*.
-	// 
-	// The Bricklet is also reinitialized if the mode is changed, see SetMode.
-	// 
-	// The functions of this Bricklet can be called in the *P2PIdle* state and all of
-	// the *P2PReady* and *P2PError* states.
-	// 
-	// Example: If you call P2PStartDiscovery, the state will change to
-	// *P2PDiscover* until the discovery is finished. Then it will change
-	// to either P2PDiscoverReady* if it worked or to *P2PDiscoverError* if it
-	// didn't.
-	// 
-	// The same approach is used analogously for the other API functions.
+// 
+// On startup the Bricklet will be in the *P2PInitialization* state. The
+// initialization will only take about 20ms. After that it changes to *P2PIdle*.
+// 
+// The Bricklet is also reinitialized if the mode is changed, see SetMode.
+// 
+// The functions of this Bricklet can be called in the *P2PIdle* state and all of
+// the *P2PReady* and *P2PError* states.
+// 
+// Example: If you call P2PStartDiscovery, the state will change to
+// *P2PDiscover* until the discovery is finished. Then it will change
+// to either P2PDiscoverReady* if it worked or to *P2PDiscoverError* if it
+// didn't.
+// 
+// The same approach is used analogously for the other API functions.
 //
 // Associated constants:
 //
@@ -1303,7 +1303,7 @@ func (device *NFCBricklet) CardemuStartTransfer(transfer CardemuTransfer) (err e
 //	* P2PStateTransferNDEF
 //	* P2PStateTransferNDEFReady
 //	* P2PStateTransferNDEFError
-func (device *NFCBricklet) P2PGetState() (state P2PState, idle bool, err error) {    
+func (device *NFCBricklet) P2PGetState() (state P2PState, idle bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionP2PGetState), buf.Bytes())
@@ -1312,7 +1312,7 @@ func (device *NFCBricklet) P2PGetState() (state P2PState, idle bool, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return state, idle, BrickletError(header.ErrorCode)
@@ -1323,21 +1323,21 @@ func (device *NFCBricklet) P2PGetState() (state P2PState, idle bool, err error) 
 	binary.Read(resultBuf, binary.LittleEndian, &idle)
 
     }
-    
+
     return state, idle, nil
 }
 
 // Starts the discovery process. If you call this function while another NFC
-	// P2P enabled device is near to the NFC Bricklet the state will change from
-	// *P2PDiscovery* to *P2PDiscoveryReady*.
-	// 
-	// If no NFC P2P enabled device can be found or if there is an error during
-	// discovery the P2P state will change to *P2PDiscoveryError*. In this case you
-	// have to restart the discovery process.
-	// 
-	// If the P2P state changes to *P2PDiscoveryReady* you can start the NDEF message
-	// transfer with P2PStartTransfer.
-func (device *NFCBricklet) P2PStartDiscovery() (err error) {    
+// P2P enabled device is near to the NFC Bricklet the state will change from
+// *P2PDiscovery* to *P2PDiscoveryReady*.
+// 
+// If no NFC P2P enabled device can be found or if there is an error during
+// discovery the P2P state will change to *P2PDiscoveryError*. In this case you
+// have to restart the discovery process.
+// 
+// If the P2P state changes to *P2PDiscoveryReady* you can start the NDEF message
+// transfer with P2PStartTransfer.
+func (device *NFCBricklet) P2PStartDiscovery() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionP2PStartDiscovery), buf.Bytes())
@@ -1346,7 +1346,7 @@ func (device *NFCBricklet) P2PStartDiscovery() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1355,18 +1355,18 @@ func (device *NFCBricklet) P2PStartDiscovery() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes the NDEF messages that is to be transferred to the NFC peer.
-	// 
-	// The maximum supported NDEF message size for P2P transfer is 255 byte.
-	// 
-	// You can call this function at any time in P2P mode. The internal buffer
-	// will not be overwritten until you call this function again, change the
-	// mode or use P2P to read an NDEF messages.
-func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {    
+// 
+// The maximum supported NDEF message size for P2P transfer is 255 byte.
+// 
+// You can call this function at any time in P2P mode. The internal buffer
+// will not be overwritten until you call this function again, change the
+// mode or use P2P to read an NDEF messages.
+func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, ndefLength);
 	binary.Write(&buf, binary.LittleEndian, ndefChunkOffset);
@@ -1378,7 +1378,7 @@ func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffs
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1387,18 +1387,18 @@ func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffs
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes the NDEF messages that is to be transferred to the NFC peer.
-	// 
-	// The maximum supported NDEF message size for P2P transfer is 255 byte.
-	// 
-	// You can call this function at any time in P2P mode. The internal buffer
-	// will not be overwritten until you call this function again, change the
-	// mode or use P2P to read an NDEF messages.
-	func (device *NFCBricklet) P2PWriteNDEF(ndef []uint8) (err error) {            
+// 
+// The maximum supported NDEF message size for P2P transfer is 255 byte.
+// 
+// You can call this function at any time in P2P mode. The internal buffer
+// will not be overwritten until you call this function again, change the
+// mode or use P2P to read an NDEF messages.
+	func (device *NFCBricklet) P2PWriteNDEF(ndef []uint8) (err error) {
         _, err = device.device.SetHighLevel(func(ndefLength uint64, ndefChunkOffset uint64, ndefChunkData []byte) (LowLevelWriteResult, error) {
             arr := [60]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(ndefChunkData))
@@ -1411,7 +1411,7 @@ func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffs
             return LowLevelWriteResult{
                 uint64(60),
                 lowLevelResults.Bytes()}, err
-        }, 6, 8, 480, Uint8SliceToByteSlice(ndef))   
+        }, 6, 8, 480, Uint8SliceToByteSlice(ndef))
 
          if err != nil {
             return
@@ -1424,24 +1424,24 @@ func (device *NFCBricklet) P2PWriteNDEFLowLevel(ndefLength uint16, ndefChunkOffs
     }
 
 // You can start the transfer of a NDEF message if the P2P state is *P2PDiscoveryReady*.
-	// 
-	// Before you call this function to start a write transfer, the NDEF message that
-	// is to be transferred has to be written via P2PWriteNDEF first.
-	// 
-	// After you call this function the P2P state will change to *P2PTransferNDEF*. It will
-	// change to *P2PTransferNDEFReady* if the transfer was successfull or
-	// *P2PTransferNDEFError* if it wasn't.
-	// 
-	// If you started a write transfer you are now done. If you started a read transfer
-	// you can now use P2PReadNDEF to read the NDEF message that was written
-	// by the NFC peer.
+// 
+// Before you call this function to start a write transfer, the NDEF message that
+// is to be transferred has to be written via P2PWriteNDEF first.
+// 
+// After you call this function the P2P state will change to *P2PTransferNDEF*. It will
+// change to *P2PTransferNDEFReady* if the transfer was successfull or
+// *P2PTransferNDEFError* if it wasn't.
+// 
+// If you started a write transfer you are now done. If you started a read transfer
+// you can now use P2PReadNDEF to read the NDEF message that was written
+// by the NFC peer.
 //
 // Associated constants:
 //
 //	* P2PTransferAbort
 //	* P2PTransferWrite
 //	* P2PTransferRead
-func (device *NFCBricklet) P2PStartTransfer(transfer P2PTransfer) (err error) {    
+func (device *NFCBricklet) P2PStartTransfer(transfer P2PTransfer) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, transfer);
 
@@ -1451,7 +1451,7 @@ func (device *NFCBricklet) P2PStartTransfer(transfer P2PTransfer) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1460,16 +1460,16 @@ func (device *NFCBricklet) P2PStartTransfer(transfer P2PTransfer) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the NDEF message that was written by a NFC peer in NFC P2P mode.
-	// The maximum NDEF length is 8192 byte.
-	// 
-	// The NDEF message is ready if you called P2PStartTransfer with a
-	// read transfer and the P2P state changed to *P2PTransferNDEFReady*.
-func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8, err error) {    
+// The maximum NDEF length is 8192 byte.
+// 
+// The NDEF message is ready if you called P2PStartTransfer with a
+// read transfer and the P2P state changed to *P2PTransferNDEFReady*.
+func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionP2PReadNDEFLowLevel), buf.Bytes())
@@ -1478,7 +1478,7 @@ func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOf
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ndefLength, ndefChunkOffset, ndefChunkData, BrickletError(header.ErrorCode)
@@ -1490,18 +1490,18 @@ func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOf
 	copy(ndefChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 60/8)))
 
     }
-    
+
     return ndefLength, ndefChunkOffset, ndefChunkData, nil
 }
 
 // Returns the NDEF message that was written by a NFC peer in NFC P2P mode.
-	// The maximum NDEF length is 8192 byte.
-	// 
-	// The NDEF message is ready if you called P2PStartTransfer with a
-	// read transfer and the P2P state changed to *P2PTransferNDEFReady*.
+// The maximum NDEF length is 8192 byte.
+// 
+// The NDEF message is ready if you called P2PStartTransfer with a
+// read transfer and the P2P state changed to *P2PTransferNDEFReady*.
 	func (device *NFCBricklet) P2PReadNDEF() (ndef []uint8, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            ndefLength, ndefChunkOffset, ndefChunkData, err := device.P2PReadNDEFLowLevel()            
+            ndefLength, ndefChunkOffset, ndefChunkData, err := device.P2PReadNDEFLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -1527,11 +1527,11 @@ func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOf
     }
 
 // Sets the detection LED configuration. By default the LED shows
-	// if a card/reader is detected.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is off.
+// if a card/reader is detected.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
 //
@@ -1539,7 +1539,7 @@ func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOf
 //	* DetectionLEDConfigOn
 //	* DetectionLEDConfigShowHeartbeat
 //	* DetectionLEDConfigShowDetection
-func (device *NFCBricklet) SetDetectionLEDConfig(config DetectionLEDConfig) (err error) {    
+func (device *NFCBricklet) SetDetectionLEDConfig(config DetectionLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1549,7 +1549,7 @@ func (device *NFCBricklet) SetDetectionLEDConfig(config DetectionLEDConfig) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1558,7 +1558,7 @@ func (device *NFCBricklet) SetDetectionLEDConfig(config DetectionLEDConfig) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1570,7 +1570,7 @@ func (device *NFCBricklet) SetDetectionLEDConfig(config DetectionLEDConfig) (err
 //	* DetectionLEDConfigOn
 //	* DetectionLEDConfigShowHeartbeat
 //	* DetectionLEDConfigShowDetection
-func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, err error) {    
+func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDetectionLEDConfig), buf.Bytes())
@@ -1579,7 +1579,7 @@ func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1589,32 +1589,32 @@ func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, e
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Sets the maximum timeout in ms.
-	// 
-	// This is a global maximum used for all internal state timeouts. The timeouts depend heavily
-	// on the used tags etc. For example: If you use a Type 2 tag and you want to detect if
-	// it is present, you have to use ReaderRequestTagID and wait for the state
-	// to change to either the error state or the ready state.
-	// 
-	// With the default configuration this takes 2-3 seconds. By setting the maximum timeout to
-	// 100ms you can reduce this time to ~150-200ms. For Type 2 this would also still work
-	// with a 20ms timeout (a Type 2 tag answers usually within 10ms). A type 4 tag can take
-	// up to 500ms in our tests.
-	// 
-	// If you need a fast response time to discover if a tag is present or not you can find
-	// a good timeout value by trial and error for your specific tag.
-	// 
-	// By default we use a very conservative timeout, to be sure that any Tag can always
-	// answer in time.
-	// 
-	// Default timeout: 2000ms.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
-func (device *NFCBricklet) SetMaximumTimeout(timeout uint16) (err error) {    
+// 
+// This is a global maximum used for all internal state timeouts. The timeouts depend heavily
+// on the used tags etc. For example: If you use a Type 2 tag and you want to detect if
+// it is present, you have to use ReaderRequestTagID and wait for the state
+// to change to either the error state or the ready state.
+// 
+// With the default configuration this takes 2-3 seconds. By setting the maximum timeout to
+// 100ms you can reduce this time to ~150-200ms. For Type 2 this would also still work
+// with a 20ms timeout (a Type 2 tag answers usually within 10ms). A type 4 tag can take
+// up to 500ms in our tests.
+// 
+// If you need a fast response time to discover if a tag is present or not you can find
+// a good timeout value by trial and error for your specific tag.
+// 
+// By default we use a very conservative timeout, to be sure that any Tag can always
+// answer in time.
+// 
+// Default timeout: 2000ms.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *NFCBricklet) SetMaximumTimeout(timeout uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, timeout);
 
@@ -1624,7 +1624,7 @@ func (device *NFCBricklet) SetMaximumTimeout(timeout uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1633,14 +1633,14 @@ func (device *NFCBricklet) SetMaximumTimeout(timeout uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the timeout as set by SetMaximumTimeout
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Plugin)
-func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {    
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMaximumTimeout), buf.Bytes())
@@ -1649,7 +1649,7 @@ func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return timeout, BrickletError(header.ErrorCode)
@@ -1659,22 +1659,22 @@ func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &timeout)
 
     }
-    
+
     return timeout, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *NFCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *NFCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -1683,7 +1683,7 @@ func (device *NFCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -1696,19 +1696,19 @@ func (device *NFCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, 
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -1723,7 +1723,7 @@ func (device *NFCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, 
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *NFCBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *NFCBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -1733,7 +1733,7 @@ func (device *NFCBricklet) SetBootloaderMode(mode BootloaderMode) (status Bootlo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1743,7 +1743,7 @@ func (device *NFCBricklet) SetBootloaderMode(mode BootloaderMode) (status Bootlo
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -1756,7 +1756,7 @@ func (device *NFCBricklet) SetBootloaderMode(mode BootloaderMode) (status Bootlo
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *NFCBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *NFCBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -1765,7 +1765,7 @@ func (device *NFCBricklet) GetBootloaderMode() (mode BootloaderMode, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1775,17 +1775,17 @@ func (device *NFCBricklet) GetBootloaderMode() (mode BootloaderMode, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *NFCBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *NFCBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -1795,7 +1795,7 @@ func (device *NFCBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1804,19 +1804,19 @@ func (device *NFCBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *NFCBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *NFCBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -1826,7 +1826,7 @@ func (device *NFCBricklet) WriteFirmware(data [64]uint8) (status uint8, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1836,17 +1836,17 @@ func (device *NFCBricklet) WriteFirmware(data [64]uint8) (status uint8, err erro
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -1854,7 +1854,7 @@ func (device *NFCBricklet) WriteFirmware(data [64]uint8) (status uint8, err erro
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *NFCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *NFCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1864,7 +1864,7 @@ func (device *NFCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1873,7 +1873,7 @@ func (device *NFCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1885,7 +1885,7 @@ func (device *NFCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *NFCBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *NFCBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -1894,7 +1894,7 @@ func (device *NFCBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1904,17 +1904,17 @@ func (device *NFCBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err err
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *NFCBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *NFCBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1923,7 +1923,7 @@ func (device *NFCBricklet) GetChipTemperature() (temperature int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1933,17 +1933,17 @@ func (device *NFCBricklet) GetChipTemperature() (temperature int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *NFCBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *NFCBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1952,7 +1952,7 @@ func (device *NFCBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1961,16 +1961,16 @@ func (device *NFCBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *NFCBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *NFCBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1980,7 +1980,7 @@ func (device *NFCBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1989,13 +1989,13 @@ func (device *NFCBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *NFCBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *NFCBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -2004,7 +2004,7 @@ func (device *NFCBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -2014,19 +2014,19 @@ func (device *NFCBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *NFCBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *NFCBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -2035,7 +2035,7 @@ func (device *NFCBricklet) GetIdentity() (uid string, connectedUid string, posit
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -2050,6 +2050,6 @@ func (device *NFCBricklet) GetIdentity() (uid string, connectedUid string, posit
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

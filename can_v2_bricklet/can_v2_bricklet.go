@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -183,17 +183,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (CANV2Bricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *CANV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -202,7 +202,7 @@ func (device *CANV2Bricklet) GetResponseExpected(functionID Function) (bool, err
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -222,18 +222,18 @@ func (device *CANV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered if a data or remote frame was received by the CAN
-	// transceiver.
-	// 
-	// The ``identifier`` return value follows the identifier format described for
-	// WriteFrame.
-	// 
-	// For details on the ``data`` return value see ReadFrame.
-	// 
-	// A configurable read filter can be used to define which frames should be
-	// received by the CAN transceiver and put into the read queue (see
-	// SetQueueConfiguration).
-	// 
-	// To enable this callback, use SetFrameReadCallbackConfiguration.
+// transceiver.
+// 
+// The ``identifier`` return value follows the identifier format described for
+// WriteFrame.
+// 
+// For details on the ``data`` return value see ReadFrame.
+// 
+// A configurable read filter can be used to define which frames should be
+// received by the CAN transceiver and put into the read queue (see
+// SetQueueConfiguration).
+// 
+// To enable this callback, use SetFrameReadCallbackConfiguration.
 func (device *CANV2Bricklet) RegisterFrameReadLowLevelCallback(fn func(FrameType, uint32, uint8, [15]uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -251,24 +251,24 @@ copy(dataData[:], ByteSliceToUint8Slice(buf.Next(8 * 15/8)))
 }
 
 //Remove a registered Frame Read Low Level callback.
-func (device *CANV2Bricklet) DeregisterFrameReadLowLevelCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameReadLowLevel), callbackID)
+func (device *CANV2Bricklet) DeregisterFrameReadLowLevelCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackFrameReadLowLevel), registrationID)
 }
 
 
 // This callback is triggered if a data or remote frame was received by the CAN
-	// transceiver.
-	// 
-	// The ``identifier`` return value follows the identifier format described for
-	// WriteFrame.
-	// 
-	// For details on the ``data`` return value see ReadFrame.
-	// 
-	// A configurable read filter can be used to define which frames should be
-	// received by the CAN transceiver and put into the read queue (see
-	// SetQueueConfiguration).
-	// 
-	// To enable this callback, use SetFrameReadCallbackConfiguration.
+// transceiver.
+// 
+// The ``identifier`` return value follows the identifier format described for
+// WriteFrame.
+// 
+// For details on the ``data`` return value see ReadFrame.
+// 
+// A configurable read filter can be used to define which frames should be
+// received by the CAN transceiver and put into the read queue (see
+// SetQueueConfiguration).
+// 
+// To enable this callback, use SetFrameReadCallbackConfiguration.
 func (device *CANV2Bricklet) RegisterFrameReadCallback(fn func(FrameType, uint32, []uint8)) uint64 {
     buf := make([]uint8, 0)
     wrapper := func(frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8)  {
@@ -280,48 +280,48 @@ func (device *CANV2Bricklet) RegisterFrameReadCallback(fn func(FrameType, uint32
         }
         toRead := MinU(uint64(dataLength-0), uint64(len(dataData[:])))
         buf = append(buf, dataData[:toRead]...)
-        if len(buf) >= int(dataLength) {            
+        if len(buf) >= int(dataLength) {
             fn(frameType, identifier, buf)
             buf = make([]uint8, 0)
         }
     }
-    return device.RegisterFrameReadLowLevelCallback(wrapper)    
+    return device.RegisterFrameReadLowLevelCallback(wrapper)
 }
 
 //Remove a registered Frame Read Low Level callback.
-func (device *CANV2Bricklet) DeregisterFrameReadCallback(callbackID uint64) {
-    device.DeregisterFrameReadLowLevelCallback(callbackID)
+func (device *CANV2Bricklet) DeregisterFrameReadCallback(registrationID uint64) {
+    device.DeregisterFrameReadLowLevelCallback(registrationID)
 }
 
 
 // Writes a data or remote frame to the write queue to be transmitted over the
-	// CAN transceiver.
-	// 
-	// The Bricklet supports the standard 11-bit (CAN 2.0A) and the additional extended
-	// 29-bit (CAN 2.0B) identifiers. For standard frames the Bricklet uses bit 0 to 10
-	// from the ``identifier`` parameter as standard 11-bit identifier. For extended
-	// frames the Bricklet uses bit 0 to 28 from the ``identifier`` parameter as
-	// extended 29-bit identifier.
-	// 
-	// The ``data`` parameter can be up to 15 bytes long. For data frames up to 8 bytes
-	// will be used as the actual data. The length (DLC) field in the data or remote
-	// frame will be set to the actual length of the ``data`` parameter. This allows
-	// to transmit data and remote frames with excess length. For remote frames only
-	// the length of the ``data`` parameter is used. The actual ``data`` bytes are
-	// ignored.
-	// 
-	// Returns *true* if the frame was successfully added to the write queue. Returns
-	// *false* if the frame could not be added because write queue is already full or
-	// because the write buffer or the write backlog are configured with a size of
-	// zero (see SetQueueConfiguration).
-	// 
-	// The write queue can overflow if frames are written to it at a higher rate
-	// than the Bricklet can transmitted them over the CAN transceiver. This may
-	// happen if the CAN transceiver is configured as read-only or is using a low baud
-	// rate (see SetTransceiverConfiguration). It can also happen if the CAN
-	// bus is congested and the frame cannot be transmitted because it constantly loses
-	// arbitration or because the CAN transceiver is currently disabled due to a high
-	// write error level (see GetErrorLog).
+// CAN transceiver.
+// 
+// The Bricklet supports the standard 11-bit (CAN 2.0A) and the additional extended
+// 29-bit (CAN 2.0B) identifiers. For standard frames the Bricklet uses bit 0 to 10
+// from the ``identifier`` parameter as standard 11-bit identifier. For extended
+// frames the Bricklet uses bit 0 to 28 from the ``identifier`` parameter as
+// extended 29-bit identifier.
+// 
+// The ``data`` parameter can be up to 15 bytes long. For data frames up to 8 bytes
+// will be used as the actual data. The length (DLC) field in the data or remote
+// frame will be set to the actual length of the ``data`` parameter. This allows
+// to transmit data and remote frames with excess length. For remote frames only
+// the length of the ``data`` parameter is used. The actual ``data`` bytes are
+// ignored.
+// 
+// Returns *true* if the frame was successfully added to the write queue. Returns
+// *false* if the frame could not be added because write queue is already full or
+// because the write buffer or the write backlog are configured with a size of
+// zero (see SetQueueConfiguration).
+// 
+// The write queue can overflow if frames are written to it at a higher rate
+// than the Bricklet can transmitted them over the CAN transceiver. This may
+// happen if the CAN transceiver is configured as read-only or is using a low baud
+// rate (see SetTransceiverConfiguration). It can also happen if the CAN
+// bus is congested and the frame cannot be transmitted because it constantly loses
+// arbitration or because the CAN transceiver is currently disabled due to a high
+// write error level (see GetErrorLog).
 //
 // Associated constants:
 //
@@ -329,7 +329,7 @@ func (device *CANV2Bricklet) DeregisterFrameReadCallback(callbackID uint64) {
 //	* FrameTypeStandardRemote
 //	* FrameTypeExtendedData
 //	* FrameTypeExtendedRemote
-func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8) (success bool, err error) {    
+func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8) (success bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, frameType);
 	binary.Write(&buf, binary.LittleEndian, identifier);
@@ -342,7 +342,7 @@ func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return success, BrickletError(header.ErrorCode)
@@ -352,39 +352,39 @@ func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier 
         binary.Read(resultBuf, binary.LittleEndian, &success)
 
     }
-    
+
     return success, nil
 }
 
 // Writes a data or remote frame to the write queue to be transmitted over the
-	// CAN transceiver.
-	// 
-	// The Bricklet supports the standard 11-bit (CAN 2.0A) and the additional extended
-	// 29-bit (CAN 2.0B) identifiers. For standard frames the Bricklet uses bit 0 to 10
-	// from the ``identifier`` parameter as standard 11-bit identifier. For extended
-	// frames the Bricklet uses bit 0 to 28 from the ``identifier`` parameter as
-	// extended 29-bit identifier.
-	// 
-	// The ``data`` parameter can be up to 15 bytes long. For data frames up to 8 bytes
-	// will be used as the actual data. The length (DLC) field in the data or remote
-	// frame will be set to the actual length of the ``data`` parameter. This allows
-	// to transmit data and remote frames with excess length. For remote frames only
-	// the length of the ``data`` parameter is used. The actual ``data`` bytes are
-	// ignored.
-	// 
-	// Returns *true* if the frame was successfully added to the write queue. Returns
-	// *false* if the frame could not be added because write queue is already full or
-	// because the write buffer or the write backlog are configured with a size of
-	// zero (see SetQueueConfiguration).
-	// 
-	// The write queue can overflow if frames are written to it at a higher rate
-	// than the Bricklet can transmitted them over the CAN transceiver. This may
-	// happen if the CAN transceiver is configured as read-only or is using a low baud
-	// rate (see SetTransceiverConfiguration). It can also happen if the CAN
-	// bus is congested and the frame cannot be transmitted because it constantly loses
-	// arbitration or because the CAN transceiver is currently disabled due to a high
-	// write error level (see GetErrorLog).
-	func (device *CANV2Bricklet) WriteFrame(frameType FrameType, identifier uint32, data []uint8) (success bool, err error) {            
+// CAN transceiver.
+// 
+// The Bricklet supports the standard 11-bit (CAN 2.0A) and the additional extended
+// 29-bit (CAN 2.0B) identifiers. For standard frames the Bricklet uses bit 0 to 10
+// from the ``identifier`` parameter as standard 11-bit identifier. For extended
+// frames the Bricklet uses bit 0 to 28 from the ``identifier`` parameter as
+// extended 29-bit identifier.
+// 
+// The ``data`` parameter can be up to 15 bytes long. For data frames up to 8 bytes
+// will be used as the actual data. The length (DLC) field in the data or remote
+// frame will be set to the actual length of the ``data`` parameter. This allows
+// to transmit data and remote frames with excess length. For remote frames only
+// the length of the ``data`` parameter is used. The actual ``data`` bytes are
+// ignored.
+// 
+// Returns *true* if the frame was successfully added to the write queue. Returns
+// *false* if the frame could not be added because write queue is already full or
+// because the write buffer or the write backlog are configured with a size of
+// zero (see SetQueueConfiguration).
+// 
+// The write queue can overflow if frames are written to it at a higher rate
+// than the Bricklet can transmitted them over the CAN transceiver. This may
+// happen if the CAN transceiver is configured as read-only or is using a low baud
+// rate (see SetTransceiverConfiguration). It can also happen if the CAN
+// bus is congested and the frame cannot be transmitted because it constantly loses
+// arbitration or because the CAN transceiver is currently disabled due to a high
+// write error level (see GetErrorLog).
+	func (device *CANV2Bricklet) WriteFrame(frameType FrameType, identifier uint32, data []uint8) (success bool, err error) {
         lowLevelResult, err := device.device.SetHighLevel(func(dataLength uint64, chunkOffset uint64, dataData []byte) (LowLevelWriteResult, error) {
             arr := [15]uint8{}
             copy(arr[:], ByteSliceToUint8Slice(dataData))
@@ -397,7 +397,7 @@ func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier 
             return LowLevelWriteResult{
                 uint64(15),
                 lowLevelResults.Bytes()}, err
-        }, 0, 8, 120, Uint8SliceToByteSlice(data))   
+        }, 0, 8, 120, Uint8SliceToByteSlice(data))
 
          if err != nil {
             return
@@ -411,27 +411,27 @@ func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier 
     }
 
 // Tries to read the next data or remote frame from the read queue and returns it.
-	// If a frame was successfully read, then the ``success`` return value is set to
-	// *true* and the other return values contain the frame. If the read queue is
-	// empty and no frame could be read, then the ``success`` return value is set to
-	// *false* and the other return values contain invalid data.
-	// 
-	// The ``identifier`` return value follows the identifier format described for
-	// WriteFrame.
-	// 
-	// The ``data`` return value can be up to 15 bytes long. For data frames up to the
-	// first 8 bytes are the actual received data. All bytes after the 8th byte are
-	// always zero and only there to indicate the length of a data or remote frame
-	// with excess length. For remote frames the length of the ``data`` return value
-	// represents the requested length. The actual ``data`` bytes are always zero.
-	// 
-	// A configurable read filter can be used to define which frames should be
-	// received by the CAN transceiver and put into the read queue (see
-	// SetReadFilterConfiguration).
-	// 
-	// Instead of polling with this function, you can also use callbacks. See the
-	// SetFrameReadCallbackConfiguration function and the RegisterFrameReadCallback
-	// callback.
+// If a frame was successfully read, then the ``success`` return value is set to
+// *true* and the other return values contain the frame. If the read queue is
+// empty and no frame could be read, then the ``success`` return value is set to
+// *false* and the other return values contain invalid data.
+// 
+// The ``identifier`` return value follows the identifier format described for
+// WriteFrame.
+// 
+// The ``data`` return value can be up to 15 bytes long. For data frames up to the
+// first 8 bytes are the actual received data. All bytes after the 8th byte are
+// always zero and only there to indicate the length of a data or remote frame
+// with excess length. For remote frames the length of the ``data`` return value
+// represents the requested length. The actual ``data`` bytes are always zero.
+// 
+// A configurable read filter can be used to define which frames should be
+// received by the CAN transceiver and put into the read queue (see
+// SetReadFilterConfiguration).
+// 
+// Instead of polling with this function, you can also use callbacks. See the
+// SetFrameReadCallbackConfiguration function and the RegisterFrameReadCallback
+// callback.
 //
 // Associated constants:
 //
@@ -439,7 +439,7 @@ func (device *CANV2Bricklet) WriteFrameLowLevel(frameType FrameType, identifier 
 //	* FrameTypeStandardRemote
 //	* FrameTypeExtendedData
 //	* FrameTypeExtendedRemote
-func (device *CANV2Bricklet) ReadFrameLowLevel() (success bool, frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8, err error) {    
+func (device *CANV2Bricklet) ReadFrameLowLevel() (success bool, frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadFrameLowLevel), buf.Bytes())
@@ -448,7 +448,7 @@ func (device *CANV2Bricklet) ReadFrameLowLevel() (success bool, frameType FrameT
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return success, frameType, identifier, dataLength, dataData, BrickletError(header.ErrorCode)
@@ -462,35 +462,35 @@ func (device *CANV2Bricklet) ReadFrameLowLevel() (success bool, frameType FrameT
 	copy(dataData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 15/8)))
 
     }
-    
+
     return success, frameType, identifier, dataLength, dataData, nil
 }
 
 // Tries to read the next data or remote frame from the read queue and returns it.
-	// If a frame was successfully read, then the ``success`` return value is set to
-	// *true* and the other return values contain the frame. If the read queue is
-	// empty and no frame could be read, then the ``success`` return value is set to
-	// *false* and the other return values contain invalid data.
-	// 
-	// The ``identifier`` return value follows the identifier format described for
-	// WriteFrame.
-	// 
-	// The ``data`` return value can be up to 15 bytes long. For data frames up to the
-	// first 8 bytes are the actual received data. All bytes after the 8th byte are
-	// always zero and only there to indicate the length of a data or remote frame
-	// with excess length. For remote frames the length of the ``data`` return value
-	// represents the requested length. The actual ``data`` bytes are always zero.
-	// 
-	// A configurable read filter can be used to define which frames should be
-	// received by the CAN transceiver and put into the read queue (see
-	// SetReadFilterConfiguration).
-	// 
-	// Instead of polling with this function, you can also use callbacks. See the
-	// SetFrameReadCallbackConfiguration function and the RegisterFrameReadCallback
-	// callback.
+// If a frame was successfully read, then the ``success`` return value is set to
+// *true* and the other return values contain the frame. If the read queue is
+// empty and no frame could be read, then the ``success`` return value is set to
+// *false* and the other return values contain invalid data.
+// 
+// The ``identifier`` return value follows the identifier format described for
+// WriteFrame.
+// 
+// The ``data`` return value can be up to 15 bytes long. For data frames up to the
+// first 8 bytes are the actual received data. All bytes after the 8th byte are
+// always zero and only there to indicate the length of a data or remote frame
+// with excess length. For remote frames the length of the ``data`` return value
+// represents the requested length. The actual ``data`` bytes are always zero.
+// 
+// A configurable read filter can be used to define which frames should be
+// received by the CAN transceiver and put into the read queue (see
+// SetReadFilterConfiguration).
+// 
+// Instead of polling with this function, you can also use callbacks. See the
+// SetFrameReadCallbackConfiguration function and the RegisterFrameReadCallback
+// callback.
 	func (device *CANV2Bricklet) ReadFrame() (data []uint8, success bool, frameType FrameType, identifier uint32, err error) {
         buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            success, frameType, identifier, dataLength, dataData, err := device.ReadFrameLowLevel()            
+            success, frameType, identifier, dataLength, dataData, err := device.ReadFrameLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -520,9 +520,9 @@ func (device *CANV2Bricklet) ReadFrameLowLevel() (success bool, frameType FrameT
     }
 
 // Enables and disables the RegisterFrameReadCallback callback.
-	// 
-	// By default the callback is disabled.
-func (device *CANV2Bricklet) SetFrameReadCallbackConfiguration(enabled bool) (err error) {    
+// 
+// By default the callback is disabled.
+func (device *CANV2Bricklet) SetFrameReadCallbackConfiguration(enabled bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enabled);
 
@@ -532,7 +532,7 @@ func (device *CANV2Bricklet) SetFrameReadCallbackConfiguration(enabled bool) (er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -541,12 +541,12 @@ func (device *CANV2Bricklet) SetFrameReadCallbackConfiguration(enabled bool) (er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the RegisterFrameReadCallback callback is enabled, *false* otherwise.
-func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, err error) {    
+func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetFrameReadCallbackConfiguration), buf.Bytes())
@@ -555,7 +555,7 @@ func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -565,33 +565,33 @@ func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, 
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Sets the transceiver configuration for the CAN bus communication.
-	// 
-	// The baud rate can be configured in bit/s between 10 and 1000 kbit/s and the
-	// sample point can be configured in 1/10 % between 50 and 90 %.
-	// 
-	// The CAN transceiver has three different modes:
-	// 
-	// * Normal: Reads from and writes to the CAN bus and performs active bus
-	//   error detection and acknowledgement.
-	// * Loopback: All reads and writes are performed internally. The transceiver
-	//   is disconnected from the actual CAN bus.
-	// * Read-Only: Only reads from the CAN bus, but does neither active bus error
-	//   detection nor acknowledgement. Only the receiving part of the transceiver
-	//   is connected to the CAN bus.
-	// 
-	// The default is: 125 kbit/s, 62.5 % and normal transceiver mode.
+// 
+// The baud rate can be configured in bit/s between 10 and 1000 kbit/s and the
+// sample point can be configured in 1/10 % between 50 and 90 %.
+// 
+// The CAN transceiver has three different modes:
+// 
+// * Normal: Reads from and writes to the CAN bus and performs active bus
+//   error detection and acknowledgement.
+// * Loopback: All reads and writes are performed internally. The transceiver
+//   is disconnected from the actual CAN bus.
+// * Read-Only: Only reads from the CAN bus, but does neither active bus error
+//   detection nor acknowledgement. Only the receiving part of the transceiver
+//   is connected to the CAN bus.
+// 
+// The default is: 125 kbit/s, 62.5 % and normal transceiver mode.
 //
 // Associated constants:
 //
 //	* TransceiverModeNormal
 //	* TransceiverModeLoopback
 //	* TransceiverModeReadOnly
-func (device *CANV2Bricklet) SetTransceiverConfiguration(baudRate uint32, samplePoint uint16, transceiverMode TransceiverMode) (err error) {    
+func (device *CANV2Bricklet) SetTransceiverConfiguration(baudRate uint32, samplePoint uint16, transceiverMode TransceiverMode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, baudRate);
 	binary.Write(&buf, binary.LittleEndian, samplePoint);
@@ -603,7 +603,7 @@ func (device *CANV2Bricklet) SetTransceiverConfiguration(baudRate uint32, sample
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -612,7 +612,7 @@ func (device *CANV2Bricklet) SetTransceiverConfiguration(baudRate uint32, sample
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -623,7 +623,7 @@ func (device *CANV2Bricklet) SetTransceiverConfiguration(baudRate uint32, sample
 //	* TransceiverModeNormal
 //	* TransceiverModeLoopback
 //	* TransceiverModeReadOnly
-func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, samplePoint uint16, transceiverMode TransceiverMode, err error) {    
+func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, samplePoint uint16, transceiverMode TransceiverMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTransceiverConfiguration), buf.Bytes())
@@ -632,7 +632,7 @@ func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, sam
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudRate, samplePoint, transceiverMode, BrickletError(header.ErrorCode)
@@ -644,67 +644,67 @@ func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, sam
 	binary.Read(resultBuf, binary.LittleEndian, &transceiverMode)
 
     }
-    
+
     return baudRate, samplePoint, transceiverMode, nil
 }
 
 // Sets the write and read queue configuration.
-	// 
-	// The CAN transceiver has 32 buffers in total in hardware for transmitting and
-	// receiving frames. Additionally, the Bricklet has a backlog for 768 frames in
-	// total in software. The buffers and the backlog can be freely assigned to the
-	// write and read queues.
-	// 
-	// WriteFrame writes a frame into the write backlog. The Bricklet moves
-	// the frame from the backlog into a free write buffer. The CAN transceiver then
-	// transmits the frame from the write buffer to the CAN bus. If there are no
-	// write buffers (``write_buffer_size`` is zero) or there is no write backlog
-	// (``write_backlog_size`` is zero) then no frames can be transmitted and
-	// WriteFrame returns always *false*.
-	// 
-	// The CAN transceiver receives a frame from the CAN bus and stores it into a
-	// free read buffer. The Bricklet moves the frame from the read buffer into the
-	// read backlog. ReadFrame reads the frame from the read backlog and
-	// returns it. If there are no read buffers (``read_buffer_sizes`` is empty) or
-	// there is no read backlog (``read_backlog_size`` is zero) then no frames can be
-	// received and ReadFrame returns always *false*.
-	// 
-	// There can be multiple read buffers, because the CAN transceiver cannot receive
-	// data and remote frames into the same read buffer. A positive read buffer size
-	// represents a data frame read buffer and a negative read buffer size represents
-	// a remote frame read buffer. A read buffer size of zero is not allowed. By
-	// default the first read buffer is configured for data frames and the second read
-	// buffer is configured for remote frame. There can be up to 32 different read
-	// buffers, assuming that no write buffer is used. Each read buffer has its own
-	// filter configuration (see SetReadFilterConfiguration).
-	// 
-	// A valid queue configuration fulfills these conditions::
-	// 
-	//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
-	//  write_backlog_size + read_backlog_size <= 768
-	// 
-	// The write buffer timeout has three different modes that define how a failed
-	// frame transmission should be handled:
-	// 
-	// * Single-Shot (< 0): Only one transmission attempt will be made. If the
-	//   transmission fails then the frame is discarded.
-	// * Infinite (= 0): Infinite transmission attempts will be made. The frame will
-	//   never be discarded.
-	// * Milliseconds (> 0): A limited number of transmission attempts will be made.
-	//   If the frame could not be transmitted successfully after the configured
-	//   number of milliseconds then the frame is discarded.
-	// 
-	// The current content of the queues is lost when this function is called.
-	// 
-	// The default is:
-	// 
-	// * 8 write buffers,
-	// * infinite write timeout,
-	// * 383 write backlog frames,
-	// * 16 read buffers for data frames,
-	// * 8 read buffers for remote frames and
-	// * 383 read backlog frames.
-func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBufferSizesLength uint8, readBufferSizesData [32]int8, readBacklogSize uint16) (err error) {    
+// 
+// The CAN transceiver has 32 buffers in total in hardware for transmitting and
+// receiving frames. Additionally, the Bricklet has a backlog for 768 frames in
+// total in software. The buffers and the backlog can be freely assigned to the
+// write and read queues.
+// 
+// WriteFrame writes a frame into the write backlog. The Bricklet moves
+// the frame from the backlog into a free write buffer. The CAN transceiver then
+// transmits the frame from the write buffer to the CAN bus. If there are no
+// write buffers (``write_buffer_size`` is zero) or there is no write backlog
+// (``write_backlog_size`` is zero) then no frames can be transmitted and
+// WriteFrame returns always *false*.
+// 
+// The CAN transceiver receives a frame from the CAN bus and stores it into a
+// free read buffer. The Bricklet moves the frame from the read buffer into the
+// read backlog. ReadFrame reads the frame from the read backlog and
+// returns it. If there are no read buffers (``read_buffer_sizes`` is empty) or
+// there is no read backlog (``read_backlog_size`` is zero) then no frames can be
+// received and ReadFrame returns always *false*.
+// 
+// There can be multiple read buffers, because the CAN transceiver cannot receive
+// data and remote frames into the same read buffer. A positive read buffer size
+// represents a data frame read buffer and a negative read buffer size represents
+// a remote frame read buffer. A read buffer size of zero is not allowed. By
+// default the first read buffer is configured for data frames and the second read
+// buffer is configured for remote frame. There can be up to 32 different read
+// buffers, assuming that no write buffer is used. Each read buffer has its own
+// filter configuration (see SetReadFilterConfiguration).
+// 
+// A valid queue configuration fulfills these conditions::
+// 
+//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
+//  write_backlog_size + read_backlog_size <= 768
+// 
+// The write buffer timeout has three different modes that define how a failed
+// frame transmission should be handled:
+// 
+// * Single-Shot (< 0): Only one transmission attempt will be made. If the
+//   transmission fails then the frame is discarded.
+// * Infinite (= 0): Infinite transmission attempts will be made. The frame will
+//   never be discarded.
+// * Milliseconds (> 0): A limited number of transmission attempts will be made.
+//   If the frame could not be transmitted successfully after the configured
+//   number of milliseconds then the frame is discarded.
+// 
+// The current content of the queues is lost when this function is called.
+// 
+// The default is:
+// 
+// * 8 write buffers,
+// * infinite write timeout,
+// * 383 write backlog frames,
+// * 16 read buffers for data frames,
+// * 8 read buffers for remote frames and
+// * 383 read backlog frames.
+func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBufferSizesLength uint8, readBufferSizesData [32]int8, readBacklogSize uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, writeBufferSize);
 	binary.Write(&buf, binary.LittleEndian, writeBufferTimeout);
@@ -719,7 +719,7 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -728,67 +728,67 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Sets the write and read queue configuration.
-	// 
-	// The CAN transceiver has 32 buffers in total in hardware for transmitting and
-	// receiving frames. Additionally, the Bricklet has a backlog for 768 frames in
-	// total in software. The buffers and the backlog can be freely assigned to the
-	// write and read queues.
-	// 
-	// WriteFrame writes a frame into the write backlog. The Bricklet moves
-	// the frame from the backlog into a free write buffer. The CAN transceiver then
-	// transmits the frame from the write buffer to the CAN bus. If there are no
-	// write buffers (``write_buffer_size`` is zero) or there is no write backlog
-	// (``write_backlog_size`` is zero) then no frames can be transmitted and
-	// WriteFrame returns always *false*.
-	// 
-	// The CAN transceiver receives a frame from the CAN bus and stores it into a
-	// free read buffer. The Bricklet moves the frame from the read buffer into the
-	// read backlog. ReadFrame reads the frame from the read backlog and
-	// returns it. If there are no read buffers (``read_buffer_sizes`` is empty) or
-	// there is no read backlog (``read_backlog_size`` is zero) then no frames can be
-	// received and ReadFrame returns always *false*.
-	// 
-	// There can be multiple read buffers, because the CAN transceiver cannot receive
-	// data and remote frames into the same read buffer. A positive read buffer size
-	// represents a data frame read buffer and a negative read buffer size represents
-	// a remote frame read buffer. A read buffer size of zero is not allowed. By
-	// default the first read buffer is configured for data frames and the second read
-	// buffer is configured for remote frame. There can be up to 32 different read
-	// buffers, assuming that no write buffer is used. Each read buffer has its own
-	// filter configuration (see SetReadFilterConfiguration).
-	// 
-	// A valid queue configuration fulfills these conditions::
-	// 
-	//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
-	//  write_backlog_size + read_backlog_size <= 768
-	// 
-	// The write buffer timeout has three different modes that define how a failed
-	// frame transmission should be handled:
-	// 
-	// * Single-Shot (< 0): Only one transmission attempt will be made. If the
-	//   transmission fails then the frame is discarded.
-	// * Infinite (= 0): Infinite transmission attempts will be made. The frame will
-	//   never be discarded.
-	// * Milliseconds (> 0): A limited number of transmission attempts will be made.
-	//   If the frame could not be transmitted successfully after the configured
-	//   number of milliseconds then the frame is discarded.
-	// 
-	// The current content of the queues is lost when this function is called.
-	// 
-	// The default is:
-	// 
-	// * 8 write buffers,
-	// * infinite write timeout,
-	// * 383 write backlog frames,
-	// * 16 read buffers for data frames,
-	// * 8 read buffers for remote frames and
-	// * 383 read backlog frames.
-	func (device *CANV2Bricklet) SetQueueConfiguration(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBacklogSize uint16, readBufferSizes []int8) (err error) {            
+// 
+// The CAN transceiver has 32 buffers in total in hardware for transmitting and
+// receiving frames. Additionally, the Bricklet has a backlog for 768 frames in
+// total in software. The buffers and the backlog can be freely assigned to the
+// write and read queues.
+// 
+// WriteFrame writes a frame into the write backlog. The Bricklet moves
+// the frame from the backlog into a free write buffer. The CAN transceiver then
+// transmits the frame from the write buffer to the CAN bus. If there are no
+// write buffers (``write_buffer_size`` is zero) or there is no write backlog
+// (``write_backlog_size`` is zero) then no frames can be transmitted and
+// WriteFrame returns always *false*.
+// 
+// The CAN transceiver receives a frame from the CAN bus and stores it into a
+// free read buffer. The Bricklet moves the frame from the read buffer into the
+// read backlog. ReadFrame reads the frame from the read backlog and
+// returns it. If there are no read buffers (``read_buffer_sizes`` is empty) or
+// there is no read backlog (``read_backlog_size`` is zero) then no frames can be
+// received and ReadFrame returns always *false*.
+// 
+// There can be multiple read buffers, because the CAN transceiver cannot receive
+// data and remote frames into the same read buffer. A positive read buffer size
+// represents a data frame read buffer and a negative read buffer size represents
+// a remote frame read buffer. A read buffer size of zero is not allowed. By
+// default the first read buffer is configured for data frames and the second read
+// buffer is configured for remote frame. There can be up to 32 different read
+// buffers, assuming that no write buffer is used. Each read buffer has its own
+// filter configuration (see SetReadFilterConfiguration).
+// 
+// A valid queue configuration fulfills these conditions::
+// 
+//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
+//  write_backlog_size + read_backlog_size <= 768
+// 
+// The write buffer timeout has three different modes that define how a failed
+// frame transmission should be handled:
+// 
+// * Single-Shot (< 0): Only one transmission attempt will be made. If the
+//   transmission fails then the frame is discarded.
+// * Infinite (= 0): Infinite transmission attempts will be made. The frame will
+//   never be discarded.
+// * Milliseconds (> 0): A limited number of transmission attempts will be made.
+//   If the frame could not be transmitted successfully after the configured
+//   number of milliseconds then the frame is discarded.
+// 
+// The current content of the queues is lost when this function is called.
+// 
+// The default is:
+// 
+// * 8 write buffers,
+// * infinite write timeout,
+// * 383 write backlog frames,
+// * 16 read buffers for data frames,
+// * 8 read buffers for remote frames and
+// * 383 read backlog frames.
+	func (device *CANV2Bricklet) SetQueueConfiguration(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBacklogSize uint16, readBufferSizes []int8) (err error) {
         _, err = device.device.SetHighLevel(func(readBufferSizesLength uint64, chunkOffset uint64, readBufferSizesData []byte) (LowLevelWriteResult, error) {
             arr := [32]int8{}
             copy(arr[:], ByteSliceToInt8Slice(readBufferSizesData))
@@ -801,7 +801,7 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
             return LowLevelWriteResult{
                 uint64(32),
                 lowLevelResults.Bytes()}, err
-        }, 2, 8, 256, Int8SliceToByteSlice(readBufferSizes))   
+        }, 2, 8, 256, Int8SliceToByteSlice(readBufferSizes))
 
          if err != nil {
             return
@@ -814,7 +814,7 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
     }
 
 // Returns the queue configuration as set by SetQueueConfiguration.
-func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBufferSizesLength uint8, readBufferSizesData [32]int8, readBacklogSize uint16, err error) {    
+func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBufferSizesLength uint8, readBufferSizesData [32]int8, readBacklogSize uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetQueueConfigurationLowLevel), buf.Bytes())
@@ -823,7 +823,7 @@ func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return writeBufferSize, writeBufferTimeout, writeBacklogSize, readBufferSizesLength, readBufferSizesData, readBacklogSize, BrickletError(header.ErrorCode)
@@ -838,14 +838,14 @@ func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize ui
 	binary.Read(resultBuf, binary.LittleEndian, &readBacklogSize)
 
     }
-    
+
     return writeBufferSize, writeBufferTimeout, writeBacklogSize, readBufferSizesLength, readBufferSizesData, readBacklogSize, nil
 }
 
 // Returns the queue configuration as set by SetQueueConfiguration.
 	func (device *CANV2Bricklet) GetQueueConfiguration() (readBufferSizes []int8, writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBacklogSize uint16, err error) {
         buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            writeBufferSize, writeBufferTimeout, writeBacklogSize, readBufferSizesLength, readBufferSizesData, readBacklogSize, err := device.GetQueueConfigurationLowLevel()            
+            writeBufferSize, writeBufferTimeout, writeBacklogSize, readBufferSizesLength, readBufferSizesData, readBacklogSize, err := device.GetQueueConfigurationLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -877,61 +877,61 @@ func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize ui
     }
 
 // Set the read filter configuration for the given read buffer index. This can be
-	// used to define which frames should be received by the CAN transceiver and put
-	// into the read buffer.
-	// 
-	// The read filter has four different modes that define if and how the filter mask
-	// and the filter identifier are applied:
-	// 
-	// * Accept-All: All frames are received.
-	// * Match-Standard-Only: Only standard frames with a matching identifier are
-	//   received.
-	// * Match-Extended-Only: Only extended frames with a matching identifier are
-	//   received.
-	// * Match-Standard-And-Extended: Standard and extended frames with a matching
-	//   identifier are received.
-	// 
-	// The filter mask and filter identifier are used as bit masks. Their usage
-	// depends on the mode:
-	// 
-	// * Accept-All: Mask and identifier are ignored.
-	// * Match-Standard-Only: Bit 0 to 10 (11 bits) of filter mask and filter
-	//   identifier are used to match the 11-bit identifier of standard frames.
-	// * Match-Extended-Only: Bit 0 to 28 (29 bits) of filter mask and filter
-	//   identifier are used to match the 29-bit identifier of extended frames.
-	// * Match-Standard-And-Extended: Bit 18 to 28 (11 bits) of filter mask and filter
-	//   identifier are used to match the 11-bit identifier of standard frames, bit 0
-	//   to 17 (18 bits) are ignored in this case. Bit 0 to 28 (29 bits) of filter
-	//   mask and filter identifier are used to match the 29-bit identifier of extended
-	//   frames.
-	// 
-	// The filter mask and filter identifier are applied in this way: The filter mask
-	// is used to select the frame identifier bits that should be compared to the
-	// corresponding filter identifier bits. All unselected bits are automatically
-	// accepted. All selected bits have to match the filter identifier to be accepted.
-	// If all bits for the selected mode are accepted then the frame is accepted and
-	// is added to the read buffer.
-	// 
-	//  Filter Mask Bit| Filter Identifier Bit| Frame Identifier Bit| Result
-	//  --- | --- | --- | --- 
-	//  0| X| X| Accept
-	//  1| 0| 0| Accept
-	//  1| 0| 1| Reject
-	//  1| 1| 0| Reject
-	//  1| 1| 1| Accept
-	// 
-	// For example, to receive standard frames with identifier 0x123 only, the mode
-	// can be set to Match-Standard-Only with 0x7FF as mask and 0x123 as identifier.
-	// The mask of 0x7FF selects all 11 identifier bits for matching so that the
-	// identifier has to be exactly 0x123 to be accepted.
-	// 
-	// To accept identifier 0x123 and identifier 0x456 at the same time, just set
-	// filter 2 to 0x456 and keep mask and filter 1 unchanged.
-	// 
-	// There can be up to 32 different read filters configured at the same time,
-	// because there can be up to 32 read buffer (see SetQueueConfiguration).
-	// 
-	// The default mode is accept-all for all read buffers.
+// used to define which frames should be received by the CAN transceiver and put
+// into the read buffer.
+// 
+// The read filter has four different modes that define if and how the filter mask
+// and the filter identifier are applied:
+// 
+// * Accept-All: All frames are received.
+// * Match-Standard-Only: Only standard frames with a matching identifier are
+//   received.
+// * Match-Extended-Only: Only extended frames with a matching identifier are
+//   received.
+// * Match-Standard-And-Extended: Standard and extended frames with a matching
+//   identifier are received.
+// 
+// The filter mask and filter identifier are used as bit masks. Their usage
+// depends on the mode:
+// 
+// * Accept-All: Mask and identifier are ignored.
+// * Match-Standard-Only: Bit 0 to 10 (11 bits) of filter mask and filter
+//   identifier are used to match the 11-bit identifier of standard frames.
+// * Match-Extended-Only: Bit 0 to 28 (29 bits) of filter mask and filter
+//   identifier are used to match the 29-bit identifier of extended frames.
+// * Match-Standard-And-Extended: Bit 18 to 28 (11 bits) of filter mask and filter
+//   identifier are used to match the 11-bit identifier of standard frames, bit 0
+//   to 17 (18 bits) are ignored in this case. Bit 0 to 28 (29 bits) of filter
+//   mask and filter identifier are used to match the 29-bit identifier of extended
+//   frames.
+// 
+// The filter mask and filter identifier are applied in this way: The filter mask
+// is used to select the frame identifier bits that should be compared to the
+// corresponding filter identifier bits. All unselected bits are automatically
+// accepted. All selected bits have to match the filter identifier to be accepted.
+// If all bits for the selected mode are accepted then the frame is accepted and
+// is added to the read buffer.
+// 
+//  Filter Mask Bit| Filter Identifier Bit| Frame Identifier Bit| Result
+//  --- | --- | --- | --- 
+//  0| X| X| Accept
+//  1| 0| 0| Accept
+//  1| 0| 1| Reject
+//  1| 1| 0| Reject
+//  1| 1| 1| Accept
+// 
+// For example, to receive standard frames with identifier 0x123 only, the mode
+// can be set to Match-Standard-Only with 0x7FF as mask and 0x123 as identifier.
+// The mask of 0x7FF selects all 11 identifier bits for matching so that the
+// identifier has to be exactly 0x123 to be accepted.
+// 
+// To accept identifier 0x123 and identifier 0x456 at the same time, just set
+// filter 2 to 0x456 and keep mask and filter 1 unchanged.
+// 
+// There can be up to 32 different read filters configured at the same time,
+// because there can be up to 32 read buffer (see SetQueueConfiguration).
+// 
+// The default mode is accept-all for all read buffers.
 //
 // Associated constants:
 //
@@ -939,7 +939,7 @@ func (device *CANV2Bricklet) GetQueueConfigurationLowLevel() (writeBufferSize ui
 //	* FilterModeMatchStandardOnly
 //	* FilterModeMatchExtendedOnly
 //	* FilterModeMatchStandardAndExtended
-func (device *CANV2Bricklet) SetReadFilterConfiguration(bufferIndex uint8, filterMode FilterMode, filterMask uint32, filterIdentifier uint32) (err error) {    
+func (device *CANV2Bricklet) SetReadFilterConfiguration(bufferIndex uint8, filterMode FilterMode, filterMask uint32, filterIdentifier uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, bufferIndex);
 	binary.Write(&buf, binary.LittleEndian, filterMode);
@@ -952,7 +952,7 @@ func (device *CANV2Bricklet) SetReadFilterConfiguration(bufferIndex uint8, filte
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -961,7 +961,7 @@ func (device *CANV2Bricklet) SetReadFilterConfiguration(bufferIndex uint8, filte
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -973,7 +973,7 @@ func (device *CANV2Bricklet) SetReadFilterConfiguration(bufferIndex uint8, filte
 //	* FilterModeMatchStandardOnly
 //	* FilterModeMatchExtendedOnly
 //	* FilterModeMatchStandardAndExtended
-func (device *CANV2Bricklet) GetReadFilterConfiguration(bufferIndex uint8) (filterMode FilterMode, filterMask uint32, filterIdentifier uint32, err error) {    
+func (device *CANV2Bricklet) GetReadFilterConfiguration(bufferIndex uint8) (filterMode FilterMode, filterMask uint32, filterIdentifier uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, bufferIndex);
 
@@ -983,7 +983,7 @@ func (device *CANV2Bricklet) GetReadFilterConfiguration(bufferIndex uint8) (filt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return filterMode, filterMask, filterIdentifier, BrickletError(header.ErrorCode)
@@ -995,51 +995,51 @@ func (device *CANV2Bricklet) GetReadFilterConfiguration(bufferIndex uint8) (filt
 	binary.Read(resultBuf, binary.LittleEndian, &filterIdentifier)
 
     }
-    
+
     return filterMode, filterMask, filterIdentifier, nil
 }
 
 // Returns information about different kinds of errors.
-	// 
-	// The write and read error levels indicate the current level of stuffing, form,
-	// acknowledgement, bit and checksum errors during CAN bus write and read
-	// operations. For each of this error kinds there is also an individual counter.
-	// 
-	// When the write error level extends 255 then the CAN transceiver gets disabled
-	// and no frames can be transmitted or received anymore. The CAN transceiver will
-	// automatically be activated again after the CAN bus is idle for a while.
-	// 
-	// The write buffer timeout, read buffer and backlog overflow counts represents the
-	// number of these errors:
-	// 
-	// * A write buffer timeout occurs if a frame could not be transmitted before the
-	//   configured write buffer timeout expired (see SetQueueConfiguration).
-	// * A read buffer overflow occurs if a read buffer of the CAN transceiver
-	//   still contains the last received frame when the next frame arrives. In this
-	//   case the last received frame is lost. This happens if the CAN transceiver
-	//   receives more frames than the Bricklet can handle. Using the read filter
-	//   (see SetReadFilterConfiguration) can help to reduce the amount of
-	//   received frames. This count is not exact, but a lower bound, because the
-	//   Bricklet might not able detect all overflows if they occur in rapid succession.
-	// * A read backlog overflow occurs if the read backlog of the Bricklet is already
-	//   full when the next frame should be read from a read buffer of the CAN
-	//   transceiver. In this case the frame in the read buffer is lost. This
-	//   happens if the CAN transceiver receives more frames to be added to the read
-	//   backlog than are removed from the read backlog using the ReadFrame
-	//   function. Using the RegisterFrameReadCallback callback ensures that the read backlog
-	//   can not overflow.
-	// 
-	// The read buffer overflow counter counts the overflows of all configured read
-	// buffers. Which read buffer exactly suffered from an overflow can be figured
-	// out from the read buffer overflow occurrence list
-	// (``read_buffer_overflow_error_occurred``).
+// 
+// The write and read error levels indicate the current level of stuffing, form,
+// acknowledgement, bit and checksum errors during CAN bus write and read
+// operations. For each of this error kinds there is also an individual counter.
+// 
+// When the write error level extends 255 then the CAN transceiver gets disabled
+// and no frames can be transmitted or received anymore. The CAN transceiver will
+// automatically be activated again after the CAN bus is idle for a while.
+// 
+// The write buffer timeout, read buffer and backlog overflow counts represents the
+// number of these errors:
+// 
+// * A write buffer timeout occurs if a frame could not be transmitted before the
+//   configured write buffer timeout expired (see SetQueueConfiguration).
+// * A read buffer overflow occurs if a read buffer of the CAN transceiver
+//   still contains the last received frame when the next frame arrives. In this
+//   case the last received frame is lost. This happens if the CAN transceiver
+//   receives more frames than the Bricklet can handle. Using the read filter
+//   (see SetReadFilterConfiguration) can help to reduce the amount of
+//   received frames. This count is not exact, but a lower bound, because the
+//   Bricklet might not able detect all overflows if they occur in rapid succession.
+// * A read backlog overflow occurs if the read backlog of the Bricklet is already
+//   full when the next frame should be read from a read buffer of the CAN
+//   transceiver. In this case the frame in the read buffer is lost. This
+//   happens if the CAN transceiver receives more frames to be added to the read
+//   backlog than are removed from the read backlog using the ReadFrame
+//   function. Using the RegisterFrameReadCallback callback ensures that the read backlog
+//   can not overflow.
+// 
+// The read buffer overflow counter counts the overflows of all configured read
+// buffers. Which read buffer exactly suffered from an overflow can be figured
+// out from the read buffer overflow occurrence list
+// (``read_buffer_overflow_error_occurred``).
 //
 // Associated constants:
 //
 //	* TransceiverStateActive
 //	* TransceiverStatePassive
 //	* TransceiverStateDisabled
-func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState TransceiverState, transceiverWriteErrorLevel uint8, transceiverReadErrorLevel uint8, transceiverStuffingErrorCount uint32, transceiverFormatErrorCount uint32, transceiverACKErrorCount uint32, transceiverBit1ErrorCount uint32, transceiverBit0ErrorCount uint32, transceiverCRCErrorCount uint32, writeBufferTimeoutErrorCount uint32, readBufferOverflowErrorCount uint32, readBufferOverflowErrorOccurredLength uint8, readBufferOverflowErrorOccurredData [32]bool, readBacklogOverflowErrorCount uint32, err error) {    
+func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState TransceiverState, transceiverWriteErrorLevel uint8, transceiverReadErrorLevel uint8, transceiverStuffingErrorCount uint32, transceiverFormatErrorCount uint32, transceiverACKErrorCount uint32, transceiverBit1ErrorCount uint32, transceiverBit0ErrorCount uint32, transceiverCRCErrorCount uint32, writeBufferTimeoutErrorCount uint32, readBufferOverflowErrorCount uint32, readBufferOverflowErrorOccurredLength uint8, readBufferOverflowErrorOccurredData [32]bool, readBacklogOverflowErrorCount uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetErrorLogLowLevel), buf.Bytes())
@@ -1048,7 +1048,7 @@ func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState Transceiver
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return transceiverState, transceiverWriteErrorLevel, transceiverReadErrorLevel, transceiverStuffingErrorCount, transceiverFormatErrorCount, transceiverACKErrorCount, transceiverBit1ErrorCount, transceiverBit0ErrorCount, transceiverCRCErrorCount, writeBufferTimeoutErrorCount, readBufferOverflowErrorCount, readBufferOverflowErrorOccurredLength, readBufferOverflowErrorOccurredData, readBacklogOverflowErrorCount, BrickletError(header.ErrorCode)
@@ -1071,47 +1071,47 @@ func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState Transceiver
 	binary.Read(resultBuf, binary.LittleEndian, &readBacklogOverflowErrorCount)
 
     }
-    
+
     return transceiverState, transceiverWriteErrorLevel, transceiverReadErrorLevel, transceiverStuffingErrorCount, transceiverFormatErrorCount, transceiverACKErrorCount, transceiverBit1ErrorCount, transceiverBit0ErrorCount, transceiverCRCErrorCount, writeBufferTimeoutErrorCount, readBufferOverflowErrorCount, readBufferOverflowErrorOccurredLength, readBufferOverflowErrorOccurredData, readBacklogOverflowErrorCount, nil
 }
 
 // Returns information about different kinds of errors.
-	// 
-	// The write and read error levels indicate the current level of stuffing, form,
-	// acknowledgement, bit and checksum errors during CAN bus write and read
-	// operations. For each of this error kinds there is also an individual counter.
-	// 
-	// When the write error level extends 255 then the CAN transceiver gets disabled
-	// and no frames can be transmitted or received anymore. The CAN transceiver will
-	// automatically be activated again after the CAN bus is idle for a while.
-	// 
-	// The write buffer timeout, read buffer and backlog overflow counts represents the
-	// number of these errors:
-	// 
-	// * A write buffer timeout occurs if a frame could not be transmitted before the
-	//   configured write buffer timeout expired (see SetQueueConfiguration).
-	// * A read buffer overflow occurs if a read buffer of the CAN transceiver
-	//   still contains the last received frame when the next frame arrives. In this
-	//   case the last received frame is lost. This happens if the CAN transceiver
-	//   receives more frames than the Bricklet can handle. Using the read filter
-	//   (see SetReadFilterConfiguration) can help to reduce the amount of
-	//   received frames. This count is not exact, but a lower bound, because the
-	//   Bricklet might not able detect all overflows if they occur in rapid succession.
-	// * A read backlog overflow occurs if the read backlog of the Bricklet is already
-	//   full when the next frame should be read from a read buffer of the CAN
-	//   transceiver. In this case the frame in the read buffer is lost. This
-	//   happens if the CAN transceiver receives more frames to be added to the read
-	//   backlog than are removed from the read backlog using the ReadFrame
-	//   function. Using the RegisterFrameReadCallback callback ensures that the read backlog
-	//   can not overflow.
-	// 
-	// The read buffer overflow counter counts the overflows of all configured read
-	// buffers. Which read buffer exactly suffered from an overflow can be figured
-	// out from the read buffer overflow occurrence list
-	// (``read_buffer_overflow_error_occurred``).
+// 
+// The write and read error levels indicate the current level of stuffing, form,
+// acknowledgement, bit and checksum errors during CAN bus write and read
+// operations. For each of this error kinds there is also an individual counter.
+// 
+// When the write error level extends 255 then the CAN transceiver gets disabled
+// and no frames can be transmitted or received anymore. The CAN transceiver will
+// automatically be activated again after the CAN bus is idle for a while.
+// 
+// The write buffer timeout, read buffer and backlog overflow counts represents the
+// number of these errors:
+// 
+// * A write buffer timeout occurs if a frame could not be transmitted before the
+//   configured write buffer timeout expired (see SetQueueConfiguration).
+// * A read buffer overflow occurs if a read buffer of the CAN transceiver
+//   still contains the last received frame when the next frame arrives. In this
+//   case the last received frame is lost. This happens if the CAN transceiver
+//   receives more frames than the Bricklet can handle. Using the read filter
+//   (see SetReadFilterConfiguration) can help to reduce the amount of
+//   received frames. This count is not exact, but a lower bound, because the
+//   Bricklet might not able detect all overflows if they occur in rapid succession.
+// * A read backlog overflow occurs if the read backlog of the Bricklet is already
+//   full when the next frame should be read from a read buffer of the CAN
+//   transceiver. In this case the frame in the read buffer is lost. This
+//   happens if the CAN transceiver receives more frames to be added to the read
+//   backlog than are removed from the read backlog using the ReadFrame
+//   function. Using the RegisterFrameReadCallback callback ensures that the read backlog
+//   can not overflow.
+// 
+// The read buffer overflow counter counts the overflows of all configured read
+// buffers. Which read buffer exactly suffered from an overflow can be figured
+// out from the read buffer overflow occurrence list
+// (``read_buffer_overflow_error_occurred``).
 	func (device *CANV2Bricklet) GetErrorLog() (readBufferOverflowErrorOccurred []bool, transceiverState TransceiverState, transceiverWriteErrorLevel uint8, transceiverReadErrorLevel uint8, transceiverStuffingErrorCount uint32, transceiverFormatErrorCount uint32, transceiverACKErrorCount uint32, transceiverBit1ErrorCount uint32, transceiverBit0ErrorCount uint32, transceiverCRCErrorCount uint32, writeBufferTimeoutErrorCount uint32, readBufferOverflowErrorCount uint32, readBacklogOverflowErrorCount uint32, err error) {
         buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            transceiverState, transceiverWriteErrorLevel, transceiverReadErrorLevel, transceiverStuffingErrorCount, transceiverFormatErrorCount, transceiverACKErrorCount, transceiverBit1ErrorCount, transceiverBit0ErrorCount, transceiverCRCErrorCount, writeBufferTimeoutErrorCount, readBufferOverflowErrorCount, readBufferOverflowErrorOccurredLength, readBufferOverflowErrorOccurredData, readBacklogOverflowErrorCount, err := device.GetErrorLogLowLevel()            
+            transceiverState, transceiverWriteErrorLevel, transceiverReadErrorLevel, transceiverStuffingErrorCount, transceiverFormatErrorCount, transceiverACKErrorCount, transceiverBit1ErrorCount, transceiverBit0ErrorCount, transceiverCRCErrorCount, writeBufferTimeoutErrorCount, readBufferOverflowErrorCount, readBufferOverflowErrorOccurredLength, readBufferOverflowErrorOccurredData, readBacklogOverflowErrorCount, err := device.GetErrorLogLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -1159,11 +1159,11 @@ func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState Transceiver
     }
 
 // Sets the communication LED configuration. By default the LED shows
-	// CAN-Bus traffic, it flickers once for every 40 transmitted or received frames.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is off.
+// CAN-Bus traffic, it flickers once for every 40 transmitted or received frames.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
 //
@@ -1171,7 +1171,7 @@ func (device *CANV2Bricklet) GetErrorLogLowLevel() (transceiverState Transceiver
 //	* CommunicationLEDConfigOn
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
-func (device *CANV2Bricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {    
+func (device *CANV2Bricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1181,7 +1181,7 @@ func (device *CANV2Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1190,7 +1190,7 @@ func (device *CANV2Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1202,7 +1202,7 @@ func (device *CANV2Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
 //	* CommunicationLEDConfigOn
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
-func (device *CANV2Bricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {    
+func (device *CANV2Bricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
@@ -1211,7 +1211,7 @@ func (device *CANV2Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1221,23 +1221,23 @@ func (device *CANV2Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Sets the error LED configuration.
-	// 
-	// By default (show-transceiver-state) the error LED turns on if the CAN
-	// transceiver is passive or disabled state (see GetErrorLog). If
-	// the CAN transceiver is in active state the LED turns off.
-	// 
-	// If the LED is configured as show-error then the error LED turns on if any error
-	// occurs. If you call this function with the show-error option again, the LED will
-	// turn off until the next error occurs.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is off.
+// 
+// By default (show-transceiver-state) the error LED turns on if the CAN
+// transceiver is passive or disabled state (see GetErrorLog). If
+// the CAN transceiver is in active state the LED turns off.
+// 
+// If the LED is configured as show-error then the error LED turns on if any error
+// occurs. If you call this function with the show-error option again, the LED will
+// turn off until the next error occurs.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
 //
@@ -1246,7 +1246,7 @@ func (device *CANV2Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
 //	* ErrorLEDConfigShowHeartbeat
 //	* ErrorLEDConfigShowTransceiverState
 //	* ErrorLEDConfigShowError
-func (device *CANV2Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error) {    
+func (device *CANV2Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1256,7 +1256,7 @@ func (device *CANV2Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1265,7 +1265,7 @@ func (device *CANV2Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1278,7 +1278,7 @@ func (device *CANV2Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
 //	* ErrorLEDConfigShowHeartbeat
 //	* ErrorLEDConfigShowTransceiverState
 //	* ErrorLEDConfigShowError
-func (device *CANV2Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error) {    
+func (device *CANV2Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetErrorLEDConfig), buf.Bytes())
@@ -1287,7 +1287,7 @@ func (device *CANV2Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1297,22 +1297,22 @@ func (device *CANV2Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err err
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *CANV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *CANV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -1321,7 +1321,7 @@ func (device *CANV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -1334,19 +1334,19 @@ func (device *CANV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -1361,7 +1361,7 @@ func (device *CANV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *CANV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *CANV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -1371,7 +1371,7 @@ func (device *CANV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1381,7 +1381,7 @@ func (device *CANV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -1394,7 +1394,7 @@ func (device *CANV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *CANV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *CANV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -1403,7 +1403,7 @@ func (device *CANV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1413,17 +1413,17 @@ func (device *CANV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *CANV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *CANV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -1433,7 +1433,7 @@ func (device *CANV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1442,19 +1442,19 @@ func (device *CANV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *CANV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *CANV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -1464,7 +1464,7 @@ func (device *CANV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1474,17 +1474,17 @@ func (device *CANV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -1492,7 +1492,7 @@ func (device *CANV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *CANV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *CANV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1502,7 +1502,7 @@ func (device *CANV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1511,7 +1511,7 @@ func (device *CANV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1523,7 +1523,7 @@ func (device *CANV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *CANV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *CANV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -1532,7 +1532,7 @@ func (device *CANV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1542,17 +1542,17 @@ func (device *CANV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *CANV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *CANV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1561,7 +1561,7 @@ func (device *CANV2Bricklet) GetChipTemperature() (temperature int16, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1571,17 +1571,17 @@ func (device *CANV2Bricklet) GetChipTemperature() (temperature int16, err error)
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *CANV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *CANV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1590,7 +1590,7 @@ func (device *CANV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1599,16 +1599,16 @@ func (device *CANV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *CANV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *CANV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1618,7 +1618,7 @@ func (device *CANV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1627,13 +1627,13 @@ func (device *CANV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *CANV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *CANV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1642,7 +1642,7 @@ func (device *CANV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1652,19 +1652,19 @@ func (device *CANV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *CANV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *CANV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1673,7 +1673,7 @@ func (device *CANV2Bricklet) GetIdentity() (uid string, connectedUid string, pos
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1688,6 +1688,6 @@ func (device *CANV2Bricklet) GetIdentity() (uid string, connectedUid string, pos
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

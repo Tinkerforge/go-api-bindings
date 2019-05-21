@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -122,17 +122,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LaserRangeFinderBricklet
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LaserRangeFinderBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -141,7 +141,7 @@ func (device *LaserRangeFinderBricklet) GetResponseExpected(functionID Function)
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -161,11 +161,11 @@ func (device *LaserRangeFinderBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetDistanceCallbackPeriod. The parameter is the distance
-	// value of the sensor.
-	// 
-	// The RegisterDistanceCallback callback is only triggered if the distance value has changed
-	// since the last triggering.
+// SetDistanceCallbackPeriod. The parameter is the distance
+// value of the sensor.
+// 
+// The RegisterDistanceCallback callback is only triggered if the distance value has changed
+// since the last triggering.
 func (device *LaserRangeFinderBricklet) RegisterDistanceCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -177,17 +177,17 @@ func (device *LaserRangeFinderBricklet) RegisterDistanceCallback(fn func(uint16)
 }
 
 //Remove a registered Distance callback.
-func (device *LaserRangeFinderBricklet) DeregisterDistanceCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDistance), callbackID)
+func (device *LaserRangeFinderBricklet) DeregisterDistanceCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackDistance), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetVelocityCallbackPeriod. The parameter is the velocity
-	// value of the sensor.
-	// 
-	// The RegisterVelocityCallback callback is only triggered if the velocity has changed since
-	// the last triggering.
+// SetVelocityCallbackPeriod. The parameter is the velocity
+// value of the sensor.
+// 
+// The RegisterVelocityCallback callback is only triggered if the velocity has changed since
+// the last triggering.
 func (device *LaserRangeFinderBricklet) RegisterVelocityCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -199,17 +199,17 @@ func (device *LaserRangeFinderBricklet) RegisterVelocityCallback(fn func(int16))
 }
 
 //Remove a registered Velocity callback.
-func (device *LaserRangeFinderBricklet) DeregisterVelocityCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVelocity), callbackID)
+func (device *LaserRangeFinderBricklet) DeregisterVelocityCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackVelocity), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetDistanceCallbackThreshold is reached.
-	// The parameter is the distance value of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetDistanceCallbackThreshold is reached.
+// The parameter is the distance value of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *LaserRangeFinderBricklet) RegisterDistanceReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -221,17 +221,17 @@ func (device *LaserRangeFinderBricklet) RegisterDistanceReachedCallback(fn func(
 }
 
 //Remove a registered Distance Reached callback.
-func (device *LaserRangeFinderBricklet) DeregisterDistanceReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDistanceReached), callbackID)
+func (device *LaserRangeFinderBricklet) DeregisterDistanceReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackDistanceReached), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetVelocityCallbackThreshold is reached.
-	// The parameter is the velocity value of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetVelocityCallbackThreshold is reached.
+// The parameter is the velocity value of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *LaserRangeFinderBricklet) RegisterVelocityReachedCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -243,24 +243,24 @@ func (device *LaserRangeFinderBricklet) RegisterVelocityReachedCallback(fn func(
 }
 
 //Remove a registered Velocity Reached callback.
-func (device *LaserRangeFinderBricklet) DeregisterVelocityReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), callbackID)
+func (device *LaserRangeFinderBricklet) DeregisterVelocityReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), registrationID)
 }
 
 
 // Returns the measured distance. The value has a range of 0 to 4000
-	// and is given in cm.
-	// 
-	// Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
-	// measure distance and velocity at the same time. Therefore, the distance mode
-	// has to be enabled using SetMode.
-	// Sensor hardware version 3 can measure distance and velocity at the same
-	// time. Also the laser has to be enabled, see EnableLaser.
-	// 
-	// If you want to get the distance periodically, it is recommended to
-	// use the RegisterDistanceCallback callback and set the period with
-	// SetDistanceCallbackPeriod.
-func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err error) {    
+// and is given in cm.
+// 
+// Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
+// measure distance and velocity at the same time. Therefore, the distance mode
+// has to be enabled using SetMode.
+// Sensor hardware version 3 can measure distance and velocity at the same
+// time. Also the laser has to be enabled, see EnableLaser.
+// 
+// If you want to get the distance periodically, it is recommended to
+// use the RegisterDistanceCallback callback and set the period with
+// SetDistanceCallbackPeriod.
+func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDistance), buf.Bytes())
@@ -269,7 +269,7 @@ func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return distance, BrickletError(header.ErrorCode)
@@ -279,25 +279,25 @@ func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err erro
         binary.Read(resultBuf, binary.LittleEndian, &distance)
 
     }
-    
+
     return distance, nil
 }
 
 // Returns the measured velocity. The value has a range of -12800 to 12700
-	// and is given in 1/100 m/s.
-	// 
-	// Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
-	// measure distance and velocity at the same time. Therefore, the velocity mode
-	// has to be enabled using SetMode.
-	// Sensor hardware version 3 can measure distance and velocity at the same
-	// time, but the velocity measurement only produces stables results if a fixed
-	// measurement rate (see SetConfiguration) is configured. Also the laser
-	// has to be enabled, see EnableLaser.
-	// 
-	// If you want to get the velocity periodically, it is recommended to
-	// use the RegisterVelocityCallback callback and set the period with
-	// SetVelocityCallbackPeriod.
-func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error) {    
+// and is given in 1/100 m/s.
+// 
+// Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
+// measure distance and velocity at the same time. Therefore, the velocity mode
+// has to be enabled using SetMode.
+// Sensor hardware version 3 can measure distance and velocity at the same
+// time, but the velocity measurement only produces stables results if a fixed
+// measurement rate (see SetConfiguration) is configured. Also the laser
+// has to be enabled, see EnableLaser.
+// 
+// If you want to get the velocity periodically, it is recommended to
+// use the RegisterVelocityCallback callback and set the period with
+// SetVelocityCallbackPeriod.
+func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVelocity), buf.Bytes())
@@ -306,7 +306,7 @@ func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return velocity, BrickletError(header.ErrorCode)
@@ -316,18 +316,18 @@ func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error
         binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
     }
-    
+
     return velocity, nil
 }
 
 // Sets the period in ms with which the RegisterDistanceCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterDistanceCallback callback is only triggered if the distance value has
-	// changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterDistanceCallback callback is only triggered if the distance value has
+// changed since the last triggering.
+// 
+// The default value is 0.
+func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -337,7 +337,7 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -346,12 +346,12 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetDistanceCallbackPeriod.
-func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint32, err error) {    
+func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackPeriod), buf.Bytes())
@@ -360,7 +360,7 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -370,18 +370,18 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterVelocityCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterVelocityCallback callback is only triggered if the velocity value has
-	// changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterVelocityCallback callback is only triggered if the velocity value has
+// changed since the last triggering.
+// 
+// The default value is 0.
+func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -391,7 +391,7 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -400,12 +400,12 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetVelocityCallbackPeriod.
-func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint32, err error) {    
+func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVelocityCallbackPeriod), buf.Bytes())
@@ -414,7 +414,7 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -424,23 +424,23 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterDistanceReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the distance value is *outside* the min and max values
-	//  'i'|    Callback is triggered when the distance value is *inside* the min and max values
-	//  '<'|    Callback is triggered when the distance value is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the distance value is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the distance value is *outside* the min and max values
+//  'i'|    Callback is triggered when the distance value is *inside* the min and max values
+//  '<'|    Callback is triggered when the distance value is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the distance value is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -449,7 +449,7 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -461,7 +461,7 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option Thre
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -470,7 +470,7 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option Thre
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -483,7 +483,7 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option Thre
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackThreshold), buf.Bytes())
@@ -492,7 +492,7 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option T
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -504,23 +504,23 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option T
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterVelocityReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the velocity is *outside* the min and max values
-	//  'i'|    Callback is triggered when the velocity is *inside* the min and max values
-	//  '<'|    Callback is triggered when the velocity is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the velocity is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the velocity is *outside* the min and max values
+//  'i'|    Callback is triggered when the velocity is *inside* the min and max values
+//  '<'|    Callback is triggered when the velocity is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the velocity is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -529,7 +529,7 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option T
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {    
+func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -541,7 +541,7 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option Thre
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -550,7 +550,7 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option Thre
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -563,7 +563,7 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option Thre
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {    
+func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVelocityCallbackThreshold), buf.Bytes())
@@ -572,7 +572,7 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option T
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -584,24 +584,24 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option T
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterDistanceReachedCallback,
-	// * RegisterVelocityReachedCallback,
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetDistanceCallbackThreshold,
-	// * SetVelocityCallbackThreshold,
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterDistanceReachedCallback,
+// * RegisterVelocityReachedCallback,
+// 
+// are triggered, if the thresholds
+// 
+// * SetDistanceCallbackThreshold,
+// * SetVelocityCallbackThreshold,
+// 
+// keep being reached.
+// 
+// The default value is 100.
+func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -611,7 +611,7 @@ func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -620,12 +620,12 @@ func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -634,7 +634,7 @@ func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -644,20 +644,20 @@ func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, er
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
-	// for the distance and velocity.
-	// 
-	// Setting the length to 0 will turn the averaging completely off. With less
-	// averaging, there is more noise on the data.
-	// 
-	// The range for the averaging is 0-30.
-	// 
-	// The default value is 10.
-func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength uint8, velocityAverageLength uint8) (err error) {    
+// for the distance and velocity.
+// 
+// Setting the length to 0 will turn the averaging completely off. With less
+// averaging, there is more noise on the data.
+// 
+// The range for the averaging is 0-30.
+// 
+// The default value is 10.
+func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength uint8, velocityAverageLength uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, distanceAverageLength);
 	binary.Write(&buf, binary.LittleEndian, velocityAverageLength);
@@ -668,7 +668,7 @@ func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -677,12 +677,12 @@ func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the length moving average as set by SetMovingAverage.
-func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLength uint8, velocityAverageLength uint8, err error) {    
+func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLength uint8, velocityAverageLength uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverage), buf.Bytes())
@@ -691,7 +691,7 @@ func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLengt
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return distanceAverageLength, velocityAverageLength, BrickletError(header.ErrorCode)
@@ -702,28 +702,28 @@ func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLengt
 	binary.Read(resultBuf, binary.LittleEndian, &velocityAverageLength)
 
     }
-    
+
     return distanceAverageLength, velocityAverageLength, nil
 }
 
 // Note
-	//  This function is only available if you have a LIDAR-Lite sensor with hardware
-	//  version 1. Use SetConfiguration for hardware version 3. You can check
-	//  the sensor hardware version using GetSensorHardwareVersion.
-	// 
-	// The LIDAR-Lite sensor (hardware version 1) has five different modes. One mode is
-	// for distance measurements and four modes are for velocity measurements with
-	// different ranges.
-	// 
-	// The following modes are available:
-	// 
-	// * 0: Distance is measured with resolution 1.0 cm and range 0-400 cm
-	// * 1: Velocity is measured with resolution 0.1 m/s and range is 0-12.7 m/s
-	// * 2: Velocity is measured with resolution 0.25 m/s and range is 0-31.75 m/s
-	// * 3: Velocity is measured with resolution 0.5 m/s and range is 0-63.5 m/s
-	// * 4: Velocity is measured with resolution 1.0 m/s and range is 0-127 m/s
-	// 
-	// The default mode is 0 (distance is measured).
+//  This function is only available if you have a LIDAR-Lite sensor with hardware
+//  version 1. Use SetConfiguration for hardware version 3. You can check
+//  the sensor hardware version using GetSensorHardwareVersion.
+// 
+// The LIDAR-Lite sensor (hardware version 1) has five different modes. One mode is
+// for distance measurements and four modes are for velocity measurements with
+// different ranges.
+// 
+// The following modes are available:
+// 
+// * 0: Distance is measured with resolution 1.0 cm and range 0-400 cm
+// * 1: Velocity is measured with resolution 0.1 m/s and range is 0-12.7 m/s
+// * 2: Velocity is measured with resolution 0.25 m/s and range is 0-31.75 m/s
+// * 3: Velocity is measured with resolution 0.5 m/s and range is 0-63.5 m/s
+// * 4: Velocity is measured with resolution 1.0 m/s and range is 0-127 m/s
+// 
+// The default mode is 0 (distance is measured).
 //
 // Associated constants:
 //
@@ -732,7 +732,7 @@ func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLengt
 //	* ModeVelocityMax32ms
 //	* ModeVelocityMax64ms
 //	* ModeVelocityMax127ms
-func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {    
+func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -742,7 +742,7 @@ func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -751,7 +751,7 @@ func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -764,7 +764,7 @@ func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {
 //	* ModeVelocityMax32ms
 //	* ModeVelocityMax64ms
 //	* ModeVelocityMax127ms
-func (device *LaserRangeFinderBricklet) GetMode() (mode Mode, err error) {    
+func (device *LaserRangeFinderBricklet) GetMode() (mode Mode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMode), buf.Bytes())
@@ -773,7 +773,7 @@ func (device *LaserRangeFinderBricklet) GetMode() (mode Mode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -783,15 +783,15 @@ func (device *LaserRangeFinderBricklet) GetMode() (mode Mode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Activates the laser of the LIDAR.
-	// 
-	// We recommend that you wait 250ms after enabling the laser before
-	// the first call of GetDistance to ensure stable measurements.
-func (device *LaserRangeFinderBricklet) EnableLaser() (err error) {    
+// 
+// We recommend that you wait 250ms after enabling the laser before
+// the first call of GetDistance to ensure stable measurements.
+func (device *LaserRangeFinderBricklet) EnableLaser() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableLaser), buf.Bytes())
@@ -800,7 +800,7 @@ func (device *LaserRangeFinderBricklet) EnableLaser() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -809,12 +809,12 @@ func (device *LaserRangeFinderBricklet) EnableLaser() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Deactivates the laser of the LIDAR.
-func (device *LaserRangeFinderBricklet) DisableLaser() (err error) {    
+func (device *LaserRangeFinderBricklet) DisableLaser() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableLaser), buf.Bytes())
@@ -823,7 +823,7 @@ func (device *LaserRangeFinderBricklet) DisableLaser() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -832,12 +832,12 @@ func (device *LaserRangeFinderBricklet) DisableLaser() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the laser is enabled, *false* otherwise.
-func (device *LaserRangeFinderBricklet) IsLaserEnabled() (laserEnabled bool, err error) {    
+func (device *LaserRangeFinderBricklet) IsLaserEnabled() (laserEnabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsLaserEnabled), buf.Bytes())
@@ -846,7 +846,7 @@ func (device *LaserRangeFinderBricklet) IsLaserEnabled() (laserEnabled bool, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return laserEnabled, BrickletError(header.ErrorCode)
@@ -856,19 +856,19 @@ func (device *LaserRangeFinderBricklet) IsLaserEnabled() (laserEnabled bool, err
         binary.Read(resultBuf, binary.LittleEndian, &laserEnabled)
 
     }
-    
+
     return laserEnabled, nil
 }
 
 // Returns the LIDAR-Lite hardware version.
-	// 
-	// .. versionadded:: 2.0.3$nbsp;(Plugin)
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
 //
 // Associated constants:
 //
 //	* Version1
 //	* Version3
-func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Version, err error) {    
+func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Version, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorHardwareVersion), buf.Bytes())
@@ -877,7 +877,7 @@ func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Vers
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return version, BrickletError(header.ErrorCode)
@@ -887,45 +887,45 @@ func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Vers
         binary.Read(resultBuf, binary.LittleEndian, &version)
 
     }
-    
+
     return version, nil
 }
 
 // Note
-	//  This function is only available if you have a LIDAR-Lite sensor with hardware
-	//  version 3. Use SetMode for hardware version 1. You can check
-	//  the sensor hardware version using GetSensorHardwareVersion.
-	// 
-	// The **Aquisition Count** defines the number of times the Laser Range Finder Bricklet
-	// will integrate acquisitions to find a correlation record peak. With a higher count,
-	// the Bricklet can measure longer distances. With a lower count, the rate increases. The
-	// allowed values are 1-255.
-	// 
-	// If you set **Enable Quick Termination** to true, the distance measurement will be terminated
-	// early if a high peak was already detected. This means that a higher measurement rate can be achieved
-	// and long distances can be measured at the same time. However, the chance of false-positive
-	// distance measurements increases.
-	// 
-	// Normally the distance is calculated with a detection algorithm that uses peak value,
-	// signal strength and noise. You can however also define a fixed **Threshold Value**.
-	// Set this to a low value if you want to measure the distance to something that has
-	// very little reflection (e.g. glass) and set it to a high value if you want to measure
-	// the distance to something with a very high reflection (e.g. mirror). Set this to 0 to
-	// use the default algorithm. The other allowed values are 1-255.
-	// 
-	// Set the **Measurement Frequency** in Hz to force a fixed measurement rate. If set to 0,
-	// the Laser Range Finder Bricklet will use the optimal frequency according to the other
-	// configurations and the actual measured distance. Since the rate is not fixed in this case,
-	// the velocity measurement is not stable. For a stable velocity measurement you should
-	// set a fixed measurement frequency. The lower the frequency, the higher is the resolution
-	// of the calculated velocity. The allowed values are 10Hz-500Hz (and 0 to turn the fixed
-	// frequency off).
-	// 
-	// The default values for Acquisition Count, Enable Quick Termination, Threshold Value and
-	// Measurement Frequency are 128, false, 0 and 0.
-	// 
-	// .. versionadded:: 2.0.3$nbsp;(Plugin)
-func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8, enableQuickTermination bool, thresholdValue uint8, measurementFrequency uint16) (err error) {    
+//  This function is only available if you have a LIDAR-Lite sensor with hardware
+//  version 3. Use SetMode for hardware version 1. You can check
+//  the sensor hardware version using GetSensorHardwareVersion.
+// 
+// The **Acquisition Count** defines the number of times the Laser Range Finder Bricklet
+// will integrate acquisitions to find a correlation record peak. With a higher count,
+// the Bricklet can measure longer distances. With a lower count, the rate increases. The
+// allowed values are 1-255.
+// 
+// If you set **Enable Quick Termination** to true, the distance measurement will be terminated
+// early if a high peak was already detected. This means that a higher measurement rate can be achieved
+// and long distances can be measured at the same time. However, the chance of false-positive
+// distance measurements increases.
+// 
+// Normally the distance is calculated with a detection algorithm that uses peak value,
+// signal strength and noise. You can however also define a fixed **Threshold Value**.
+// Set this to a low value if you want to measure the distance to something that has
+// very little reflection (e.g. glass) and set it to a high value if you want to measure
+// the distance to something with a very high reflection (e.g. mirror). Set this to 0 to
+// use the default algorithm. The other allowed values are 1-255.
+// 
+// Set the **Measurement Frequency** in Hz to force a fixed measurement rate. If set to 0,
+// the Laser Range Finder Bricklet will use the optimal frequency according to the other
+// configurations and the actual measured distance. Since the rate is not fixed in this case,
+// the velocity measurement is not stable. For a stable velocity measurement you should
+// set a fixed measurement frequency. The lower the frequency, the higher is the resolution
+// of the calculated velocity. The allowed values are 10Hz-500Hz (and 0 to turn the fixed
+// frequency off).
+// 
+// The default values for Acquisition Count, Enable Quick Termination, Threshold Value and
+// Measurement Frequency are 128, false, 0 and 0.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8, enableQuickTermination bool, thresholdValue uint8, measurementFrequency uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, acquisitionCount);
 	binary.Write(&buf, binary.LittleEndian, enableQuickTermination);
@@ -938,7 +938,7 @@ func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -947,14 +947,14 @@ func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8,
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
-	// 
-	// .. versionadded:: 2.0.3$nbsp;(Plugin)
-func (device *LaserRangeFinderBricklet) GetConfiguration() (acquisitionCount uint8, enableQuickTermination bool, thresholdValue uint8, measurementFrequency uint16, err error) {    
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *LaserRangeFinderBricklet) GetConfiguration() (acquisitionCount uint8, enableQuickTermination bool, thresholdValue uint8, measurementFrequency uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
@@ -963,7 +963,7 @@ func (device *LaserRangeFinderBricklet) GetConfiguration() (acquisitionCount uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return acquisitionCount, enableQuickTermination, thresholdValue, measurementFrequency, BrickletError(header.ErrorCode)
@@ -976,19 +976,19 @@ func (device *LaserRangeFinderBricklet) GetConfiguration() (acquisitionCount uin
 	binary.Read(resultBuf, binary.LittleEndian, &measurementFrequency)
 
     }
-    
+
     return acquisitionCount, enableQuickTermination, thresholdValue, measurementFrequency, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *LaserRangeFinderBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *LaserRangeFinderBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -997,7 +997,7 @@ func (device *LaserRangeFinderBricklet) GetIdentity() (uid string, connectedUid 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1012,6 +1012,6 @@ func (device *LaserRangeFinderBricklet) GetIdentity() (uid string, connectedUid 
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

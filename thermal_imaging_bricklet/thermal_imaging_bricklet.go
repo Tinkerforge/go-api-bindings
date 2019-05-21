@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -148,17 +148,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, 
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ThermalImagingBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -167,7 +167,7 @@ func (device *ThermalImagingBricklet) GetResponseExpected(functionID Function) (
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -187,14 +187,14 @@ func (device *ThermalImagingBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered with every new high contrast image if the transfer image
-	// config is configured for high contrast callback (see SetImageTransferConfig).
-	// 
-	// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 8-bit value represents one gray-scale image pixel that can directly be
-	// shown to a user on a display.
+// config is configured for high contrast callback (see SetImageTransferConfig).
+// 
+// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 8-bit value represents one gray-scale image pixel that can directly be
+// shown to a user on a display.
 func (device *ThermalImagingBricklet) RegisterHighContrastImageLowLevelCallback(fn func(uint16, [62]uint8)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -208,20 +208,20 @@ copy(imageChunkData[:], ByteSliceToUint8Slice(buf.Next(8 * 62/8)))
 }
 
 //Remove a registered High Contrast Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), callbackID)
+func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), registrationID)
 }
 
 
 // This callback is triggered with every new high contrast image if the transfer image
-	// config is configured for high contrast callback (see SetImageTransferConfig).
-	// 
-	// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 8-bit value represents one gray-scale image pixel that can directly be
-	// shown to a user on a display.
+// config is configured for high contrast callback (see SetImageTransferConfig).
+// 
+// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 8-bit value represents one gray-scale image pixel that can directly be
+// shown to a user on a display.
 func (device *ThermalImagingBricklet) RegisterHighContrastImageCallback(fn func([]uint8)) uint64 {
     buf := make([]uint8, 0)
     wrapper := func(imageChunkOffset uint16, imageChunkData [62]uint8)  {
@@ -233,29 +233,29 @@ func (device *ThermalImagingBricklet) RegisterHighContrastImageCallback(fn func(
         }
         toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
         buf = append(buf, imageChunkData[:toRead]...)
-        if len(buf) >= int(4800) {            
+        if len(buf) >= int(4800) {
             fn(buf)
             buf = make([]uint8, 0)
         }
     }
-    return device.RegisterHighContrastImageLowLevelCallback(wrapper)    
+    return device.RegisterHighContrastImageLowLevelCallback(wrapper)
 }
 
 //Remove a registered High Contrast Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(callbackID uint64) {
-    device.DeregisterHighContrastImageLowLevelCallback(callbackID)
+func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(registrationID uint64) {
+    device.DeregisterHighContrastImageLowLevelCallback(registrationID)
 }
 
 
 // This callback is triggered with every new temperature image if the transfer image
-	// config is configured for temperature callback (see SetImageTransferConfig).
-	// 
-	// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 16-bit value represents one temperature measurement in either
-	// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// config is configured for temperature callback (see SetImageTransferConfig).
+// 
+// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 16-bit value represents one temperature measurement in either
+// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
 func (device *ThermalImagingBricklet) RegisterTemperatureImageLowLevelCallback(fn func(uint16, [31]uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -269,20 +269,20 @@ copy(imageChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 31/8)))
 }
 
 //Remove a registered Temperature Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), callbackID)
+func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), registrationID)
 }
 
 
 // This callback is triggered with every new temperature image if the transfer image
-	// config is configured for temperature callback (see SetImageTransferConfig).
-	// 
-	// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 16-bit value represents one temperature measurement in either
-	// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// config is configured for temperature callback (see SetImageTransferConfig).
+// 
+// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 16-bit value represents one temperature measurement in either
+// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
 func (device *ThermalImagingBricklet) RegisterTemperatureImageCallback(fn func([]uint16)) uint64 {
     buf := make([]uint16, 0)
     wrapper := func(imageChunkOffset uint16, imageChunkData [31]uint16)  {
@@ -294,35 +294,35 @@ func (device *ThermalImagingBricklet) RegisterTemperatureImageCallback(fn func([
         }
         toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
         buf = append(buf, imageChunkData[:toRead]...)
-        if len(buf) >= int(4800) {            
+        if len(buf) >= int(4800) {
             fn(buf)
             buf = make([]uint16, 0)
         }
     }
-    return device.RegisterTemperatureImageLowLevelCallback(wrapper)    
+    return device.RegisterTemperatureImageLowLevelCallback(wrapper)
 }
 
 //Remove a registered Temperature Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterTemperatureImageCallback(callbackID uint64) {
-    device.DeregisterTemperatureImageLowLevelCallback(callbackID)
+func (device *ThermalImagingBricklet) DeregisterTemperatureImageCallback(registrationID uint64) {
+    device.DeregisterTemperatureImageLowLevelCallback(registrationID)
 }
 
 
 // Returns the current high contrast image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
-	// for the difference between
-	// High Contrast and Temperature Image. If you don't know what to use
-	// the High Contrast Image is probably right for you.
-	// 
-	// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 8-bit value represents one gray-scale image pixel that can directly be
-	// shown to a user on a display.
-	// 
-	// Before you can use this function you have to enable it with
-	// SetImageTransferConfig.
-func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunkOffset uint16, imageChunkData [62]uint8, err error) {    
+// for the difference between
+// High Contrast and Temperature Image. If you don't know what to use
+// the High Contrast Image is probably right for you.
+// 
+// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 8-bit value represents one gray-scale image pixel that can directly be
+// shown to a user on a display.
+// 
+// Before you can use this function you have to enable it with
+// SetImageTransferConfig.
+func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunkOffset uint16, imageChunkData [62]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastImageLowLevel), buf.Bytes())
@@ -331,7 +331,7 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return imageChunkOffset, imageChunkData, BrickletError(header.ErrorCode)
@@ -342,27 +342,27 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
 	copy(imageChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 62/8)))
 
     }
-    
+
     return imageChunkOffset, imageChunkData, nil
 }
 
 // Returns the current high contrast image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
-	// for the difference between
-	// High Contrast and Temperature Image. If you don't know what to use
-	// the High Contrast Image is probably right for you.
-	// 
-	// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 8-bit value represents one gray-scale image pixel that can directly be
-	// shown to a user on a display.
-	// 
-	// Before you can use this function you have to enable it with
-	// SetImageTransferConfig.
+// for the difference between
+// High Contrast and Temperature Image. If you don't know what to use
+// the High Contrast Image is probably right for you.
+// 
+// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 8-bit value represents one gray-scale image pixel that can directly be
+// shown to a user on a display.
+// 
+// Before you can use this function you have to enable it with
+// SetImageTransferConfig.
 	func (device *ThermalImagingBricklet) GetHighContrastImage() (image []uint8, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            imageChunkOffset, imageChunkData, err := device.GetHighContrastImageLowLevel()            
+            imageChunkOffset, imageChunkData, err := device.GetHighContrastImageLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -388,19 +388,19 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
     }
 
 // Returns the current temperature image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
-	// for the difference between High Contrast and Temperature Image.
-	// If you don't know what to use the High Contrast Image is probably right for you.
-	// 
-	// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 16-bit value represents one temperature measurement in either
-	// Kelvin/10 or Kelvin/100 (depending on the resolution set withSetResolution).
-	// 
-	// Before you can use this function you have to enable it with
-	// SetImageTransferConfig.
-func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkOffset uint16, imageChunkData [31]uint16, err error) {    
+// for the difference between High Contrast and Temperature Image.
+// If you don't know what to use the High Contrast Image is probably right for you.
+// 
+// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 16-bit value represents one temperature measurement in either
+// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// 
+// Before you can use this function you have to enable it with
+// SetImageTransferConfig.
+func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkOffset uint16, imageChunkData [31]uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureImageLowLevel), buf.Bytes())
@@ -409,7 +409,7 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return imageChunkOffset, imageChunkData, BrickletError(header.ErrorCode)
@@ -420,26 +420,26 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
 	copy(imageChunkData[:], ByteSliceToUint16Slice(resultBuf.Next(16 * 31/8)))
 
     }
-    
+
     return imageChunkOffset, imageChunkData, nil
 }
 
 // Returns the current temperature image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
-	// for the difference between High Contrast and Temperature Image.
-	// If you don't know what to use the High Contrast Image is probably right for you.
-	// 
-	// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
-	// a one-dimensional array. The data is arranged line by line from top left to
-	// bottom right.
-	// 
-	// Each 16-bit value represents one temperature measurement in either
-	// Kelvin/10 or Kelvin/100 (depending on the resolution set withSetResolution).
-	// 
-	// Before you can use this function you have to enable it with
-	// SetImageTransferConfig.
+// for the difference between High Contrast and Temperature Image.
+// If you don't know what to use the High Contrast Image is probably right for you.
+// 
+// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
+// a one-dimensional array. The data is arranged line by line from top left to
+// bottom right.
+// 
+// Each 16-bit value represents one temperature measurement in either
+// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// 
+// Before you can use this function you have to enable it with
+// SetImageTransferConfig.
 	func (device *ThermalImagingBricklet) GetTemperatureImage() (image []uint16, err error) {
         buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            imageChunkOffset, imageChunkData, err := device.GetTemperatureImageLowLevel()            
+            imageChunkOffset, imageChunkData, err := device.GetTemperatureImageLowLevel()
 
             if err != nil {
                 return LowLevelResult{}, err
@@ -465,35 +465,35 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
     }
 
 // Returns the spotmeter statistics, various temperatures, current resolution and status bits.
-	// 
-	// The spotmeter statistics are:
-	// 
-	// * Index 0: Mean Temperature.
-	// * Index 1: Maximum Temperature.
-	// * Index 2: Minimum Temperature.
-	// * Index 3: Pixel Count of spotmeter region of interest.
-	// 
-	// The temperatures are:
-	// 
-	// * Index 0: Focal Plain Array temperature.
-	// * Index 1: Focal Plain Array temperature at last FFC (Flat Field Correction).
-	// * Index 2: Housing temperature.
-	// * Index 3: Housing temperature at last FFC.
-	// 
-	// The resolution is either `0 to 6553 Kelvin` or `0 to 655 Kelvin`. If the resolution is the former,
-	// the temperatures are in Kelvin/10, if it is the latter the temperatures are in Kelvin/100.
-	// 
-	// FFC (Flat Field Correction) Status:
-	// 
-	// * FFC Never Commanded: Only seen on startup before first FFC.
-	// * FFC Imminent: This state is entered 2 seconds prior to initiating FFC.
-	// * FFC In Progress: Flat field correction is started (shutter moves in front of lens and back). Takes about 1 second.
-	// * FFC Complete: Shutter is in waiting position again, FFC done.
-	// 
-	// Temperature warning bits:
-	// 
-	// * Index 0: Shutter lockout (if true shutter is locked out because temperature is outside -10°C to +65°C)
-	// * Index 1: Overtemperature shut down imminent (goes true 10 seconds before shutdown)
+// 
+// The spotmeter statistics are:
+// 
+// * Index 0: Mean Temperature.
+// * Index 1: Maximum Temperature.
+// * Index 2: Minimum Temperature.
+// * Index 3: Pixel Count of spotmeter region of interest.
+// 
+// The temperatures are:
+// 
+// * Index 0: Focal Plain Array temperature.
+// * Index 1: Focal Plain Array temperature at last FFC (Flat Field Correction).
+// * Index 2: Housing temperature.
+// * Index 3: Housing temperature at last FFC.
+// 
+// The resolution is either `0 to 6553 Kelvin` or `0 to 655 Kelvin`. If the resolution is the former,
+// the temperatures are in Kelvin/10, if it is the latter the temperatures are in Kelvin/100.
+// 
+// FFC (Flat Field Correction) Status:
+// 
+// * FFC Never Commanded: Only seen on startup before first FFC.
+// * FFC Imminent: This state is entered 2 seconds prior to initiating FFC.
+// * FFC In Progress: Flat field correction is started (shutter moves in front of lens and back). Takes about 1 second.
+// * FFC Complete: Shutter is in waiting position again, FFC done.
+// 
+// Temperature warning bits:
+// 
+// * Index 0: Shutter lockout (if true shutter is locked out because temperature is outside -10°C to +65°C)
+// * Index 1: Overtemperature shut down imminent (goes true 10 seconds before shutdown)
 //
 // Associated constants:
 //
@@ -503,7 +503,7 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
 //	* FFCStatusImminent
 //	* FFCStatusInProgress
 //	* FFCStatusComplete
-func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]uint16, temperatures [4]uint16, resolution Resolution, ffcStatus FFCStatus, temperatureWarning [2]bool, err error) {    
+func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]uint16, temperatures [4]uint16, resolution Resolution, ffcStatus FFCStatus, temperatureWarning [2]bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatistics), buf.Bytes())
@@ -512,7 +512,7 @@ func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, BrickletError(header.ErrorCode)
@@ -526,25 +526,25 @@ func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]ui
 	binary.Read(resultBuf, binary.LittleEndian, &temperatureWarning)
 
     }
-    
+
     return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, nil
 }
 
 // Sets the resolution. The Thermal Imaging Bricklet can either measure
-	// 
-	// * from 0 to 6553 Kelvin (-273.15°C to +6279.85°C) with 0.1°C resolution or
-	// * from 0 to 655 Kelvin (-273.15°C to +381.85°C) with 0.01°C resolution.
-	// 
-	// The accuracy is specified for -10°C to 450°C in the
-	// first range and -10°C and 140°C in the second range.
-	// 
-	// The default value is 0 to 655 Kelvin.
+// 
+// * from 0 to 6553 Kelvin (-273.15°C to +6279.85°C) with 0.1°C resolution or
+// * from 0 to 655 Kelvin (-273.15°C to +381.85°C) with 0.01°C resolution.
+// 
+// The accuracy is specified for -10°C to 450°C in the
+// first range and -10°C and 140°C in the second range.
+// 
+// The default value is 0 to 655 Kelvin.
 //
 // Associated constants:
 //
 //	* Resolution0To6553Kelvin
 //	* Resolution0To655Kelvin
-func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err error) {    
+func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, resolution);
 
@@ -554,7 +554,7 @@ func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -563,7 +563,7 @@ func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -573,7 +573,7 @@ func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err 
 //
 //	* Resolution0To6553Kelvin
 //	* Resolution0To655Kelvin
-func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, err error) {    
+func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetResolution), buf.Bytes())
@@ -582,7 +582,7 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return resolution, BrickletError(header.ErrorCode)
@@ -592,21 +592,21 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
         binary.Read(resultBuf, binary.LittleEndian, &resolution)
 
     }
-    
+
     return resolution, nil
 }
 
 // Sets the spotmeter region of interest. The 4 values are
-	// 
-	// * Index 0: Column start (has to be smaller then Column end).
-	// * Index 1: Row start (has to be smaller then Row end).
-	// * Index 2: Column end (has to be smaller then 80).
-	// * Index 3: Row end (has to be smaller then 60).
-	// 
-	// The spotmeter statistics can be read out with GetStatistics.
-	// 
-	// The default region of interest is (39, 29, 40, 30).
-func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uint8) (err error) {    
+// 
+// * Index 0: Column start (has to be smaller then Column end).
+// * Index 1: Row start (has to be smaller then Row end).
+// * Index 2: Column end (has to be smaller then 80).
+// * Index 3: Row end (has to be smaller then 60).
+// 
+// The spotmeter statistics can be read out with GetStatistics.
+// 
+// The default region of interest is (39, 29, 40, 30).
+func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, regionOfInterest);
 
@@ -616,7 +616,7 @@ func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -625,12 +625,12 @@ func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the spotmeter config as set by SetSpotmeterConfig.
-func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]uint8, err error) {    
+func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]uint8, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSpotmeterConfig), buf.Bytes())
@@ -639,7 +639,7 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return regionOfInterest, BrickletError(header.ErrorCode)
@@ -649,56 +649,56 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
         binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
 
     }
-    
+
     return regionOfInterest, nil
 }
 
 // Sets the high contrast region of interest, dampening factor, clip limit and empty counts.
-	// This config is only used in high contrast mode (see SetImageTransferConfig).
-	// 
-	// The high contrast region of interest consists of four values:
-	// 
-	// * Index 0: Column start (has to be smaller or equal then Column end).
-	// * Index 1: Row start (has to be smaller then Row end).
-	// * Index 2: Column end (has to be smaller then 80).
-	// * Index 3: Row end (has to be smaller then 60).
-	// 
-	// The algorithm to generate the high contrast image is applied to this region.
-	// 
-	// Dampening Factor: This parameter is the amount of temporal dampening applied to the HEQ
-	// (history equalization) transformation function. An IIR filter of the form::
-	// 
-	//  (N / 256) * previous + ((256 - N) / 256) * current
-	// 
-	// is applied, and the HEQ dampening factor
-	// represents the value N in the equation, i.e., a value that applies to the amount of
-	// influence the previous HEQ transformation function has on the current function. The
-	// lower the value of N the higher the influence of the current video frame whereas
-	// the higher the value of N the more influence the previous damped transfer function has.
-	// 
-	// Clip Limit Index 0 (AGC HEQ Clip Limit Low): This parameter defines an artificial population that is added to
-	// every non-empty histogram bin. In other words, if the Clip Limit Low is set to L, a bin
-	// with an actual population of X will have an effective population of L + X. Any empty bin
-	// that is nearby a populated bin will be given an artificial population of L. The effect of
-	// higher values is to provide a more linear transfer function; lower values provide a more
-	// non-linear (equalized) transfer function.
-	// 
-	// Clip Limit Index 1 (AGC HEQ Clip Limit High): This parameter defines the maximum number of pixels allowed
-	// to accumulate in any given histogram bin. Any additional pixels in a given bin are clipped.
-	// The effect of this parameter is to limit the influence of highly-populated bins on the
-	// resulting HEQ transformation function.
-	// 
-	// Empty Counts: This parameter specifies the maximum number of pixels in a bin that will be
-	// interpreted as an empty bin. Histogram bins with this number of pixels or less will be
-	// processed as an empty bin.
-	// 
-	// The default values are
-	// 
-	// * Region Of Interest = (0, 0, 79, 59),
-	// * Dampening Factor = 64,
-	// * Clip Limit = (4800, 512) and
-	// * Empty Counts = 2.
-func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16) (err error) {    
+// This config is only used in high contrast mode (see SetImageTransferConfig).
+// 
+// The high contrast region of interest consists of four values:
+// 
+// * Index 0: Column start (has to be smaller or equal then Column end).
+// * Index 1: Row start (has to be smaller then Row end).
+// * Index 2: Column end (has to be smaller then 80).
+// * Index 3: Row end (has to be smaller then 60).
+// 
+// The algorithm to generate the high contrast image is applied to this region.
+// 
+// Dampening Factor: This parameter is the amount of temporal dampening applied to the HEQ
+// (history equalization) transformation function. An IIR filter of the form::
+// 
+//  (N / 256) * previous + ((256 - N) / 256) * current
+// 
+// is applied, and the HEQ dampening factor
+// represents the value N in the equation, i.e., a value that applies to the amount of
+// influence the previous HEQ transformation function has on the current function. The
+// lower the value of N the higher the influence of the current video frame whereas
+// the higher the value of N the more influence the previous damped transfer function has.
+// 
+// Clip Limit Index 0 (AGC HEQ Clip Limit Low): This parameter defines an artificial population that is added to
+// every non-empty histogram bin. In other words, if the Clip Limit Low is set to L, a bin
+// with an actual population of X will have an effective population of L + X. Any empty bin
+// that is nearby a populated bin will be given an artificial population of L. The effect of
+// higher values is to provide a more linear transfer function; lower values provide a more
+// non-linear (equalized) transfer function.
+// 
+// Clip Limit Index 1 (AGC HEQ Clip Limit High): This parameter defines the maximum number of pixels allowed
+// to accumulate in any given histogram bin. Any additional pixels in a given bin are clipped.
+// The effect of this parameter is to limit the influence of highly-populated bins on the
+// resulting HEQ transformation function.
+// 
+// Empty Counts: This parameter specifies the maximum number of pixels in a bin that will be
+// interpreted as an empty bin. Histogram bins with this number of pixels or less will be
+// processed as an empty bin.
+// 
+// The default values are
+// 
+// * Region Of Interest = (0, 0, 79, 59),
+// * Dampening Factor = 64,
+// * Clip Limit = (4800, 512) and
+// * Empty Counts = 2.
+func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, regionOfInterest);
 	binary.Write(&buf, binary.LittleEndian, dampeningFactor);
@@ -711,7 +711,7 @@ func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -720,12 +720,12 @@ func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the high contrast config as set by SetHighContrastConfig.
-func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16, err error) {    
+func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastConfig), buf.Bytes())
@@ -734,7 +734,7 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, BrickletError(header.ErrorCode)
@@ -747,22 +747,22 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
 	binary.Read(resultBuf, binary.LittleEndian, &emptyCounts)
 
     }
-    
+
     return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, nil
 }
 
 // The necessary bandwidth of this Bricklet is too high to use getter/callback or
-	// high contrast/temperature image at the same time. You have to configure the one
-	// you want to use, the Bricklet will optimize the internal configuration accordingly.
-	// 
-	// Corresponding functions:
-	// 
-	// * Manual High Contrast Image: GetHighContrastImage.
-	// * Manual Temperature Image: GetTemperatureImage.
-	// * Callback High Contrast Image: RegisterHighContrastImageCallback callback.
-	// * Callback Temperature Image: RegisterTemperatureImageCallback callback.
-	// 
-	// The default is Manual High Contrast Image (0).
+// high contrast/temperature image at the same time. You have to configure the one
+// you want to use, the Bricklet will optimize the internal configuration accordingly.
+// 
+// Corresponding functions:
+// 
+// * Manual High Contrast Image: GetHighContrastImage.
+// * Manual Temperature Image: GetTemperatureImage.
+// * Callback High Contrast Image: RegisterHighContrastImageCallback callback.
+// * Callback Temperature Image: RegisterTemperatureImageCallback callback.
+// 
+// The default is Manual High Contrast Image (0).
 //
 // Associated constants:
 //
@@ -770,7 +770,7 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
 //	* ImageTransferManualTemperatureImage
 //	* ImageTransferCallbackHighContrastImage
 //	* ImageTransferCallbackTemperatureImage
-func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfer) (err error) {    
+func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfer) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -780,7 +780,7 @@ func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfe
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -789,7 +789,7 @@ func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfe
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -801,7 +801,7 @@ func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfe
 //	* ImageTransferManualTemperatureImage
 //	* ImageTransferCallbackHighContrastImage
 //	* ImageTransferCallbackTemperatureImage
-func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTransfer, err error) {    
+func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTransfer, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetImageTransferConfig), buf.Bytes())
@@ -810,7 +810,7 @@ func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTran
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -820,22 +820,22 @@ func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTran
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -844,7 +844,7 @@ func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecks
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -857,19 +857,19 @@ func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecks
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -884,7 +884,7 @@ func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecks
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -894,7 +894,7 @@ func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (st
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -904,7 +904,7 @@ func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (st
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -917,7 +917,7 @@ func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (st
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -926,7 +926,7 @@ func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -936,17 +936,17 @@ func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, 
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -956,7 +956,7 @@ func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -965,19 +965,19 @@ func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -987,7 +987,7 @@ func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -997,17 +997,17 @@ func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -1015,7 +1015,7 @@ func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1025,7 +1025,7 @@ func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1034,7 +1034,7 @@ func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1046,7 +1046,7 @@ func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -1055,7 +1055,7 @@ func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConf
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1065,17 +1065,17 @@ func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConf
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1084,7 +1084,7 @@ func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1094,17 +1094,17 @@ func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, e
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *ThermalImagingBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *ThermalImagingBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1113,7 +1113,7 @@ func (device *ThermalImagingBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1122,16 +1122,16 @@ func (device *ThermalImagingBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1141,7 +1141,7 @@ func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1150,13 +1150,13 @@ func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1165,7 +1165,7 @@ func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1175,19 +1175,19 @@ func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1196,7 +1196,7 @@ func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid st
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1211,6 +1211,6 @@ func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid st
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

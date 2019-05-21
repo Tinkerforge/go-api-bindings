@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -149,17 +149,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ServoBrick) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -168,7 +168,7 @@ func (device *ServoBrick) GetResponseExpected(functionID Function) (bool, error)
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -188,8 +188,8 @@ func (device *ServoBrick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when the input voltage drops below the value set by
-	// SetMinimumVoltage. The parameter is the current voltage given
-	// in mV.
+// SetMinimumVoltage. The parameter is the current voltage given
+// in mV.
 func (device *ServoBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -201,23 +201,23 @@ func (device *ServoBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
 }
 
 //Remove a registered Under Voltage callback.
-func (device *ServoBrick) DeregisterUnderVoltageCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), callbackID)
+func (device *ServoBrick) DeregisterUnderVoltageCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationID)
 }
 
 
 // This callback is triggered when a position set by SetPosition
-	// is reached. If the new position matches the current position then the
-	// callback is not triggered, because the servo didn't move.
-	// The parameters are the servo and the position that is reached.
-	// 
-	// You can enable this callback with EnablePositionReachedCallback.
-	// 
-	// Note
-	//  Since we can't get any feedback from the servo, this only works if the
-	//  velocity (see SetVelocity) is set smaller or equal to the
-	//  maximum velocity of the servo. Otherwise the servo will lag behind the
-	//  control value and the callback will be triggered too early.
+// is reached. If the new position matches the current position then the
+// callback is not triggered, because the servo didn't move.
+// The parameters are the servo and the position that is reached.
+// 
+// You can enable this callback with EnablePositionReachedCallback.
+// 
+// Note
+//  Since we can't get any feedback from the servo, this only works if the
+//  velocity (see SetVelocity) is set smaller or equal to the
+//  maximum velocity of the servo. Otherwise the servo will lag behind the
+//  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterPositionReachedCallback(fn func(uint8, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -231,21 +231,21 @@ binary.Read(buf, binary.LittleEndian, &position)
 }
 
 //Remove a registered Position Reached callback.
-func (device *ServoBrick) DeregisterPositionReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), callbackID)
+func (device *ServoBrick) DeregisterPositionReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationID)
 }
 
 
 // This callback is triggered when a velocity set by SetVelocity
-	// is reached. The parameters are the servo and the velocity that is reached.
-	// 
-	// You can enable this callback with EnableVelocityReachedCallback.
-	// 
-	// Note
-	//  Since we can't get any feedback from the servo, this only works if the
-	//  acceleration (see SetAcceleration) is set smaller or equal to the
-	//  maximum acceleration of the servo. Otherwise the servo will lag behind the
-	//  control value and the callback will be triggered too early.
+// is reached. The parameters are the servo and the velocity that is reached.
+// 
+// You can enable this callback with EnableVelocityReachedCallback.
+// 
+// Note
+//  Since we can't get any feedback from the servo, this only works if the
+//  acceleration (see SetAcceleration) is set smaller or equal to the
+//  maximum acceleration of the servo. Otherwise the servo will lag behind the
+//  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterVelocityReachedCallback(fn func(uint8, int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -259,14 +259,14 @@ binary.Read(buf, binary.LittleEndian, &velocity)
 }
 
 //Remove a registered Velocity Reached callback.
-func (device *ServoBrick) DeregisterVelocityReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), callbackID)
+func (device *ServoBrick) DeregisterVelocityReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), registrationID)
 }
 
 
 // Enables a servo (0 to 6). If a servo is enabled, the configured position,
-	// velocity, acceleration, etc. are applied immediately.
-func (device *ServoBrick) Enable(servoNum uint8) (err error) {    
+// velocity, acceleration, etc. are applied immediately.
+func (device *ServoBrick) Enable(servoNum uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -276,7 +276,7 @@ func (device *ServoBrick) Enable(servoNum uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -285,13 +285,13 @@ func (device *ServoBrick) Enable(servoNum uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables a servo (0 to 6). Disabled servos are not driven at all, i.e. a
-	// disabled servo will not hold its position if a load is applied.
-func (device *ServoBrick) Disable(servoNum uint8) (err error) {    
+// disabled servo will not hold its position if a load is applied.
+func (device *ServoBrick) Disable(servoNum uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -301,7 +301,7 @@ func (device *ServoBrick) Disable(servoNum uint8) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -310,12 +310,12 @@ func (device *ServoBrick) Disable(servoNum uint8) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the specified servo is enabled, *false* otherwise.
-func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {    
+func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -325,7 +325,7 @@ func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -335,19 +335,19 @@ func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Sets the position in °/100 for the specified servo.
-	// 
-	// The default range of the position is -9000 to 9000, but it can be specified
-	// according to your servo with SetDegree.
-	// 
-	// If you want to control a linear servo or RC brushless motor controller or
-	// similar with the Servo Brick, you can also define lengths or speeds with
-	// SetDegree.
-func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error) {    
+// 
+// The default range of the position is -9000 to 9000, but it can be specified
+// according to your servo with SetDegree.
+// 
+// If you want to control a linear servo or RC brushless motor controller or
+// similar with the Servo Brick, you can also define lengths or speeds with
+// SetDegree.
+func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, position);
@@ -358,7 +358,7 @@ func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -367,12 +367,12 @@ func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the position of the specified servo as set by SetPosition.
-func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error) {    
+func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -382,7 +382,7 @@ func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return position, BrickletError(header.ErrorCode)
@@ -392,14 +392,14 @@ func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error
         binary.Read(resultBuf, binary.LittleEndian, &position)
 
     }
-    
+
     return position, nil
 }
 
 // Returns the *current* position of the specified servo. This may not be the
-	// value of SetPosition if the servo is currently approaching a
-	// position goal.
-func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, err error) {    
+// value of SetPosition if the servo is currently approaching a
+// position goal.
+func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -409,7 +409,7 @@ func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return position, BrickletError(header.ErrorCode)
@@ -419,18 +419,18 @@ func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, er
         binary.Read(resultBuf, binary.LittleEndian, &position)
 
     }
-    
+
     return position, nil
 }
 
 // Sets the maximum velocity of the specified servo in °/100s. The velocity
-	// is accelerated according to the value set by SetAcceleration.
-	// 
-	// The minimum velocity is 0 (no movement) and the maximum velocity is 65535.
-	// With a value of 65535 the position will be set immediately (no velocity).
-	// 
-	// The default value is 65535.
-func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err error) {    
+// is accelerated according to the value set by SetAcceleration.
+// 
+// The minimum velocity is 0 (no movement) and the maximum velocity is 65535.
+// With a value of 65535 the position will be set immediately (no velocity).
+// 
+// The default value is 65535.
+func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, velocity);
@@ -441,7 +441,7 @@ func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -450,12 +450,12 @@ func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err erro
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the velocity of the specified servo as set by SetVelocity.
-func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err error) {    
+func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -465,7 +465,7 @@ func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return velocity, BrickletError(header.ErrorCode)
@@ -475,14 +475,14 @@ func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err erro
         binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
     }
-    
+
     return velocity, nil
 }
 
 // Returns the *current* velocity of the specified servo. This may not be the
-	// value of SetVelocity if the servo is currently approaching a
-	// velocity goal.
-func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, err error) {    
+// value of SetVelocity if the servo is currently approaching a
+// velocity goal.
+func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -492,7 +492,7 @@ func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return velocity, BrickletError(header.ErrorCode)
@@ -502,17 +502,17 @@ func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, e
         binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
     }
-    
+
     return velocity, nil
 }
 
 // Sets the acceleration of the specified servo in °/100s².
-	// 
-	// The minimum acceleration is 1 and the maximum acceleration is 65535.
-	// With a value of 65535 the velocity will be set immediately (no acceleration).
-	// 
-	// The default value is 65535.
-func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (err error) {    
+// 
+// The minimum acceleration is 1 and the maximum acceleration is 65535.
+// With a value of 65535 the velocity will be set immediately (no acceleration).
+// 
+// The default value is 65535.
+func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, acceleration);
@@ -523,7 +523,7 @@ func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -532,13 +532,13 @@ func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the acceleration for the specified servo as set by
-	// SetAcceleration.
-func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, err error) {    
+// SetAcceleration.
+func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -548,7 +548,7 @@ func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return acceleration, BrickletError(header.ErrorCode)
@@ -558,21 +558,21 @@ func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, 
         binary.Read(resultBuf, binary.LittleEndian, &acceleration)
 
     }
-    
+
     return acceleration, nil
 }
 
 // Sets the output voltages with which the servos are driven in mV.
-	// The minimum output voltage is 2000mV and the maximum output voltage is
-	// 9000mV.
-	// 
-	// Note
-	//  We recommend that you set this value to the maximum voltage that is
-	//  specified for your servo, most servos achieve their maximum force only
-	//  with high voltages.
-	// 
-	// The default value is 5000.
-func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {    
+// The minimum output voltage is 2000mV and the maximum output voltage is
+// 9000mV.
+// 
+// Note
+//  We recommend that you set this value to the maximum voltage that is
+//  specified for your servo, most servos achieve their maximum force only
+//  with high voltages.
+// 
+// The default value is 5000.
+func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltage);
 
@@ -582,7 +582,7 @@ func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -591,12 +591,12 @@ func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the output voltage as specified by SetOutputVoltage.
-func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {    
+func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetOutputVoltage), buf.Bytes())
@@ -605,7 +605,7 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -615,28 +615,28 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets the minimum and maximum pulse width of the specified servo in µs.
-	// 
-	// Usually, servos are controlled with a
-	// https://en.wikipedia.org/wiki/Pulse-width_modulation, whereby the
-	// length of the pulse controls the position of the servo. Every servo has
-	// different minimum and maximum pulse widths, these can be specified with
-	// this function.
-	// 
-	// If you have a datasheet for your servo that specifies the minimum and
-	// maximum pulse width, you should set the values accordingly. If your servo
-	// comes without any datasheet you have to find the values via trial and error.
-	// 
-	// Both values have a range from 1 to 65535 (unsigned 16-bit integer). The
-	// minimum must be smaller than the maximum.
-	// 
-	// The default values are 1000µs (1ms) and 2000µs (2ms) for minimum and
-	// maximum pulse width.
-func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) (err error) {    
+// 
+// Usually, servos are controlled with a
+// https://en.wikipedia.org/wiki/Pulse-width_modulation, whereby the
+// length of the pulse controls the position of the servo. Every servo has
+// different minimum and maximum pulse widths, these can be specified with
+// this function.
+// 
+// If you have a datasheet for your servo that specifies the minimum and
+// maximum pulse width, you should set the values accordingly. If your servo
+// comes without any datasheet you have to find the values via trial and error.
+// 
+// Both values have a range from 1 to 65535 (unsigned 16-bit integer). The
+// minimum must be smaller than the maximum.
+// 
+// The default values are 1000µs (1ms) and 2000µs (2ms) for minimum and
+// maximum pulse width.
+func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -648,7 +648,7 @@ func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -657,13 +657,13 @@ func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the minimum and maximum pulse width for the specified servo as set by
-	// SetPulseWidth.
-func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16, err error) {    
+// SetPulseWidth.
+func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -673,7 +673,7 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return min, max, BrickletError(header.ErrorCode)
@@ -684,41 +684,41 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return min, max, nil
 }
 
 // Sets the minimum and maximum degree for the specified servo (by default
-	// given as °/100).
-	// 
-	// This only specifies the abstract values between which the minimum and maximum
-	// pulse width is scaled. For example: If you specify a pulse width of 1000µs
-	// to 2000µs and a degree range of -90° to 90°, a call of SetPosition
-	// with 0 will result in a pulse width of 1500µs
-	// (-90° = 1000µs, 90° = 2000µs, etc.).
-	// 
-	// Possible usage:
-	// 
-	// * The datasheet of your servo specifies a range of 200° with the middle position
-	//   at 110°. In this case you can set the minimum to -9000 and the maximum to 11000.
-	// * You measure a range of 220° on your servo and you don't have or need a middle
-	//   position. In this case you can set the minimum to 0 and the maximum to 22000.
-	// * You have a linear servo with a drive length of 20cm, In this case you could
-	//   set the minimum to 0 and the maximum to 20000. Now you can set the Position
-	//   with SetPosition with a resolution of cm/100. Also the velocity will
-	//   have a resolution of cm/100s and the acceleration will have a resolution of
-	//   cm/100s².
-	// * You don't care about units and just want the highest possible resolution. In
-	//   this case you should set the minimum to -32767 and the maximum to 32767.
-	// * You have a brushless motor with a maximum speed of 10000 rpm and want to
-	//   control it with a RC brushless motor controller. In this case you can set the
-	//   minimum to 0 and the maximum to 10000. SetPosition now controls the rpm.
-	// 
-	// Both values have a possible range from -32767 to 32767
-	// (signed 16-bit integer). The minimum must be smaller than the maximum.
-	// 
-	// The default values are -9000 and 9000 for the minimum and maximum degree.
-func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err error) {    
+// given as °/100).
+// 
+// This only specifies the abstract values between which the minimum and maximum
+// pulse width is scaled. For example: If you specify a pulse width of 1000µs
+// to 2000µs and a degree range of -90° to 90°, a call of SetPosition
+// with 0 will result in a pulse width of 1500µs
+// (-90° = 1000µs, 90° = 2000µs, etc.).
+// 
+// Possible usage:
+// 
+// * The datasheet of your servo specifies a range of 200° with the middle position
+//   at 110°. In this case you can set the minimum to -9000 and the maximum to 11000.
+// * You measure a range of 220° on your servo and you don't have or need a middle
+//   position. In this case you can set the minimum to 0 and the maximum to 22000.
+// * You have a linear servo with a drive length of 20cm, In this case you could
+//   set the minimum to 0 and the maximum to 20000. Now you can set the Position
+//   with SetPosition with a resolution of cm/100. Also the velocity will
+//   have a resolution of cm/100s and the acceleration will have a resolution of
+//   cm/100s².
+// * You don't care about units and just want the highest possible resolution. In
+//   this case you should set the minimum to -32767 and the maximum to 32767.
+// * You have a brushless motor with a maximum speed of 10000 rpm and want to
+//   control it with a RC brushless motor controller. In this case you can set the
+//   minimum to 0 and the maximum to 10000. SetPosition now controls the rpm.
+// 
+// Both values have a possible range from -32767 to 32767
+// (signed 16-bit integer). The minimum must be smaller than the maximum.
+// 
+// The default values are -9000 and 9000 for the minimum and maximum degree.
+func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -730,7 +730,7 @@ func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -739,13 +739,13 @@ func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the minimum and maximum degree for the specified servo as set by
-	// SetDegree.
-func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err error) {    
+// SetDegree.
+func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -755,7 +755,7 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return min, max, BrickletError(header.ErrorCode)
@@ -766,26 +766,26 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return min, max, nil
 }
 
 // Sets the period of the specified servo in µs.
-	// 
-	// Usually, servos are controlled with a
-	// https://en.wikipedia.org/wiki/Pulse-width_modulation. Different
-	// servos expect PWMs with different periods. Most servos run well with a
-	// period of about 20ms.
-	// 
-	// If your servo comes with a datasheet that specifies a period, you should
-	// set it accordingly. If you don't have a datasheet and you have no idea
-	// what the correct period is, the default value (19.5ms) will most likely
-	// work fine.
-	// 
-	// The minimum possible period is 1µs and the maximum is 65535µs.
-	// 
-	// The default value is 19.5ms (19500µs).
-func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {    
+// 
+// Usually, servos are controlled with a
+// https://en.wikipedia.org/wiki/Pulse-width_modulation. Different
+// servos expect PWMs with different periods. Most servos run well with a
+// period of about 20ms.
+// 
+// If your servo comes with a datasheet that specifies a period, you should
+// set it accordingly. If you don't have a datasheet and you have no idea
+// what the correct period is, the default value (19.5ms) will most likely
+// work fine.
+// 
+// The minimum possible period is 1µs and the maximum is 65535µs.
+// 
+// The default value is 19.5ms (19500µs).
+func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -796,7 +796,7 @@ func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -805,12 +805,12 @@ func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period for the specified servo as set by SetPeriod.
-func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {    
+func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -820,7 +820,7 @@ func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -830,12 +830,12 @@ func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Returns the current consumption of the specified servo in mA.
-func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err error) {    
+func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, servoNum);
 
@@ -845,7 +845,7 @@ func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return current, BrickletError(header.ErrorCode)
@@ -855,12 +855,12 @@ func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err e
         binary.Read(resultBuf, binary.LittleEndian, &current)
 
     }
-    
+
     return current, nil
 }
 
 // Returns the current consumption of all servos together in mA.
-func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {    
+func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetOverallCurrent), buf.Bytes())
@@ -869,7 +869,7 @@ func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return current, BrickletError(header.ErrorCode)
@@ -879,14 +879,14 @@ func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &current)
 
     }
-    
+
     return current, nil
 }
 
 // Returns the stack input voltage in mV. The stack input voltage is the
-	// voltage that is supplied via the stack, i.e. it is given by a
-	// Step-Down or Step-Up Power Supply.
-func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {    
+// voltage that is supplied via the stack, i.e. it is given by a
+// Step-Down or Step-Up Power Supply.
+func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
@@ -895,7 +895,7 @@ func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -905,23 +905,23 @@ func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Returns the external input voltage in mV. The external input voltage is
-	// given via the black power input connector on the Servo Brick.
-	// 
-	// If there is an external input voltage and a stack input voltage, the motors
-	// will be driven by the external input voltage. If there is only a stack
-	// voltage present, the motors will be driven by this voltage.
-	// 
-	// Warning
-	//  This means, if you have a high stack voltage and a low external voltage,
-	//  the motors will be driven with the low external voltage. If you then remove
-	//  the external connection, it will immediately be driven by the high
-	//  stack voltage
-func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) {    
+// given via the black power input connector on the Servo Brick.
+// 
+// If there is an external input voltage and a stack input voltage, the motors
+// will be driven by the external input voltage. If there is only a stack
+// voltage present, the motors will be driven by this voltage.
+// 
+// Warning
+//  This means, if you have a high stack voltage and a low external voltage,
+//  the motors will be driven with the low external voltage. If you then remove
+//  the external connection, it will immediately be driven by the high
+//  stack voltage
+func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
@@ -930,7 +930,7 @@ func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -940,18 +940,18 @@ func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
-	// is triggered. The minimum possible value that works with the Servo Brick is 5V.
-	// You can use this function to detect the discharge of a battery that is used
-	// to drive the stepper motor. If you have a fixed power supply, you likely do
-	// not need this functionality.
-	// 
-	// The default value is 5V (5000mV).
-func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {    
+// is triggered. The minimum possible value that works with the Servo Brick is 5V.
+// You can use this function to detect the discharge of a battery that is used
+// to drive the stepper motor. If you have a fixed power supply, you likely do
+// not need this functionality.
+// 
+// The default value is 5V (5000mV).
+func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltage);
 
@@ -961,7 +961,7 @@ func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -970,12 +970,12 @@ func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the minimum voltage as set by SetMinimumVoltage
-func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {    
+func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
@@ -984,7 +984,7 @@ func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -994,16 +994,16 @@ func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Enables the RegisterPositionReachedCallback callback.
-	// 
-	// Default is disabled.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) EnablePositionReachedCallback() (err error) {    
+// 
+// Default is disabled.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnablePositionReachedCallback), buf.Bytes())
@@ -1012,7 +1012,7 @@ func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1021,16 +1021,16 @@ func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the RegisterPositionReachedCallback callback.
-	// 
-	// Default is disabled.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) DisablePositionReachedCallback() (err error) {    
+// 
+// Default is disabled.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisablePositionReachedCallback), buf.Bytes())
@@ -1039,7 +1039,7 @@ func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1048,14 +1048,14 @@ func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if RegisterPositionReachedCallback callback is enabled, *false* otherwise.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsPositionReachedCallbackEnabled), buf.Bytes())
@@ -1064,7 +1064,7 @@ func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -1074,16 +1074,16 @@ func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err 
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Enables the RegisterVelocityReachedCallback callback.
-	// 
-	// Default is disabled.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {    
+// 
+// Default is disabled.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableVelocityReachedCallback), buf.Bytes())
@@ -1092,7 +1092,7 @@ func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1101,16 +1101,16 @@ func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the RegisterVelocityReachedCallback callback.
-	// 
-	// Default is disabled.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {    
+// 
+// Default is disabled.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableVelocityReachedCallback), buf.Bytes())
@@ -1119,7 +1119,7 @@ func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1128,14 +1128,14 @@ func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if RegisterVelocityReachedCallback callback is enabled, *false* otherwise.
-	// 
-	// .. versionadded:: 2.0.1$nbsp;(Firmware)
-func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsVelocityReachedCallbackEnabled), buf.Bytes())
@@ -1144,7 +1144,7 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -1154,35 +1154,35 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
-	// enabled, the Brick will try to adapt the baudrate for the communication
-	// between Bricks and Bricklets according to the amount of data that is transferred.
-	// 
-	// The baudrate will be increased exponentially if lots of data is send/received and
-	// decreased linearly if little data is send/received.
-	// 
-	// This lowers the baudrate in applications where little data is transferred (e.g.
-	// a weather station) and increases the robustness. If there is lots of data to transfer
-	// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
-	// 
-	// In cases where some data has to transferred as fast as possible every few seconds
-	// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
-	// the dynamic baudrate off to get the highest possible performance.
-	// 
-	// The maximum value of the baudrate can be set per port with the function
-	// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
-	// as set by SetSPITFPBaudrate will be used statically.
-	// 
-	// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-	// 
-	// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-	// 
-	// .. versionadded:: 2.3.4$nbsp;(Firmware)
-func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {    
+// enabled, the Brick will try to adapt the baudrate for the communication
+// between Bricks and Bricklets according to the amount of data that is transferred.
+// 
+// The baudrate will be increased exponentially if lots of data is send/received and
+// decreased linearly if little data is send/received.
+// 
+// This lowers the baudrate in applications where little data is transferred (e.g.
+// a weather station) and increases the robustness. If there is lots of data to transfer
+// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
+// 
+// In cases where some data has to transferred as fast as possible every few seconds
+// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
+// the dynamic baudrate off to get the highest possible performance.
+// 
+// The maximum value of the baudrate can be set per port with the function
+// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
+// as set by SetSPITFPBaudrate will be used statically.
+// 
+// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
+// 
+// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
+// 
+// .. versionadded:: 2.3.4$nbsp;(Firmware)
+func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
@@ -1193,7 +1193,7 @@ func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1202,14 +1202,14 @@ func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
-	// 
-	// .. versionadded:: 2.3.4$nbsp;(Firmware)
-func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.3.4$nbsp;(Firmware)
+func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
@@ -1218,7 +1218,7 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
@@ -1229,18 +1229,18 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
     }
-    
+
     return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
-	// 
-	// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
-	// 
-	// This function is mostly used for debugging during development, in normal operation
-	// the counters should nearly always stay at 0.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
+// 
+// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
+// 
+// This function is mostly used for debugging during development, in normal operation
+// the counters should nearly always stay at 0.
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -1252,7 +1252,7 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 //	* CommunicationMethodWIFI
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
-func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {    
+func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
@@ -1262,7 +1262,7 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return timeoutCount, BrickletError(header.ErrorCode)
@@ -1272,29 +1272,29 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
         binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
     }
-    
+
     return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-	// baudrate can be in the range 400000 to 2000000.
-	// 
-	// If you want to increase the throughput of Bricklets you can increase
-	// the baudrate. If you get a high error count because of high
-	// interference (see GetSPITFPErrorCount) you can decrease the
-	// baudrate.
-	// 
-	// If the dynamic baudrate feature is enabled, the baudrate set by this
-	// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
-	// 
-	// Regulatory testing is done with the default baudrate. If CE compatibility
-	// or similar is necessary in you applications we recommend to not change
-	// the baudrate.
-	// 
-	// The default baudrate for all ports is 1400000.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {    
+// baudrate can be in the range 400000 to 2000000.
+// 
+// If you want to increase the throughput of Bricklets you can increase
+// the baudrate. If you get a high error count because of high
+// interference (see GetSPITFPErrorCount) you can decrease the
+// baudrate.
+// 
+// If the dynamic baudrate feature is enabled, the baudrate set by this
+// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
+// 
+// Regulatory testing is done with the default baudrate. If CE compatibility
+// or similar is necessary in you applications we recommend to not change
+// the baudrate.
+// 
+// The default baudrate for all ports is 1400000.
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
@@ -1305,7 +1305,7 @@ func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1314,14 +1314,14 @@ func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1331,7 +1331,7 @@ func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudrate, BrickletError(header.ErrorCode)
@@ -1341,24 +1341,24 @@ func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
         binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
     }
-    
+
     return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Brick side. All
-	// Bricklets have a similar function that returns the errors on the Bricklet side.
-	// 
-	// .. versionadded:: 2.3.2$nbsp;(Firmware)
-func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Brick side. All
+// Bricklets have a similar function that returns the errors on the Bricklet side.
+// 
+// .. versionadded:: 2.3.2$nbsp;(Firmware)
+func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1368,7 +1368,7 @@ func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -1381,19 +1381,19 @@ func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *ServoBrick) EnableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *ServoBrick) EnableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
@@ -1402,7 +1402,7 @@ func (device *ServoBrick) EnableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1411,19 +1411,19 @@ func (device *ServoBrick) EnableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *ServoBrick) DisableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *ServoBrick) DisableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
@@ -1432,7 +1432,7 @@ func (device *ServoBrick) DisableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1441,14 +1441,14 @@ func (device *ServoBrick) DisableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
@@ -1457,7 +1457,7 @@ func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -1467,16 +1467,16 @@ func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
-	// given port.
-	// 
-	// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
-	// plugins.
-func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {    
+// given port.
+// 
+// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
+// plugins.
+func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, port);
 
@@ -1486,7 +1486,7 @@ func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
@@ -1498,17 +1498,17 @@ func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion u
 	name = ByteSliceToString(resultBuf.Next(40))
 
     }
-    
+
     return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has an
-	// accuracy of +-15%. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has an
+// accuracy of +-15%. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1517,7 +1517,7 @@ func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1527,17 +1527,17 @@ func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
-	// on a Brick inside of a stack will reset the whole stack.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *ServoBrick) Reset() (err error) {    
+// on a Brick inside of a stack will reset the whole stack.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *ServoBrick) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1546,7 +1546,7 @@ func (device *ServoBrick) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1555,19 +1555,19 @@ func (device *ServoBrick) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be '0'-'8' (stack position).
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be '0'-'8' (stack position).
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1576,7 +1576,7 @@ func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, positi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1591,6 +1591,6 @@ func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, positi
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

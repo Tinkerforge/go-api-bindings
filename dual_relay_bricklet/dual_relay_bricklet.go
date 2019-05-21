@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -58,17 +58,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DualRelayBricklet, error
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *DualRelayBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -77,7 +77,7 @@ func (device *DualRelayBricklet) GetResponseExpected(functionID Function) (bool,
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -97,8 +97,8 @@ func (device *DualRelayBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered whenever a monoflop timer reaches 0. The
-	// parameter contain the relay (1 or 2) and the current state of the relay
-	// (the state after the monoflop).
+// parameter contain the relay (1 or 2) and the current state of the relay
+// (the state after the monoflop).
 func (device *DualRelayBricklet) RegisterMonoflopDoneCallback(fn func(uint8, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -112,22 +112,22 @@ binary.Read(buf, binary.LittleEndian, &state)
 }
 
 //Remove a registered Monoflop Done callback.
-func (device *DualRelayBricklet) DeregisterMonoflopDoneCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMonoflopDone), callbackID)
+func (device *DualRelayBricklet) DeregisterMonoflopDoneCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackMonoflopDone), registrationID)
 }
 
 
 // Sets the state of the relays, *true* means on and *false* means off.
-	// For example: (true, false) turns relay 1 on and relay 2 off.
-	// 
-	// If you just want to set one of the relays and don't know the current state
-	// of the other relay, you can get the state with GetState or you
-	// can use SetSelectedState.
-	// 
-	// Running monoflop timers will be overwritten if this function is called.
-	// 
-	// The default value is (*false*, *false*).
-func (device *DualRelayBricklet) SetState(relay1 bool, relay2 bool) (err error) {    
+// For example: (true, false) turns relay 1 on and relay 2 off.
+// 
+// If you just want to set one of the relays and don't know the current state
+// of the other relay, you can get the state with GetState or you
+// can use SetSelectedState.
+// 
+// All running monoflop timers will be aborted if this function is called.
+// 
+// The default value is (*false*, *false*).
+func (device *DualRelayBricklet) SetState(relay1 bool, relay2 bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, relay1);
 	binary.Write(&buf, binary.LittleEndian, relay2);
@@ -138,7 +138,7 @@ func (device *DualRelayBricklet) SetState(relay1 bool, relay2 bool) (err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -147,12 +147,12 @@ func (device *DualRelayBricklet) SetState(relay1 bool, relay2 bool) (err error) 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the state of the relays, *true* means on and *false* means off.
-func (device *DualRelayBricklet) GetState() (relay1 bool, relay2 bool, err error) {    
+func (device *DualRelayBricklet) GetState() (relay1 bool, relay2 bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetState), buf.Bytes())
@@ -161,7 +161,7 @@ func (device *DualRelayBricklet) GetState() (relay1 bool, relay2 bool, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return relay1, relay2, BrickletError(header.ErrorCode)
@@ -172,24 +172,24 @@ func (device *DualRelayBricklet) GetState() (relay1 bool, relay2 bool, err error
 	binary.Read(resultBuf, binary.LittleEndian, &relay2)
 
     }
-    
+
     return relay1, relay2, nil
 }
 
 // The first parameter can be 1 or 2 (relay 1 or relay 2). The second parameter
-	// is the desired state of the relay (*true* means on and *false* means off).
-	// The third parameter indicates the time (in ms) that the relay should hold
-	// the state.
-	// 
-	// If this function is called with the parameters (1, true, 1500):
-	// Relay 1 will turn on and in 1.5s it will turn off again.
-	// 
-	// A monoflop can be used as a failsafe mechanism. For example: Lets assume you
-	// have a RS485 bus and a Dual Relay Bricklet connected to one of the slave
-	// stacks. You can now call this function every second, with a time parameter
-	// of two seconds. The relay will be on all the time. If now the RS485
-	// connection is lost, the relay will turn off in at most two seconds.
-func (device *DualRelayBricklet) SetMonoflop(relay uint8, state bool, time uint32) (err error) {    
+// is the desired state of the relay (*true* means on and *false* means off).
+// The third parameter indicates the time (in ms) that the relay should hold
+// the state.
+// 
+// If this function is called with the parameters (1, true, 1500):
+// Relay 1 will turn on and in 1.5s it will turn off again.
+// 
+// A monoflop can be used as a failsafe mechanism. For example: Lets assume you
+// have a RS485 bus and a Dual Relay Bricklet connected to one of the slave
+// stacks. You can now call this function every second, with a time parameter
+// of two seconds. The relay will be on all the time. If now the RS485
+// connection is lost, the relay will turn off in at most two seconds.
+func (device *DualRelayBricklet) SetMonoflop(relay uint8, state bool, time uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, relay);
 	binary.Write(&buf, binary.LittleEndian, state);
@@ -201,7 +201,7 @@ func (device *DualRelayBricklet) SetMonoflop(relay uint8, state bool, time uint3
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -210,16 +210,16 @@ func (device *DualRelayBricklet) SetMonoflop(relay uint8, state bool, time uint3
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns (for the given relay) the current state and the time as set by
-	// SetMonoflop as well as the remaining time until the state flips.
-	// 
-	// If the timer is not running currently, the remaining time will be returned
-	// as 0.
-func (device *DualRelayBricklet) GetMonoflop(relay uint8) (state bool, time uint32, timeRemaining uint32, err error) {    
+// SetMonoflop as well as the remaining time until the state flips.
+// 
+// If the timer is not running currently, the remaining time will be returned
+// as 0.
+func (device *DualRelayBricklet) GetMonoflop(relay uint8) (state bool, time uint32, timeRemaining uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, relay);
 
@@ -229,7 +229,7 @@ func (device *DualRelayBricklet) GetMonoflop(relay uint8) (state bool, time uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return state, time, timeRemaining, BrickletError(header.ErrorCode)
@@ -241,14 +241,16 @@ func (device *DualRelayBricklet) GetMonoflop(relay uint8) (state bool, time uint
 	binary.Read(resultBuf, binary.LittleEndian, &timeRemaining)
 
     }
-    
+
     return state, time, timeRemaining, nil
 }
 
 // Sets the state of the selected relay (1 or 2), *true* means on and *false* means off.
-	// 
-	// The other relay remains untouched.
-func (device *DualRelayBricklet) SetSelectedState(relay uint8, state bool) (err error) {    
+// 
+// A running monoflop timer for the selected relay will be aborted if this function is called.
+// 
+// The other relay remains untouched.
+func (device *DualRelayBricklet) SetSelectedState(relay uint8, state bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, relay);
 	binary.Write(&buf, binary.LittleEndian, state);
@@ -259,7 +261,7 @@ func (device *DualRelayBricklet) SetSelectedState(relay uint8, state bool) (err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -268,19 +270,19 @@ func (device *DualRelayBricklet) SetSelectedState(relay uint8, state bool) (err 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *DualRelayBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *DualRelayBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -289,7 +291,7 @@ func (device *DualRelayBricklet) GetIdentity() (uid string, connectedUid string,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -304,6 +306,6 @@ func (device *DualRelayBricklet) GetIdentity() (uid string, connectedUid string,
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

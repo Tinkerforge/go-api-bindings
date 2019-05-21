@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -123,17 +123,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ColorBricklet, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ColorBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -142,7 +142,7 @@ func (device *ColorBricklet) GetResponseExpected(functionID Function) (bool, err
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -162,11 +162,11 @@ func (device *ColorBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetColorCallbackPeriod. The parameter is the color
-	// of the sensor as RGBC.
-	// 
-	// The RegisterColorCallback callback is only triggered if the color has changed since the
-	// last triggering.
+// SetColorCallbackPeriod. The parameter is the color
+// of the sensor as RGBC.
+// 
+// The RegisterColorCallback callback is only triggered if the color has changed since the
+// last triggering.
 func (device *ColorBricklet) RegisterColorCallback(fn func(uint16, uint16, uint16, uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -184,18 +184,18 @@ binary.Read(buf, binary.LittleEndian, &c)
 }
 
 //Remove a registered Color callback.
-func (device *ColorBricklet) DeregisterColorCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackColor), callbackID)
+func (device *ColorBricklet) DeregisterColorCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackColor), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetColorCallbackThreshold is reached.
-	// The parameter is the color
-	// of the sensor as RGBC.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetColorCallbackThreshold is reached.
+// The parameter is the color
+// of the sensor as RGBC.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *ColorBricklet) RegisterColorReachedCallback(fn func(uint16, uint16, uint16, uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -213,17 +213,17 @@ binary.Read(buf, binary.LittleEndian, &c)
 }
 
 //Remove a registered Color Reached callback.
-func (device *ColorBricklet) DeregisterColorReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackColorReached), callbackID)
+func (device *ColorBricklet) DeregisterColorReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackColorReached), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetIlluminanceCallbackPeriod. The parameter is the illuminance.
-	// See GetIlluminance for how to interpret this value.
-	// 
-	// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
-	// since the last triggering.
+// SetIlluminanceCallbackPeriod. The parameter is the illuminance.
+// See GetIlluminance for how to interpret this value.
+// 
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
+// since the last triggering.
 func (device *ColorBricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -235,17 +235,17 @@ func (device *ColorBricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64
 }
 
 //Remove a registered Illuminance callback.
-func (device *ColorBricklet) DeregisterIlluminanceCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), callbackID)
+func (device *ColorBricklet) DeregisterIlluminanceCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetColorTemperatureCallbackPeriod. The parameter is the
-	// color temperature in Kelvin.
-	// 
-	// The RegisterColorTemperatureCallback callback is only triggered if the color temperature
-	// has changed since the last triggering.
+// SetColorTemperatureCallbackPeriod. The parameter is the
+// color temperature in Kelvin.
+// 
+// The RegisterColorTemperatureCallback callback is only triggered if the color temperature
+// has changed since the last triggering.
 func (device *ColorBricklet) RegisterColorTemperatureCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -257,28 +257,28 @@ func (device *ColorBricklet) RegisterColorTemperatureCallback(fn func(uint16)) u
 }
 
 //Remove a registered Color Temperature callback.
-func (device *ColorBricklet) DeregisterColorTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackColorTemperature), callbackID)
+func (device *ColorBricklet) DeregisterColorTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackColorTemperature), registrationID)
 }
 
 
 // Returns the measured color of the sensor. The values
-	// have a range of 0 to 65535.
-	// 
-	// The red (r), green (g), blue (b) and clear (c) colors are measured
-	// with four different photodiodes that are responsive at different
-	// wavelengths:
-	// 
-	// .. image:: /Images/Bricklets/bricklet_color_wavelength_chart_600.jpg
-	//    :scale: 100 %
-	//    :alt: Chart Responsivity / Wavelength
-	//    :align: center
-	//    :target: ../../_images/Bricklets/bricklet_color_wavelength_chart_600.jpg
-	// 
-	// If you want to get the color periodically, it is recommended
-	// to use the RegisterColorCallback callback and set the period with
-	// SetColorCallbackPeriod.
-func (device *ColorBricklet) GetColor() (r uint16, g uint16, b uint16, c uint16, err error) {    
+// have a range of 0 to 65535.
+// 
+// The red (r), green (g), blue (b) and clear (c) colors are measured
+// with four different photodiodes that are responsive at different
+// wavelengths:
+// 
+// .. image:: /Images/Bricklets/bricklet_color_wavelength_chart_600.jpg
+//    :scale: 100 %
+//    :alt: Chart Responsivity / Wavelength
+//    :align: center
+//    :target: ../../_images/Bricklets/bricklet_color_wavelength_chart_600.jpg
+// 
+// If you want to get the color periodically, it is recommended
+// to use the RegisterColorCallback callback and set the period with
+// SetColorCallbackPeriod.
+func (device *ColorBricklet) GetColor() (r uint16, g uint16, b uint16, c uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetColor), buf.Bytes())
@@ -287,7 +287,7 @@ func (device *ColorBricklet) GetColor() (r uint16, g uint16, b uint16, c uint16,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return r, g, b, c, BrickletError(header.ErrorCode)
@@ -300,18 +300,18 @@ func (device *ColorBricklet) GetColor() (r uint16, g uint16, b uint16, c uint16,
 	binary.Read(resultBuf, binary.LittleEndian, &c)
 
     }
-    
+
     return r, g, b, c, nil
 }
 
 // Sets the period in ms with which the RegisterColorCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterColorCallback callback is only triggered if the color has changed since the
-	// last triggering.
-	// 
-	// The default value is 0.
-func (device *ColorBricklet) SetColorCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterColorCallback callback is only triggered if the color has changed since the
+// last triggering.
+// 
+// The default value is 0.
+func (device *ColorBricklet) SetColorCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -321,7 +321,7 @@ func (device *ColorBricklet) SetColorCallbackPeriod(period uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -330,12 +330,12 @@ func (device *ColorBricklet) SetColorCallbackPeriod(period uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetColorCallbackPeriod.
-func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error) {    
+func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetColorCallbackPeriod), buf.Bytes())
@@ -344,7 +344,7 @@ func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -354,23 +354,23 @@ func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error)
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterColorReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
-	//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
-	//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0, 0, 0, 0, 0, 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the temperature is *outside* the min and max values
+//  'i'|    Callback is triggered when the temperature is *inside* the min and max values
+//  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0, 0, 0, 0, 0, 0, 0).
 //
 // Associated constants:
 //
@@ -379,7 +379,7 @@ func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error)
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *ColorBricklet) SetColorCallbackThreshold(option ThresholdOption, minR uint16, maxR uint16, minG uint16, maxG uint16, minB uint16, maxB uint16, minC uint16, maxC uint16) (err error) {    
+func (device *ColorBricklet) SetColorCallbackThreshold(option ThresholdOption, minR uint16, maxR uint16, minG uint16, maxG uint16, minB uint16, maxB uint16, minC uint16, maxC uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, minR);
@@ -397,7 +397,7 @@ func (device *ColorBricklet) SetColorCallbackThreshold(option ThresholdOption, m
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -406,7 +406,7 @@ func (device *ColorBricklet) SetColorCallbackThreshold(option ThresholdOption, m
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -419,7 +419,7 @@ func (device *ColorBricklet) SetColorCallbackThreshold(option ThresholdOption, m
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption, minR uint16, maxR uint16, minG uint16, maxG uint16, minB uint16, maxB uint16, minC uint16, maxC uint16, err error) {    
+func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption, minR uint16, maxR uint16, minG uint16, maxG uint16, minB uint16, maxB uint16, minC uint16, maxC uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetColorCallbackThreshold), buf.Bytes())
@@ -428,7 +428,7 @@ func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, minR, maxR, minG, maxG, minB, maxB, minC, maxC, BrickletError(header.ErrorCode)
@@ -446,22 +446,22 @@ func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption
 	binary.Read(resultBuf, binary.LittleEndian, &maxC)
 
     }
-    
+
     return option, minR, maxR, minG, maxG, minB, maxB, minC, maxC, nil
 }
 
 // Sets the period in ms with which the threshold callback
-	// 
-	// * RegisterColorReachedCallback
-	// 
-	// is triggered, if the threshold
-	// 
-	// * SetColorCallbackThreshold
-	// 
-	// keeps being reached.
-	// 
-	// The default value is 100.
-func (device *ColorBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterColorReachedCallback
+// 
+// is triggered, if the threshold
+// 
+// * SetColorCallbackThreshold
+// 
+// keeps being reached.
+// 
+// The default value is 100.
+func (device *ColorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -471,7 +471,7 @@ func (device *ColorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -480,12 +480,12 @@ func (device *ColorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *ColorBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *ColorBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -494,7 +494,7 @@ func (device *ColorBricklet) GetDebouncePeriod() (debounce uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -504,12 +504,12 @@ func (device *ColorBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Turns the LED on.
-func (device *ColorBricklet) LightOn() (err error) {    
+func (device *ColorBricklet) LightOn() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionLightOn), buf.Bytes())
@@ -518,7 +518,7 @@ func (device *ColorBricklet) LightOn() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -527,12 +527,12 @@ func (device *ColorBricklet) LightOn() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Turns the LED off.
-func (device *ColorBricklet) LightOff() (err error) {    
+func (device *ColorBricklet) LightOff() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionLightOff), buf.Bytes())
@@ -541,7 +541,7 @@ func (device *ColorBricklet) LightOff() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -550,20 +550,20 @@ func (device *ColorBricklet) LightOff() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the state of the LED. Possible values are:
-	// 
-	// * 0: On
-	// * 1: Off
+// 
+// * 0: On
+// * 1: Off
 //
 // Associated constants:
 //
 //	* LightOn
 //	* LightOff
-func (device *ColorBricklet) IsLightOn() (light Light, err error) {    
+func (device *ColorBricklet) IsLightOn() (light Light, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsLightOn), buf.Bytes())
@@ -572,7 +572,7 @@ func (device *ColorBricklet) IsLightOn() (light Light, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return light, BrickletError(header.ErrorCode)
@@ -582,37 +582,37 @@ func (device *ColorBricklet) IsLightOn() (light Light, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &light)
 
     }
-    
+
     return light, nil
 }
 
 // Sets the configuration of the sensor. Gain and integration time
-	// can be configured in this way.
-	// 
-	// For configuring the gain:
-	// 
-	// * 0: 1x Gain
-	// * 1: 4x Gain
-	// * 2: 16x Gain
-	// * 3: 60x Gain
-	// 
-	// For configuring the integration time:
-	// 
-	// * 0: 2.4ms
-	// * 1: 24ms
-	// * 2: 101ms
-	// * 3: 154ms
-	// * 4: 700ms
-	// 
-	// Increasing the gain enables the sensor to detect a
-	// color from a higher distance.
-	// 
-	// The integration time provides a trade-off between conversion time
-	// and accuracy. With a longer integration time the values read will
-	// be more accurate but it will take longer time to get the conversion
-	// results.
-	// 
-	// The default values are 60x gain and 154ms integration time.
+// can be configured in this way.
+// 
+// For configuring the gain:
+// 
+// * 0: 1x Gain
+// * 1: 4x Gain
+// * 2: 16x Gain
+// * 3: 60x Gain
+// 
+// For configuring the integration time:
+// 
+// * 0: 2.4ms
+// * 1: 24ms
+// * 2: 101ms
+// * 3: 154ms
+// * 4: 700ms
+// 
+// Increasing the gain enables the sensor to detect a
+// color from a higher distance.
+// 
+// The integration time provides a trade-off between conversion time
+// and accuracy. With a longer integration time the values read will
+// be more accurate but it will take longer time to get the conversion
+// results.
+// 
+// The default values are 60x gain and 154ms integration time.
 //
 // Associated constants:
 //
@@ -625,7 +625,7 @@ func (device *ColorBricklet) IsLightOn() (light Light, err error) {
 //	* IntegrationTime101ms
 //	* IntegrationTime154ms
 //	* IntegrationTime700ms
-func (device *ColorBricklet) SetConfig(gain Gain, integrationTime IntegrationTime) (err error) {    
+func (device *ColorBricklet) SetConfig(gain Gain, integrationTime IntegrationTime) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, gain);
 	binary.Write(&buf, binary.LittleEndian, integrationTime);
@@ -636,7 +636,7 @@ func (device *ColorBricklet) SetConfig(gain Gain, integrationTime IntegrationTim
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -645,7 +645,7 @@ func (device *ColorBricklet) SetConfig(gain Gain, integrationTime IntegrationTim
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -662,7 +662,7 @@ func (device *ColorBricklet) SetConfig(gain Gain, integrationTime IntegrationTim
 //	* IntegrationTime101ms
 //	* IntegrationTime154ms
 //	* IntegrationTime700ms
-func (device *ColorBricklet) GetConfig() (gain Gain, integrationTime IntegrationTime, err error) {    
+func (device *ColorBricklet) GetConfig() (gain Gain, integrationTime IntegrationTime, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetConfig), buf.Bytes())
@@ -671,7 +671,7 @@ func (device *ColorBricklet) GetConfig() (gain Gain, integrationTime Integration
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return gain, integrationTime, BrickletError(header.ErrorCode)
@@ -682,20 +682,20 @@ func (device *ColorBricklet) GetConfig() (gain Gain, integrationTime Integration
 	binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
     }
-    
+
     return gain, integrationTime, nil
 }
 
 // Returns the illuminance affected by the gain and integration time as
-	// set by SetConfig. To get the illuminance in Lux apply this formula::
-	// 
-	//  lux = illuminance * 700 / gain / integration_time
-	// 
-	// To get a correct illuminance measurement make sure that the color
-	// values themself are not saturated. The color value (R, G or B)
-	// is saturated if it is equal to the maximum value of 65535.
-	// In that case you have to reduce the gain, see SetConfig.
-func (device *ColorBricklet) GetIlluminance() (illuminance uint32, err error) {    
+// set by SetConfig. To get the illuminance in Lux apply this formula::
+// 
+//  lux = illuminance * 700 / gain / integration_time
+// 
+// To get a correct illuminance measurement make sure that the color
+// values themself are not saturated. The color value (R, G or B)
+// is saturated if it is equal to the maximum value of 65535.
+// In that case you have to reduce the gain, see SetConfig.
+func (device *ColorBricklet) GetIlluminance() (illuminance uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
@@ -704,7 +704,7 @@ func (device *ColorBricklet) GetIlluminance() (illuminance uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return illuminance, BrickletError(header.ErrorCode)
@@ -714,17 +714,17 @@ func (device *ColorBricklet) GetIlluminance() (illuminance uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &illuminance)
 
     }
-    
+
     return illuminance, nil
 }
 
 // Returns the color temperature in Kelvin.
-	// 
-	// To get a correct color temperature measurement make sure that the color
-	// values themself are not saturated. The color value (R, G or B)
-	// is saturated if it is equal to the maximum value of 65535.
-	// In that case you have to reduce the gain, see SetConfig.
-func (device *ColorBricklet) GetColorTemperature() (colorTemperature uint16, err error) {    
+// 
+// To get a correct color temperature measurement make sure that the color
+// values themself are not saturated. The color value (R, G or B)
+// is saturated if it is equal to the maximum value of 65535.
+// In that case you have to reduce the gain, see SetConfig.
+func (device *ColorBricklet) GetColorTemperature() (colorTemperature uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetColorTemperature), buf.Bytes())
@@ -733,7 +733,7 @@ func (device *ColorBricklet) GetColorTemperature() (colorTemperature uint16, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return colorTemperature, BrickletError(header.ErrorCode)
@@ -743,18 +743,18 @@ func (device *ColorBricklet) GetColorTemperature() (colorTemperature uint16, err
         binary.Read(resultBuf, binary.LittleEndian, &colorTemperature)
 
     }
-    
+
     return colorTemperature, nil
 }
 
 // Sets the period in ms with which the RegisterIlluminanceCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
-	// since the last triggering.
-	// 
-	// The default value is 0.
-func (device *ColorBricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {    
+// periodically. A value of 0 turns the callback off.
+// 
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
+// since the last triggering.
+// 
+// The default value is 0.
+func (device *ColorBricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -764,7 +764,7 @@ func (device *ColorBricklet) SetIlluminanceCallbackPeriod(period uint32) (err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -773,12 +773,12 @@ func (device *ColorBricklet) SetIlluminanceCallbackPeriod(period uint32) (err er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetIlluminanceCallbackPeriod.
-func (device *ColorBricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {    
+func (device *ColorBricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackPeriod), buf.Bytes())
@@ -787,7 +787,7 @@ func (device *ColorBricklet) GetIlluminanceCallbackPeriod() (period uint32, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -797,18 +797,18 @@ func (device *ColorBricklet) GetIlluminanceCallbackPeriod() (period uint32, err 
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterColorTemperatureCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterColorTemperatureCallback callback is only triggered if the color temperature
-	// has changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *ColorBricklet) SetColorTemperatureCallbackPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+// 
+// The RegisterColorTemperatureCallback callback is only triggered if the color temperature
+// has changed since the last triggering.
+// 
+// The default value is 0.
+func (device *ColorBricklet) SetColorTemperatureCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -818,7 +818,7 @@ func (device *ColorBricklet) SetColorTemperatureCallbackPeriod(period uint32) (e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -827,12 +827,12 @@ func (device *ColorBricklet) SetColorTemperatureCallbackPeriod(period uint32) (e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetColorTemperatureCallbackPeriod.
-func (device *ColorBricklet) GetColorTemperatureCallbackPeriod() (period uint32, err error) {    
+func (device *ColorBricklet) GetColorTemperatureCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetColorTemperatureCallbackPeriod), buf.Bytes())
@@ -841,7 +841,7 @@ func (device *ColorBricklet) GetColorTemperatureCallbackPeriod() (period uint32,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -851,19 +851,19 @@ func (device *ColorBricklet) GetColorTemperatureCallbackPeriod() (period uint32,
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *ColorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *ColorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -872,7 +872,7 @@ func (device *ColorBricklet) GetIdentity() (uid string, connectedUid string, pos
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -887,6 +887,6 @@ func (device *ColorBricklet) GetIdentity() (uid string, connectedUid string, pos
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

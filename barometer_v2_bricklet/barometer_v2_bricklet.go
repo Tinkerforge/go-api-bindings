@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -165,17 +165,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (BarometerV2Bricklet, err
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *BarometerV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -184,7 +184,7 @@ func (device *BarometerV2Bricklet) GetResponseExpected(functionID Function) (boo
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -204,9 +204,9 @@ func (device *BarometerV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetAirPressureCallbackConfiguration.
-	// 
-	// The parameter is the same as GetAirPressure.
+// SetAirPressureCallbackConfiguration.
+// 
+// The parameter is the same as GetAirPressure.
 func (device *BarometerV2Bricklet) RegisterAirPressureCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -218,15 +218,15 @@ func (device *BarometerV2Bricklet) RegisterAirPressureCallback(fn func(int32)) u
 }
 
 //Remove a registered Air Pressure callback.
-func (device *BarometerV2Bricklet) DeregisterAirPressureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAirPressure), callbackID)
+func (device *BarometerV2Bricklet) DeregisterAirPressureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAirPressure), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetAltitudeCallbackConfiguration.
-	// 
-	// The parameter is the same as GetAltitude.
+// SetAltitudeCallbackConfiguration.
+// 
+// The parameter is the same as GetAltitude.
 func (device *BarometerV2Bricklet) RegisterAltitudeCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -238,15 +238,15 @@ func (device *BarometerV2Bricklet) RegisterAltitudeCallback(fn func(int32)) uint
 }
 
 //Remove a registered Altitude callback.
-func (device *BarometerV2Bricklet) DeregisterAltitudeCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAltitude), callbackID)
+func (device *BarometerV2Bricklet) DeregisterAltitudeCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAltitude), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetTemperatureCallbackConfiguration.
-	// 
-	// The parameter is the same as GetTemperature.
+// SetTemperatureCallbackConfiguration.
+// 
+// The parameter is the same as GetTemperature.
 func (device *BarometerV2Bricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -258,20 +258,20 @@ func (device *BarometerV2Bricklet) RegisterTemperatureCallback(fn func(int32)) u
 }
 
 //Remove a registered Temperature callback.
-func (device *BarometerV2Bricklet) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+func (device *BarometerV2Bricklet) DeregisterTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationID)
 }
 
 
 // Returns the measured air pressure. The value has a range of
-	// 260000 to 1260000 and is given in mbar/1000, i.e. a value of
-	// 1001092 means that an air pressure of 1001.092 mbar is measured.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterAirPressureCallback callback. You can set the callback configuration
-	// with SetAirPressureCallbackConfiguration.
-func (device *BarometerV2Bricklet) GetAirPressure() (airPressure int32, err error) {    
+// 260000 to 1260000 and is given in mbar/1000, i.e. a value of
+// 1001092 means that an air pressure of 1001.092 mbar is measured.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterAirPressureCallback callback. You can set the callback configuration
+// with SetAirPressureCallbackConfiguration.
+func (device *BarometerV2Bricklet) GetAirPressure() (airPressure int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAirPressure), buf.Bytes())
@@ -280,7 +280,7 @@ func (device *BarometerV2Bricklet) GetAirPressure() (airPressure int32, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return airPressure, BrickletError(header.ErrorCode)
@@ -290,37 +290,37 @@ func (device *BarometerV2Bricklet) GetAirPressure() (airPressure int32, err erro
         binary.Read(resultBuf, binary.LittleEndian, &airPressure)
 
     }
-    
+
     return airPressure, nil
 }
 
 // The period in ms is the period with which the RegisterAirPressureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterAirPressureCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterAirPressureCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -329,7 +329,7 @@ func (device *BarometerV2Bricklet) GetAirPressure() (airPressure int32, err erro
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) SetAirPressureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *BarometerV2Bricklet) SetAirPressureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -343,7 +343,7 @@ func (device *BarometerV2Bricklet) SetAirPressureCallbackConfiguration(period ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -352,7 +352,7 @@ func (device *BarometerV2Bricklet) SetAirPressureCallbackConfiguration(period ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -365,7 +365,7 @@ func (device *BarometerV2Bricklet) SetAirPressureCallbackConfiguration(period ui
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) GetAirPressureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *BarometerV2Bricklet) GetAirPressureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAirPressureCallbackConfiguration), buf.Bytes())
@@ -374,7 +374,7 @@ func (device *BarometerV2Bricklet) GetAirPressureCallbackConfiguration() (period
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -388,20 +388,20 @@ func (device *BarometerV2Bricklet) GetAirPressureCallbackConfiguration() (period
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the relative altitude of the air pressure sensor. The value
-	// is given in mm and is calculated based on the difference between the
-	// current air pressure and the reference air pressure that can be set
-	// with SetReferenceAirPressure.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterAltitudeCallback callback. You can set the callback configuration
-	// with SetAltitudeCallbackConfiguration.
-func (device *BarometerV2Bricklet) GetAltitude() (altitude int32, err error) {    
+// is given in mm and is calculated based on the difference between the
+// current air pressure and the reference air pressure that can be set
+// with SetReferenceAirPressure.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterAltitudeCallback callback. You can set the callback configuration
+// with SetAltitudeCallbackConfiguration.
+func (device *BarometerV2Bricklet) GetAltitude() (altitude int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAltitude), buf.Bytes())
@@ -410,7 +410,7 @@ func (device *BarometerV2Bricklet) GetAltitude() (altitude int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return altitude, BrickletError(header.ErrorCode)
@@ -420,37 +420,37 @@ func (device *BarometerV2Bricklet) GetAltitude() (altitude int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &altitude)
 
     }
-    
+
     return altitude, nil
 }
 
 // The period in ms is the period with which the RegisterAltitudeCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterAltitudeCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterAltitudeCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -459,7 +459,7 @@ func (device *BarometerV2Bricklet) GetAltitude() (altitude int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) SetAltitudeCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *BarometerV2Bricklet) SetAltitudeCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -473,7 +473,7 @@ func (device *BarometerV2Bricklet) SetAltitudeCallbackConfiguration(period uint3
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -482,7 +482,7 @@ func (device *BarometerV2Bricklet) SetAltitudeCallbackConfiguration(period uint3
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -495,7 +495,7 @@ func (device *BarometerV2Bricklet) SetAltitudeCallbackConfiguration(period uint3
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) GetAltitudeCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *BarometerV2Bricklet) GetAltitudeCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAltitudeCallbackConfiguration), buf.Bytes())
@@ -504,7 +504,7 @@ func (device *BarometerV2Bricklet) GetAltitudeCallbackConfiguration() (period ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -518,24 +518,24 @@ func (device *BarometerV2Bricklet) GetAltitudeCallbackConfiguration() (period ui
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the temperature of the air pressure sensor. The value
-	// has a range of -4000 to 8500 and is given in °C/100, i.e. a value
-	// of 2007 means that a temperature of 20.07 °C is measured.
-	// 
-	// This temperature is used internally for temperature compensation
-	// of the air pressure measurement. It is not as accurate as the
-	// temperature measured by the `temperature_v2_bricklet` or the
-	// `temperature_ir_v2_bricklet`.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterTemperatureCallback callback. You can set the callback configuration
-	// with SetTemperatureCallbackConfiguration.
-func (device *BarometerV2Bricklet) GetTemperature() (temperature int32, err error) {    
+// has a range of -4000 to 8500 and is given in °C/100, i.e. a value
+// of 2007 means that a temperature of 20.07 °C is measured.
+// 
+// This temperature is used internally for temperature compensation
+// of the air pressure measurement. It is not as accurate as the
+// temperature measured by the `temperature_v2_bricklet` or the
+// `temperature_ir_v2_bricklet`.
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterTemperatureCallback callback. You can set the callback configuration
+// with SetTemperatureCallbackConfiguration.
+func (device *BarometerV2Bricklet) GetTemperature() (temperature int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
@@ -544,7 +544,7 @@ func (device *BarometerV2Bricklet) GetTemperature() (temperature int32, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -554,37 +554,37 @@ func (device *BarometerV2Bricklet) GetTemperature() (temperature int32, err erro
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -593,7 +593,7 @@ func (device *BarometerV2Bricklet) GetTemperature() (temperature int32, err erro
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *BarometerV2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -607,7 +607,7 @@ func (device *BarometerV2Bricklet) SetTemperatureCallbackConfiguration(period ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -616,7 +616,7 @@ func (device *BarometerV2Bricklet) SetTemperatureCallbackConfiguration(period ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -629,7 +629,7 @@ func (device *BarometerV2Bricklet) SetTemperatureCallbackConfiguration(period ui
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *BarometerV2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *BarometerV2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
@@ -638,7 +638,7 @@ func (device *BarometerV2Bricklet) GetTemperatureCallbackConfiguration() (period
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -652,23 +652,23 @@ func (device *BarometerV2Bricklet) GetTemperatureCallbackConfiguration() (period
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
-	// for the air pressure and temperature measurements.
-	// 
-	// Setting the length to 1 will turn the averaging off. With less
-	// averaging, there is more noise on the data.
-	// 
-	// The range for the averaging is 1-1000.
-	// 
-	// If you want to do long term measurements the longest moving average will give
-	// the cleanest results.
-	// 
-	// The default value is 100.
-func (device *BarometerV2Bricklet) SetMovingAverageConfiguration(movingAverageLengthAirPressure uint16, movingAverageLengthTemperature uint16) (err error) {    
+// for the air pressure and temperature measurements.
+// 
+// Setting the length to 1 will turn the averaging off. With less
+// averaging, there is more noise on the data.
+// 
+// The range for the averaging is 1-1000.
+// 
+// If you want to do long term measurements the longest moving average will give
+// the cleanest results.
+// 
+// The default value is 100.
+func (device *BarometerV2Bricklet) SetMovingAverageConfiguration(movingAverageLengthAirPressure uint16, movingAverageLengthTemperature uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, movingAverageLengthAirPressure);
 	binary.Write(&buf, binary.LittleEndian, movingAverageLengthTemperature);
@@ -679,7 +679,7 @@ func (device *BarometerV2Bricklet) SetMovingAverageConfiguration(movingAverageLe
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -688,13 +688,13 @@ func (device *BarometerV2Bricklet) SetMovingAverageConfiguration(movingAverageLe
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the moving average configuration as set by
-	// SetMovingAverageConfiguration.
-func (device *BarometerV2Bricklet) GetMovingAverageConfiguration() (movingAverageLengthAirPressure uint16, movingAverageLengthTemperature uint16, err error) {    
+// SetMovingAverageConfiguration.
+func (device *BarometerV2Bricklet) GetMovingAverageConfiguration() (movingAverageLengthAirPressure uint16, movingAverageLengthTemperature uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverageConfiguration), buf.Bytes())
@@ -703,7 +703,7 @@ func (device *BarometerV2Bricklet) GetMovingAverageConfiguration() (movingAverag
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return movingAverageLengthAirPressure, movingAverageLengthTemperature, BrickletError(header.ErrorCode)
@@ -714,22 +714,22 @@ func (device *BarometerV2Bricklet) GetMovingAverageConfiguration() (movingAverag
 	binary.Read(resultBuf, binary.LittleEndian, &movingAverageLengthTemperature)
 
     }
-    
+
     return movingAverageLengthAirPressure, movingAverageLengthTemperature, nil
 }
 
 // Sets the reference air pressure in mbar/1000 for the altitude calculation.
-	// Valid values are between 260000 and 1260000. Setting the reference to the
-	// current air pressure results in a calculated altitude of 0mm. Passing 0 is
-	// a shortcut for passing the current air pressure as reference.
-	// 
-	// Well known reference values are the Q codes
-	// https://en.wikipedia.org/wiki/QNH and
-	// https://en.wikipedia.org/wiki/Mean_sea_level_pressure#Mean_sea_level_pressure
-	// used in aviation.
-	// 
-	// The default value is 1013.25mbar.
-func (device *BarometerV2Bricklet) SetReferenceAirPressure(airPressure int32) (err error) {    
+// Valid values are between 260000 and 1260000. Setting the reference to the
+// current air pressure results in a calculated altitude of 0mm. Passing 0 is
+// a shortcut for passing the current air pressure as reference.
+// 
+// Well known reference values are the Q codes
+// https://en.wikipedia.org/wiki/QNH and
+// https://en.wikipedia.org/wiki/Mean_sea_level_pressure#Mean_sea_level_pressure
+// used in aviation.
+// 
+// The default value is 1013.25mbar.
+func (device *BarometerV2Bricklet) SetReferenceAirPressure(airPressure int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, airPressure);
 
@@ -739,7 +739,7 @@ func (device *BarometerV2Bricklet) SetReferenceAirPressure(airPressure int32) (e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -748,12 +748,12 @@ func (device *BarometerV2Bricklet) SetReferenceAirPressure(airPressure int32) (e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the reference air pressure as set by SetReferenceAirPressure.
-func (device *BarometerV2Bricklet) GetReferenceAirPressure() (airPressure int32, err error) {    
+func (device *BarometerV2Bricklet) GetReferenceAirPressure() (airPressure int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetReferenceAirPressure), buf.Bytes())
@@ -762,7 +762,7 @@ func (device *BarometerV2Bricklet) GetReferenceAirPressure() (airPressure int32,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return airPressure, BrickletError(header.ErrorCode)
@@ -772,26 +772,26 @@ func (device *BarometerV2Bricklet) GetReferenceAirPressure() (airPressure int32,
         binary.Read(resultBuf, binary.LittleEndian, &airPressure)
 
     }
-    
+
     return airPressure, nil
 }
 
 // Sets the one point calibration (OPC) values for the air pressure measurement.
-	// 
-	// Before the Bricklet can be calibrated any previous calibration has to be removed
-	// by setting ``measured air pressure`` and ``actual air pressure`` to 0.
-	// 
-	// Then the current air pressure has to be measured using the Bricklet
-	// (``measured air pressure``) and with and accurate reference barometer
-	// (``actual air pressure``) at the same time and passed to this function in
-	// mbar/1000.
-	// 
-	// After proper calibration the air pressure measurement can achieve an accuracy
-	// up to 0.2 mbar.
-	// 
-	// The calibration is saved in the EEPROM of the Bricklet and only needs to be
-	// configured once.
-func (device *BarometerV2Bricklet) SetCalibration(measuredAirPressure int32, actualAirPressure int32) (err error) {    
+// 
+// Before the Bricklet can be calibrated any previous calibration has to be removed
+// by setting ``measured air pressure`` and ``actual air pressure`` to 0.
+// 
+// Then the current air pressure has to be measured using the Bricklet
+// (``measured air pressure``) and with and accurate reference barometer
+// (``actual air pressure``) at the same time and passed to this function in
+// mbar/1000.
+// 
+// After proper calibration the air pressure measurement can achieve an accuracy
+// up to 0.2 mbar.
+// 
+// The calibration is saved in the EEPROM of the Bricklet and only needs to be
+// configured once.
+func (device *BarometerV2Bricklet) SetCalibration(measuredAirPressure int32, actualAirPressure int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, measuredAirPressure);
 	binary.Write(&buf, binary.LittleEndian, actualAirPressure);
@@ -802,7 +802,7 @@ func (device *BarometerV2Bricklet) SetCalibration(measuredAirPressure int32, act
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -811,13 +811,13 @@ func (device *BarometerV2Bricklet) SetCalibration(measuredAirPressure int32, act
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the air pressure one point calibration values as set by
-	// SetCalibration.
-func (device *BarometerV2Bricklet) GetCalibration() (measuredAirPressure int32, actualAirPressure int32, err error) {    
+// SetCalibration.
+func (device *BarometerV2Bricklet) GetCalibration() (measuredAirPressure int32, actualAirPressure int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCalibration), buf.Bytes())
@@ -826,7 +826,7 @@ func (device *BarometerV2Bricklet) GetCalibration() (measuredAirPressure int32, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return measuredAirPressure, actualAirPressure, BrickletError(header.ErrorCode)
@@ -837,22 +837,22 @@ func (device *BarometerV2Bricklet) GetCalibration() (measuredAirPressure int32, 
 	binary.Read(resultBuf, binary.LittleEndian, &actualAirPressure)
 
     }
-    
+
     return measuredAirPressure, actualAirPressure, nil
 }
 
 // Configures the data rate and air pressure low pass filter. The low pass filter
-	// cut-off frequency (if enabled) can be set to 1/9th or 1/20th of the configure
-	// data rate to decrease the noise on the air pressure data.
-	// 
-	// The low pass filter configuration only applies to the air pressure measurement.
-	// There is no low pass filter for the temperature measurement.
-	// 
-	// A higher data rate will result in a less precise temperature because of
-	// self-heating of the sensor. If the accuracy of the temperature reading is
-	// important to you, we would recommend the 1Hz data rate.
-	// 
-	// The default values are 50Hz data rate and 1/9th low pass filter.
+// cut-off frequency (if enabled) can be set to 1/9th or 1/20th of the configure
+// data rate to decrease the noise on the air pressure data.
+// 
+// The low pass filter configuration only applies to the air pressure measurement.
+// There is no low pass filter for the temperature measurement.
+// 
+// A higher data rate will result in a less precise temperature because of
+// self-heating of the sensor. If the accuracy of the temperature reading is
+// important to you, we would recommend the 1Hz data rate.
+// 
+// The default values are 50Hz data rate and 1/9th low pass filter.
 //
 // Associated constants:
 //
@@ -865,7 +865,7 @@ func (device *BarometerV2Bricklet) GetCalibration() (measuredAirPressure int32, 
 //	* LowPassFilterOff
 //	* LowPassFilter19th
 //	* LowPassFilter120th
-func (device *BarometerV2Bricklet) SetSensorConfiguration(dataRate DataRate, airPressureLowPassFilter LowPassFilter) (err error) {    
+func (device *BarometerV2Bricklet) SetSensorConfiguration(dataRate DataRate, airPressureLowPassFilter LowPassFilter) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, dataRate);
 	binary.Write(&buf, binary.LittleEndian, airPressureLowPassFilter);
@@ -876,7 +876,7 @@ func (device *BarometerV2Bricklet) SetSensorConfiguration(dataRate DataRate, air
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -885,7 +885,7 @@ func (device *BarometerV2Bricklet) SetSensorConfiguration(dataRate DataRate, air
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -902,7 +902,7 @@ func (device *BarometerV2Bricklet) SetSensorConfiguration(dataRate DataRate, air
 //	* LowPassFilterOff
 //	* LowPassFilter19th
 //	* LowPassFilter120th
-func (device *BarometerV2Bricklet) GetSensorConfiguration() (dataRate DataRate, airPressureLowPassFilter LowPassFilter, err error) {    
+func (device *BarometerV2Bricklet) GetSensorConfiguration() (dataRate DataRate, airPressureLowPassFilter LowPassFilter, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSensorConfiguration), buf.Bytes())
@@ -911,7 +911,7 @@ func (device *BarometerV2Bricklet) GetSensorConfiguration() (dataRate DataRate, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return dataRate, airPressureLowPassFilter, BrickletError(header.ErrorCode)
@@ -922,22 +922,22 @@ func (device *BarometerV2Bricklet) GetSensorConfiguration() (dataRate DataRate, 
 	binary.Read(resultBuf, binary.LittleEndian, &airPressureLowPassFilter)
 
     }
-    
+
     return dataRate, airPressureLowPassFilter, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *BarometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *BarometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -946,7 +946,7 @@ func (device *BarometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -959,19 +959,19 @@ func (device *BarometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum 
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -986,7 +986,7 @@ func (device *BarometerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum 
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *BarometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *BarometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -996,7 +996,7 @@ func (device *BarometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (statu
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1006,7 +1006,7 @@ func (device *BarometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (statu
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -1019,7 +1019,7 @@ func (device *BarometerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (statu
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *BarometerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *BarometerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -1028,7 +1028,7 @@ func (device *BarometerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1038,17 +1038,17 @@ func (device *BarometerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *BarometerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *BarometerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -1058,7 +1058,7 @@ func (device *BarometerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1067,19 +1067,19 @@ func (device *BarometerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *BarometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *BarometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -1089,7 +1089,7 @@ func (device *BarometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1099,17 +1099,17 @@ func (device *BarometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, 
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -1117,7 +1117,7 @@ func (device *BarometerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, 
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *BarometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *BarometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1127,7 +1127,7 @@ func (device *BarometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1136,7 +1136,7 @@ func (device *BarometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1148,7 +1148,7 @@ func (device *BarometerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (e
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *BarometerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *BarometerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -1157,7 +1157,7 @@ func (device *BarometerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1167,17 +1167,17 @@ func (device *BarometerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig,
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *BarometerV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *BarometerV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1186,7 +1186,7 @@ func (device *BarometerV2Bricklet) GetChipTemperature() (temperature int16, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1196,17 +1196,17 @@ func (device *BarometerV2Bricklet) GetChipTemperature() (temperature int16, err 
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *BarometerV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *BarometerV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1215,7 +1215,7 @@ func (device *BarometerV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1224,16 +1224,16 @@ func (device *BarometerV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *BarometerV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *BarometerV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1243,7 +1243,7 @@ func (device *BarometerV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1252,13 +1252,13 @@ func (device *BarometerV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *BarometerV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *BarometerV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1267,7 +1267,7 @@ func (device *BarometerV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1277,19 +1277,19 @@ func (device *BarometerV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *BarometerV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *BarometerV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1298,7 +1298,7 @@ func (device *BarometerV2Bricklet) GetIdentity() (uid string, connectedUid strin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1313,6 +1313,6 @@ func (device *BarometerV2Bricklet) GetIdentity() (uid string, connectedUid strin
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

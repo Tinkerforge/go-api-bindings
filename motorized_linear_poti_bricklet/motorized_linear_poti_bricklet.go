@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -134,17 +134,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MotorizedLinearPotiBrick
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MotorizedLinearPotiBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -153,7 +153,7 @@ func (device *MotorizedLinearPotiBricklet) GetResponseExpected(functionID Functi
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -173,9 +173,9 @@ func (device *MotorizedLinearPotiBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetPositionCallbackConfiguration.
-	// 
-	// The parameter is the same as GetPosition.
+// SetPositionCallbackConfiguration.
+// 
+// The parameter is the same as GetPosition.
 func (device *MotorizedLinearPotiBricklet) RegisterPositionCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -187,15 +187,15 @@ func (device *MotorizedLinearPotiBricklet) RegisterPositionCallback(fn func(uint
 }
 
 //Remove a registered Position callback.
-func (device *MotorizedLinearPotiBricklet) DeregisterPositionCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPosition), callbackID)
+func (device *MotorizedLinearPotiBricklet) DeregisterPositionCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackPosition), registrationID)
 }
 
 
 // This callback is triggered if a new position as set by
-	// SetMotorPosition is reached.
-	// 
-	// The parameter is the current position.
+// SetMotorPosition is reached.
+// 
+// The parameter is the current position.
 func (device *MotorizedLinearPotiBricklet) RegisterPositionReachedCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -207,19 +207,19 @@ func (device *MotorizedLinearPotiBricklet) RegisterPositionReachedCallback(fn fu
 }
 
 //Remove a registered Position Reached callback.
-func (device *MotorizedLinearPotiBricklet) DeregisterPositionReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), callbackID)
+func (device *MotorizedLinearPotiBricklet) DeregisterPositionReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationID)
 }
 
 
 // Returns the position of the linear potentiometer. The value is
-	// between 0 (slider down) and 100 (slider up).
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterPositionCallback callback. You can set the callback configuration
-	// with SetPositionCallbackConfiguration.
-func (device *MotorizedLinearPotiBricklet) GetPosition() (position uint16, err error) {    
+// between 0 (slider down) and 100 (slider up).
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterPositionCallback callback. You can set the callback configuration
+// with SetPositionCallbackConfiguration.
+func (device *MotorizedLinearPotiBricklet) GetPosition() (position uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
@@ -228,7 +228,7 @@ func (device *MotorizedLinearPotiBricklet) GetPosition() (position uint16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return position, BrickletError(header.ErrorCode)
@@ -238,37 +238,37 @@ func (device *MotorizedLinearPotiBricklet) GetPosition() (position uint16, err e
         binary.Read(resultBuf, binary.LittleEndian, &position)
 
     }
-    
+
     return position, nil
 }
 
 // The period in ms is the period with which the RegisterPositionCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterPositionCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterPositionCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -277,7 +277,7 @@ func (device *MotorizedLinearPotiBricklet) GetPosition() (position uint16, err e
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MotorizedLinearPotiBricklet) SetPositionCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {    
+func (device *MotorizedLinearPotiBricklet) SetPositionCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -291,7 +291,7 @@ func (device *MotorizedLinearPotiBricklet) SetPositionCallbackConfiguration(peri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -300,7 +300,7 @@ func (device *MotorizedLinearPotiBricklet) SetPositionCallbackConfiguration(peri
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -313,7 +313,7 @@ func (device *MotorizedLinearPotiBricklet) SetPositionCallbackConfiguration(peri
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *MotorizedLinearPotiBricklet) GetPositionCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {    
+func (device *MotorizedLinearPotiBricklet) GetPositionCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackConfiguration), buf.Bytes())
@@ -322,7 +322,7 @@ func (device *MotorizedLinearPotiBricklet) GetPositionCallbackConfiguration() (p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -336,29 +336,29 @@ func (device *MotorizedLinearPotiBricklet) GetPositionCallbackConfiguration() (p
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the position of the potentiometer. The motorized potentiometer will
-	// immediately start to approach the position. Depending on the chosen drive mode,
-	// the position will either be reached as fast as possible or in a slow but smooth
-	// motion.
-	// 
-	// The position has to be between 0 (slider down) and 100 (slider up).
-	// 
-	// If you set the hold position parameter to true, the position will automatically
-	// be retained. If a user changes the position of the potentiometer, it will
-	// automatically drive back to the original set point.
-	// 
-	// If the hold position parameter is set to false, the potentiometer can be changed
-	// again by the user as soon as the set point was reached once.
+// immediately start to approach the position. Depending on the chosen drive mode,
+// the position will either be reached as fast as possible or in a slow but smooth
+// motion.
+// 
+// The position has to be between 0 (slider down) and 100 (slider up).
+// 
+// If you set the hold position parameter to true, the position will automatically
+// be retained. If a user changes the position of the potentiometer, it will
+// automatically drive back to the original set point.
+// 
+// If the hold position parameter is set to false, the potentiometer can be changed
+// again by the user as soon as the set point was reached once.
 //
 // Associated constants:
 //
 //	* DriveModeFast
 //	* DriveModeSmooth
-func (device *MotorizedLinearPotiBricklet) SetMotorPosition(position uint16, driveMode DriveMode, holdPosition bool) (err error) {    
+func (device *MotorizedLinearPotiBricklet) SetMotorPosition(position uint16, driveMode DriveMode, holdPosition bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, position);
 	binary.Write(&buf, binary.LittleEndian, driveMode);
@@ -370,7 +370,7 @@ func (device *MotorizedLinearPotiBricklet) SetMotorPosition(position uint16, dri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -379,22 +379,22 @@ func (device *MotorizedLinearPotiBricklet) SetMotorPosition(position uint16, dri
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the last motor position as set by SetMotorPosition. This is not
-	// the current position (use GetPosition to get the current position). This
-	// is the last used set point and configuration.
-	// 
-	// The position reached parameter is true if the position has been reached at one point.
-	// The position may have been changed again in the meantime by the user.
+// the current position (use GetPosition to get the current position). This
+// is the last used set point and configuration.
+// 
+// The position reached parameter is true if the position has been reached at one point.
+// The position may have been changed again in the meantime by the user.
 //
 // Associated constants:
 //
 //	* DriveModeFast
 //	* DriveModeSmooth
-func (device *MotorizedLinearPotiBricklet) GetMotorPosition() (position uint16, driveMode DriveMode, holdPosition bool, positionReached bool, err error) {    
+func (device *MotorizedLinearPotiBricklet) GetMotorPosition() (position uint16, driveMode DriveMode, holdPosition bool, positionReached bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMotorPosition), buf.Bytes())
@@ -403,7 +403,7 @@ func (device *MotorizedLinearPotiBricklet) GetMotorPosition() (position uint16, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return position, driveMode, holdPosition, positionReached, BrickletError(header.ErrorCode)
@@ -416,18 +416,18 @@ func (device *MotorizedLinearPotiBricklet) GetMotorPosition() (position uint16, 
 	binary.Read(resultBuf, binary.LittleEndian, &positionReached)
 
     }
-    
+
     return position, driveMode, holdPosition, positionReached, nil
 }
 
 // Starts a calibration procedure. The potentiometer will be driven to the extreme
-	// points to calibrate the potentiometer.
-	// 
-	// The calibration is saved in flash, it does not have to be called on every start up.
-	// 
-	// The Motorized Linear Poti Bricklet is already factory-calibrated during
-	// testing at Tinkerforge.
-func (device *MotorizedLinearPotiBricklet) Calibrate() (err error) {    
+// points to calibrate the potentiometer.
+// 
+// The calibration is saved in flash, it does not have to be called on every start up.
+// 
+// The Motorized Linear Poti Bricklet is already factory-calibrated during
+// testing at Tinkerforge.
+func (device *MotorizedLinearPotiBricklet) Calibrate() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionCalibrate), buf.Bytes())
@@ -436,7 +436,7 @@ func (device *MotorizedLinearPotiBricklet) Calibrate() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -445,14 +445,14 @@ func (device *MotorizedLinearPotiBricklet) Calibrate() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Enables/Disables RegisterPositionReachedCallback callback.
-	// 
-	// By default the callback is enabled.
-func (device *MotorizedLinearPotiBricklet) SetPositionReachedCallbackConfiguration(enabled bool) (err error) {    
+// 
+// By default the callback is enabled.
+func (device *MotorizedLinearPotiBricklet) SetPositionReachedCallbackConfiguration(enabled bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enabled);
 
@@ -462,7 +462,7 @@ func (device *MotorizedLinearPotiBricklet) SetPositionReachedCallbackConfigurati
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -471,13 +471,13 @@ func (device *MotorizedLinearPotiBricklet) SetPositionReachedCallbackConfigurati
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the RegisterPositionReachedCallback callback configuration
-	// as set by SetPositionReachedCallbackConfiguration.
-func (device *MotorizedLinearPotiBricklet) GetPositionReachedCallbackConfiguration() (enabled bool, err error) {    
+// as set by SetPositionReachedCallbackConfiguration.
+func (device *MotorizedLinearPotiBricklet) GetPositionReachedCallbackConfiguration() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPositionReachedCallbackConfiguration), buf.Bytes())
@@ -486,7 +486,7 @@ func (device *MotorizedLinearPotiBricklet) GetPositionReachedCallbackConfigurati
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -496,22 +496,22 @@ func (device *MotorizedLinearPotiBricklet) GetPositionReachedCallbackConfigurati
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *MotorizedLinearPotiBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *MotorizedLinearPotiBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -520,7 +520,7 @@ func (device *MotorizedLinearPotiBricklet) GetSPITFPErrorCount() (errorCountAckC
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -533,19 +533,19 @@ func (device *MotorizedLinearPotiBricklet) GetSPITFPErrorCount() (errorCountAckC
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -560,7 +560,7 @@ func (device *MotorizedLinearPotiBricklet) GetSPITFPErrorCount() (errorCountAckC
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *MotorizedLinearPotiBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *MotorizedLinearPotiBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -570,7 +570,7 @@ func (device *MotorizedLinearPotiBricklet) SetBootloaderMode(mode BootloaderMode
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -580,7 +580,7 @@ func (device *MotorizedLinearPotiBricklet) SetBootloaderMode(mode BootloaderMode
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -593,7 +593,7 @@ func (device *MotorizedLinearPotiBricklet) SetBootloaderMode(mode BootloaderMode
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *MotorizedLinearPotiBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *MotorizedLinearPotiBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -602,7 +602,7 @@ func (device *MotorizedLinearPotiBricklet) GetBootloaderMode() (mode BootloaderM
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -612,17 +612,17 @@ func (device *MotorizedLinearPotiBricklet) GetBootloaderMode() (mode BootloaderM
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *MotorizedLinearPotiBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *MotorizedLinearPotiBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -632,7 +632,7 @@ func (device *MotorizedLinearPotiBricklet) SetWriteFirmwarePointer(pointer uint3
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -641,19 +641,19 @@ func (device *MotorizedLinearPotiBricklet) SetWriteFirmwarePointer(pointer uint3
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *MotorizedLinearPotiBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *MotorizedLinearPotiBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -663,7 +663,7 @@ func (device *MotorizedLinearPotiBricklet) WriteFirmware(data [64]uint8) (status
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -673,17 +673,17 @@ func (device *MotorizedLinearPotiBricklet) WriteFirmware(data [64]uint8) (status
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -691,7 +691,7 @@ func (device *MotorizedLinearPotiBricklet) WriteFirmware(data [64]uint8) (status
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *MotorizedLinearPotiBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *MotorizedLinearPotiBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -701,7 +701,7 @@ func (device *MotorizedLinearPotiBricklet) SetStatusLEDConfig(config StatusLEDCo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -710,7 +710,7 @@ func (device *MotorizedLinearPotiBricklet) SetStatusLEDConfig(config StatusLEDCo
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -722,7 +722,7 @@ func (device *MotorizedLinearPotiBricklet) SetStatusLEDConfig(config StatusLEDCo
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *MotorizedLinearPotiBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *MotorizedLinearPotiBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -731,7 +731,7 @@ func (device *MotorizedLinearPotiBricklet) GetStatusLEDConfig() (config StatusLE
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -741,17 +741,17 @@ func (device *MotorizedLinearPotiBricklet) GetStatusLEDConfig() (config StatusLE
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *MotorizedLinearPotiBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *MotorizedLinearPotiBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -760,7 +760,7 @@ func (device *MotorizedLinearPotiBricklet) GetChipTemperature() (temperature int
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -770,17 +770,17 @@ func (device *MotorizedLinearPotiBricklet) GetChipTemperature() (temperature int
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *MotorizedLinearPotiBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *MotorizedLinearPotiBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -789,7 +789,7 @@ func (device *MotorizedLinearPotiBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -798,16 +798,16 @@ func (device *MotorizedLinearPotiBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *MotorizedLinearPotiBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *MotorizedLinearPotiBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -817,7 +817,7 @@ func (device *MotorizedLinearPotiBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -826,13 +826,13 @@ func (device *MotorizedLinearPotiBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *MotorizedLinearPotiBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *MotorizedLinearPotiBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -841,7 +841,7 @@ func (device *MotorizedLinearPotiBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -851,19 +851,19 @@ func (device *MotorizedLinearPotiBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *MotorizedLinearPotiBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *MotorizedLinearPotiBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -872,7 +872,7 @@ func (device *MotorizedLinearPotiBricklet) GetIdentity() (uid string, connectedU
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -887,6 +887,6 @@ func (device *MotorizedLinearPotiBricklet) GetIdentity() (uid string, connectedU
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

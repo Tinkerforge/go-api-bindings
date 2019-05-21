@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -89,17 +89,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureIRBricklet, e
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *TemperatureIRBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -108,7 +108,7 @@ func (device *TemperatureIRBricklet) GetResponseExpected(functionID Function) (b
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -128,11 +128,11 @@ func (device *TemperatureIRBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically with the period that is set by
-	// SetAmbientTemperatureCallbackPeriod. The parameter is the
-	// ambient temperature of the sensor.
-	// 
-	// The RegisterAmbientTemperatureCallback callback is only triggered if the ambient
-	// temperature has changed since the last triggering.
+// SetAmbientTemperatureCallbackPeriod. The parameter is the
+// ambient temperature of the sensor.
+// 
+// The RegisterAmbientTemperatureCallback callback is only triggered if the ambient
+// temperature has changed since the last triggering.
 func (device *TemperatureIRBricklet) RegisterAmbientTemperatureCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -144,17 +144,17 @@ func (device *TemperatureIRBricklet) RegisterAmbientTemperatureCallback(fn func(
 }
 
 //Remove a registered Ambient Temperature callback.
-func (device *TemperatureIRBricklet) DeregisterAmbientTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperature), callbackID)
+func (device *TemperatureIRBricklet) DeregisterAmbientTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperature), registrationID)
 }
 
 
 // This callback is triggered periodically with the period that is set by
-	// SetObjectTemperatureCallbackPeriod. The parameter is the
-	// object temperature of the sensor.
-	// 
-	// The RegisterObjectTemperatureCallback callback is only triggered if the object
-	// temperature has changed since the last triggering.
+// SetObjectTemperatureCallbackPeriod. The parameter is the
+// object temperature of the sensor.
+// 
+// The RegisterObjectTemperatureCallback callback is only triggered if the object
+// temperature has changed since the last triggering.
 func (device *TemperatureIRBricklet) RegisterObjectTemperatureCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -166,17 +166,17 @@ func (device *TemperatureIRBricklet) RegisterObjectTemperatureCallback(fn func(i
 }
 
 //Remove a registered Object Temperature callback.
-func (device *TemperatureIRBricklet) DeregisterObjectTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperature), callbackID)
+func (device *TemperatureIRBricklet) DeregisterObjectTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperature), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetAmbientTemperatureCallbackThreshold is reached.
-	// The parameter is the ambient temperature of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetAmbientTemperatureCallbackThreshold is reached.
+// The parameter is the ambient temperature of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *TemperatureIRBricklet) RegisterAmbientTemperatureReachedCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -188,17 +188,17 @@ func (device *TemperatureIRBricklet) RegisterAmbientTemperatureReachedCallback(f
 }
 
 //Remove a registered Ambient Temperature Reached callback.
-func (device *TemperatureIRBricklet) DeregisterAmbientTemperatureReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperatureReached), callbackID)
+func (device *TemperatureIRBricklet) DeregisterAmbientTemperatureReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperatureReached), registrationID)
 }
 
 
 // This callback is triggered when the threshold as set by
-	// SetObjectTemperatureCallbackThreshold is reached.
-	// The parameter is the object temperature of the sensor.
-	// 
-	// If the threshold keeps being reached, the callback is triggered periodically
-	// with the period as set by SetDebouncePeriod.
+// SetObjectTemperatureCallbackThreshold is reached.
+// The parameter is the object temperature of the sensor.
+// 
+// If the threshold keeps being reached, the callback is triggered periodically
+// with the period as set by SetDebouncePeriod.
 func (device *TemperatureIRBricklet) RegisterObjectTemperatureReachedCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -210,20 +210,20 @@ func (device *TemperatureIRBricklet) RegisterObjectTemperatureReachedCallback(fn
 }
 
 //Remove a registered Object Temperature Reached callback.
-func (device *TemperatureIRBricklet) DeregisterObjectTemperatureReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperatureReached), callbackID)
+func (device *TemperatureIRBricklet) DeregisterObjectTemperatureReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperatureReached), registrationID)
 }
 
 
 // Returns the ambient temperature of the sensor. The value
-	// has a range of -400 to 1250 and is given in °C/10,
-	// e.g. a value of 423 means that an ambient temperature of 42.3 °C is
-	// measured.
-	// 
-	// If you want to get the ambient temperature periodically, it is recommended
-	// to use the RegisterAmbientTemperatureCallback callback and set the period with
-	// SetAmbientTemperatureCallbackPeriod.
-func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16, err error) {    
+// has a range of -400 to 1250 and is given in °C/10,
+// e.g. a value of 423 means that an ambient temperature of 42.3 °C is
+// measured.
+// 
+// If you want to get the ambient temperature periodically, it is recommended
+// to use the RegisterAmbientTemperatureCallback callback and set the period with
+// SetAmbientTemperatureCallbackPeriod.
+func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperature), buf.Bytes())
@@ -232,7 +232,7 @@ func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -242,24 +242,24 @@ func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16,
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Returns the object temperature of the sensor, i.e. the temperature
-	// of the surface of the object the sensor is aimed at. The value
-	// has a range of -700 to 3800 and is given in °C/10,
-	// e.g. a value of 3001 means that a temperature of 300.1 °C is measured
-	// on the surface of the object.
-	// 
-	// The temperature of different materials is dependent on their `emissivity
-	// <https://en.wikipedia.org/wiki/Emissivity>`__. The emissivity of the material
-	// can be set with SetEmissivity.
-	// 
-	// If you want to get the object temperature periodically, it is recommended
-	// to use the RegisterObjectTemperatureCallback callback and set the period with
-	// SetObjectTemperatureCallbackPeriod.
-func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, err error) {    
+// of the surface of the object the sensor is aimed at. The value
+// has a range of -700 to 3800 and is given in °C/10,
+// e.g. a value of 3001 means that a temperature of 300.1 °C is measured
+// on the surface of the object.
+// 
+// The temperature of different materials is dependent on their `emissivity
+// <https://en.wikipedia.org/wiki/Emissivity>`__. The emissivity of the material
+// can be set with SetEmissivity.
+// 
+// If you want to get the object temperature periodically, it is recommended
+// to use the RegisterObjectTemperatureCallback callback and set the period with
+// SetObjectTemperatureCallbackPeriod.
+func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperature), buf.Bytes())
@@ -268,7 +268,7 @@ func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -278,25 +278,25 @@ func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, 
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Sets the https://en.wikipedia.org/wiki/Emissivity that is
-	// used to calculate the surface temperature as returned by
-	// :func:http://www.infrared-thermography.com/material.htm.
-	// 
-	// The parameter of SetEmissivity has to be given with a factor of
-	// 65535 (16-bit). For example: An emissivity of 0.1 can be set with the
-	// value 6553, an emissivity of 0.5 with the value 32767 and so on.
-	// 
-	// Note
-	//  If you need a precise measurement for the object temperature, it is
-	//  absolutely crucial that you also provide a precise emissivity.
-	// 
-	// The default emissivity is 1.0 (value of 65535) and the minimum emissivity the
-	// sensor can handle is 0.1 (value of 6553).
-func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error) {    
+// used to calculate the surface temperature as returned by
+// :func:http://www.infrared-thermography.com/material.htm.
+// 
+// The parameter of SetEmissivity has to be given with a factor of
+// 65535 (16-bit). For example: An emissivity of 0.1 can be set with the
+// value 6553, an emissivity of 0.5 with the value 32767 and so on.
+// 
+// Note
+//  If you need a precise measurement for the object temperature, it is
+//  absolutely crucial that you also provide a precise emissivity.
+// 
+// The default emissivity is 1.0 (value of 65535) and the minimum emissivity the
+// sensor can handle is 0.1 (value of 6553).
+func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, emissivity);
 
@@ -306,7 +306,7 @@ func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -315,12 +315,12 @@ func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the emissivity as set by SetEmissivity.
-func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err error) {    
+func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetEmissivity), buf.Bytes())
@@ -329,7 +329,7 @@ func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return emissivity, BrickletError(header.ErrorCode)
@@ -339,18 +339,18 @@ func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err err
         binary.Read(resultBuf, binary.LittleEndian, &emissivity)
 
     }
-    
+
     return emissivity, nil
 }
 
 // Sets the period in ms with which the RegisterAmbientTemperatureCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterAmbientTemperatureCallback callback is only triggered if the temperature has
-	// changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+// 
+// The RegisterAmbientTemperatureCallback callback is only triggered if the temperature has
+// changed since the last triggering.
+// 
+// The default value is 0.
+func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -360,7 +360,7 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -369,12 +369,12 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetAmbientTemperatureCallbackPeriod.
-func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (period uint32, err error) {    
+func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperatureCallbackPeriod), buf.Bytes())
@@ -383,7 +383,7 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (peri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -393,18 +393,18 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (peri
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the period in ms with which the RegisterObjectTemperatureCallback callback is
-	// triggered periodically. A value of 0 turns the callback off.
-	// 
-	// The RegisterObjectTemperatureCallback callback is only triggered if the temperature
-	// has changed since the last triggering.
-	// 
-	// The default value is 0.
-func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period uint32) (err error) {    
+// triggered periodically. A value of 0 turns the callback off.
+// 
+// The RegisterObjectTemperatureCallback callback is only triggered if the temperature
+// has changed since the last triggering.
+// 
+// The default value is 0.
+func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -414,7 +414,7 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -423,12 +423,12 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period u
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetObjectTemperatureCallbackPeriod.
-func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (period uint32, err error) {    
+func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (period uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperatureCallbackPeriod), buf.Bytes())
@@ -437,7 +437,7 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (perio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -447,23 +447,23 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (perio
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // Sets the thresholds for the RegisterAmbientTemperatureReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the ambient temperature is *outside* the min and max values
-	//  'i'|    Callback is triggered when the ambient temperature is *inside* the min and max values
-	//  '<'|    Callback is triggered when the ambient temperature is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the ambient temperature is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the ambient temperature is *outside* the min and max values
+//  'i'|    Callback is triggered when the ambient temperature is *inside* the min and max values
+//  '<'|    Callback is triggered when the ambient temperature is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the ambient temperature is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -472,7 +472,7 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (perio
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {    
+func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -484,7 +484,7 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(opti
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -493,7 +493,7 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(opti
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -506,7 +506,7 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(opti
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {    
+func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperatureCallbackThreshold), buf.Bytes())
@@ -515,7 +515,7 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (o
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -527,23 +527,23 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (o
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterObjectTemperatureReachedCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Callback is turned off
-	//  'o'|    Callback is triggered when the object temperature is *outside* the min and max values
-	//  'i'|    Callback is triggered when the object temperature is *inside* the min and max values
-	//  '<'|    Callback is triggered when the object temperature is smaller than the min value (max is ignored)
-	//  '>'|    Callback is triggered when the object temperature is greater than the min value (max is ignored)
-	// 
-	// The default value is ('x', 0, 0).
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Callback is turned off
+//  'o'|    Callback is triggered when the object temperature is *outside* the min and max values
+//  'i'|    Callback is triggered when the object temperature is *inside* the min and max values
+//  '<'|    Callback is triggered when the object temperature is smaller than the min value (max is ignored)
+//  '>'|    Callback is triggered when the object temperature is greater than the min value (max is ignored)
+// 
+// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -552,7 +552,7 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (o
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {    
+func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
@@ -564,7 +564,7 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(optio
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -573,7 +573,7 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(optio
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -586,7 +586,7 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(optio
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {    
+func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperatureCallbackThreshold), buf.Bytes())
@@ -595,7 +595,7 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (op
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return option, min, max, BrickletError(header.ErrorCode)
@@ -607,24 +607,24 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (op
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
-	// 
-	// * RegisterAmbientTemperatureReachedCallback,
-	// * RegisterObjectTemperatureReachedCallback
-	// 
-	// are triggered, if the thresholds
-	// 
-	// * SetAmbientTemperatureCallbackThreshold,
-	// * SetObjectTemperatureCallbackThreshold
-	// 
-	// keep being reached.
-	// 
-	// The default value is 100.
-func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err error) {    
+// 
+// * RegisterAmbientTemperatureReachedCallback,
+// * RegisterObjectTemperatureReachedCallback
+// 
+// are triggered, if the thresholds
+// 
+// * SetAmbientTemperatureCallbackThreshold,
+// * SetObjectTemperatureCallbackThreshold
+// 
+// keep being reached.
+// 
+// The default value is 100.
+func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, debounce);
 
@@ -634,7 +634,7 @@ func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -643,12 +643,12 @@ func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
-func (device *TemperatureIRBricklet) GetDebouncePeriod() (debounce uint32, err error) {    
+func (device *TemperatureIRBricklet) GetDebouncePeriod() (debounce uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
@@ -657,7 +657,7 @@ func (device *TemperatureIRBricklet) GetDebouncePeriod() (debounce uint32, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return debounce, BrickletError(header.ErrorCode)
@@ -667,19 +667,19 @@ func (device *TemperatureIRBricklet) GetDebouncePeriod() (debounce uint32, err e
         binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *TemperatureIRBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *TemperatureIRBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -688,7 +688,7 @@ func (device *TemperatureIRBricklet) GetIdentity() (uid string, connectedUid str
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -703,6 +703,6 @@ func (device *TemperatureIRBricklet) GetIdentity() (uid string, connectedUid str
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

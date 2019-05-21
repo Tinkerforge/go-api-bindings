@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -42,6 +42,9 @@ const (
 	FunctionGetAirPressure Function = 19
 	FunctionSetAirPressureCallbackConfiguration Function = 20
 	FunctionGetAirPressureCallbackConfiguration Function = 21
+	FunctionRemoveCalibration Function = 23
+	FunctionSetBackgroundCalibrationDuration Function = 24
+	FunctionGetBackgroundCalibrationDuration Function = 25
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -78,6 +81,13 @@ const (
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
+)
+
+type Duration uint8
+
+const (
+    Duration4Days Duration = 0
+	Duration28Days Duration = 1
 )
 
 type BootloaderMode uint8
@@ -119,7 +129,7 @@ const DeviceDisplayName = "Air Quality Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AirQualityBricklet, error) {
     internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
     if err != nil {
         return AirQualityBricklet{}, err
     }
@@ -140,6 +150,9 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AirQualityBricklet, erro
 	dev.ResponseExpected[FunctionGetAirPressure] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAirPressureCallbackConfiguration] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetAirPressureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionRemoveCalibration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionSetBackgroundCalibrationDuration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetBackgroundCalibrationDuration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -157,17 +170,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AirQualityBricklet, erro
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *AirQualityBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -176,7 +189,7 @@ func (device *AirQualityBricklet) GetResponseExpected(functionID Function) (bool
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -196,9 +209,9 @@ func (device *AirQualityBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetAllValuesCallbackConfiguration.
-	// 
-	// The parameters are the same as GetAllValues.
+// SetAllValuesCallbackConfiguration.
+// 
+// The parameters are the same as GetAllValues.
 func (device *AirQualityBricklet) RegisterAllValuesCallback(fn func(int32, Accuracy, int32, int32, int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -218,15 +231,15 @@ binary.Read(buf, binary.LittleEndian, &airPressure)
 }
 
 //Remove a registered All Values callback.
-func (device *AirQualityBricklet) DeregisterAllValuesCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllValues), callbackID)
+func (device *AirQualityBricklet) DeregisterAllValuesCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAllValues), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetIAQIndexCallbackConfiguration.
-	// 
-	// The parameters are the same as GetIAQIndex.
+// SetIAQIndexCallbackConfiguration.
+// 
+// The parameters are the same as GetIAQIndex.
 func (device *AirQualityBricklet) RegisterIAQIndexCallback(fn func(int32, Accuracy)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -240,15 +253,15 @@ binary.Read(buf, binary.LittleEndian, &iaqIndexAccuracy)
 }
 
 //Remove a registered IAQ Index callback.
-func (device *AirQualityBricklet) DeregisterIAQIndexCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIAQIndex), callbackID)
+func (device *AirQualityBricklet) DeregisterIAQIndexCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackIAQIndex), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetTemperatureCallbackConfiguration.
-	// 
-	// The parameter is the same as GetTemperature.
+// SetTemperatureCallbackConfiguration.
+// 
+// The parameter is the same as GetTemperature.
 func (device *AirQualityBricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -260,15 +273,15 @@ func (device *AirQualityBricklet) RegisterTemperatureCallback(fn func(int32)) ui
 }
 
 //Remove a registered Temperature callback.
-func (device *AirQualityBricklet) DeregisterTemperatureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), callbackID)
+func (device *AirQualityBricklet) DeregisterTemperatureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetHumidityCallbackConfiguration.
-	// 
-	// The parameter is the same as GetHumidity.
+// SetHumidityCallbackConfiguration.
+// 
+// The parameter is the same as GetHumidity.
 func (device *AirQualityBricklet) RegisterHumidityCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -280,15 +293,15 @@ func (device *AirQualityBricklet) RegisterHumidityCallback(fn func(int32)) uint6
 }
 
 //Remove a registered Humidity callback.
-func (device *AirQualityBricklet) DeregisterHumidityCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackHumidity), callbackID)
+func (device *AirQualityBricklet) DeregisterHumidityCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackHumidity), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetAirPressureCallbackConfiguration.
-	// 
-	// The parameter is the same as GetAirPressure.
+// SetAirPressureCallbackConfiguration.
+// 
+// The parameter is the same as GetAirPressure.
 func (device *AirQualityBricklet) RegisterAirPressureCallback(fn func(int32)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -300,28 +313,28 @@ func (device *AirQualityBricklet) RegisterAirPressureCallback(fn func(int32)) ui
 }
 
 //Remove a registered Air Pressure callback.
-func (device *AirQualityBricklet) DeregisterAirPressureCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAirPressure), callbackID)
+func (device *AirQualityBricklet) DeregisterAirPressureCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAirPressure), registrationID)
 }
 
 
 // Returns all values measured by the Air Quality Bricklet. The values are
-	// IAQ (Indoor Air Quality) Index, IAQ Index Accuracy, Temperature, Humidity and
-	// Air Pressure.
-	// 
-	// .. image:: /Images/Misc/bricklet_air_quality_iaq_index.png
-	//    :scale: 100 %
-	//    :alt: Air Quality Index description
-	//    :align: center
-	//    :target: ../../_images/Misc/bricklet_air_quality_iaq_index.png
-	// 
-	// The values have these ranges and units:
-	// 
-	// * IAQ Index: 0 to 500, higher value means greater level of air pollution
-	// * IAQ Index Accuracy: 0 = unreliable to 3 = high
-	// * Temperature: in steps of 0.01 °C
-	// * Humidity: in steps of 0.01 %RH
-	// * Air Pressure: in steps of 0.01 mbar
+// IAQ (Indoor Air Quality) Index, IAQ Index Accuracy, Temperature, Humidity and
+// Air Pressure.
+// 
+// .. image:: /Images/Misc/bricklet_air_quality_iaq_index.png
+//    :scale: 100 %
+//    :alt: Air Quality Index description
+//    :align: center
+//    :target: ../../_images/Misc/bricklet_air_quality_iaq_index.png
+// 
+// The values have these ranges and units:
+// 
+// * IAQ Index: 0 to 500, higher value means greater level of air pollution
+// * IAQ Index Accuracy: 0 = unreliable to 3 = high
+// * Temperature: in steps of 0.01 °C
+// * Humidity: in steps of 0.01 %RH
+// * Air Pressure: in steps of 0.01 mbar
 //
 // Associated constants:
 //
@@ -329,7 +342,7 @@ func (device *AirQualityBricklet) DeregisterAirPressureCallback(callbackID uint6
 //	* AccuracyLow
 //	* AccuracyMedium
 //	* AccuracyHigh
-func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccuracy Accuracy, temperature int32, humidity int32, airPressure int32, err error) {    
+func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccuracy Accuracy, temperature int32, humidity int32, airPressure int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAllValues), buf.Bytes())
@@ -338,7 +351,7 @@ func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccura
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return iaqIndex, iaqIndexAccuracy, temperature, humidity, airPressure, BrickletError(header.ErrorCode)
@@ -352,26 +365,26 @@ func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccura
 	binary.Read(resultBuf, binary.LittleEndian, &airPressure)
 
     }
-    
+
     return iaqIndex, iaqIndexAccuracy, temperature, humidity, airPressure, nil
 }
 
 // Sets a temperature offset with resolution 1/100°C. A offset of 10 will decrease
-	// the measured temperature by 0.1°C.
-	// 
-	// If you install this Bricklet into an enclosure and you want to measure the ambient
-	// temperature, you may have to decrease the measured temperature by some value to
-	// compensate for the error because of the heating inside of the enclosure.
-	// 
-	// We recommend that you leave the parts in the enclosure running for at least
-	// 24 hours such that a temperature equilibrium can be reached. After that you can measure
-	// the temperature directly outside of enclosure and set the difference as offset.
-	// 
-	// This temperature offset is used to calculate the relative humidity and
-	// IAQ index measurements. In case the Bricklet is installed in an enclosure, we
-	// recommend to measure and set the temperature offset to imporve the accuracy of
-	// the measurements.
-func (device *AirQualityBricklet) SetTemperatureOffset(offset int32) (err error) {    
+// the measured temperature by 0.1°C.
+// 
+// If you install this Bricklet into an enclosure and you want to measure the ambient
+// temperature, you may have to decrease the measured temperature by some value to
+// compensate for the error because of the heating inside of the enclosure.
+// 
+// We recommend that you leave the parts in the enclosure running for at least
+// 24 hours such that a temperature equilibrium can be reached. After that you can measure
+// the temperature directly outside of enclosure and set the difference as offset.
+// 
+// This temperature offset is used to calculate the relative humidity and
+// IAQ index measurements. In case the Bricklet is installed in an enclosure, we
+// recommend to measure and set the temperature offset to imporve the accuracy of
+// the measurements.
+func (device *AirQualityBricklet) SetTemperatureOffset(offset int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, offset);
 
@@ -381,7 +394,7 @@ func (device *AirQualityBricklet) SetTemperatureOffset(offset int32) (err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -390,13 +403,13 @@ func (device *AirQualityBricklet) SetTemperatureOffset(offset int32) (err error)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the temperature offset as set by
-	// SetTemperatureOffset.
-func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err error) {    
+// SetTemperatureOffset.
+func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureOffset), buf.Bytes())
@@ -405,7 +418,7 @@ func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err erro
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return offset, BrickletError(header.ErrorCode)
@@ -415,22 +428,22 @@ func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err erro
         binary.Read(resultBuf, binary.LittleEndian, &offset)
 
     }
-    
+
     return offset, nil
 }
 
 // The period in ms is the period with which the RegisterAllValuesCallback
-	// callback is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after at least one of the values has changed. If the values didn't
-	// change within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *AirQualityBricklet) SetAllValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after at least one of the values has changed. If the values didn't
+// change within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *AirQualityBricklet) SetAllValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -441,7 +454,7 @@ func (device *AirQualityBricklet) SetAllValuesCallbackConfiguration(period uint3
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -450,13 +463,13 @@ func (device *AirQualityBricklet) SetAllValuesCallbackConfiguration(period uint3
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetAllValuesCallbackConfiguration.
-func (device *AirQualityBricklet) GetAllValuesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetAllValuesCallbackConfiguration.
+func (device *AirQualityBricklet) GetAllValuesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAllValuesCallbackConfiguration), buf.Bytes())
@@ -465,7 +478,7 @@ func (device *AirQualityBricklet) GetAllValuesCallbackConfiguration() (period ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -476,22 +489,22 @@ func (device *AirQualityBricklet) GetAllValuesCallbackConfiguration() (period ui
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the IAQ index and accuracy. The IAQ index goes from
-	// 0 to 500. The higher the IAQ index, the greater the level of air pollution.
-	// 
-	// .. image:: /Images/Misc/bricklet_air_quality_iaq_index.png
-	//    :scale: 100 %
-	//    :alt: IAQ index description
-	//    :align: center
-	//    :target: ../../_images/Misc/bricklet_air_quality_iaq_index.png
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterIAQIndexCallback callback. You can set the callback configuration
-	// with SetIAQIndexCallbackConfiguration.
+// 0 to 500. The higher the IAQ index, the greater the level of air pollution.
+// 
+// .. image:: /Images/Misc/bricklet_air_quality_iaq_index.png
+//    :scale: 100 %
+//    :alt: IAQ index description
+//    :align: center
+//    :target: ../../_images/Misc/bricklet_air_quality_iaq_index.png
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterIAQIndexCallback callback. You can set the callback configuration
+// with SetIAQIndexCallbackConfiguration.
 //
 // Associated constants:
 //
@@ -499,7 +512,7 @@ func (device *AirQualityBricklet) GetAllValuesCallbackConfiguration() (period ui
 //	* AccuracyLow
 //	* AccuracyMedium
 //	* AccuracyHigh
-func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccuracy Accuracy, err error) {    
+func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccuracy Accuracy, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIAQIndex), buf.Bytes())
@@ -508,7 +521,7 @@ func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccurac
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return iaqIndex, iaqIndexAccuracy, BrickletError(header.ErrorCode)
@@ -519,22 +532,22 @@ func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccurac
 	binary.Read(resultBuf, binary.LittleEndian, &iaqIndexAccuracy)
 
     }
-    
+
     return iaqIndex, iaqIndexAccuracy, nil
 }
 
 // The period in ms is the period with which the RegisterIAQIndexCallback
-	// callback is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after at least one of the values has changed. If the values didn't
-	// change within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *AirQualityBricklet) SetIAQIndexCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after at least one of the values has changed. If the values didn't
+// change within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *AirQualityBricklet) SetIAQIndexCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -545,7 +558,7 @@ func (device *AirQualityBricklet) SetIAQIndexCallbackConfiguration(period uint32
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -554,13 +567,13 @@ func (device *AirQualityBricklet) SetIAQIndexCallbackConfiguration(period uint32
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetIAQIndexCallbackConfiguration.
-func (device *AirQualityBricklet) GetIAQIndexCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetIAQIndexCallbackConfiguration.
+func (device *AirQualityBricklet) GetIAQIndexCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIAQIndexCallbackConfiguration), buf.Bytes())
@@ -569,7 +582,7 @@ func (device *AirQualityBricklet) GetIAQIndexCallbackConfiguration() (period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -580,17 +593,17 @@ func (device *AirQualityBricklet) GetIAQIndexCallbackConfiguration() (period uin
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns temperature in steps of 0.01 °C.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterTemperatureCallback callback. You can set the callback configuration
-	// with SetTemperatureCallbackConfiguration.
-func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error) {    
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterTemperatureCallback callback. You can set the callback configuration
+// with SetTemperatureCallbackConfiguration.
+func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
@@ -599,7 +612,7 @@ func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -609,37 +622,37 @@ func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -648,7 +661,7 @@ func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *AirQualityBricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -662,7 +675,7 @@ func (device *AirQualityBricklet) SetTemperatureCallbackConfiguration(period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -671,7 +684,7 @@ func (device *AirQualityBricklet) SetTemperatureCallbackConfiguration(period uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -684,7 +697,7 @@ func (device *AirQualityBricklet) SetTemperatureCallbackConfiguration(period uin
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *AirQualityBricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
@@ -693,7 +706,7 @@ func (device *AirQualityBricklet) GetTemperatureCallbackConfiguration() (period 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -707,17 +720,17 @@ func (device *AirQualityBricklet) GetTemperatureCallbackConfiguration() (period 
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns relative humidity in steps of 0.01 %RH.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterHumidityCallback callback. You can set the callback configuration
-	// with SetHumidityCallbackConfiguration.
-func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {    
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterHumidityCallback callback. You can set the callback configuration
+// with SetHumidityCallbackConfiguration.
+func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetHumidity), buf.Bytes())
@@ -726,7 +739,7 @@ func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return humidity, BrickletError(header.ErrorCode)
@@ -736,37 +749,37 @@ func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &humidity)
 
     }
-    
+
     return humidity, nil
 }
 
 // The period in ms is the period with which the RegisterHumidityCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterHumidityCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterHumidityCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -775,7 +788,7 @@ func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) SetHumidityCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *AirQualityBricklet) SetHumidityCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -789,7 +802,7 @@ func (device *AirQualityBricklet) SetHumidityCallbackConfiguration(period uint32
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -798,7 +811,7 @@ func (device *AirQualityBricklet) SetHumidityCallbackConfiguration(period uint32
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -811,7 +824,7 @@ func (device *AirQualityBricklet) SetHumidityCallbackConfiguration(period uint32
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) GetHumidityCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *AirQualityBricklet) GetHumidityCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetHumidityCallbackConfiguration), buf.Bytes())
@@ -820,7 +833,7 @@ func (device *AirQualityBricklet) GetHumidityCallbackConfiguration() (period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -834,17 +847,17 @@ func (device *AirQualityBricklet) GetHumidityCallbackConfiguration() (period uin
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns air pressure in steps of 0.01 mbar.
-	// 
-	// 
-	// If you want to get the value periodically, it is recommended to use the
-	// RegisterAirPressureCallback callback. You can set the callback configuration
-	// with SetAirPressureCallbackConfiguration.
-func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error) {    
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterAirPressureCallback callback. You can set the callback configuration
+// with SetAirPressureCallbackConfiguration.
+func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAirPressure), buf.Bytes())
@@ -853,7 +866,7 @@ func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return airPressure, BrickletError(header.ErrorCode)
@@ -863,37 +876,37 @@ func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error
         binary.Read(resultBuf, binary.LittleEndian, &airPressure)
 
     }
-    
+
     return airPressure, nil
 }
 
 // The period in ms is the period with which the RegisterAirPressureCallback callback is triggered
-	// periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change
-	// within the period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// It is furthermore possible to constrain the callback with thresholds.
-	// 
-	// The `option`-parameter together with min/max sets a threshold for the RegisterAirPressureCallback callback.
-	// 
-	// The following options are possible:
-	// 
-	//  Option| Description
-	//  --- | --- 
-	//  'x'|    Threshold is turned off
-	//  'o'|    Threshold is triggered when the value is *outside* the min and max values
-	//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
-	//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
-	//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-	// 
-	// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-	// 
-	// The default value is (0, false, 'x', 0, 0).
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterAirPressureCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
+// 
+// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -902,7 +915,7 @@ func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) SetAirPressureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {    
+func (device *AirQualityBricklet) SetAirPressureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -916,7 +929,7 @@ func (device *AirQualityBricklet) SetAirPressureCallbackConfiguration(period uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -925,7 +938,7 @@ func (device *AirQualityBricklet) SetAirPressureCallbackConfiguration(period uin
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -938,7 +951,7 @@ func (device *AirQualityBricklet) SetAirPressureCallbackConfiguration(period uin
 //	* ThresholdOptionInside
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
-func (device *AirQualityBricklet) GetAirPressureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {    
+func (device *AirQualityBricklet) GetAirPressureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAirPressureCallbackConfiguration), buf.Bytes())
@@ -947,7 +960,7 @@ func (device *AirQualityBricklet) GetAirPressureCallbackConfiguration() (period 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
@@ -961,22 +974,136 @@ func (device *AirQualityBricklet) GetAirPressureCallbackConfiguration() (period 
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
     }
-    
+
     return period, valueHasToChange, option, min, max, nil
 }
 
+// Deletes the calibration from flash. After you call this function,
+// you need to power cycle the Air Quality Bricklet.
+// 
+// On the next power up the Bricklet will start a new calibration, as
+// if it was started for the very first time.
+// 
+// The calibration is based on the data of the last four days, so it takes
+// four days until a full calibration is re-established.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *AirQualityBricklet) RemoveCalibration() (err error) {
+        var buf bytes.Buffer
+    
+    resultBytes, err := device.device.Set(uint8(FunctionRemoveCalibration), buf.Bytes())
+    if err != nil {
+        return err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return BrickletError(header.ErrorCode)
+        }
+
+        bytes.NewBuffer(resultBytes[8:])
+        
+    }
+
+    return nil
+}
+
+// The Air Quality Bricklet uses an automatic background calibration mechanism to
+// calculate the IAQ Index. This calibration mechanism considers a history of
+// measured data. The duration of this history can be configured to either be
+// 4 days or 28 days.
+// 
+// If you keep the Bricklet mostly at one place and it does not get moved around
+// to different environments, we recommend that you use a duration of 28 days.
+// 
+// If you change the duration, the current calibration will be discarded and
+// the calibration will start from beginning again. The configuration of the
+// duration is saved in flash, so you should only have to call this function
+// once in the lifetime of the Bricklet.
+// 
+// The Bricklet has to be power cycled after this function is called 
+// for a duration change to take effect.
+// 
+// Before firmware version 2.0.3 this was not configurable and the duration was
+// 4 days.
+// 
+// The default value (since firmware version 2.0.3) is 28 days.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* Duration4Days
+//	* Duration28Days
+func (device *AirQualityBricklet) SetBackgroundCalibrationDuration(duration Duration) (err error) {
+        var buf bytes.Buffer
+    binary.Write(&buf, binary.LittleEndian, duration);
+
+    resultBytes, err := device.device.Set(uint8(FunctionSetBackgroundCalibrationDuration), buf.Bytes())
+    if err != nil {
+        return err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return BrickletError(header.ErrorCode)
+        }
+
+        bytes.NewBuffer(resultBytes[8:])
+        
+    }
+
+    return nil
+}
+
+// Returns the background calibration duration as set by 
+// SetBackgroundCalibrationDuration.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* Duration4Days
+//	* Duration28Days
+func (device *AirQualityBricklet) GetBackgroundCalibrationDuration() (duration Duration, err error) {
+        var buf bytes.Buffer
+    
+    resultBytes, err := device.device.Get(uint8(FunctionGetBackgroundCalibrationDuration), buf.Bytes())
+    if err != nil {
+        return duration, err
+    }
+    if len(resultBytes) > 0 {
+        var header PacketHeader
+
+        header.FillFromBytes(resultBytes)
+        if header.ErrorCode != 0 {
+            return duration, BrickletError(header.ErrorCode)
+        }
+
+        resultBuf := bytes.NewBuffer(resultBytes[8:])
+        binary.Read(resultBuf, binary.LittleEndian, &duration)
+
+    }
+
+    return duration, nil
+}
+
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *AirQualityBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *AirQualityBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -985,7 +1112,7 @@ func (device *AirQualityBricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -998,19 +1125,19 @@ func (device *AirQualityBricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -1025,7 +1152,7 @@ func (device *AirQualityBricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *AirQualityBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *AirQualityBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -1035,7 +1162,7 @@ func (device *AirQualityBricklet) SetBootloaderMode(mode BootloaderMode) (status
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1045,7 +1172,7 @@ func (device *AirQualityBricklet) SetBootloaderMode(mode BootloaderMode) (status
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -1058,7 +1185,7 @@ func (device *AirQualityBricklet) SetBootloaderMode(mode BootloaderMode) (status
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *AirQualityBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *AirQualityBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -1067,7 +1194,7 @@ func (device *AirQualityBricklet) GetBootloaderMode() (mode BootloaderMode, err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -1077,17 +1204,17 @@ func (device *AirQualityBricklet) GetBootloaderMode() (mode BootloaderMode, err 
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *AirQualityBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *AirQualityBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -1097,7 +1224,7 @@ func (device *AirQualityBricklet) SetWriteFirmwarePointer(pointer uint32) (err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1106,19 +1233,19 @@ func (device *AirQualityBricklet) SetWriteFirmwarePointer(pointer uint32) (err e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *AirQualityBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *AirQualityBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -1128,7 +1255,7 @@ func (device *AirQualityBricklet) WriteFirmware(data [64]uint8) (status uint8, e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -1138,17 +1265,17 @@ func (device *AirQualityBricklet) WriteFirmware(data [64]uint8) (status uint8, e
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -1156,7 +1283,7 @@ func (device *AirQualityBricklet) WriteFirmware(data [64]uint8) (status uint8, e
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *AirQualityBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *AirQualityBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -1166,7 +1293,7 @@ func (device *AirQualityBricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1175,7 +1302,7 @@ func (device *AirQualityBricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -1187,7 +1314,7 @@ func (device *AirQualityBricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *AirQualityBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *AirQualityBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -1196,7 +1323,7 @@ func (device *AirQualityBricklet) GetStatusLEDConfig() (config StatusLEDConfig, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -1206,17 +1333,17 @@ func (device *AirQualityBricklet) GetStatusLEDConfig() (config StatusLEDConfig, 
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *AirQualityBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *AirQualityBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1225,7 +1352,7 @@ func (device *AirQualityBricklet) GetChipTemperature() (temperature int16, err e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1235,17 +1362,17 @@ func (device *AirQualityBricklet) GetChipTemperature() (temperature int16, err e
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *AirQualityBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *AirQualityBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1254,7 +1381,7 @@ func (device *AirQualityBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1263,16 +1390,16 @@ func (device *AirQualityBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *AirQualityBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *AirQualityBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1282,7 +1409,7 @@ func (device *AirQualityBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1291,13 +1418,13 @@ func (device *AirQualityBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *AirQualityBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *AirQualityBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1306,7 +1433,7 @@ func (device *AirQualityBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -1316,19 +1443,19 @@ func (device *AirQualityBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *AirQualityBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *AirQualityBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1337,7 +1464,7 @@ func (device *AirQualityBricklet) GetIdentity() (uid string, connectedUid string
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1352,6 +1479,6 @@ func (device *AirQualityBricklet) GetIdentity() (uid string, connectedUid string
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

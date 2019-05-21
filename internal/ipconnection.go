@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+	"unicode"
 )
 
 type BrickletError uint8
@@ -36,11 +37,23 @@ func (e BrickletError) Error() string {
 	}
 }
 
+// The IPConnection gets moved when returning from NewIPConnection(),
+// so it only stores pointers to timeout and autoReconnect, as they are
+// also shared to the socket thread.
+// To ensure that the timeout is 64 bit aligned on 32 bit systems,
+// allocate it in a separate struct.
+type TimeoutStruct struct {
+	timeout         int64
+	autoReconnect   uint32
+	connectionState int32
+}
+
 type IPConnection struct {
 	//When reordering this struct, keep timeout at the top, as it needs to be 64-bit aligned for atomic operations.
-	timeout               int64	
-	connection            net.Conn	
-	connectionState       int32	
+	timeout               *int64
+	autoReconnect         *uint32
+	connection            net.Conn
+	connectionState       *int32
 	terminate             chan struct{}
 	connReq               chan connectRequest
 	disconnReq            chan chan<- struct{}
@@ -50,17 +63,21 @@ type IPConnection struct {
 	connectCallbackReg    chan ConnectCallbackRegistration
 	disconnectCallbackReg chan DisconnectCallbackRegistration
 	enumerateCallbackReg  chan CallbackRegistration
-	ipconCallbackDereg    chan IPConCallbackDeregistration	
-	autoReconnect         chan bool
-	autoReconnectCache    bool
+	ipconCallbackDereg    chan IPConCallbackDeregistration
 	authenticateMutex     sync.Mutex
 }
 
 func NewIPConnection() IPConnection {
-	ipcon := IPConnection{
+	timeoutStruct := TimeoutStruct{
 		(time.Millisecond * 2500).Nanoseconds(),
+		1,
+		0}
+
+	ipcon := IPConnection{
+		&timeoutStruct.timeout,
+		&timeoutStruct.autoReconnect,
 		nil,
-		0,
+		&timeoutStruct.connectionState,
 		make(chan struct{}, ChannelSize),
 		make(chan connectRequest, connReqChannelSize),
 		make(chan chan<- struct{}, ChannelSize),
@@ -70,17 +87,15 @@ func NewIPConnection() IPConnection {
 		make(chan ConnectCallbackRegistration, ChannelSize),
 		make(chan DisconnectCallbackRegistration, ChannelSize),
 		make(chan CallbackRegistration, ChannelSize),
-		make(chan IPConCallbackDeregistration, ChannelSize),		
-		make(chan bool, ChannelSize),
-		true,
+		make(chan IPConCallbackDeregistration, ChannelSize),
 		sync.Mutex{}}
 
 	callbackConnection := make(chan callbackConnectionState, ChannelSize)
 	callback := make(chan [80]byte, ChannelSize)
 
 	go socketThreadFn(ipcon.connection,
-		&ipcon.connectionState,
-		&ipcon.timeout,
+		ipcon.connectionState,
+		ipcon.timeout,
 		ipcon.autoReconnect,
 		ipcon.terminate,
 		ipcon.connReq,
@@ -130,19 +145,19 @@ func (ipcon *IPConnection) RegisterConnectCallback(fn func(uint8)) uint64 {
 	return <-idChan
 }
 
-func (ipcon *IPConnection) DeregisterConnectCallback(callbackID uint64) {
+func (ipcon *IPConnection) DeregisterConnectCallback(registrationID uint64) {
 	ipcon.ipconCallbackDereg <- IPConCallbackDeregistration{
-		callbackID}
+		registrationID}
 }
 
-func (ipcon *IPConnection) DeregisterDisconnectCallback(callbackID uint64) {
+func (ipcon *IPConnection) DeregisterDisconnectCallback(registrationID uint64) {
 	ipcon.ipconCallbackDereg <- IPConCallbackDeregistration{
-		callbackID}
+		registrationID}
 }
 
-func (ipcon *IPConnection) DeregisterEnumerateCallback(callbackID uint64) {
+func (ipcon *IPConnection) DeregisterEnumerateCallback(registrationID uint64) {
 	ipcon.ipconCallbackDereg <- IPConCallbackDeregistration{
-		callbackID}
+		registrationID}
 }
 
 func (ipcon *IPConnection) RegisterDisconnectCallback(fn func(uint8)) uint64 {
@@ -158,24 +173,27 @@ func (ipcon *IPConnection) RegisterEnumerateCallback(fn func([]byte)) uint64 {
 }
 
 func (ipcon *IPConnection) SetTimeout(timeout time.Duration) {
-	atomic.StoreInt64(&ipcon.timeout, timeout.Nanoseconds())
+	atomic.StoreInt64(ipcon.timeout, timeout.Nanoseconds())
 }
 
 func (ipcon *IPConnection) GetTimeout() time.Duration {
-	return time.Duration(atomic.LoadInt64(&ipcon.timeout))
+	return time.Duration(atomic.LoadInt64(ipcon.timeout))
 }
 
 func (ipcon *IPConnection) GetConnectionState() ConnectionState {
-	return ConnectionState(atomic.LoadInt32(&ipcon.connectionState))
+	return ConnectionState(atomic.LoadInt32(ipcon.connectionState))
 }
 
 func (ipcon *IPConnection) SetAutoReconnect(autoReconnectEnabled bool) {
-	ipcon.autoReconnect <- autoReconnectEnabled
-	ipcon.autoReconnectCache = autoReconnectEnabled
+	if autoReconnectEnabled {
+		atomic.StoreUint32(ipcon.autoReconnect, 1)
+	} else {
+		atomic.StoreUint32(ipcon.autoReconnect, 0)
+	}
 }
 
 func (ipcon *IPConnection) GetAutoReconnect() bool {
-	return ipcon.autoReconnectCache
+	return atomic.LoadUint32(ipcon.autoReconnect) == 1
 }
 
 func (ipcon *IPConnection) Enumerate() {
@@ -191,12 +209,19 @@ func (ipcon *IPConnection) Enumerate() {
 func (ipcon *IPConnection) Authenticate(secret string) error {
 	ipcon.authenticateMutex.Lock()
 	defer ipcon.authenticateMutex.Unlock()
+
+	for _, r := range secret {
+		if r > unicode.MaxASCII {
+			return fmt.Errorf("secret contained non-ASCII character")
+		}
+	}
+
 	//Get server nonce
 	header := PacketHeader{1, PacketHeaderSize, 1, 0, true, 0}
 	payload := header.ToLeBytes()
 	resp, err := ReqWithTimeout(payload, ipcon.Req)
 	if err != nil {
-		return fmt.Errorf("could not get server nonce: %s", err)
+		return fmt.Errorf("can not get server nonce: %s", err)
 	}
 
 	var respHeader PacketHeader
@@ -452,7 +477,7 @@ func callbackThreadFn(
 
 				idxToRemove := -1
 				for idx, callback := range registeredCallbacks[key] {
-					if callback.RegID == CallbackDereg.CallbackID {
+					if callback.RegID == CallbackDereg.RegistrationID {
 						idxToRemove = idx
 					}
 				}
@@ -478,7 +503,7 @@ func callbackThreadFn(
 				//Search in connect callbacks
 				idxToRemove := -1
 				for idx, callback := range connectCallbacks {
-					if callback.RegID == CallbackDereg.CallbackID {
+					if callback.RegID == CallbackDereg.RegistrationID {
 						idxToRemove = idx
 					}
 				}
@@ -490,7 +515,7 @@ func callbackThreadFn(
 
 				//Search in disconnect callbacks
 				for idx, callback := range disconnectCallbacks {
-					if callback.RegID == CallbackDereg.CallbackID {
+					if callback.RegID == CallbackDereg.RegistrationID {
 						idxToRemove = idx
 					}
 				}
@@ -502,7 +527,7 @@ func callbackThreadFn(
 
 				//Search in enumerate callbacks
 				for idx, callback := range enumerateCallbacks {
-					if callback.RegID == CallbackDereg.CallbackID {
+					if callback.RegID == CallbackDereg.RegistrationID {
 						idxToRemove = idx
 					}
 				}
@@ -549,7 +574,7 @@ const (
 func socketThreadFn(connection net.Conn,
 	connectionState *int32,
 	timeout *int64,
-	autoReconnectRX <-chan bool,
+	autoReconnect *uint32,
 	terminationRX <-chan struct{},
 	connReq chan connectRequest,
 	disconnReqRX <-chan chan<- struct{},
@@ -559,7 +584,6 @@ func socketThreadFn(connection net.Conn,
 
 	var sessionID uint64
 	autoReconnectAllowed := true
-	autoReconnectEnabled := true
 	isAutoReconnect := false
 Thread:
 	for {
@@ -576,10 +600,8 @@ Thread:
 			//Terminate
 			case <-terminationRX:
 				break Thread
-			case arEnable := <-autoReconnectRX:
-				autoReconnectEnabled = arEnable
 			case connRequest = <-connReq:
-				if connRequest.isReconnect && (!autoReconnectAllowed || !autoReconnectEnabled) {
+				if connRequest.isReconnect && (!autoReconnectAllowed || atomic.LoadUint32(autoReconnect) != 1) {
 					continue WaitForConnect
 				}
 				break WaitForConnect
@@ -629,8 +651,6 @@ Thread:
 			//Terminate
 			case <-terminationRX:
 				break Thread
-			case arEnable := <-autoReconnectRX:
-				autoReconnectEnabled = arEnable
 			//Disconnect
 			case channel := <-disconnReqRX:
 				{
@@ -642,7 +662,7 @@ Thread:
 			//Read thread noticed, that the socket was closed
 			case wasShutdown := <-socketClosed:
 				{
-					if autoReconnectEnabled {
+					if atomic.LoadUint32(autoReconnect) == 1 {
 						connReq <- connectRequest{connRequest.addr, true, nil}
 					}
 
@@ -698,7 +718,7 @@ Thread:
 						} else {
 							connection.Close()
 							//Connection seems to be broken, try to reconnect
-							if autoReconnectEnabled {
+							if atomic.LoadUint32(autoReconnect) == 1 {
 								connReq <- connectRequest{connRequest.addr, true, nil}
 							}
 							disconnectReason = DisconnectReasonError
@@ -814,9 +834,9 @@ type CallbackRegistration struct {
 }
 
 type CallbackDeregistration struct {
-	UID        uint32
-	FunctionID uint8
-	CallbackID uint64
+	UID            uint32
+	FunctionID     uint8
+	RegistrationID uint64
 }
 
 type ConnectCallbackRegistration struct {
@@ -830,7 +850,7 @@ type DisconnectCallbackRegistration struct {
 }
 
 type IPConCallbackDeregistration struct {
-	CallbackID uint64
+	RegistrationID uint64
 }
 
 type CallbackContainer struct {

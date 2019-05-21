@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -147,17 +147,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4V2Br
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IndustrialDigitalIn4V2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -166,7 +166,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetResponseExpected(functionID Fun
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -186,11 +186,11 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered periodically according to the configuration set by
-	// SetValueCallbackConfiguration.
-	// 
-	// The parameters are the channel, a value-changed indicator and the actual
-	// value for the channel. The `changed` parameter is true if the value has changed
-	// since the last callback.
+// SetValueCallbackConfiguration.
+// 
+// The parameters are the channel, a value-changed indicator and the actual
+// value for the channel. The `changed` parameter is true if the value has changed
+// since the last callback.
 func (device *IndustrialDigitalIn4V2Bricklet) RegisterValueCallback(fn func(Channel, bool, bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -206,17 +206,17 @@ binary.Read(buf, binary.LittleEndian, &value)
 }
 
 //Remove a registered Value callback.
-func (device *IndustrialDigitalIn4V2Bricklet) DeregisterValueCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackValue), callbackID)
+func (device *IndustrialDigitalIn4V2Bricklet) DeregisterValueCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackValue), registrationID)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-	// SetAllValueCallbackConfiguration.
-	// 
-	// The parameters are the same as GetValue. Additional the
-	// `changed` parameter is true if the value has changed since
-	// the last callback.
+// SetAllValueCallbackConfiguration.
+// 
+// The parameters are the same as GetValue. Additional the
+// `changed` parameter is true if the value has changed since
+// the last callback.
 func (device *IndustrialDigitalIn4V2Bricklet) RegisterAllValueCallback(fn func([4]bool, [4]bool)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -230,13 +230,13 @@ binary.Read(buf, binary.LittleEndian, &value)
 }
 
 //Remove a registered All Value callback.
-func (device *IndustrialDigitalIn4V2Bricklet) DeregisterAllValueCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllValue), callbackID)
+func (device *IndustrialDigitalIn4V2Bricklet) DeregisterAllValueCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackAllValue), registrationID)
 }
 
 
 // Returns the input value as bools, *true* refers to high and *false* refers to low.
-func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetValue), buf.Bytes())
@@ -245,7 +245,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return value, BrickletError(header.ErrorCode)
@@ -255,23 +255,23 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
         binary.Read(resultBuf, binary.LittleEndian, &value)
 
     }
-    
+
     return value, nil
 }
 
 // This callback can be configured per channel.
-	// 
-	// The period in ms is the period with which the RegisterValueCallback
-	// callback is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
+// 
+// The period in ms is the period with which the RegisterValueCallback
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
 //
 // Associated constants:
 //
@@ -279,7 +279,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
 //	* Channel1
 //	* Channel2
 //	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(channel Channel, period uint32, valueHasToChange bool) (err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(channel Channel, period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -291,7 +291,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(chan
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -300,12 +300,12 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(chan
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration for the given channel as set by
-	// SetValueCallbackConfiguration.
+// SetValueCallbackConfiguration.
 //
 // Associated constants:
 //
@@ -313,7 +313,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(chan
 //	* Channel1
 //	* Channel2
 //	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(channel Channel) (period uint32, valueHasToChange bool, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(channel Channel) (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -323,7 +323,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(chan
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -334,22 +334,22 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(chan
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // The period in ms is the period with which the RegisterAllValueCallback
-	// callback is triggered periodically. A value of 0 turns the callback off.
-	// 
-	// If the `value has to change`-parameter is set to true, the callback is only
-	// triggered after the value has changed. If the value didn't change within the
-	// period, the callback is triggered immediately on change.
-	// 
-	// If it is set to false, the callback is continuously triggered with the period,
-	// independent of the value.
-	// 
-	// The default value is (0, false).
-func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {    
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// The default value is (0, false).
+func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
@@ -360,7 +360,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(p
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -369,13 +369,13 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(p
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the callback configuration as set by
-	// SetAllValueCallbackConfiguration.
-func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {    
+// SetAllValueCallbackConfiguration.
+func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAllValueCallbackConfiguration), buf.Bytes())
@@ -384,7 +384,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration()
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, valueHasToChange, BrickletError(header.ErrorCode)
@@ -395,15 +395,15 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration()
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
     }
-    
+
     return period, valueHasToChange, nil
 }
 
 // Returns the current value of the edge counter for the selected channel. You can
-	// configure the edges that are counted with SetEdgeCountConfiguration.
-	// 
-	// If you set the reset counter to *true*, the count is set back to 0
-	// directly after it is read.
+// configure the edges that are counted with SetEdgeCountConfiguration.
+// 
+// If you set the reset counter to *true*, the count is set back to 0
+// directly after it is read.
 //
 // Associated constants:
 //
@@ -411,7 +411,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration()
 //	* Channel1
 //	* Channel2
 //	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, resetCounter bool) (count uint32, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, resetCounter bool) (count uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, resetCounter);
@@ -422,7 +422,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, rese
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return count, BrickletError(header.ErrorCode)
@@ -432,27 +432,27 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, rese
         binary.Read(resultBuf, binary.LittleEndian, &count)
 
     }
-    
+
     return count, nil
 }
 
 // Configures the edge counter for a specific channel.
-	// 
-	// The edge type parameter configures if rising edges, falling edges or both are
-	// counted. Possible edge types are:
-	// 
-	// * 0 = rising (default)
-	// * 1 = falling
-	// * 2 = both
-	// 
-	// The debounce time is given in ms.
-	// 
-	// Configuring an edge counter resets its value to 0.
-	// 
-	// If you don't know what any of this means, just leave it at default. The
-	// default configuration is very likely OK for you.
-	// 
-	// Default values: 0 (edge type) and 100ms (debounce time)
+// 
+// The edge type parameter configures if rising edges, falling edges or both are
+// counted. Possible edge types are:
+// 
+// * 0 = rising (default)
+// * 1 = falling
+// * 2 = both
+// 
+// The debounce time is given in ms.
+// 
+// Configuring an edge counter resets its value to 0.
+// 
+// If you don't know what any of this means, just leave it at default. The
+// default configuration is very likely OK for you.
+// 
+// Default values: 0 (edge type) and 100ms (debounce time)
 //
 // Associated constants:
 //
@@ -463,7 +463,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, rese
 //	* EdgeTypeRising
 //	* EdgeTypeFalling
 //	* EdgeTypeBoth
-func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel Channel, edgeType EdgeType, debounce uint8) (err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel Channel, edgeType EdgeType, debounce uint8) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, edgeType);
@@ -475,7 +475,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -484,12 +484,12 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the edge type and debounce time for the selected channel as set by
-	// SetEdgeCountConfiguration.
+// SetEdgeCountConfiguration.
 //
 // Associated constants:
 //
@@ -500,7 +500,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel 
 //	* EdgeTypeRising
 //	* EdgeTypeFalling
 //	* EdgeTypeBoth
-func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel Channel) (edgeType EdgeType, debounce uint8, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel Channel) (edgeType EdgeType, debounce uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -510,7 +510,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return edgeType, debounce, BrickletError(header.ErrorCode)
@@ -521,15 +521,15 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel 
 	binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
     }
-    
+
     return edgeType, debounce, nil
 }
 
 // Each channel has a corresponding LED. You can turn the LED off, on or show a
-	// heartbeat. You can also set the LED to Channel Status. In this mode the
-	// LED is on if the channel is high and off otherwise.
-	// 
-	// By default all channel LEDs are configured as Channel Status.
+// heartbeat. You can also set the LED to Channel Status. In this mode the
+// LED is on if the channel is high and off otherwise.
+// 
+// By default all channel LEDs are configured as Channel Status.
 //
 // Associated constants:
 //
@@ -541,7 +541,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel 
 //	* ChannelLEDConfigOn
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channel, config ChannelLEDConfig) (err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channel, config ChannelLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, config);
@@ -552,7 +552,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channe
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -561,7 +561,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channe
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -577,7 +577,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channe
 //	* ChannelLEDConfigOn
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channel) (config ChannelLEDConfig, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channel) (config ChannelLEDConfig, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, channel);
 
@@ -587,7 +587,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channe
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -597,22 +597,22 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channe
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -621,7 +621,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountA
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -634,19 +634,19 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountA
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -661,7 +661,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountA
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -671,7 +671,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderM
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -681,7 +681,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderM
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -694,7 +694,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderM
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -703,7 +703,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode Bootload
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -713,17 +713,17 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode Bootload
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -733,7 +733,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer ui
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -742,19 +742,19 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer ui
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -764,7 +764,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (sta
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -774,17 +774,17 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (sta
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -792,7 +792,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (sta
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -802,7 +802,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLE
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -811,7 +811,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLE
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -823,7 +823,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLE
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -832,7 +832,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config Statu
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -842,17 +842,17 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config Statu
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -861,7 +861,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -871,17 +871,17 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature 
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -890,7 +890,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -899,16 +899,16 @@ func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -918,7 +918,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -927,13 +927,13 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -942,7 +942,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -952,19 +952,19 @@ func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) 
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *IndustrialDigitalIn4V2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *IndustrialDigitalIn4V2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -973,7 +973,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetIdentity() (uid string, connect
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -988,6 +988,6 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetIdentity() (uid string, connect
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

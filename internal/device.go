@@ -22,12 +22,15 @@ type Device struct {
 	callbackRegTX    chan<- CallbackRegistration
 	callbackDeregTX  chan<- CallbackDeregistration
 	highLevelLocks   []sync.Mutex
+	initialized      bool
 }
 
 func NewDevice(apiVersion [3]uint8, uid string, ipcon *IPConnection, highLevelFunctionCount uint8) (Device, error) {
 	internalUID, err := Base58ToU32(uid)
 	if err != nil {
-		return Device{}, err
+		result := Device{}
+		result.initialized = false
+		return result, err
 	}
 	return Device{
 		apiVersion,
@@ -36,7 +39,8 @@ func NewDevice(apiVersion [3]uint8, uid string, ipcon *IPConnection, highLevelFu
 		ipcon.Req,
 		ipcon.CallbackReg,
 		ipcon.CallbackDereg,
-		make([]sync.Mutex, highLevelFunctionCount)}, nil
+		make([]sync.Mutex, highLevelFunctionCount),
+		true}, nil
 }
 
 func (device *Device) GetAPIVersion() [3]uint8 {
@@ -85,6 +89,9 @@ func (device *Device) SetResponseExpectedAll(responseExpected bool) {
 }
 
 func (device *Device) Set(functionID uint8, payload []byte) ([]byte, error) {
+	if !device.initialized {
+		return nil, fmt.Errorf("device is not initialized")
+	}
 	responseExpected := !(device.ResponseExpected[functionID] == ResponseExpectedFlagFalse)
 
 	if responseExpected {
@@ -105,6 +112,9 @@ func (device *Device) Set(functionID uint8, payload []byte) ([]byte, error) {
 }
 
 func (device *Device) Get(functionID uint8, payload []byte) ([]byte, error) {
+	if !device.initialized {
+		return nil, fmt.Errorf("device is not initialized")
+	}
 	header := PacketHeader{
 		device.internalUID,
 		uint8(len(payload) + PacketHeaderSize),
@@ -123,6 +133,9 @@ type LowLevelWriteResult struct {
 }
 
 func (device *Device) SetHighLevel(lowLevelClosure func(uint64, uint64, []byte) (LowLevelWriteResult, error), highLevelFunctionIdx uint8, elementSizeInBit uint64, chunkLenInBit uint64, payload []byte) (LowLevelWriteResult, error) {
+	if !device.initialized {
+		return LowLevelWriteResult{}, fmt.Errorf("device is not initialized")
+	}
 	length := uint64(len(payload)) * 8 / elementSizeInBit
 	chunkOffset := uint64(0) * 8 / elementSizeInBit
 
@@ -161,6 +174,9 @@ type LowLevelResult struct {
 }
 
 func (device *Device) GetHighLevel(lowLevelClosure func() (LowLevelResult, error), highLevelFunctionIdx uint8, elementSizeInBit uint64) ([]byte, []byte, error) {
+	if !device.initialized {
+		return nil, nil, fmt.Errorf("device is not initialized")
+	}
 	chunkOffset := uint64(0) * elementSizeInBit
 	device.highLevelLocks[highLevelFunctionIdx].Lock()
 	defer device.highLevelLocks[highLevelFunctionIdx].Unlock()
@@ -200,7 +216,7 @@ func (device *Device) GetHighLevel(lowLevelClosure func() (LowLevelResult, error
 		chunkOffset += uint64(len(result.ChunkData) * 8)
 		result, _ = lowLevelClosure()
 	}
-	return nil, nil, fmt.Errorf("stream was out of sync, please retry")
+	return nil, nil, fmt.Errorf("stream is out of sync, please retry")
 }
 
 func (device *Device) RegisterCallback(functionID uint8, fn func([]byte)) uint64 {
@@ -209,6 +225,6 @@ func (device *Device) RegisterCallback(functionID uint8, fn func([]byte)) uint64
 	return <-idChan
 }
 
-func (device *Device) DeregisterCallback(functionID uint8, callbackID uint64) {
-	device.callbackDeregTX <- CallbackDeregistration{device.internalUID, functionID, callbackID}
+func (device *Device) DeregisterCallback(functionID uint8, registrationID uint64) {
+	device.callbackDeregTX <- CallbackDeregistration{device.internalUID, functionID, registrationID}
 }

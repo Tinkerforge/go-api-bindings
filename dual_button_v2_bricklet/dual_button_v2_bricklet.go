@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -135,17 +135,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DualButtonV2Bricklet, er
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *DualButtonV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -154,7 +154,7 @@ func (device *DualButtonV2Bricklet) GetResponseExpected(functionID Function) (bo
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -174,20 +174,20 @@ func (device *DualButtonV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is called whenever a button is pressed.
-	// 
-	// Possible states for buttons are:
-	// 
-	// * 0 = pressed
-	// * 1 = released
-	// 
-	// Possible states for LEDs are:
-	// 
-	// * 0 = AutoToggleOn: Auto toggle enabled and LED on.
-	// * 1 = AutoToggleOff: Auto toggle enabled and LED off.
-	// * 2 = On: LED on (auto toggle is disabled).
-	// * 3 = Off: LED off (auto toggle is disabled).
-	// 
-	// This callback can be enabled with SetStateChangedCallbackConfiguration.
+// 
+// Possible states for buttons are:
+// 
+// * 0 = pressed
+// * 1 = released
+// 
+// Possible states for LEDs are:
+// 
+// * 0 = AutoToggleOn: Auto toggle enabled and LED on.
+// * 1 = AutoToggleOff: Auto toggle enabled and LED off.
+// * 2 = On: LED on (auto toggle is disabled).
+// * 3 = Off: LED off (auto toggle is disabled).
+// 
+// This callback can be enabled with SetStateChangedCallbackConfiguration.
 func (device *DualButtonV2Bricklet) RegisterStateChangedCallback(fn func(ButtonState, ButtonState, LEDState, LEDState)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -205,25 +205,25 @@ binary.Read(buf, binary.LittleEndian, &ledR)
 }
 
 //Remove a registered State Changed callback.
-func (device *DualButtonV2Bricklet) DeregisterStateChangedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStateChanged), callbackID)
+func (device *DualButtonV2Bricklet) DeregisterStateChangedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackStateChanged), registrationID)
 }
 
 
 // Sets the state of the LEDs. Possible states are:
-	// 
-	// * 0 = AutoToggleOn: Enables auto toggle with initially enabled LED.
-	// * 1 = AutoToggleOff: Activates auto toggle with initially disabled LED.
-	// * 2 = On: Enables LED (auto toggle is disabled).
-	// * 3 = Off: Disables LED (auto toggle is disabled).
-	// 
-	// In auto toggle mode the LED is toggled automatically at each press of a button.
-	// 
-	// If you just want to set one of the LEDs and don't know the current state
-	// of the other LED, you can get the state with GetLEDState or you
-	// can use SetSelectedLEDState.
-	// 
-	// The default value is (1, 1).
+// 
+// * 0 = AutoToggleOn: Enables auto toggle with initially enabled LED.
+// * 1 = AutoToggleOff: Activates auto toggle with initially disabled LED.
+// * 2 = On: Enables LED (auto toggle is disabled).
+// * 3 = Off: Disables LED (auto toggle is disabled).
+// 
+// In auto toggle mode the LED is toggled automatically at each press of a button.
+// 
+// If you just want to set one of the LEDs and don't know the current state
+// of the other LED, you can get the state with GetLEDState or you
+// can use SetSelectedLEDState.
+// 
+// The default value is (1, 1).
 //
 // Associated constants:
 //
@@ -231,7 +231,7 @@ func (device *DualButtonV2Bricklet) DeregisterStateChangedCallback(callbackID ui
 //	* LEDStateAutoToggleOff
 //	* LEDStateOn
 //	* LEDStateOff
-func (device *DualButtonV2Bricklet) SetLEDState(ledL LEDState, ledR LEDState) (err error) {    
+func (device *DualButtonV2Bricklet) SetLEDState(ledL LEDState, ledR LEDState) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, ledL);
 	binary.Write(&buf, binary.LittleEndian, ledR);
@@ -242,7 +242,7 @@ func (device *DualButtonV2Bricklet) SetLEDState(ledL LEDState, ledR LEDState) (e
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -251,7 +251,7 @@ func (device *DualButtonV2Bricklet) SetLEDState(ledL LEDState, ledR LEDState) (e
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -263,7 +263,7 @@ func (device *DualButtonV2Bricklet) SetLEDState(ledL LEDState, ledR LEDState) (e
 //	* LEDStateAutoToggleOff
 //	* LEDStateOn
 //	* LEDStateOff
-func (device *DualButtonV2Bricklet) GetLEDState() (ledL LEDState, ledR LEDState, err error) {    
+func (device *DualButtonV2Bricklet) GetLEDState() (ledL LEDState, ledR LEDState, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetLEDState), buf.Bytes())
@@ -272,7 +272,7 @@ func (device *DualButtonV2Bricklet) GetLEDState() (ledL LEDState, ledR LEDState,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return ledL, ledR, BrickletError(header.ErrorCode)
@@ -283,20 +283,20 @@ func (device *DualButtonV2Bricklet) GetLEDState() (ledL LEDState, ledR LEDState,
 	binary.Read(resultBuf, binary.LittleEndian, &ledR)
 
     }
-    
+
     return ledL, ledR, nil
 }
 
 // Returns the current state for both buttons. Possible states are:
-	// 
-	// * 0 = pressed
-	// * 1 = released
+// 
+// * 0 = pressed
+// * 1 = released
 //
 // Associated constants:
 //
 //	* ButtonStatePressed
 //	* ButtonStateReleased
-func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, buttonR ButtonState, err error) {    
+func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, buttonR ButtonState, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetButtonState), buf.Bytes())
@@ -305,7 +305,7 @@ func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, butto
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return buttonL, buttonR, BrickletError(header.ErrorCode)
@@ -316,13 +316,13 @@ func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, butto
 	binary.Read(resultBuf, binary.LittleEndian, &buttonR)
 
     }
-    
+
     return buttonL, buttonR, nil
 }
 
 // Sets the state of the selected LED (0 or 1).
-	// 
-	// The other LED remains untouched.
+// 
+// The other LED remains untouched.
 //
 // Associated constants:
 //
@@ -332,7 +332,7 @@ func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, butto
 //	* LEDStateAutoToggleOff
 //	* LEDStateOn
 //	* LEDStateOff
-func (device *DualButtonV2Bricklet) SetSelectedLEDState(led LED, state LEDState) (err error) {    
+func (device *DualButtonV2Bricklet) SetSelectedLEDState(led LED, state LEDState) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, led);
 	binary.Write(&buf, binary.LittleEndian, state);
@@ -343,7 +343,7 @@ func (device *DualButtonV2Bricklet) SetSelectedLEDState(led LED, state LEDState)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -352,15 +352,15 @@ func (device *DualButtonV2Bricklet) SetSelectedLEDState(led LED, state LEDState)
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // If you enable this callback, the RegisterStateChangedCallback callback is triggered
-	// every time a button is pressed/released
-	// 
-	// By default this callback is disabled.
-func (device *DualButtonV2Bricklet) SetStateChangedCallbackConfiguration(enabled bool) (err error) {    
+// every time a button is pressed/released
+// 
+// By default this callback is disabled.
+func (device *DualButtonV2Bricklet) SetStateChangedCallbackConfiguration(enabled bool) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enabled);
 
@@ -370,7 +370,7 @@ func (device *DualButtonV2Bricklet) SetStateChangedCallbackConfiguration(enabled
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -379,12 +379,12 @@ func (device *DualButtonV2Bricklet) SetStateChangedCallbackConfiguration(enabled
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the configuration as set by SetStateChangedCallbackConfiguration.
-func (device *DualButtonV2Bricklet) GetStateChangedCallbackConfiguration() (enabled bool, err error) {    
+func (device *DualButtonV2Bricklet) GetStateChangedCallbackConfiguration() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStateChangedCallbackConfiguration), buf.Bytes())
@@ -393,7 +393,7 @@ func (device *DualButtonV2Bricklet) GetStateChangedCallbackConfiguration() (enab
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -403,22 +403,22 @@ func (device *DualButtonV2Bricklet) GetStateChangedCallbackConfiguration() (enab
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *DualButtonV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *DualButtonV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -427,7 +427,7 @@ func (device *DualButtonV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -440,19 +440,19 @@ func (device *DualButtonV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -467,7 +467,7 @@ func (device *DualButtonV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *DualButtonV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *DualButtonV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -477,7 +477,7 @@ func (device *DualButtonV2Bricklet) SetBootloaderMode(mode BootloaderMode) (stat
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -487,7 +487,7 @@ func (device *DualButtonV2Bricklet) SetBootloaderMode(mode BootloaderMode) (stat
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -500,7 +500,7 @@ func (device *DualButtonV2Bricklet) SetBootloaderMode(mode BootloaderMode) (stat
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *DualButtonV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *DualButtonV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -509,7 +509,7 @@ func (device *DualButtonV2Bricklet) GetBootloaderMode() (mode BootloaderMode, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -519,17 +519,17 @@ func (device *DualButtonV2Bricklet) GetBootloaderMode() (mode BootloaderMode, er
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *DualButtonV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *DualButtonV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -539,7 +539,7 @@ func (device *DualButtonV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -548,19 +548,19 @@ func (device *DualButtonV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *DualButtonV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *DualButtonV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -570,7 +570,7 @@ func (device *DualButtonV2Bricklet) WriteFirmware(data [64]uint8) (status uint8,
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -580,17 +580,17 @@ func (device *DualButtonV2Bricklet) WriteFirmware(data [64]uint8) (status uint8,
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -598,7 +598,7 @@ func (device *DualButtonV2Bricklet) WriteFirmware(data [64]uint8) (status uint8,
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *DualButtonV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *DualButtonV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -608,7 +608,7 @@ func (device *DualButtonV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -617,7 +617,7 @@ func (device *DualButtonV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -629,7 +629,7 @@ func (device *DualButtonV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *DualButtonV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *DualButtonV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -638,7 +638,7 @@ func (device *DualButtonV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -648,17 +648,17 @@ func (device *DualButtonV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *DualButtonV2Bricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *DualButtonV2Bricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -667,7 +667,7 @@ func (device *DualButtonV2Bricklet) GetChipTemperature() (temperature int16, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -677,17 +677,17 @@ func (device *DualButtonV2Bricklet) GetChipTemperature() (temperature int16, err
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *DualButtonV2Bricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *DualButtonV2Bricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -696,7 +696,7 @@ func (device *DualButtonV2Bricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -705,16 +705,16 @@ func (device *DualButtonV2Bricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *DualButtonV2Bricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *DualButtonV2Bricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -724,7 +724,7 @@ func (device *DualButtonV2Bricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -733,13 +733,13 @@ func (device *DualButtonV2Bricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *DualButtonV2Bricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *DualButtonV2Bricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -748,7 +748,7 @@ func (device *DualButtonV2Bricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -758,19 +758,19 @@ func (device *DualButtonV2Bricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *DualButtonV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *DualButtonV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -779,7 +779,7 @@ func (device *DualButtonV2Bricklet) GetIdentity() (uid string, connectedUid stri
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -794,6 +794,6 @@ func (device *DualButtonV2Bricklet) GetIdentity() (uid string, connectedUid stri
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

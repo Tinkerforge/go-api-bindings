@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -111,17 +111,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IsolatorBricklet, error)
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IsolatorBricklet) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -130,7 +130,7 @@ func (device *IsolatorBricklet) GetResponseExpected(functionID Function) (bool, 
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -150,7 +150,7 @@ func (device *IsolatorBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // Returns statistics for the Isolator Bricklet.
-func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messagesFromBricklet uint32, connectedBrickletDeviceIdentifier uint16, connectedBrickletUID string, err error) {    
+func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messagesFromBricklet uint32, connectedBrickletDeviceIdentifier uint16, connectedBrickletUID string, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatistics), buf.Bytes())
@@ -159,7 +159,7 @@ func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messa
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return messagesFromBrick, messagesFromBricklet, connectedBrickletDeviceIdentifier, connectedBrickletUID, BrickletError(header.ErrorCode)
@@ -172,36 +172,36 @@ func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messa
 	connectedBrickletUID = ByteSliceToString(resultBuf.Next(8))
 
     }
-    
+
     return messagesFromBrick, messagesFromBricklet, connectedBrickletDeviceIdentifier, connectedBrickletUID, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
-	// enabled, the Isolator Bricklet will try to adapt the baudrate for the communication
-	// between Bricks and Bricklets according to the amount of data that is transferred.
-	// 
-	// The baudrate for communication config between
-	// Brick and Isolator Bricklet can be set through the API of the Brick.
-	// 
-	// The baudrate will be increased exponentially if lots of data is send/received and
-	// decreased linearly if little data is send/received.
-	// 
-	// This lowers the baudrate in applications where little data is transferred (e.g.
-	// a weather station) and increases the robustness. If there is lots of data to transfer
-	// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
-	// 
-	// In cases where some data has to transferred as fast as possible every few seconds
-	// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
-	// the dynamic baudrate off to get the highest possible performance.
-	// 
-	// The maximum value of the baudrate can be set per port with the function
-	// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
-	// as set by SetSPITFPBaudrate will be used statically.
-	// 
-	// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-	// 
-	// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-func (device *IsolatorBricklet) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {    
+// enabled, the Isolator Bricklet will try to adapt the baudrate for the communication
+// between Bricks and Bricklets according to the amount of data that is transferred.
+// 
+// The baudrate for communication config between
+// Brick and Isolator Bricklet can be set through the API of the Brick.
+// 
+// The baudrate will be increased exponentially if lots of data is send/received and
+// decreased linearly if little data is send/received.
+// 
+// This lowers the baudrate in applications where little data is transferred (e.g.
+// a weather station) and increases the robustness. If there is lots of data to transfer
+// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
+// 
+// In cases where some data has to transferred as fast as possible every few seconds
+// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
+// the dynamic baudrate off to get the highest possible performance.
+// 
+// The maximum value of the baudrate can be set per port with the function
+// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
+// as set by SetSPITFPBaudrate will be used statically.
+// 
+// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
+// 
+// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
+func (device *IsolatorBricklet) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
@@ -212,7 +212,7 @@ func (device *IsolatorBricklet) SetSPITFPBaudrateConfig(enableDynamicBaudrate bo
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -221,12 +221,12 @@ func (device *IsolatorBricklet) SetSPITFPBaudrateConfig(enableDynamicBaudrate bo
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
-func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {    
+func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
@@ -235,7 +235,7 @@ func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
@@ -246,30 +246,30 @@ func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
     }
-    
+
     return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Sets the baudrate for a the communication between Isolator Bricklet
-	// and the connected Bricklet. The baudrate for communication between
-	// Brick and Isolator Bricklet can be set through the API of the Brick.
-	// 
-	// The baudrate can be in the range 400000 to 2000000.
-	// 
-	// If you want to increase the throughput of Bricklets you can increase
-	// the baudrate. If you get a high error count because of high
-	// interference (see GetSPITFPErrorCount) you can decrease the
-	// baudrate.
-	// 
-	// If the dynamic baudrate feature is enabled, the baudrate set by this
-	// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
-	// 
-	// Regulatory testing is done with the default baudrate. If CE compatibility
-	// or similar is necessary in you applications we recommend to not change
-	// the baudrate.
-	// 
-	// The default baudrate for all ports is 1400000.
-func (device *IsolatorBricklet) SetSPITFPBaudrate(baudrate uint32) (err error) {    
+// and the connected Bricklet. The baudrate for communication between
+// Brick and Isolator Bricklet can be set through the API of the Brick.
+// 
+// The baudrate can be in the range 400000 to 2000000.
+// 
+// If you want to increase the throughput of Bricklets you can increase
+// the baudrate. If you get a high error count because of high
+// interference (see GetSPITFPErrorCount) you can decrease the
+// baudrate.
+// 
+// If the dynamic baudrate feature is enabled, the baudrate set by this
+// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
+// 
+// Regulatory testing is done with the default baudrate. If CE compatibility
+// or similar is necessary in you applications we recommend to not change
+// the baudrate.
+// 
+// The default baudrate for all ports is 1400000.
+func (device *IsolatorBricklet) SetSPITFPBaudrate(baudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, baudrate);
 
@@ -279,7 +279,7 @@ func (device *IsolatorBricklet) SetSPITFPBaudrate(baudrate uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -288,12 +288,12 @@ func (device *IsolatorBricklet) SetSPITFPBaudrate(baudrate uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate, see SetSPITFPBaudrate.
-func (device *IsolatorBricklet) GetSPITFPBaudrate() (baudrate uint32, err error) {    
+func (device *IsolatorBricklet) GetSPITFPBaudrate() (baudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrate), buf.Bytes())
@@ -302,7 +302,7 @@ func (device *IsolatorBricklet) GetSPITFPBaudrate() (baudrate uint32, err error)
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudrate, BrickletError(header.ErrorCode)
@@ -312,21 +312,21 @@ func (device *IsolatorBricklet) GetSPITFPBaudrate() (baudrate uint32, err error)
         binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
     }
-    
+
     return baudrate, nil
 }
 
 // Returns the error count for the communication between Isolator Bricklet and
-	// the connected Bricklet. Call GetSPITFPErrorCount to get the
-	// error count between Isolator Bricklet and Brick.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-func (device *IsolatorBricklet) GetIsolatorSPITFPErrorCount() (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// the connected Bricklet. Call GetSPITFPErrorCount to get the
+// error count between Isolator Bricklet and Brick.
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+func (device *IsolatorBricklet) GetIsolatorSPITFPErrorCount() (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIsolatorSPITFPErrorCount), buf.Bytes())
@@ -335,7 +335,7 @@ func (device *IsolatorBricklet) GetIsolatorSPITFPErrorCount() (errorCountACKChec
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -348,22 +348,22 @@ func (device *IsolatorBricklet) GetIsolatorSPITFPErrorCount() (errorCountACKChec
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Bricklet side. All
-	// Bricks have a similar function that returns the errors on the Brick side.
-func (device *IsolatorBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Bricklet side. All
+// Bricks have a similar function that returns the errors on the Brick side.
+func (device *IsolatorBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -372,7 +372,7 @@ func (device *IsolatorBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uin
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -385,19 +385,19 @@ func (device *IsolatorBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uin
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
-	// mode change was instigated.
-	// 
-	// You can change from bootloader mode to firmware mode and vice versa. A change
-	// from bootloader mode to firmware mode will only take place if the entry function,
-	// device identifier and CRC are present and correct.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
+// mode change was instigated.
+// 
+// You can change from bootloader mode to firmware mode and vice versa. A change
+// from bootloader mode to firmware mode will only take place if the entry function,
+// device identifier and CRC are present and correct.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
 //
 // Associated constants:
 //
@@ -412,7 +412,7 @@ func (device *IsolatorBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uin
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *IsolatorBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {    
+func (device *IsolatorBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -422,7 +422,7 @@ func (device *IsolatorBricklet) SetBootloaderMode(mode BootloaderMode) (status B
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -432,7 +432,7 @@ func (device *IsolatorBricklet) SetBootloaderMode(mode BootloaderMode) (status B
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
@@ -445,7 +445,7 @@ func (device *IsolatorBricklet) SetBootloaderMode(mode BootloaderMode) (status B
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *IsolatorBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {    
+func (device *IsolatorBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -454,7 +454,7 @@ func (device *IsolatorBricklet) GetBootloaderMode() (mode BootloaderMode, err er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -464,17 +464,17 @@ func (device *IsolatorBricklet) GetBootloaderMode() (mode BootloaderMode, err er
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
-	// to be increased by chunks of size 64. The data is written to flash
-	// every 4 chunks (which equals to one page of size 256).
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IsolatorBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {    
+// to be increased by chunks of size 64. The data is written to flash
+// every 4 chunks (which equals to one page of size 256).
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IsolatorBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -484,7 +484,7 @@ func (device *IsolatorBricklet) SetWriteFirmwarePointer(pointer uint32) (err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -493,19 +493,19 @@ func (device *IsolatorBricklet) SetWriteFirmwarePointer(pointer uint32) (err err
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
-	// SetWriteFirmwarePointer before. The firmware is written
-	// to flash every 4 chunks.
-	// 
-	// You can only write firmware in bootloader mode.
-	// 
-	// This function is used by Brick Viewer during flashing. It should not be
-	// necessary to call it in a normal user program.
-func (device *IsolatorBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {    
+// SetWriteFirmwarePointer before. The firmware is written
+// to flash every 4 chunks.
+// 
+// You can only write firmware in bootloader mode.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IsolatorBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, data);
 
@@ -515,7 +515,7 @@ func (device *IsolatorBricklet) WriteFirmware(data [64]uint8) (status uint8, err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return status, BrickletError(header.ErrorCode)
@@ -525,17 +525,17 @@ func (device *IsolatorBricklet) WriteFirmware(data [64]uint8) (status uint8, err
         binary.Read(resultBuf, binary.LittleEndian, &status)
 
     }
-    
+
     return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
-	// communication traffic between Brick and Bricklet, it flickers once
-	// for every 10 received data packets.
-	// 
-	// You can also turn the LED permanently on/off or show a heartbeat.
-	// 
-	// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
+// communication traffic between Brick and Bricklet, it flickers once
+// for every 10 received data packets.
+// 
+// You can also turn the LED permanently on/off or show a heartbeat.
+// 
+// If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
 //
@@ -543,7 +543,7 @@ func (device *IsolatorBricklet) WriteFirmware(data [64]uint8) (status uint8, err
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IsolatorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {    
+func (device *IsolatorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, config);
 
@@ -553,7 +553,7 @@ func (device *IsolatorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -562,7 +562,7 @@ func (device *IsolatorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err 
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -574,7 +574,7 @@ func (device *IsolatorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err 
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IsolatorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {    
+func (device *IsolatorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -583,7 +583,7 @@ func (device *IsolatorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return config, BrickletError(header.ErrorCode)
@@ -593,17 +593,17 @@ func (device *IsolatorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, er
         binary.Read(resultBuf, binary.LittleEndian, &config)
 
     }
-    
+
     return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has bad
-	// accuracy. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *IsolatorBricklet) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has bad
+// accuracy. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *IsolatorBricklet) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -612,7 +612,7 @@ func (device *IsolatorBricklet) GetChipTemperature() (temperature int16, err err
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -622,17 +622,17 @@ func (device *IsolatorBricklet) GetChipTemperature() (temperature int16, err err
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
-	// will be lost.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *IsolatorBricklet) Reset() (err error) {    
+// will be lost.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *IsolatorBricklet) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -641,7 +641,7 @@ func (device *IsolatorBricklet) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -650,16 +650,16 @@ func (device *IsolatorBricklet) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
-	// you have to decode the Base58 encoded UID string into an
-	// integer first.
-	// 
-	// We recommend that you use Brick Viewer to change the UID.
-func (device *IsolatorBricklet) WriteUID(uid uint32) (err error) {    
+// you have to decode the Base58 encoded UID string into an
+// integer first.
+// 
+// We recommend that you use Brick Viewer to change the UID.
+func (device *IsolatorBricklet) WriteUID(uid uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -669,7 +669,7 @@ func (device *IsolatorBricklet) WriteUID(uid uint32) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -678,13 +678,13 @@ func (device *IsolatorBricklet) WriteUID(uid uint32) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the current UID as an integer. Encode as
-	// Base58 to get the usual string version.
-func (device *IsolatorBricklet) ReadUID() (uid uint32, err error) {    
+// Base58 to get the usual string version.
+func (device *IsolatorBricklet) ReadUID() (uid uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -693,7 +693,7 @@ func (device *IsolatorBricklet) ReadUID() (uid uint32, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, BrickletError(header.ErrorCode)
@@ -703,19 +703,19 @@ func (device *IsolatorBricklet) ReadUID() (uid uint32, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &uid)
 
     }
-    
+
     return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be 'a', 'b', 'c' or 'd'.
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *IsolatorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be 'a', 'b', 'c' or 'd'.
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *IsolatorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -724,7 +724,7 @@ func (device *IsolatorBricklet) GetIdentity() (uid string, connectedUid string, 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -739,6 +739,6 @@ func (device *IsolatorBricklet) GetIdentity() (uid string, connectedUid string, 
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

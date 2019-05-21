@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-01-29.      *
+ * This file was automatically generated on 2019-05-21.      *
  *                                                           *
- * Go Bindings Version 2.0.2                                 *
+ * Go Bindings Version 2.0.3                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -135,17 +135,17 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DCBrick, error) {
 
 // Returns the response expected flag for the function specified by the function ID parameter.
 // It is true if the function is expected to send a response, false otherwise.
-// 
-// For getter functions this is enabled by default and cannot be disabled, because those 
-// functions will always send a response. For callback configuration functions it is enabled 
-// by default too, but can be disabled by SetResponseExpected. 
+//
+// For getter functions this is enabled by default and cannot be disabled, because those
+// functions will always send a response. For callback configuration functions it is enabled
+// by default too, but can be disabled by SetResponseExpected.
 // For setter functions it is disabled by default and can be enabled.
-// 
-// Enabling the response expected flag for a setter function allows to detect timeouts 
+//
+// Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
-// 
+//
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *DCBrick) GetResponseExpected(functionID Function) (bool, error) {
     return device.device.GetResponseExpected(uint8(functionID))
@@ -154,7 +154,7 @@ func (device *DCBrick) GetResponseExpected(functionID Function) (bool, error) {
 // Changes the response expected flag of the function specified by the function ID parameter.
 // This flag can only be changed for setter (default value: false) and callback configuration
 // functions (default value: true). For getter functions it is always enabled.
-// 
+//
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is send
@@ -174,8 +174,8 @@ func (device *DCBrick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when the input voltage drops below the value set by
-	// SetMinimumVoltage. The parameter is the current voltage given
-	// in mV.
+// SetMinimumVoltage. The parameter is the current voltage given
+// in mV.
 func (device *DCBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -187,25 +187,25 @@ func (device *DCBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
 }
 
 //Remove a registered Under Voltage callback.
-func (device *DCBrick) DeregisterUnderVoltageCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), callbackID)
+func (device *DCBrick) DeregisterUnderVoltageCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationID)
 }
 
 
 // This callback is triggered if either the current consumption
-	// is too high (above 5A) or the temperature of the driver chip is too high
-	// (above 175°C). These two possibilities are essentially the same, since the
-	// temperature will reach this threshold immediately if the motor consumes too
-	// much current. In case of a voltage below 3.3V (external or stack) this
-	// callback is triggered as well.
-	// 
-	// If this callback is triggered, the driver chip gets disabled at the same time.
-	// That means, Enable has to be called to drive the motor again.
-	// 
-	// Note
-	//  This callback only works in Drive/Brake mode (see SetDriveMode). In
-	//  Drive/Coast mode it is unfortunately impossible to reliably read the
-	//  overcurrent/overtemperature signal from the driver chip.
+// is too high (above 5A) or the temperature of the driver chip is too high
+// (above 175°C). These two possibilities are essentially the same, since the
+// temperature will reach this threshold immediately if the motor consumes too
+// much current. In case of a voltage below 3.3V (external or stack) this
+// callback is triggered as well.
+// 
+// If this callback is triggered, the driver chip gets disabled at the same time.
+// That means, Enable has to be called to drive the motor again.
+// 
+// Note
+//  This callback only works in Drive/Brake mode (see SetDriveMode). In
+//  Drive/Coast mode it is unfortunately impossible to reliably read the
+//  overcurrent/overtemperature signal from the driver chip.
 func (device *DCBrick) RegisterEmergencyShutdownCallback(fn func()) uint64 {
             wrapper := func(byteSlice []byte) {
                 
@@ -217,21 +217,21 @@ func (device *DCBrick) RegisterEmergencyShutdownCallback(fn func()) uint64 {
 }
 
 //Remove a registered Emergency Shutdown callback.
-func (device *DCBrick) DeregisterEmergencyShutdownCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackEmergencyShutdown), callbackID)
+func (device *DCBrick) DeregisterEmergencyShutdownCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackEmergencyShutdown), registrationID)
 }
 
 
 // This callback is triggered whenever a set velocity is reached. For example:
-	// If a velocity of 0 is present, acceleration is set to 5000 and velocity
-	// to 10000, the RegisterVelocityReachedCallback callback will be triggered after about
-	// 2 seconds, when the set velocity is actually reached.
-	// 
-	// Note
-	//  Since we can't get any feedback from the DC motor, this only works if the
-	//  acceleration (see SetAcceleration) is set smaller or equal to the
-	//  maximum acceleration of the motor. Otherwise the motor will lag behind the
-	//  control value and the callback will be triggered too early.
+// If a velocity of 0 is present, acceleration is set to 5000 and velocity
+// to 10000, the RegisterVelocityReachedCallback callback will be triggered after about
+// 2 seconds, when the set velocity is actually reached.
+// 
+// Note
+//  Since we can't get any feedback from the DC motor, this only works if the
+//  acceleration (see SetAcceleration) is set smaller or equal to the
+//  maximum acceleration of the motor. Otherwise the motor will lag behind the
+//  control value and the callback will be triggered too early.
 func (device *DCBrick) RegisterVelocityReachedCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -243,17 +243,17 @@ func (device *DCBrick) RegisterVelocityReachedCallback(fn func(int16)) uint64 {
 }
 
 //Remove a registered Velocity Reached callback.
-func (device *DCBrick) DeregisterVelocityReachedCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), callbackID)
+func (device *DCBrick) DeregisterVelocityReachedCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), registrationID)
 }
 
 
 // This callback is triggered with the period that is set by
-	// SetCurrentVelocityPeriod. The parameter is the *current*
-	// velocity used by the motor.
-	// 
-	// The RegisterCurrentVelocityCallback callback is only triggered after the set period
-	// if there is a change in the velocity.
+// SetCurrentVelocityPeriod. The parameter is the *current*
+// velocity used by the motor.
+// 
+// The RegisterCurrentVelocityCallback callback is only triggered after the set period
+// if there is a change in the velocity.
 func (device *DCBrick) RegisterCurrentVelocityCallback(fn func(int16)) uint64 {
             wrapper := func(byteSlice []byte) {
                 buf := bytes.NewBuffer(byteSlice[8:])
@@ -265,23 +265,23 @@ func (device *DCBrick) RegisterCurrentVelocityCallback(fn func(int16)) uint64 {
 }
 
 //Remove a registered Current Velocity callback.
-func (device *DCBrick) DeregisterCurrentVelocityCallback(callbackID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrentVelocity), callbackID)
+func (device *DCBrick) DeregisterCurrentVelocityCallback(registrationID uint64) {
+    device.device.DeregisterCallback(uint8(FunctionCallbackCurrentVelocity), registrationID)
 }
 
 
 // Sets the velocity of the motor. Whereas -32767 is full speed backward,
-	// 0 is stop and 32767 is full speed forward. Depending on the
-	// acceleration (see SetAcceleration), the motor is not immediately
-	// brought to the velocity but smoothly accelerated.
-	// 
-	// The velocity describes the duty cycle of the PWM with which the motor is
-	// controlled, e.g. a velocity of 3277 sets a PWM with a 10% duty cycle.
-	// You can not only control the duty cycle of the PWM but also the frequency,
-	// see SetPWMFrequency.
-	// 
-	// The default velocity is 0.
-func (device *DCBrick) SetVelocity(velocity int16) (err error) {    
+// 0 is stop and 32767 is full speed forward. Depending on the
+// acceleration (see SetAcceleration), the motor is not immediately
+// brought to the velocity but smoothly accelerated.
+// 
+// The velocity describes the duty cycle of the PWM with which the motor is
+// controlled, e.g. a velocity of 3277 sets a PWM with a 10% duty cycle.
+// You can not only control the duty cycle of the PWM but also the frequency,
+// see SetPWMFrequency.
+// 
+// The default velocity is 0.
+func (device *DCBrick) SetVelocity(velocity int16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, velocity);
 
@@ -291,7 +291,7 @@ func (device *DCBrick) SetVelocity(velocity int16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -300,12 +300,12 @@ func (device *DCBrick) SetVelocity(velocity int16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the velocity as set by SetVelocity.
-func (device *DCBrick) GetVelocity() (velocity int16, err error) {    
+func (device *DCBrick) GetVelocity() (velocity int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetVelocity), buf.Bytes())
@@ -314,7 +314,7 @@ func (device *DCBrick) GetVelocity() (velocity int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return velocity, BrickletError(header.ErrorCode)
@@ -324,14 +324,14 @@ func (device *DCBrick) GetVelocity() (velocity int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
     }
-    
+
     return velocity, nil
 }
 
 // Returns the *current* velocity of the motor. This value is different
-	// from GetVelocity whenever the motor is currently accelerating
-	// to a goal set by SetVelocity.
-func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {    
+// from GetVelocity whenever the motor is currently accelerating
+// to a goal set by SetVelocity.
+func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
@@ -340,7 +340,7 @@ func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return velocity, BrickletError(header.ErrorCode)
@@ -350,23 +350,23 @@ func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
     }
-    
+
     return velocity, nil
 }
 
 // Sets the acceleration of the motor. It is given in *velocity/s*. An
-	// acceleration of 10000 means, that every second the velocity is increased
-	// by 10000 (or about 30% duty cycle).
-	// 
-	// For example: If the current velocity is 0 and you want to accelerate to a
-	// velocity of 16000 (about 50% duty cycle) in 10 seconds, you should set
-	// an acceleration of 1600.
-	// 
-	// If acceleration is set to 0, there is no speed ramping, i.e. a new velocity
-	// is immediately given to the motor.
-	// 
-	// The default acceleration is 10000.
-func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {    
+// acceleration of 10000 means, that every second the velocity is increased
+// by 10000 (or about 30% duty cycle).
+// 
+// For example: If the current velocity is 0 and you want to accelerate to a
+// velocity of 16000 (about 50% duty cycle) in 10 seconds, you should set
+// an acceleration of 1600.
+// 
+// If acceleration is set to 0, there is no speed ramping, i.e. a new velocity
+// is immediately given to the motor.
+// 
+// The default acceleration is 10000.
+func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, acceleration);
 
@@ -376,7 +376,7 @@ func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -385,12 +385,12 @@ func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the acceleration as set by SetAcceleration.
-func (device *DCBrick) GetAcceleration() (acceleration uint16, err error) {    
+func (device *DCBrick) GetAcceleration() (acceleration uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
@@ -399,7 +399,7 @@ func (device *DCBrick) GetAcceleration() (acceleration uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return acceleration, BrickletError(header.ErrorCode)
@@ -409,21 +409,21 @@ func (device *DCBrick) GetAcceleration() (acceleration uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &acceleration)
 
     }
-    
+
     return acceleration, nil
 }
 
 // Sets the frequency (in Hz) of the PWM with which the motor is driven.
-	// The possible range of the frequency is 1-20000Hz. Often a high frequency
-	// is less noisy and the motor runs smoother. However, with a low frequency
-	// there are less switches and therefore fewer switching losses. Also with
-	// most motors lower frequencies enable higher torque.
-	// 
-	// If you have no idea what all this means, just ignore this function and use
-	// the default frequency, it will very likely work fine.
-	// 
-	// The default frequency is 15 kHz.
-func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {    
+// The possible range of the frequency is 1-20000Hz. Often a high frequency
+// is less noisy and the motor runs smoother. However, with a low frequency
+// there are less switches and therefore fewer switching losses. Also with
+// most motors lower frequencies enable higher torque.
+// 
+// If you have no idea what all this means, just ignore this function and use
+// the default frequency, it will very likely work fine.
+// 
+// The default frequency is 15 kHz.
+func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, frequency);
 
@@ -433,7 +433,7 @@ func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -442,12 +442,12 @@ func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the PWM frequency (in Hz) as set by SetPWMFrequency.
-func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {    
+func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetPWMFrequency), buf.Bytes())
@@ -456,7 +456,7 @@ func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return frequency, BrickletError(header.ErrorCode)
@@ -466,19 +466,19 @@ func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &frequency)
 
     }
-    
+
     return frequency, nil
 }
 
 // Executes an active full brake.
-	// 
-	// Warning
-	//  This function is for emergency purposes,
-	//  where an immediate brake is necessary. Depending on the current velocity and
-	//  the strength of the motor, a full brake can be quite violent.
-	// 
-	// Call SetVelocity with 0 if you just want to stop the motor.
-func (device *DCBrick) FullBrake() (err error) {    
+// 
+// Warning
+//  This function is for emergency purposes,
+//  where an immediate brake is necessary. Depending on the current velocity and
+//  the strength of the motor, a full brake can be quite violent.
+// 
+// Call SetVelocity with 0 if you just want to stop the motor.
+func (device *DCBrick) FullBrake() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionFullBrake), buf.Bytes())
@@ -487,7 +487,7 @@ func (device *DCBrick) FullBrake() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -496,14 +496,14 @@ func (device *DCBrick) FullBrake() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the stack input voltage in mV. The stack input voltage is the
-	// voltage that is supplied via the stack, i.e. it is given by a
-	// Step-Down or Step-Up Power Supply.
-func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {    
+// voltage that is supplied via the stack, i.e. it is given by a
+// Step-Down or Step-Up Power Supply.
+func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
@@ -512,7 +512,7 @@ func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -522,23 +522,23 @@ func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Returns the external input voltage in mV. The external input voltage is
-	// given via the black power input connector on the DC Brick.
-	// 
-	// If there is an external input voltage and a stack input voltage, the motor
-	// will be driven by the external input voltage. If there is only a stack
-	// voltage present, the motor will be driven by this voltage.
-	// 
-	// Warning
-	//  This means, if you have a high stack voltage and a low external voltage,
-	//  the motor will be driven with the low external voltage. If you then remove
-	//  the external connection, it will immediately be driven by the high
-	//  stack voltage.
-func (device *DCBrick) GetExternalInputVoltage() (voltage uint16, err error) {    
+// given via the black power input connector on the DC Brick.
+// 
+// If there is an external input voltage and a stack input voltage, the motor
+// will be driven by the external input voltage. If there is only a stack
+// voltage present, the motor will be driven by this voltage.
+// 
+// Warning
+//  This means, if you have a high stack voltage and a low external voltage,
+//  the motor will be driven with the low external voltage. If you then remove
+//  the external connection, it will immediately be driven by the high
+//  stack voltage.
+func (device *DCBrick) GetExternalInputVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
@@ -547,7 +547,7 @@ func (device *DCBrick) GetExternalInputVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -557,12 +557,12 @@ func (device *DCBrick) GetExternalInputVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Returns the current consumption of the motor in mA.
-func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {    
+func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCurrentConsumption), buf.Bytes())
@@ -571,7 +571,7 @@ func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -581,13 +581,13 @@ func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Enables the driver chip. The driver parameters can be configured (velocity,
-	// acceleration, etc) before it is enabled.
-func (device *DCBrick) Enable() (err error) {    
+// acceleration, etc) before it is enabled.
+func (device *DCBrick) Enable() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
@@ -596,7 +596,7 @@ func (device *DCBrick) Enable() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -605,13 +605,13 @@ func (device *DCBrick) Enable() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the driver chip. The configurations are kept (velocity,
-	// acceleration, etc) but the motor is not driven until it is enabled again.
-func (device *DCBrick) Disable() (err error) {    
+// acceleration, etc) but the motor is not driven until it is enabled again.
+func (device *DCBrick) Disable() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
@@ -620,7 +620,7 @@ func (device *DCBrick) Disable() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -629,12 +629,12 @@ func (device *DCBrick) Disable() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the driver chip is enabled, *false* otherwise.
-func (device *DCBrick) IsEnabled() (enabled bool, err error) {    
+func (device *DCBrick) IsEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
@@ -643,7 +643,7 @@ func (device *DCBrick) IsEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -653,18 +653,18 @@ func (device *DCBrick) IsEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
-	// is triggered. The minimum possible value that works with the DC Brick is 6V.
-	// You can use this function to detect the discharge of a battery that is used
-	// to drive the motor. If you have a fixed power supply, you likely do not need
-	// this functionality.
-	// 
-	// The default value is 6V.
-func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {    
+// is triggered. The minimum possible value that works with the DC Brick is 6V.
+// You can use this function to detect the discharge of a battery that is used
+// to drive the motor. If you have a fixed power supply, you likely do not need
+// this functionality.
+// 
+// The default value is 6V.
+func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, voltage);
 
@@ -674,7 +674,7 @@ func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -683,12 +683,12 @@ func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the minimum voltage as set by SetMinimumVoltage
-func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {    
+func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
@@ -697,7 +697,7 @@ func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return voltage, BrickletError(header.ErrorCode)
@@ -707,33 +707,33 @@ func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
     }
-    
+
     return voltage, nil
 }
 
 // Sets the drive mode. Possible modes are:
-	// 
-	// * 0 = Drive/Brake
-	// * 1 = Drive/Coast
-	// 
-	// These modes are different kinds of motor controls.
-	// 
-	// In Drive/Brake mode, the motor is always either driving or braking. There
-	// is no freewheeling. Advantages are: A more linear correlation between
-	// PWM and velocity, more exact accelerations and the possibility to drive
-	// with slower velocities.
-	// 
-	// In Drive/Coast mode, the motor is always either driving or freewheeling.
-	// Advantages are: Less current consumption and less demands on the motor and
-	// driver chip.
-	// 
-	// The default value is 0 = Drive/Brake.
+// 
+// * 0 = Drive/Brake
+// * 1 = Drive/Coast
+// 
+// These modes are different kinds of motor controls.
+// 
+// In Drive/Brake mode, the motor is always either driving or braking. There
+// is no freewheeling. Advantages are: A more linear correlation between
+// PWM and velocity, more exact accelerations and the possibility to drive
+// with slower velocities.
+// 
+// In Drive/Coast mode, the motor is always either driving or freewheeling.
+// Advantages are: Less current consumption and less demands on the motor and
+// driver chip.
+// 
+// The default value is 0 = Drive/Brake.
 //
 // Associated constants:
 //
 //	* DriveModeDriveBrake
 //	* DriveModeDriveCoast
-func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {    
+func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -743,7 +743,7 @@ func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -752,7 +752,7 @@ func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
@@ -762,7 +762,7 @@ func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {
 //
 //	* DriveModeDriveBrake
 //	* DriveModeDriveCoast
-func (device *DCBrick) GetDriveMode() (mode DriveMode, err error) {    
+func (device *DCBrick) GetDriveMode() (mode DriveMode, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetDriveMode), buf.Bytes())
@@ -771,7 +771,7 @@ func (device *DCBrick) GetDriveMode() (mode DriveMode, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return mode, BrickletError(header.ErrorCode)
@@ -781,15 +781,15 @@ func (device *DCBrick) GetDriveMode() (mode DriveMode, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &mode)
 
     }
-    
+
     return mode, nil
 }
 
 // Sets a period in ms with which the RegisterCurrentVelocityCallback callback is triggered.
-	// A period of 0 turns the callback off.
-	// 
-	// The default value is 0.
-func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {    
+// A period of 0 turns the callback off.
+// 
+// The default value is 0.
+func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, period);
 
@@ -799,7 +799,7 @@ func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -808,12 +808,12 @@ func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the period as set by SetCurrentVelocityPeriod.
-func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {    
+func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocityPeriod), buf.Bytes())
@@ -822,7 +822,7 @@ func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return period, BrickletError(header.ErrorCode)
@@ -832,35 +832,35 @@ func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &period)
 
     }
-    
+
     return period, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
-	// enabled, the Brick will try to adapt the baudrate for the communication
-	// between Bricks and Bricklets according to the amount of data that is transferred.
-	// 
-	// The baudrate will be increased exponentially if lots of data is send/received and
-	// decreased linearly if little data is send/received.
-	// 
-	// This lowers the baudrate in applications where little data is transferred (e.g.
-	// a weather station) and increases the robustness. If there is lots of data to transfer
-	// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
-	// 
-	// In cases where some data has to transferred as fast as possible every few seconds
-	// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
-	// the dynamic baudrate off to get the highest possible performance.
-	// 
-	// The maximum value of the baudrate can be set per port with the function
-	// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
-	// as set by SetSPITFPBaudrate will be used statically.
-	// 
-	// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-	// 
-	// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-	// 
-	// .. versionadded:: 2.3.5$nbsp;(Firmware)
-func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {    
+// enabled, the Brick will try to adapt the baudrate for the communication
+// between Bricks and Bricklets according to the amount of data that is transferred.
+// 
+// The baudrate will be increased exponentially if lots of data is send/received and
+// decreased linearly if little data is send/received.
+// 
+// This lowers the baudrate in applications where little data is transferred (e.g.
+// a weather station) and increases the robustness. If there is lots of data to transfer
+// (e.g. Thermal Imaging Bricklet) it automatically increases the baudrate as needed.
+// 
+// In cases where some data has to transferred as fast as possible every few seconds
+// (e.g. RS485 Bricklet with a high baudrate but small payload) you may want to turn
+// the dynamic baudrate off to get the highest possible performance.
+// 
+// The maximum value of the baudrate can be set per port with the function
+// SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
+// as set by SetSPITFPBaudrate will be used statically.
+// 
+// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
+// 
+// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
+// 
+// .. versionadded:: 2.3.5$nbsp;(Firmware)
+func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
@@ -871,7 +871,7 @@ func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minim
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -880,14 +880,14 @@ func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minim
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
-	// 
-	// .. versionadded:: 2.3.5$nbsp;(Firmware)
-func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.3.5$nbsp;(Firmware)
+func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
@@ -896,7 +896,7 @@ func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, mi
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
@@ -907,18 +907,18 @@ func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, mi
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
     }
-    
+
     return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
-	// 
-	// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
-	// 
-	// This function is mostly used for debugging during development, in normal operation
-	// the counters should nearly always stay at 0.
-	// 
-	// .. versionadded:: 2.3.3$nbsp;(Firmware)
+// 
+// The methods 0-2 are available for all Bricks, 3-7 only for Master Bricks.
+// 
+// This function is mostly used for debugging during development, in normal operation
+// the counters should nearly always stay at 0.
+// 
+// .. versionadded:: 2.3.3$nbsp;(Firmware)
 //
 // Associated constants:
 //
@@ -930,7 +930,7 @@ func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, mi
 //	* CommunicationMethodWIFI
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
-func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {    
+func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
@@ -940,7 +940,7 @@ func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMeth
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return timeoutCount, BrickletError(header.ErrorCode)
@@ -950,29 +950,29 @@ func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMeth
         binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
     }
-    
+
     return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-	// baudrate can be in the range 400000 to 2000000.
-	// 
-	// If you want to increase the throughput of Bricklets you can increase
-	// the baudrate. If you get a high error count because of high
-	// interference (see GetSPITFPErrorCount) you can decrease the
-	// baudrate.
-	// 
-	// If the dynamic baudrate feature is enabled, the baudrate set by this
-	// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
-	// 
-	// Regulatory testing is done with the default baudrate. If CE compatibility
-	// or similar is necessary in you applications we recommend to not change
-	// the baudrate.
-	// 
-	// The default baudrate for all ports is 1400000.
-	// 
-	// .. versionadded:: 2.3.3$nbsp;(Firmware)
-func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {    
+// baudrate can be in the range 400000 to 2000000.
+// 
+// If you want to increase the throughput of Bricklets you can increase
+// the baudrate. If you get a high error count because of high
+// interference (see GetSPITFPErrorCount) you can decrease the
+// baudrate.
+// 
+// If the dynamic baudrate feature is enabled, the baudrate set by this
+// function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
+// 
+// Regulatory testing is done with the default baudrate. If CE compatibility
+// or similar is necessary in you applications we recommend to not change
+// the baudrate.
+// 
+// The default baudrate for all ports is 1400000.
+// 
+// .. versionadded:: 2.3.3$nbsp;(Firmware)
+func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
@@ -983,7 +983,7 @@ func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -992,14 +992,14 @@ func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (er
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
-	// 
-	// .. versionadded:: 2.3.3$nbsp;(Firmware)
-func (device *DCBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {    
+// 
+// .. versionadded:: 2.3.3$nbsp;(Firmware)
+func (device *DCBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1009,7 +1009,7 @@ func (device *DCBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, er
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return baudrate, BrickletError(header.ErrorCode)
@@ -1019,24 +1019,24 @@ func (device *DCBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, er
         binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
     }
-    
+
     return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-	// 
-	// The errors are divided into
-	// 
-	// * ACK checksum errors,
-	// * message checksum errors,
-	// * framing errors and
-	// * overflow errors.
-	// 
-	// The errors counts are for errors that occur on the Brick side. All
-	// Bricklets have a similar function that returns the errors on the Bricklet side.
-	// 
-	// .. versionadded:: 2.3.3$nbsp;(Firmware)
-func (device *DCBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {    
+// 
+// The errors are divided into
+// 
+// * ACK checksum errors,
+// * message checksum errors,
+// * framing errors and
+// * overflow errors.
+// 
+// The errors counts are for errors that occur on the Brick side. All
+// Bricklets have a similar function that returns the errors on the Bricklet side.
+// 
+// .. versionadded:: 2.3.3$nbsp;(Firmware)
+func (device *DCBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, brickletPort);
 
@@ -1046,7 +1046,7 @@ func (device *DCBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChec
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
@@ -1059,19 +1059,19 @@ func (device *DCBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChec
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
     }
-    
+
     return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *DCBrick) EnableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *DCBrick) EnableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
@@ -1080,7 +1080,7 @@ func (device *DCBrick) EnableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1089,19 +1089,19 @@ func (device *DCBrick) EnableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Disables the status LED.
-	// 
-	// The status LED is the blue LED next to the USB connector. If enabled is is
-	// on and it flickers if data is transfered. If disabled it is always off.
-	// 
-	// The default state is enabled.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *DCBrick) DisableStatusLED() (err error) {    
+// 
+// The status LED is the blue LED next to the USB connector. If enabled is is
+// on and it flickers if data is transfered. If disabled it is always off.
+// 
+// The default state is enabled.
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *DCBrick) DisableStatusLED() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
@@ -1110,7 +1110,7 @@ func (device *DCBrick) DisableStatusLED() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1119,14 +1119,14 @@ func (device *DCBrick) DisableStatusLED() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
-	// 
-	// .. versionadded:: 2.3.1$nbsp;(Firmware)
-func (device *DCBrick) IsStatusLEDEnabled() (enabled bool, err error) {    
+// 
+// .. versionadded:: 2.3.1$nbsp;(Firmware)
+func (device *DCBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
@@ -1135,7 +1135,7 @@ func (device *DCBrick) IsStatusLEDEnabled() (enabled bool, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return enabled, BrickletError(header.ErrorCode)
@@ -1145,16 +1145,16 @@ func (device *DCBrick) IsStatusLEDEnabled() (enabled bool, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
     }
-    
+
     return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
-	// given port.
-	// 
-	// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
-	// plugins.
-func (device *DCBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {    
+// given port.
+// 
+// This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
+// plugins.
+func (device *DCBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
         var buf bytes.Buffer
     binary.Write(&buf, binary.LittleEndian, port);
 
@@ -1164,7 +1164,7 @@ func (device *DCBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
@@ -1176,17 +1176,17 @@ func (device *DCBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint
 	name = ByteSliceToString(resultBuf.Next(40))
 
     }
-    
+
     return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
-	// value returned is not the ambient temperature!
-	// 
-	// The temperature is only proportional to the real temperature and it has an
-	// accuracy of +-15%. Practically it is only useful as an indicator for
-	// temperature changes.
-func (device *DCBrick) GetChipTemperature() (temperature int16, err error) {    
+// value returned is not the ambient temperature!
+// 
+// The temperature is only proportional to the real temperature and it has an
+// accuracy of +-15%. Practically it is only useful as an indicator for
+// temperature changes.
+func (device *DCBrick) GetChipTemperature() (temperature int16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -1195,7 +1195,7 @@ func (device *DCBrick) GetChipTemperature() (temperature int16, err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return temperature, BrickletError(header.ErrorCode)
@@ -1205,17 +1205,17 @@ func (device *DCBrick) GetChipTemperature() (temperature int16, err error) {
         binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
     }
-    
+
     return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
-	// on a Brick inside of a stack will reset the whole stack.
-	// 
-	// After a reset you have to create new device objects,
-	// calling functions on the existing ones will result in
-	// undefined behavior!
-func (device *DCBrick) Reset() (err error) {    
+// on a Brick inside of a stack will reset the whole stack.
+// 
+// After a reset you have to create new device objects,
+// calling functions on the existing ones will result in
+// undefined behavior!
+func (device *DCBrick) Reset() (err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1224,7 +1224,7 @@ func (device *DCBrick) Reset() (err error) {
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return BrickletError(header.ErrorCode)
@@ -1233,19 +1233,19 @@ func (device *DCBrick) Reset() (err error) {
         bytes.NewBuffer(resultBytes[8:])
         
     }
-    
+
     return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
-	// the position, the hardware and firmware version as well as the
-	// device identifier.
-	// 
-	// The position can be '0'-'8' (stack position).
-	// 
-	// The device identifier numbers can be found `here <device_identifier>`.
-	// |device_identifier_constant|
-func (device *DCBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {    
+// the position, the hardware and firmware version as well as the
+// device identifier.
+// 
+// The position can be '0'-'8' (stack position).
+// 
+// The device identifier numbers can be found `here <device_identifier>`.
+// |device_identifier_constant|
+func (device *DCBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
         var buf bytes.Buffer
     
     resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
@@ -1254,7 +1254,7 @@ func (device *DCBrick) GetIdentity() (uid string, connectedUid string, position 
     }
     if len(resultBytes) > 0 {
         var header PacketHeader
-        
+
         header.FillFromBytes(resultBytes)
         if header.ErrorCode != 0 {
             return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
@@ -1269,6 +1269,6 @@ func (device *DCBrick) GetIdentity() (uid string, connectedUid string, position 
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
     }
-    
+
     return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }
