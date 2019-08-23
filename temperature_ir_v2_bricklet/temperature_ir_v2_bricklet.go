@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures contactless object temperature between -70°C and +380°C‍.
+// Measures contactless object temperature between -70°C and +380°C‍.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/TemperatureIRV2_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package temperature_ir_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetAmbientTemperature Function = 1
+	FunctionGetAmbientTemperature Function = 1
 	FunctionSetAmbientTemperatureCallbackConfiguration Function = 2
 	FunctionGetAmbientTemperatureCallbackConfiguration Function = 3
 	FunctionGetObjectTemperature Function = 5
@@ -49,30 +49,30 @@ const (
 	FunctionCallbackObjectTemperature Function = 8
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -80,16 +80,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type TemperatureIRV2Bricklet struct{
+type TemperatureIRV2Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 291
@@ -97,12 +97,12 @@ const DeviceDisplayName = "Temperature IR Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureIRV2Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return TemperatureIRV2Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetAmbientTemperature] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return TemperatureIRV2Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetAmbientTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAmbientTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetAmbientTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetObjectTemperature] = ResponseExpectedFlagAlwaysTrue;
@@ -122,7 +122,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureIRV2Bricklet,
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return TemperatureIRV2Bricklet{dev}, nil
+	return TemperatureIRV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -140,7 +140,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureIRV2Bricklet,
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *TemperatureIRV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -152,7 +152,7 @@ func (device *TemperatureIRV2Bricklet) GetResponseExpected(functionID Function) 
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *TemperatureIRV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -162,7 +162,7 @@ func (device *TemperatureIRV2Bricklet) SetResponseExpectedAll(responseExpected b
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *TemperatureIRV2Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
@@ -170,18 +170,18 @@ func (device *TemperatureIRV2Bricklet) GetAPIVersion() [3]uint8 {
 // 
 // The parameter is the same as GetAmbientTemperature.
 func (device *TemperatureIRV2Bricklet) RegisterAmbientTemperatureCallback(fn func(int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var temperature int16
-                binary.Read(buf, binary.LittleEndian, &temperature)
-                fn(temperature)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAmbientTemperature), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var temperature int16
+		binary.Read(buf, binary.LittleEndian, &temperature)
+		fn(temperature)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAmbientTemperature), wrapper)
 }
 
-//Remove a registered Ambient Temperature callback.
-func (device *TemperatureIRV2Bricklet) DeregisterAmbientTemperatureCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperature), registrationID)
+// Remove a registered Ambient Temperature callback.
+func (device *TemperatureIRV2Bricklet) DeregisterAmbientTemperatureCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAmbientTemperature), registrationId)
 }
 
 
@@ -190,18 +190,18 @@ func (device *TemperatureIRV2Bricklet) DeregisterAmbientTemperatureCallback(regi
 // 
 // The parameter is the same as GetObjectTemperature.
 func (device *TemperatureIRV2Bricklet) RegisterObjectTemperatureCallback(fn func(int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var temperature int16
-                binary.Read(buf, binary.LittleEndian, &temperature)
-                fn(temperature)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackObjectTemperature), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var temperature int16
+		binary.Read(buf, binary.LittleEndian, &temperature)
+		fn(temperature)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackObjectTemperature), wrapper)
 }
 
-//Remove a registered Object Temperature callback.
-func (device *TemperatureIRV2Bricklet) DeregisterObjectTemperatureCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperature), registrationID)
+// Remove a registered Object Temperature callback.
+func (device *TemperatureIRV2Bricklet) DeregisterObjectTemperatureCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackObjectTemperature), registrationId)
 }
 
 
@@ -210,35 +210,31 @@ func (device *TemperatureIRV2Bricklet) DeregisterObjectTemperatureCallback(regis
 // e.g. a value of 423 means that an ambient temperature of 42.3 °C is
 // measured.
 // 
-// If you want to get the ambient temperature periodically, it is recommended
-// to use the RegisterAmbientTemperatureCallback callback and set the period with
-// SetAmbientTemperatureCallbackConfiguration.
-// 
 // 
 // If you want to get the value periodically, it is recommended to use the
 // RegisterAmbientTemperatureCallback callback. You can set the callback configuration
 // with SetAmbientTemperatureCallbackConfiguration.
 func (device *TemperatureIRV2Bricklet) GetAmbientTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // The period in ms is the period with which the RegisterAmbientTemperatureCallback callback is triggered
@@ -277,30 +273,30 @@ func (device *TemperatureIRV2Bricklet) GetAmbientTemperature() (temperature int1
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *TemperatureIRV2Bricklet) SetAmbientTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
 	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAmbientTemperatureCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAmbientTemperatureCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by SetAmbientTemperatureCallbackConfiguration.
@@ -313,30 +309,30 @@ func (device *TemperatureIRV2Bricklet) SetAmbientTemperatureCallbackConfiguratio
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *TemperatureIRV2Bricklet) GetAmbientTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperatureCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, valueHasToChange, option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAmbientTemperatureCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return period, valueHasToChange, option, min, max, nil
+	return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the object temperature of the sensor, i.e. the temperature
@@ -349,35 +345,31 @@ func (device *TemperatureIRV2Bricklet) GetAmbientTemperatureCallbackConfiguratio
 // <https://en.wikipedia.org/wiki/Emissivity>`__. The emissivity of the material
 // can be set with SetEmissivity.
 // 
-// If you want to get the object temperature periodically, it is recommended
-// to use the RegisterObjectTemperatureCallback callback and set the period with
-// SetObjectTemperatureCallbackConfiguration.
-// 
 // 
 // If you want to get the value periodically, it is recommended to use the
 // RegisterObjectTemperatureCallback callback. You can set the callback configuration
 // with SetObjectTemperatureCallbackConfiguration.
 func (device *TemperatureIRV2Bricklet) GetObjectTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // The period in ms is the period with which the RegisterObjectTemperatureCallback callback is triggered
@@ -416,30 +408,30 @@ func (device *TemperatureIRV2Bricklet) GetObjectTemperature() (temperature int16
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *TemperatureIRV2Bricklet) SetObjectTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
 	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetObjectTemperatureCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetObjectTemperatureCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by SetObjectTemperatureCallbackConfiguration.
@@ -452,35 +444,35 @@ func (device *TemperatureIRV2Bricklet) SetObjectTemperatureCallbackConfiguration
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *TemperatureIRV2Bricklet) GetObjectTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperatureCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, valueHasToChange, option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetObjectTemperatureCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return period, valueHasToChange, option, min, max, nil
+	return period, valueHasToChange, option, min, max, nil
 }
 
 // Sets the https://en.wikipedia.org/wiki/Emissivity that is
 // used to calculate the surface temperature as returned by
-// :func:http://www.infrared-thermography.com/material.htm.
+// :func:https://www.infrared-thermography.com/material.htm.
 // 
 // The parameter of SetEmissivity has to be given with a factor of
 // 65535 (16-bit). For example: An emissivity of 0.1 can be set with the
@@ -496,50 +488,50 @@ func (device *TemperatureIRV2Bricklet) GetObjectTemperatureCallbackConfiguration
 // The emissivity is stored in non-volatile memory and will still be
 // used after a restart or power cycle of the Bricklet.
 func (device *TemperatureIRV2Bricklet) SetEmissivity(emissivity uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, emissivity);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, emissivity);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetEmissivity), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetEmissivity), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the emissivity as set by SetEmissivity.
 func (device *TemperatureIRV2Bricklet) GetEmissivity() (emissivity uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetEmissivity), buf.Bytes())
-    if err != nil {
-        return emissivity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetEmissivity), buf.Bytes())
+	if err != nil {
+		return emissivity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return emissivity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return emissivity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &emissivity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &emissivity)
 
-    }
+	}
 
-    return emissivity, nil
+	return emissivity, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -554,29 +546,29 @@ func (device *TemperatureIRV2Bricklet) GetEmissivity() (emissivity uint16, err e
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *TemperatureIRV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -603,27 +595,27 @@ func (device *TemperatureIRV2Bricklet) GetSPITFPErrorCount() (errorCountAckCheck
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *TemperatureIRV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -636,26 +628,26 @@ func (device *TemperatureIRV2Bricklet) SetBootloaderMode(mode BootloaderMode) (s
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *TemperatureIRV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -665,26 +657,26 @@ func (device *TemperatureIRV2Bricklet) GetBootloaderMode() (mode BootloaderMode,
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *TemperatureIRV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -696,27 +688,27 @@ func (device *TemperatureIRV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *TemperatureIRV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -734,26 +726,26 @@ func (device *TemperatureIRV2Bricklet) WriteFirmware(data [64]uint8) (status uin
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *TemperatureIRV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -765,26 +757,26 @@ func (device *TemperatureIRV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *TemperatureIRV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -794,26 +786,26 @@ func (device *TemperatureIRV2Bricklet) GetStatusLEDConfig() (config StatusLEDCon
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *TemperatureIRV2Bricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -823,25 +815,25 @@ func (device *TemperatureIRV2Bricklet) GetChipTemperature() (temperature int16, 
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *TemperatureIRV2Bricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -850,51 +842,51 @@ func (device *TemperatureIRV2Bricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *TemperatureIRV2Bricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *TemperatureIRV2Bricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -906,29 +898,29 @@ func (device *TemperatureIRV2Bricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *TemperatureIRV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

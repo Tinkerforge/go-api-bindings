@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Reads and writes NFC and RFID tags.
+// Reads and writes NFC and RFID tags.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/NFCRFID_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package nfc_rfid_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionRequestTagID Function = 1
+	FunctionRequestTagID Function = 1
 	FunctionGetTagID Function = 2
 	FunctionGetState Function = 3
 	FunctionAuthenticateMifareClassicPage Function = 4
@@ -36,18 +36,18 @@ const (
 	FunctionCallbackStateChanged Function = 8
 )
 
-type TagType uint8
+type TagType = uint8
 
 const (
-    TagTypeMifareClassic TagType = 0
+	TagTypeMifareClassic TagType = 0
 	TagTypeType1 TagType = 1
 	TagTypeType2 TagType = 2
 )
 
-type State uint8
+type State = uint8
 
 const (
-    StateInitialization State = 0
+	StateInitialization State = 0
 	StateIdle State = 128
 	StateError State = 192
 	StateRequestTagID State = 2
@@ -64,14 +64,14 @@ const (
 	StateRequestPageError State = 197
 )
 
-type Key uint8
+type Key = uint8
 
 const (
-    KeyA Key = 0
+	KeyA Key = 0
 	KeyB Key = 1
 )
 
-type NFCRFIDBricklet struct{
+type NFCRFIDBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 246
@@ -79,12 +79,12 @@ const DeviceDisplayName = "NFC/RFID Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (NFCRFIDBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return NFCRFIDBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionRequestTagID] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return NFCRFIDBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionRequestTagID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetTagID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetState] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionAuthenticateMifareClassicPage] = ResponseExpectedFlagFalse;
@@ -92,7 +92,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (NFCRFIDBricklet, error) 
 	dev.ResponseExpected[FunctionRequestPage] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetPage] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return NFCRFIDBricklet{dev}, nil
+	return NFCRFIDBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -110,7 +110,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (NFCRFIDBricklet, error) 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *NFCRFIDBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -122,7 +122,7 @@ func (device *NFCRFIDBricklet) GetResponseExpected(functionID Function) (bool, e
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *NFCRFIDBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -132,26 +132,26 @@ func (device *NFCRFIDBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *NFCRFIDBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is called if the state of the NFC/RFID Bricklet changes.
 // See GetState for more information about the possible states.
 func (device *NFCRFIDBricklet) RegisterStateChangedCallback(fn func(State, bool)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var state State
-var idle bool
-                binary.Read(buf, binary.LittleEndian, &state)
-binary.Read(buf, binary.LittleEndian, &idle)
-                fn(state, idle)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackStateChanged), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var state State
+		var idle bool
+		binary.Read(buf, binary.LittleEndian, &state)
+		binary.Read(buf, binary.LittleEndian, &idle)
+		fn(state, idle)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackStateChanged), wrapper)
 }
 
-//Remove a registered State Changed callback.
-func (device *NFCRFIDBricklet) DeregisterStateChangedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStateChanged), registrationID)
+// Remove a registered State Changed callback.
+func (device *NFCRFIDBricklet) DeregisterStateChangedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackStateChanged), registrationId)
 }
 
 
@@ -190,26 +190,26 @@ func (device *NFCRFIDBricklet) DeregisterStateChangedCallback(registrationID uin
 //	* TagTypeType1
 //	* TagTypeType2
 func (device *NFCRFIDBricklet) RequestTagID(tagType TagType) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, tagType);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, tagType);
 
-    resultBytes, err := device.device.Set(uint8(FunctionRequestTagID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionRequestTagID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the tag type, tag ID and the length of the tag ID
@@ -230,28 +230,28 @@ func (device *NFCRFIDBricklet) RequestTagID(tagType TagType) (err error) {
 //	* TagTypeType1
 //	* TagTypeType2
 func (device *NFCRFIDBricklet) GetTagID() (tagType TagType, tidLength uint8, tid [7]uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTagID), buf.Bytes())
-    if err != nil {
-        return tagType, tidLength, tid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTagID), buf.Bytes())
+	if err != nil {
+		return tagType, tidLength, tid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return tagType, tidLength, tid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return tagType, tidLength, tid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &tagType)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &tagType)
 	binary.Read(resultBuf, binary.LittleEndian, &tidLength)
 	binary.Read(resultBuf, binary.LittleEndian, &tid)
 
-    }
+	}
 
-    return tagType, tidLength, tid, nil
+	return tagType, tidLength, tid, nil
 }
 
 // Returns the current state of the NFC/RFID Bricklet.
@@ -287,27 +287,27 @@ func (device *NFCRFIDBricklet) GetTagID() (tagType TagType, tidLength uint8, tid
 //	* StateRequestPageReady
 //	* StateRequestPageError
 func (device *NFCRFIDBricklet) GetState() (state State, idle bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetState), buf.Bytes())
-    if err != nil {
-        return state, idle, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetState), buf.Bytes())
+	if err != nil {
+		return state, idle, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return state, idle, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return state, idle, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &state)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &state)
 	binary.Read(resultBuf, binary.LittleEndian, &idle)
 
-    }
+	}
 
-    return state, idle, nil
+	return state, idle, nil
 }
 
 // Mifare Classic tags use authentication. If you want to read from or write to
@@ -334,28 +334,28 @@ func (device *NFCRFIDBricklet) GetState() (state State, idle bool, err error) {
 //	* KeyA
 //	* KeyB
 func (device *NFCRFIDBricklet) AuthenticateMifareClassicPage(page uint16, keyNumber Key, key [6]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, page);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, page);
 	binary.Write(&buf, binary.LittleEndian, keyNumber);
 	binary.Write(&buf, binary.LittleEndian, key);
 
-    resultBytes, err := device.device.Set(uint8(FunctionAuthenticateMifareClassicPage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionAuthenticateMifareClassicPage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 16 bytes starting from the given page. How many pages are written
@@ -379,27 +379,27 @@ func (device *NFCRFIDBricklet) AuthenticateMifareClassicPage(page uint16, keyNum
 // If you use a Mifare Classic tag you have to authenticate a page before you
 // can write to it. See AuthenticateMifareClassicPage.
 func (device *NFCRFIDBricklet) WritePage(page uint16, data [16]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, page);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, page);
 	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWritePage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWritePage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Reads 16 bytes starting from the given page and stores them into a buffer.
@@ -426,51 +426,51 @@ func (device *NFCRFIDBricklet) WritePage(page uint16, data [16]uint8) (err error
 // If you use a Mifare Classic tag you have to authenticate a page before you
 // can read it. See AuthenticateMifareClassicPage.
 func (device *NFCRFIDBricklet) RequestPage(page uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, page);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, page);
 
-    resultBytes, err := device.device.Set(uint8(FunctionRequestPage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionRequestPage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns 16 bytes of data from an internal buffer. To fill the buffer
 // with specific pages you have to call RequestPage beforehand.
 func (device *NFCRFIDBricklet) GetPage() (data [16]uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPage), buf.Bytes())
-    if err != nil {
-        return data, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPage), buf.Bytes())
+	if err != nil {
+		return data, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return data, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return data, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &data)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &data)
 
-    }
+	}
 
-    return data, nil
+	return data, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -482,29 +482,29 @@ func (device *NFCRFIDBricklet) GetPage() (data [16]uint8, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *NFCRFIDBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

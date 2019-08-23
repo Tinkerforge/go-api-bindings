@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Creates beep and alarm with configurable volume and frequency.
+// Creates beep and alarm with configurable volume and frequency.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/PiezoSpeakerV2_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package piezo_speaker_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionSetBeep Function = 1
+	FunctionSetBeep Function = 1
 	FunctionGetBeep Function = 2
 	FunctionSetAlarm Function = 3
 	FunctionGetAlarm Function = 4
@@ -47,34 +47,34 @@ const (
 	FunctionCallbackAlarmFinished Function = 8
 )
 
-type BeepDuration uint32
+type BeepDuration = uint32
 
 const (
-    BeepDurationOff BeepDuration = 0
+	BeepDurationOff BeepDuration = 0
 	BeepDurationInfinite BeepDuration = 4294967295
 )
 
-type AlarmDuration uint32
+type AlarmDuration = uint32
 
 const (
-    AlarmDurationOff AlarmDuration = 0
+	AlarmDurationOff AlarmDuration = 0
 	AlarmDurationInfinite AlarmDuration = 4294967295
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -82,16 +82,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type PiezoSpeakerV2Bricklet struct{
+type PiezoSpeakerV2Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 2145
@@ -99,12 +99,12 @@ const DeviceDisplayName = "Piezo Speaker Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerV2Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return PiezoSpeakerV2Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionSetBeep] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return PiezoSpeakerV2Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionSetBeep] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetBeep] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAlarm] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetAlarm] = ResponseExpectedFlagAlwaysTrue;
@@ -122,7 +122,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerV2Bricklet, 
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return PiezoSpeakerV2Bricklet{dev}, nil
+	return PiezoSpeakerV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -140,7 +140,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerV2Bricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *PiezoSpeakerV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -152,7 +152,7 @@ func (device *PiezoSpeakerV2Bricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *PiezoSpeakerV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -162,40 +162,40 @@ func (device *PiezoSpeakerV2Bricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *PiezoSpeakerV2Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered if a beep set by SetBeep is finished
 func (device *PiezoSpeakerV2Bricklet) RegisterBeepFinishedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackBeepFinished), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackBeepFinished), wrapper)
 }
 
-//Remove a registered Beep Finished callback.
-func (device *PiezoSpeakerV2Bricklet) DeregisterBeepFinishedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackBeepFinished), registrationID)
+// Remove a registered Beep Finished callback.
+func (device *PiezoSpeakerV2Bricklet) DeregisterBeepFinishedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackBeepFinished), registrationId)
 }
 
 
 // This callback is triggered if a alarm set by SetAlarm is finished
 func (device *PiezoSpeakerV2Bricklet) RegisterAlarmFinishedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAlarmFinished), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAlarmFinished), wrapper)
 }
 
-//Remove a registered Alarm Finished callback.
-func (device *PiezoSpeakerV2Bricklet) DeregisterAlarmFinishedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAlarmFinished), registrationID)
+// Remove a registered Alarm Finished callback.
+func (device *PiezoSpeakerV2Bricklet) DeregisterAlarmFinishedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAlarmFinished), registrationId)
 }
 
 
@@ -219,28 +219,28 @@ func (device *PiezoSpeakerV2Bricklet) DeregisterAlarmFinishedCallback(registrati
 //	* BeepDurationOff
 //	* BeepDurationInfinite
 func (device *PiezoSpeakerV2Bricklet) SetBeep(frequency uint16, volume uint8, duration BeepDuration) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frequency);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frequency);
 	binary.Write(&buf, binary.LittleEndian, volume);
 	binary.Write(&buf, binary.LittleEndian, duration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetBeep), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetBeep), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the last beep settings as set by SetBeep. If a beep is currently 
@@ -254,29 +254,29 @@ func (device *PiezoSpeakerV2Bricklet) SetBeep(frequency uint16, volume uint8, du
 //	* BeepDurationOff
 //	* BeepDurationInfinite
 func (device *PiezoSpeakerV2Bricklet) GetBeep() (frequency uint16, volume uint8, duration BeepDuration, durationRemaining uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBeep), buf.Bytes())
-    if err != nil {
-        return frequency, volume, duration, durationRemaining, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBeep), buf.Bytes())
+	if err != nil {
+		return frequency, volume, duration, durationRemaining, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return frequency, volume, duration, durationRemaining, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return frequency, volume, duration, durationRemaining, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &frequency)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frequency)
 	binary.Read(resultBuf, binary.LittleEndian, &volume)
 	binary.Read(resultBuf, binary.LittleEndian, &duration)
 	binary.Read(resultBuf, binary.LittleEndian, &durationRemaining)
 
-    }
+	}
 
-    return frequency, volume, duration, durationRemaining, nil
+	return frequency, volume, duration, durationRemaining, nil
 }
 
 // Creates an alarm (a tone that goes back and force between two specified frequencies).
@@ -327,31 +327,31 @@ func (device *PiezoSpeakerV2Bricklet) GetBeep() (frequency uint16, volume uint8,
 //	* AlarmDurationOff
 //	* AlarmDurationInfinite
 func (device *PiezoSpeakerV2Bricklet) SetAlarm(startFrequency uint16, endFrequency uint16, stepSize uint16, stepDelay uint16, volume uint8, duration AlarmDuration) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, startFrequency);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, startFrequency);
 	binary.Write(&buf, binary.LittleEndian, endFrequency);
 	binary.Write(&buf, binary.LittleEndian, stepSize);
 	binary.Write(&buf, binary.LittleEndian, stepDelay);
 	binary.Write(&buf, binary.LittleEndian, volume);
 	binary.Write(&buf, binary.LittleEndian, duration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAlarm), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAlarm), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the last alarm settings as set by SetAlarm. If an alarm is currently 
@@ -366,22 +366,22 @@ func (device *PiezoSpeakerV2Bricklet) SetAlarm(startFrequency uint16, endFrequen
 //	* AlarmDurationOff
 //	* AlarmDurationInfinite
 func (device *PiezoSpeakerV2Bricklet) GetAlarm() (startFrequency uint16, endFrequency uint16, stepSize uint16, stepDelay uint16, volume uint8, duration AlarmDuration, durationRemaining uint32, currentFrequency uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
-    if err != nil {
-        return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
+	if err != nil {
+		return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &startFrequency)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &startFrequency)
 	binary.Read(resultBuf, binary.LittleEndian, &endFrequency)
 	binary.Read(resultBuf, binary.LittleEndian, &stepSize)
 	binary.Read(resultBuf, binary.LittleEndian, &stepDelay)
@@ -390,57 +390,57 @@ func (device *PiezoSpeakerV2Bricklet) GetAlarm() (startFrequency uint16, endFreq
 	binary.Read(resultBuf, binary.LittleEndian, &durationRemaining)
 	binary.Read(resultBuf, binary.LittleEndian, &currentFrequency)
 
-    }
+	}
 
-    return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, nil
+	return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, nil
 }
 
 // Updates the volume of an ongoing beep or alarm. The range of the volume is 0 to 10.
 func (device *PiezoSpeakerV2Bricklet) UpdateVolume(volume uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, volume);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, volume);
 
-    resultBytes, err := device.device.Set(uint8(FunctionUpdateVolume), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionUpdateVolume), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Updates the frequency of an ongoing beep. The range of the frequency is 50Hz to 15000Hz.
 func (device *PiezoSpeakerV2Bricklet) UpdateFrequency(frequency uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frequency);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frequency);
 
-    resultBytes, err := device.device.Set(uint8(FunctionUpdateFrequency), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionUpdateFrequency), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -455,29 +455,29 @@ func (device *PiezoSpeakerV2Bricklet) UpdateFrequency(frequency uint16) (err err
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *PiezoSpeakerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -504,27 +504,27 @@ func (device *PiezoSpeakerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *PiezoSpeakerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -537,26 +537,26 @@ func (device *PiezoSpeakerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (st
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *PiezoSpeakerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -566,26 +566,26 @@ func (device *PiezoSpeakerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, 
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *PiezoSpeakerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -597,27 +597,27 @@ func (device *PiezoSpeakerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *PiezoSpeakerV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -635,26 +635,26 @@ func (device *PiezoSpeakerV2Bricklet) WriteFirmware(data [64]uint8) (status uint
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *PiezoSpeakerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -666,26 +666,26 @@ func (device *PiezoSpeakerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *PiezoSpeakerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -695,26 +695,26 @@ func (device *PiezoSpeakerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConf
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *PiezoSpeakerV2Bricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -724,25 +724,25 @@ func (device *PiezoSpeakerV2Bricklet) GetChipTemperature() (temperature int16, e
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *PiezoSpeakerV2Bricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -751,51 +751,51 @@ func (device *PiezoSpeakerV2Bricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *PiezoSpeakerV2Bricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *PiezoSpeakerV2Bricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -807,29 +807,29 @@ func (device *PiezoSpeakerV2Bricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *PiezoSpeakerV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

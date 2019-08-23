@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//1.68cm (0.66") OLED display with 64x48 pixels.
+// 1.68cm (0.66") OLED display with 64x48 pixels.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/OLED64x48_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package oled_64x48_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionWrite Function = 1
+	FunctionWrite Function = 1
 	FunctionNewWindow Function = 2
 	FunctionClearDisplay Function = 3
 	FunctionSetDisplayConfiguration Function = 4
@@ -34,7 +34,7 @@ const (
 	FunctionGetIdentity Function = 255
 )
 
-type OLED64x48Bricklet struct{
+type OLED64x48Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 264
@@ -42,19 +42,19 @@ const DeviceDisplayName = "OLED 64x48 Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (OLED64x48Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return OLED64x48Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return OLED64x48Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionNewWindow] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionClearDisplay] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionSetDisplayConfiguration] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetDisplayConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionWriteLine] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return OLED64x48Bricklet{dev}, nil
+	return OLED64x48Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -72,7 +72,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (OLED64x48Bricklet, error
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *OLED64x48Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -84,7 +84,7 @@ func (device *OLED64x48Bricklet) GetResponseExpected(functionID Function) (bool,
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *OLED64x48Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -94,7 +94,7 @@ func (device *OLED64x48Bricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *OLED64x48Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // Appends 64 byte of data to the window as set by NewWindow.
@@ -117,26 +117,26 @@ func (device *OLED64x48Bricklet) GetAPIVersion() [3]uint8 {
 // The next call of Write will write the second row and so on. To
 // fill the whole display you need to call Write 6 times.
 func (device *OLED64x48Bricklet) Write(data [64]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWrite), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWrite), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets the window in which you can write with Write. One row
@@ -144,52 +144,52 @@ func (device *OLED64x48Bricklet) Write(data [64]uint8) (err error) {
 // 
 // The columns have a range of 0 to 63 and the rows have a range of 0 to 5.
 func (device *OLED64x48Bricklet) NewWindow(columnFrom uint8, columnTo uint8, rowFrom uint8, rowTo uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, columnFrom);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, columnFrom);
 	binary.Write(&buf, binary.LittleEndian, columnTo);
 	binary.Write(&buf, binary.LittleEndian, rowFrom);
 	binary.Write(&buf, binary.LittleEndian, rowTo);
 
-    resultBytes, err := device.device.Set(uint8(FunctionNewWindow), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionNewWindow), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Clears the current content of the window as set by NewWindow.
 func (device *OLED64x48Bricklet) ClearDisplay() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionClearDisplay), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionClearDisplay), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets the configuration of the display.
@@ -199,52 +199,52 @@ func (device *OLED64x48Bricklet) ClearDisplay() (err error) {
 // 
 // The default values are contrast 143 and inverting off.
 func (device *OLED64x48Bricklet) SetDisplayConfiguration(contrast uint8, invert bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, contrast);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, contrast);
 	binary.Write(&buf, binary.LittleEndian, invert);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDisplayConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDisplayConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetDisplayConfiguration.
 func (device *OLED64x48Bricklet) GetDisplayConfiguration() (contrast uint8, invert bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDisplayConfiguration), buf.Bytes())
-    if err != nil {
-        return contrast, invert, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDisplayConfiguration), buf.Bytes())
+	if err != nil {
+		return contrast, invert, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return contrast, invert, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return contrast, invert, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &contrast)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &contrast)
 	binary.Read(resultBuf, binary.LittleEndian, &invert)
 
-    }
+	}
 
-    return contrast, invert, nil
+	return contrast, invert, nil
 }
 
 // Writes text to a specific line (0 to 5) with a specific position
@@ -259,30 +259,30 @@ func (device *OLED64x48Bricklet) GetDisplayConfiguration() (contrast uint8, inve
 // The display uses a special 5x7 pixel charset. You can view the characters
 // of the charset in Brick Viewer.
 func (device *OLED64x48Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, line);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, line);
 	binary.Write(&buf, binary.LittleEndian, position);
 	text_byte_slice, err := StringToByteSlice(text, 13)
 	if err != nil { return }
 	buf.Write(text_byte_slice)
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteLine), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteLine), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -294,29 +294,29 @@ func (device *OLED64x48Bricklet) WriteLine(line uint8, position uint8, text stri
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *OLED64x48Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

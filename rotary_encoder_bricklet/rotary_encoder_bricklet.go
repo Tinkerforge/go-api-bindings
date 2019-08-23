@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//360° rotary encoder with push-button.
+// 360° rotary encoder with push-button.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RotaryEncoder_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package rotary_encoder_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetCount Function = 1
+	FunctionGetCount Function = 1
 	FunctionSetCountCallbackPeriod Function = 2
 	FunctionGetCountCallbackPeriod Function = 3
 	FunctionSetCountCallbackThreshold Function = 4
@@ -40,17 +40,17 @@ const (
 	FunctionCallbackReleased Function = 12
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type RotaryEncoderBricklet struct{
+type RotaryEncoderBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 236
@@ -58,12 +58,12 @@ const DeviceDisplayName = "Rotary Encoder Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RotaryEncoderBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return RotaryEncoderBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetCount] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return RotaryEncoderBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetCountCallbackPeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetCountCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetCountCallbackThreshold] = ResponseExpectedFlagTrue;
@@ -72,7 +72,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RotaryEncoderBricklet, e
 	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionIsPressed] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return RotaryEncoderBricklet{dev}, nil
+	return RotaryEncoderBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -90,7 +90,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RotaryEncoderBricklet, e
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *RotaryEncoderBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -102,7 +102,7 @@ func (device *RotaryEncoderBricklet) GetResponseExpected(functionID Function) (b
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *RotaryEncoderBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -112,7 +112,7 @@ func (device *RotaryEncoderBricklet) SetResponseExpectedAll(responseExpected boo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *RotaryEncoderBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -122,18 +122,18 @@ func (device *RotaryEncoderBricklet) GetAPIVersion() [3]uint8 {
 // The RegisterCountCallback callback is only triggered if the count has changed since the
 // last triggering.
 func (device *RotaryEncoderBricklet) RegisterCountCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var count int32
-                binary.Read(buf, binary.LittleEndian, &count)
-                fn(count)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCount), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var count int32
+		binary.Read(buf, binary.LittleEndian, &count)
+		fn(count)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCount), wrapper)
 }
 
-//Remove a registered Count callback.
-func (device *RotaryEncoderBricklet) DeregisterCountCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCount), registrationID)
+// Remove a registered Count callback.
+func (device *RotaryEncoderBricklet) DeregisterCountCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCount), registrationId)
 }
 
 
@@ -144,52 +144,52 @@ func (device *RotaryEncoderBricklet) DeregisterCountCallback(registrationID uint
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *RotaryEncoderBricklet) RegisterCountReachedCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var count int32
-                binary.Read(buf, binary.LittleEndian, &count)
-                fn(count)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCountReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var count int32
+		binary.Read(buf, binary.LittleEndian, &count)
+		fn(count)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCountReached), wrapper)
 }
 
-//Remove a registered Count Reached callback.
-func (device *RotaryEncoderBricklet) DeregisterCountReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCountReached), registrationID)
+// Remove a registered Count Reached callback.
+func (device *RotaryEncoderBricklet) DeregisterCountReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCountReached), registrationId)
 }
 
 
 // This callback is triggered when the button is pressed.
 func (device *RotaryEncoderBricklet) RegisterPressedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPressed), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPressed), wrapper)
 }
 
-//Remove a registered Pressed callback.
-func (device *RotaryEncoderBricklet) DeregisterPressedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPressed), registrationID)
+// Remove a registered Pressed callback.
+func (device *RotaryEncoderBricklet) DeregisterPressedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPressed), registrationId)
 }
 
 
 // This callback is triggered when the button is released.
 func (device *RotaryEncoderBricklet) RegisterReleasedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackReleased), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackReleased), wrapper)
 }
 
-//Remove a registered Released callback.
-func (device *RotaryEncoderBricklet) DeregisterReleasedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackReleased), registrationID)
+// Remove a registered Released callback.
+func (device *RotaryEncoderBricklet) DeregisterReleasedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackReleased), registrationId)
 }
 
 
@@ -202,27 +202,27 @@ func (device *RotaryEncoderBricklet) DeregisterReleasedCallback(registrationID u
 // Turning the encoder to the left decrements the counter,
 // so a negative count is possible.
 func (device *RotaryEncoderBricklet) GetCount(reset bool) (count int32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, reset);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, reset);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCount), buf.Bytes())
-    if err != nil {
-        return count, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCount), buf.Bytes())
+	if err != nil {
+		return count, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return count, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return count, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &count)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &count)
 
-    }
+	}
 
-    return count, nil
+	return count, nil
 }
 
 // Sets the period in ms with which the RegisterCountCallback callback is triggered
@@ -233,50 +233,50 @@ func (device *RotaryEncoderBricklet) GetCount(reset bool) (count int32, err erro
 // 
 // The default value is 0.
 func (device *RotaryEncoderBricklet) SetCountCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCountCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCountCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetCountCallbackPeriod.
 func (device *RotaryEncoderBricklet) GetCountCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCountCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCountCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterCountReachedCallback callback.
@@ -301,28 +301,28 @@ func (device *RotaryEncoderBricklet) GetCountCallbackPeriod() (period uint32, er
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *RotaryEncoderBricklet) SetCountCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCountCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCountCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetCountCallbackThreshold.
@@ -335,28 +335,28 @@ func (device *RotaryEncoderBricklet) SetCountCallbackThreshold(option ThresholdO
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *RotaryEncoderBricklet) GetCountCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCountCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCountCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
@@ -371,50 +371,50 @@ func (device *RotaryEncoderBricklet) GetCountCallbackThreshold() (option Thresho
 // 
 // The default value is 100.
 func (device *RotaryEncoderBricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *RotaryEncoderBricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Returns *true* if the button is pressed and *false* otherwise.
@@ -422,26 +422,26 @@ func (device *RotaryEncoderBricklet) GetDebouncePeriod() (debounce uint32, err e
 // It is recommended to use the RegisterPressedCallback and RegisterReleasedCallback callbacks
 // to handle the button.
 func (device *RotaryEncoderBricklet) IsPressed() (pressed bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsPressed), buf.Bytes())
-    if err != nil {
-        return pressed, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsPressed), buf.Bytes())
+	if err != nil {
+		return pressed, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return pressed, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return pressed, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &pressed)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &pressed)
 
-    }
+	}
 
-    return pressed, nil
+	return pressed, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -453,29 +453,29 @@ func (device *RotaryEncoderBricklet) IsPressed() (pressed bool, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RotaryEncoderBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

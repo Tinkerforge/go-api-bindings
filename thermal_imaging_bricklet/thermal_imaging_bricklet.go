@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//80x60 pixel thermal imaging camera.
+// 80x60 pixel thermal imaging camera.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/ThermalImaging_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package thermal_imaging_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetHighContrastImageLowLevel Function = 1
+	FunctionGetHighContrastImageLowLevel Function = 1
 	FunctionGetTemperatureImageLowLevel Function = 2
 	FunctionGetStatistics Function = 3
 	FunctionSetResolution Function = 4
@@ -52,45 +52,45 @@ const (
 	FunctionCallbackTemperatureImageLowLevel Function = 13
 )
 
-type Resolution uint8
+type Resolution = uint8
 
 const (
-    Resolution0To6553Kelvin Resolution = 0
+	Resolution0To6553Kelvin Resolution = 0
 	Resolution0To655Kelvin Resolution = 1
 )
 
-type FFCStatus uint8
+type FFCStatus = uint8
 
 const (
-    FFCStatusNeverCommanded FFCStatus = 0
+	FFCStatusNeverCommanded FFCStatus = 0
 	FFCStatusImminent FFCStatus = 1
 	FFCStatusInProgress FFCStatus = 2
 	FFCStatusComplete FFCStatus = 3
 )
 
-type ImageTransfer uint8
+type ImageTransfer = uint8
 
 const (
-    ImageTransferManualHighContrastImage ImageTransfer = 0
+	ImageTransferManualHighContrastImage ImageTransfer = 0
 	ImageTransferManualTemperatureImage ImageTransfer = 1
 	ImageTransferCallbackHighContrastImage ImageTransfer = 2
 	ImageTransferCallbackTemperatureImage ImageTransfer = 3
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -98,16 +98,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type ThermalImagingBricklet struct{
+type ThermalImagingBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 278
@@ -115,12 +115,12 @@ const DeviceDisplayName = "Thermal Imaging Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4)
-    if err != nil {
-        return ThermalImagingBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetHighContrastImageLowLevel] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4)
+	if err != nil {
+		return ThermalImagingBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetHighContrastImageLowLevel] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetTemperatureImageLowLevel] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetStatistics] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetResolution] = ResponseExpectedFlagFalse;
@@ -143,7 +143,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, 
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return ThermalImagingBricklet{dev}, nil
+	return ThermalImagingBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -161,7 +161,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ThermalImagingBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -173,7 +173,7 @@ func (device *ThermalImagingBricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *ThermalImagingBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -183,7 +183,7 @@ func (device *ThermalImagingBricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *ThermalImagingBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered with every new high contrast image if the transfer image
@@ -196,20 +196,20 @@ func (device *ThermalImagingBricklet) GetAPIVersion() [3]uint8 {
 // Each 8-bit value represents one gray-scale image pixel that can directly be
 // shown to a user on a display.
 func (device *ThermalImagingBricklet) RegisterHighContrastImageLowLevelCallback(fn func(uint16, [62]uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var imageChunkOffset uint16
-var imageChunkData [62]uint8
-                binary.Read(buf, binary.LittleEndian, &imageChunkOffset)
-copy(imageChunkData[:], ByteSliceToUint8Slice(buf.Next(8 * 62/8)))
-                fn(imageChunkOffset, imageChunkData)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var imageChunkOffset uint16
+		var imageChunkData [62]uint8
+		binary.Read(buf, binary.LittleEndian, &imageChunkOffset)
+		copy(imageChunkData[:], ByteSliceToUint8Slice(buf.Next(8 * 62/8)))
+		fn(imageChunkOffset, imageChunkData)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), wrapper)
 }
 
-//Remove a registered High Contrast Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), registrationID)
+// Remove a registered High Contrast Image Low Level callback.
+func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackHighContrastImageLowLevel), registrationId)
 }
 
 
@@ -223,27 +223,27 @@ func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallbac
 // Each 8-bit value represents one gray-scale image pixel that can directly be
 // shown to a user on a display.
 func (device *ThermalImagingBricklet) RegisterHighContrastImageCallback(fn func([]uint8)) uint64 {
-    buf := make([]uint8, 0)
-    wrapper := func(imageChunkOffset uint16, imageChunkData [62]uint8)  {
-        if int(imageChunkOffset) != len(buf) {
-            buf = make([]uint8, 0)
-            if imageChunkOffset != 0 {
-                return
-            }
-        }
-        toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
-        buf = append(buf, imageChunkData[:toRead]...)
-        if len(buf) >= int(4800) {
-            fn(buf)
-            buf = make([]uint8, 0)
-        }
-    }
-    return device.RegisterHighContrastImageLowLevelCallback(wrapper)
+	buf := make([]uint8, 0)
+	wrapper := func(imageChunkOffset uint16, imageChunkData [62]uint8)  {
+		if int(imageChunkOffset) != len(buf) {
+			buf = make([]uint8, 0)
+			if imageChunkOffset != 0 {
+				return
+			}
+		}
+		toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
+		buf = append(buf, imageChunkData[:toRead]...)
+		if len(buf) >= int(4800) {
+			fn(buf)
+			buf = make([]uint8, 0)
+		}
+	}
+	return device.RegisterHighContrastImageLowLevelCallback(wrapper)
 }
 
-//Remove a registered High Contrast Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(registrationID uint64) {
-    device.DeregisterHighContrastImageLowLevelCallback(registrationID)
+// Remove a registered High Contrast Image Low Level callback.
+func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(registrationId uint64) {
+	device.DeregisterHighContrastImageLowLevelCallback(registrationId)
 }
 
 
@@ -257,20 +257,20 @@ func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(regist
 // Each 16-bit value represents one temperature measurement in either
 // Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
 func (device *ThermalImagingBricklet) RegisterTemperatureImageLowLevelCallback(fn func(uint16, [31]uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var imageChunkOffset uint16
-var imageChunkData [31]uint16
-                binary.Read(buf, binary.LittleEndian, &imageChunkOffset)
-copy(imageChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 31/8)))
-                fn(imageChunkOffset, imageChunkData)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var imageChunkOffset uint16
+		var imageChunkData [31]uint16
+		binary.Read(buf, binary.LittleEndian, &imageChunkOffset)
+		copy(imageChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 31/8)))
+		fn(imageChunkOffset, imageChunkData)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), wrapper)
 }
 
-//Remove a registered Temperature Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), registrationID)
+// Remove a registered Temperature Image Low Level callback.
+func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureImageLowLevel), registrationId)
 }
 
 
@@ -284,27 +284,27 @@ func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback
 // Each 16-bit value represents one temperature measurement in either
 // Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
 func (device *ThermalImagingBricklet) RegisterTemperatureImageCallback(fn func([]uint16)) uint64 {
-    buf := make([]uint16, 0)
-    wrapper := func(imageChunkOffset uint16, imageChunkData [31]uint16)  {
-        if int(imageChunkOffset) != len(buf) {
-            buf = make([]uint16, 0)
-            if imageChunkOffset != 0 {
-                return
-            }
-        }
-        toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
-        buf = append(buf, imageChunkData[:toRead]...)
-        if len(buf) >= int(4800) {
-            fn(buf)
-            buf = make([]uint16, 0)
-        }
-    }
-    return device.RegisterTemperatureImageLowLevelCallback(wrapper)
+	buf := make([]uint16, 0)
+	wrapper := func(imageChunkOffset uint16, imageChunkData [31]uint16)  {
+		if int(imageChunkOffset) != len(buf) {
+			buf = make([]uint16, 0)
+			if imageChunkOffset != 0 {
+				return
+			}
+		}
+		toRead := MinU(uint64(4800-imageChunkOffset), uint64(len(imageChunkData[:])))
+		buf = append(buf, imageChunkData[:toRead]...)
+		if len(buf) >= int(4800) {
+			fn(buf)
+			buf = make([]uint16, 0)
+		}
+	}
+	return device.RegisterTemperatureImageLowLevelCallback(wrapper)
 }
 
-//Remove a registered Temperature Image Low Level callback.
-func (device *ThermalImagingBricklet) DeregisterTemperatureImageCallback(registrationID uint64) {
-    device.DeregisterTemperatureImageLowLevelCallback(registrationID)
+// Remove a registered Temperature Image Low Level callback.
+func (device *ThermalImagingBricklet) DeregisterTemperatureImageCallback(registrationId uint64) {
+	device.DeregisterTemperatureImageLowLevelCallback(registrationId)
 }
 
 
@@ -323,27 +323,27 @@ func (device *ThermalImagingBricklet) DeregisterTemperatureImageCallback(registr
 // Before you can use this function you have to enable it with
 // SetImageTransferConfig.
 func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunkOffset uint16, imageChunkData [62]uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastImageLowLevel), buf.Bytes())
-    if err != nil {
-        return imageChunkOffset, imageChunkData, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastImageLowLevel), buf.Bytes())
+	if err != nil {
+		return imageChunkOffset, imageChunkData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return imageChunkOffset, imageChunkData, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
 	copy(imageChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 62/8)))
 
-    }
+	}
 
-    return imageChunkOffset, imageChunkData, nil
+	return imageChunkOffset, imageChunkData, nil
 }
 
 // Returns the current high contrast image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
@@ -361,31 +361,31 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
 // Before you can use this function you have to enable it with
 // SetImageTransferConfig.
 	func (device *ThermalImagingBricklet) GetHighContrastImage() (image []uint8, err error) {
-        buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            imageChunkOffset, imageChunkData, err := device.GetHighContrastImageLowLevel()
+		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			imageChunkOffset, imageChunkData, err := device.GetHighContrastImageLowLevel()
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelResult{
-                uint64(4800),
-                uint64(imageChunkOffset),
-                Uint8SliceToByteSlice(imageChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            0,
-            8)
-        if err != nil {
-            return ByteSliceToUint8Slice(buf), err
-        }
-        
-        
-        return ByteSliceToUint8Slice(buf), nil
-    }
+			return LowLevelResult{
+				uint64(4800),
+				uint64(imageChunkOffset),
+				Uint8SliceToByteSlice(imageChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			0,
+			8)
+		if err != nil {
+			return ByteSliceToUint8Slice(buf), err
+		}
+		
+		
+		return ByteSliceToUint8Slice(buf), nil
+	}
 
 // Returns the current temperature image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
 // for the difference between High Contrast and Temperature Image.
@@ -401,27 +401,27 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
 // Before you can use this function you have to enable it with
 // SetImageTransferConfig.
 func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkOffset uint16, imageChunkData [31]uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureImageLowLevel), buf.Bytes())
-    if err != nil {
-        return imageChunkOffset, imageChunkData, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureImageLowLevel), buf.Bytes())
+	if err != nil {
+		return imageChunkOffset, imageChunkData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return imageChunkOffset, imageChunkData, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
 	copy(imageChunkData[:], ByteSliceToUint16Slice(resultBuf.Next(16 * 31/8)))
 
-    }
+	}
 
-    return imageChunkOffset, imageChunkData, nil
+	return imageChunkOffset, imageChunkData, nil
 }
 
 // Returns the current temperature image. See https://www.tinkerforge.com/en/doc/Hardware/Bricklets/Thermal_Imaging.html#high-contrast-image-vs-temperature-image
@@ -438,31 +438,31 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
 // Before you can use this function you have to enable it with
 // SetImageTransferConfig.
 	func (device *ThermalImagingBricklet) GetTemperatureImage() (image []uint16, err error) {
-        buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            imageChunkOffset, imageChunkData, err := device.GetTemperatureImageLowLevel()
+		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			imageChunkOffset, imageChunkData, err := device.GetTemperatureImageLowLevel()
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelResult{
-                uint64(4800),
-                uint64(imageChunkOffset),
-                Uint16SliceToByteSlice(imageChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            1,
-            16)
-        if err != nil {
-            return ByteSliceToUint16Slice(buf), err
-        }
-        
-        
-        return ByteSliceToUint16Slice(buf), nil
-    }
+			return LowLevelResult{
+				uint64(4800),
+				uint64(imageChunkOffset),
+				Uint16SliceToByteSlice(imageChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			1,
+			16)
+		if err != nil {
+			return ByteSliceToUint16Slice(buf), err
+		}
+		
+		
+		return ByteSliceToUint16Slice(buf), nil
+	}
 
 // Returns the spotmeter statistics, various temperatures, current resolution and status bits.
 // 
@@ -504,30 +504,30 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
 //	* FFCStatusInProgress
 //	* FFCStatusComplete
 func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]uint16, temperatures [4]uint16, resolution Resolution, ffcStatus FFCStatus, temperatureWarning [2]bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatistics), buf.Bytes())
-    if err != nil {
-        return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatistics), buf.Bytes())
+	if err != nil {
+		return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &spotmeterStatistics)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &spotmeterStatistics)
 	binary.Read(resultBuf, binary.LittleEndian, &temperatures)
 	binary.Read(resultBuf, binary.LittleEndian, &resolution)
 	binary.Read(resultBuf, binary.LittleEndian, &ffcStatus)
 	binary.Read(resultBuf, binary.LittleEndian, &temperatureWarning)
 
-    }
+	}
 
-    return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, nil
+	return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, nil
 }
 
 // Sets the resolution. The Thermal Imaging Bricklet can either measure
@@ -545,26 +545,26 @@ func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]ui
 //	* Resolution0To6553Kelvin
 //	* Resolution0To655Kelvin
 func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, resolution);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, resolution);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetResolution), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetResolution), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the resolution as set by SetResolution.
@@ -574,26 +574,26 @@ func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err 
 //	* Resolution0To6553Kelvin
 //	* Resolution0To655Kelvin
 func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetResolution), buf.Bytes())
-    if err != nil {
-        return resolution, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetResolution), buf.Bytes())
+	if err != nil {
+		return resolution, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return resolution, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return resolution, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &resolution)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &resolution)
 
-    }
+	}
 
-    return resolution, nil
+	return resolution, nil
 }
 
 // Sets the spotmeter region of interest. The 4 values are
@@ -607,50 +607,50 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
 // 
 // The default region of interest is (39, 29, 40, 30).
 func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, regionOfInterest);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, regionOfInterest);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSpotmeterConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSpotmeterConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the spotmeter config as set by SetSpotmeterConfig.
 func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSpotmeterConfig), buf.Bytes())
-    if err != nil {
-        return regionOfInterest, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSpotmeterConfig), buf.Bytes())
+	if err != nil {
+		return regionOfInterest, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return regionOfInterest, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return regionOfInterest, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
 
-    }
+	}
 
-    return regionOfInterest, nil
+	return regionOfInterest, nil
 }
 
 // Sets the high contrast region of interest, dampening factor, clip limit and empty counts.
@@ -699,56 +699,56 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
 // * Clip Limit = (4800, 512) and
 // * Empty Counts = 2.
 func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, regionOfInterest);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, regionOfInterest);
 	binary.Write(&buf, binary.LittleEndian, dampeningFactor);
 	binary.Write(&buf, binary.LittleEndian, clipLimit);
 	binary.Write(&buf, binary.LittleEndian, emptyCounts);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetHighContrastConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetHighContrastConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the high contrast config as set by SetHighContrastConfig.
 func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastConfig), buf.Bytes())
-    if err != nil {
-        return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetHighContrastConfig), buf.Bytes())
+	if err != nil {
+		return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
 	binary.Read(resultBuf, binary.LittleEndian, &dampeningFactor)
 	binary.Read(resultBuf, binary.LittleEndian, &clipLimit)
 	binary.Read(resultBuf, binary.LittleEndian, &emptyCounts)
 
-    }
+	}
 
-    return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, nil
+	return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, nil
 }
 
 // The necessary bandwidth of this Bricklet is too high to use getter/callback or
@@ -771,26 +771,26 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
 //	* ImageTransferCallbackHighContrastImage
 //	* ImageTransferCallbackTemperatureImage
 func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfer) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetImageTransferConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetImageTransferConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the image transfer config, as set by SetImageTransferConfig.
@@ -802,26 +802,26 @@ func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfe
 //	* ImageTransferCallbackHighContrastImage
 //	* ImageTransferCallbackTemperatureImage
 func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTransfer, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetImageTransferConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetImageTransferConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -836,29 +836,29 @@ func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTran
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -885,27 +885,27 @@ func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecks
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -918,26 +918,26 @@ func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (st
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -947,26 +947,26 @@ func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, 
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -978,27 +978,27 @@ func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (e
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -1016,26 +1016,26 @@ func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -1047,26 +1047,26 @@ func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -1076,26 +1076,26 @@ func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConf
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -1105,25 +1105,25 @@ func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, e
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *ThermalImagingBricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -1132,51 +1132,51 @@ func (device *ThermalImagingBricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1188,29 +1188,29 @@ func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

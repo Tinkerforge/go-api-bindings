@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Three color 296x128 e-paper display.
+// Three color 296x128 e-paper display.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/EPaper296x128_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package e_paper_296x128_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionDraw Function = 1
+	FunctionDraw Function = 1
 	FunctionGetDrawStatus Function = 2
 	FunctionWriteBlackWhiteLowLevel Function = 3
 	FunctionReadBlackWhiteLowLevel Function = 4
@@ -54,27 +54,27 @@ const (
 	FunctionCallbackDrawStatus Function = 11
 )
 
-type DrawStatus uint8
+type DrawStatus = uint8
 
 const (
-    DrawStatusIdle DrawStatus = 0
+	DrawStatusIdle DrawStatus = 0
 	DrawStatusCopying DrawStatus = 1
 	DrawStatusDrawing DrawStatus = 2
 )
 
-type Color uint8
+type Color = uint8
 
 const (
-    ColorBlack Color = 0
+	ColorBlack Color = 0
 	ColorWhite Color = 1
 	ColorRed Color = 2
 	ColorGray Color = 2
 )
 
-type Font uint8
+type Font = uint8
 
 const (
-    Font6x8 Font = 0
+	Font6x8 Font = 0
 	Font6x16 Font = 1
 	Font6x24 Font = 2
 	Font6x32 Font = 3
@@ -86,42 +86,42 @@ const (
 	Font24x32 Font = 9
 )
 
-type Orientation uint8
+type Orientation = uint8
 
 const (
-    OrientationHorizontal Orientation = 0
+	OrientationHorizontal Orientation = 0
 	OrientationVertical Orientation = 1
 )
 
-type UpdateMode uint8
+type UpdateMode = uint8
 
 const (
-    UpdateModeDefault UpdateMode = 0
+	UpdateModeDefault UpdateMode = 0
 	UpdateModeBlackWhite UpdateMode = 1
 	UpdateModeDelta UpdateMode = 2
 )
 
-type DisplayType uint8
+type DisplayType = uint8
 
 const (
-    DisplayTypeBlackWhiteRed DisplayType = 0
+	DisplayTypeBlackWhiteRed DisplayType = 0
 	DisplayTypeBlackWhiteGray DisplayType = 1
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -129,16 +129,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type EPaper296x128Bricklet struct{
+type EPaper296x128Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 2146
@@ -146,12 +146,12 @@ const DeviceDisplayName = "E-Paper 296x128 Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (EPaper296x128Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4)
-    if err != nil {
-        return EPaper296x128Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionDraw] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4)
+	if err != nil {
+		return EPaper296x128Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionDraw] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetDrawStatus] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionWriteBlackWhiteLowLevel] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionReadBlackWhiteLowLevel] = ResponseExpectedFlagAlwaysTrue;
@@ -177,7 +177,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (EPaper296x128Bricklet, e
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return EPaper296x128Bricklet{dev}, nil
+	return EPaper296x128Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -195,7 +195,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (EPaper296x128Bricklet, e
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *EPaper296x128Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -207,7 +207,7 @@ func (device *EPaper296x128Bricklet) GetResponseExpected(functionID Function) (b
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *EPaper296x128Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -217,24 +217,24 @@ func (device *EPaper296x128Bricklet) SetResponseExpectedAll(responseExpected boo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *EPaper296x128Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // Callback for the current draw status. Will be called every time the
 // draw status changes (see GetDrawStatus).
 func (device *EPaper296x128Bricklet) RegisterDrawStatusCallback(fn func(DrawStatus)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var drawStatus DrawStatus
-                binary.Read(buf, binary.LittleEndian, &drawStatus)
-                fn(drawStatus)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackDrawStatus), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var drawStatus DrawStatus
+		binary.Read(buf, binary.LittleEndian, &drawStatus)
+		fn(drawStatus)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackDrawStatus), wrapper)
 }
 
-//Remove a registered Draw Status callback.
-func (device *EPaper296x128Bricklet) DeregisterDrawStatusCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDrawStatus), registrationID)
+// Remove a registered Draw Status callback.
+func (device *EPaper296x128Bricklet) DeregisterDrawStatusCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackDrawStatus), registrationId)
 }
 
 
@@ -243,25 +243,25 @@ func (device *EPaper296x128Bricklet) DeregisterDrawStatusCallback(registrationID
 // The Bricklet does not have any double-buffering. You should not call
 // this function while writing to the buffer. See GetDrawStatus.
 func (device *EPaper296x128Bricklet) Draw() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDraw), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDraw), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns one of three draw statuses:
@@ -280,26 +280,26 @@ func (device *EPaper296x128Bricklet) Draw() (err error) {
 //	* DrawStatusCopying
 //	* DrawStatusDrawing
 func (device *EPaper296x128Bricklet) GetDrawStatus() (drawStatus DrawStatus, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDrawStatus), buf.Bytes())
-    if err != nil {
-        return drawStatus, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDrawStatus), buf.Bytes())
+	if err != nil {
+		return drawStatus, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return drawStatus, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return drawStatus, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &drawStatus)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &drawStatus)
 
-    }
+	}
 
-    return drawStatus, nil
+	return drawStatus, nil
 }
 
 // Writes black/white pixels to the specified window into the buffer.
@@ -316,8 +316,8 @@ func (device *EPaper296x128Bricklet) GetDrawStatus() (drawStatus DrawStatus, err
 // 
 // Use WriteColor to write red or gray pixels.
 func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8, pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [432]bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, xStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
 	binary.Write(&buf, binary.LittleEndian, xEnd);
 	binary.Write(&buf, binary.LittleEndian, yEnd);
@@ -325,23 +325,23 @@ func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, ySta
 	binary.Write(&buf, binary.LittleEndian, pixelsChunkOffset);
 	buf.Write(BoolSliceToByteSlice(pixelsChunkData[:]))
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteBlackWhiteLowLevel), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteBlackWhiteLowLevel), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes black/white pixels to the specified window into the buffer.
@@ -358,29 +358,29 @@ func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, ySta
 // 
 // Use WriteColor to write red or gray pixels.
 	func (device *EPaper296x128Bricklet) WriteBlackWhite(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8, pixels []bool) (err error) {
-        _, err = device.device.SetHighLevel(func(pixelsLength uint64, pixelsChunkOffset uint64, pixelsChunkData []byte) (LowLevelWriteResult, error) {
-            arr := [432]bool{}
-            copy(arr[:], ByteSliceToBoolSlice(pixelsChunkData))
+		_, err = device.device.SetHighLevel(func(pixelsLength uint64, pixelsChunkOffset uint64, pixelsChunkData []byte) (LowLevelWriteResult, error) {
+			arr := [432]bool{}
+			copy(arr[:], ByteSliceToBoolSlice(pixelsChunkData))
 
-            err := device.WriteBlackWhiteLowLevel(xStart, yStart, xEnd, yEnd, uint16(pixelsLength), uint16(pixelsChunkOffset), arr)
+			err := device.WriteBlackWhiteLowLevel(xStart, yStart, xEnd, yEnd, uint16(pixelsLength), uint16(pixelsChunkOffset), arr)
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelWriteResult{
-                uint64(432),
-                lowLevelResults.Bytes()}, err
-        }, 0, 1, 432, BoolSliceToByteSlice(pixels))
+			return LowLevelWriteResult{
+				uint64(432),
+				lowLevelResults.Bytes()}, err
+		}, 0, 1, 432, BoolSliceToByteSlice(pixels))
 
-         if err != nil {
-            return
-        }
+		if err != nil {
+			return
+		}
 
-        
-        
-        
-        return
-    }
+		
+		
+		
+		return
+	}
 
 // Returns the current content of the black/white pixel buffer for the specified window.
 // 
@@ -392,32 +392,32 @@ func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, ySta
 // It is possible that the data was not drawn to the display yet and after a restart of
 // the Bricklet the buffer will be reset to black, while the display retains its content.
 func (device *EPaper296x128Bricklet) ReadBlackWhiteLowLevel(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8) (pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [464]bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, xStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
 	binary.Write(&buf, binary.LittleEndian, xEnd);
 	binary.Write(&buf, binary.LittleEndian, yEnd);
 
-    resultBytes, err := device.device.Get(uint8(FunctionReadBlackWhiteLowLevel), buf.Bytes())
-    if err != nil {
-        return pixelsLength, pixelsChunkOffset, pixelsChunkData, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionReadBlackWhiteLowLevel), buf.Bytes())
+	if err != nil {
+		return pixelsLength, pixelsChunkOffset, pixelsChunkData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return pixelsLength, pixelsChunkOffset, pixelsChunkData, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return pixelsLength, pixelsChunkOffset, pixelsChunkData, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &pixelsLength)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &pixelsLength)
 	binary.Read(resultBuf, binary.LittleEndian, &pixelsChunkOffset)
 	copy(pixelsChunkData[:], ByteSliceToBoolSlice(resultBuf.Next(1 * 464/8)))
 
-    }
+	}
 
-    return pixelsLength, pixelsChunkOffset, pixelsChunkData, nil
+	return pixelsLength, pixelsChunkOffset, pixelsChunkData, nil
 }
 
 // Returns the current content of the black/white pixel buffer for the specified window.
@@ -430,31 +430,31 @@ func (device *EPaper296x128Bricklet) ReadBlackWhiteLowLevel(xStart uint16, yStar
 // It is possible that the data was not drawn to the display yet and after a restart of
 // the Bricklet the buffer will be reset to black, while the display retains its content.
 	func (device *EPaper296x128Bricklet) ReadBlackWhite(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8) (pixels []bool, err error) {
-        buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadBlackWhiteLowLevel(xStart, yStart, xEnd, yEnd)
+		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadBlackWhiteLowLevel(xStart, yStart, xEnd, yEnd)
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelResult{
-                uint64(pixelsLength),
-                uint64(pixelsChunkOffset),
-                BoolSliceToByteSlice(pixelsChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            1,
-            1)
-        if err != nil {
-            return ByteSliceToBoolSlice(buf), err
-        }
-        
-        
-        return ByteSliceToBoolSlice(buf), nil
-    }
+			return LowLevelResult{
+				uint64(pixelsLength),
+				uint64(pixelsChunkOffset),
+				BoolSliceToByteSlice(pixelsChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			1,
+			1)
+		if err != nil {
+			return ByteSliceToBoolSlice(buf), err
+		}
+		
+		
+		return ByteSliceToBoolSlice(buf), nil
+	}
 
 // The E-Paper 296x128 Bricklet is available with the colors black/white/red and
 // black/white/gray. Depending on the model this function writes either red or
@@ -473,8 +473,8 @@ func (device *EPaper296x128Bricklet) ReadBlackWhiteLowLevel(xStart uint16, yStar
 // 
 // Use WriteBlackWhite to write black/white pixels.
 func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8, pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [432]bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, xStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
 	binary.Write(&buf, binary.LittleEndian, xEnd);
 	binary.Write(&buf, binary.LittleEndian, yEnd);
@@ -482,23 +482,23 @@ func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart ui
 	binary.Write(&buf, binary.LittleEndian, pixelsChunkOffset);
 	buf.Write(BoolSliceToByteSlice(pixelsChunkData[:]))
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteColorLowLevel), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteColorLowLevel), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // The E-Paper 296x128 Bricklet is available with the colors black/white/red and
@@ -518,29 +518,29 @@ func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart ui
 // 
 // Use WriteBlackWhite to write black/white pixels.
 	func (device *EPaper296x128Bricklet) WriteColor(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8, pixels []bool) (err error) {
-        _, err = device.device.SetHighLevel(func(pixelsLength uint64, pixelsChunkOffset uint64, pixelsChunkData []byte) (LowLevelWriteResult, error) {
-            arr := [432]bool{}
-            copy(arr[:], ByteSliceToBoolSlice(pixelsChunkData))
+		_, err = device.device.SetHighLevel(func(pixelsLength uint64, pixelsChunkOffset uint64, pixelsChunkData []byte) (LowLevelWriteResult, error) {
+			arr := [432]bool{}
+			copy(arr[:], ByteSliceToBoolSlice(pixelsChunkData))
 
-            err := device.WriteColorLowLevel(xStart, yStart, xEnd, yEnd, uint16(pixelsLength), uint16(pixelsChunkOffset), arr)
+			err := device.WriteColorLowLevel(xStart, yStart, xEnd, yEnd, uint16(pixelsLength), uint16(pixelsChunkOffset), arr)
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelWriteResult{
-                uint64(432),
-                lowLevelResults.Bytes()}, err
-        }, 2, 1, 432, BoolSliceToByteSlice(pixels))
+			return LowLevelWriteResult{
+				uint64(432),
+				lowLevelResults.Bytes()}, err
+		}, 2, 1, 432, BoolSliceToByteSlice(pixels))
 
-         if err != nil {
-            return
-        }
+		if err != nil {
+			return
+		}
 
-        
-        
-        
-        return
-    }
+		
+		
+		
+		return
+	}
 
 // Returns the current content of the red or gray pixel buffer for the specified window.
 // 
@@ -552,32 +552,32 @@ func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart ui
 // It is possible that the data was not drawn to the display yet and after a restart of
 // the Bricklet the buffer will be reset to black, while the display retains its content.
 func (device *EPaper296x128Bricklet) ReadColorLowLevel(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8) (pixelsLength uint16, pixelsChunkOffset uint16, pixelsChunkData [464]bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, xStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, xStart);
 	binary.Write(&buf, binary.LittleEndian, yStart);
 	binary.Write(&buf, binary.LittleEndian, xEnd);
 	binary.Write(&buf, binary.LittleEndian, yEnd);
 
-    resultBytes, err := device.device.Get(uint8(FunctionReadColorLowLevel), buf.Bytes())
-    if err != nil {
-        return pixelsLength, pixelsChunkOffset, pixelsChunkData, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionReadColorLowLevel), buf.Bytes())
+	if err != nil {
+		return pixelsLength, pixelsChunkOffset, pixelsChunkData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return pixelsLength, pixelsChunkOffset, pixelsChunkData, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return pixelsLength, pixelsChunkOffset, pixelsChunkData, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &pixelsLength)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &pixelsLength)
 	binary.Read(resultBuf, binary.LittleEndian, &pixelsChunkOffset)
 	copy(pixelsChunkData[:], ByteSliceToBoolSlice(resultBuf.Next(1 * 464/8)))
 
-    }
+	}
 
-    return pixelsLength, pixelsChunkOffset, pixelsChunkData, nil
+	return pixelsLength, pixelsChunkOffset, pixelsChunkData, nil
 }
 
 // Returns the current content of the red or gray pixel buffer for the specified window.
@@ -590,31 +590,31 @@ func (device *EPaper296x128Bricklet) ReadColorLowLevel(xStart uint16, yStart uin
 // It is possible that the data was not drawn to the display yet and after a restart of
 // the Bricklet the buffer will be reset to black, while the display retains its content.
 	func (device *EPaper296x128Bricklet) ReadColor(xStart uint16, yStart uint8, xEnd uint16, yEnd uint8) (pixels []bool, err error) {
-        buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadColorLowLevel(xStart, yStart, xEnd, yEnd)
+		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			pixelsLength, pixelsChunkOffset, pixelsChunkData, err := device.ReadColorLowLevel(xStart, yStart, xEnd, yEnd)
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelResult{
-                uint64(pixelsLength),
-                uint64(pixelsChunkOffset),
-                BoolSliceToByteSlice(pixelsChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            3,
-            1)
-        if err != nil {
-            return ByteSliceToBoolSlice(buf), err
-        }
-        
-        
-        return ByteSliceToBoolSlice(buf), nil
-    }
+			return LowLevelResult{
+				uint64(pixelsLength),
+				uint64(pixelsChunkOffset),
+				BoolSliceToByteSlice(pixelsChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			3,
+			1)
+		if err != nil {
+			return ByteSliceToBoolSlice(buf), err
+		}
+		
+		
+		return ByteSliceToBoolSlice(buf), nil
+	}
 
 // Fills the complete content of the display with the given color.
 //
@@ -625,26 +625,26 @@ func (device *EPaper296x128Bricklet) ReadColorLowLevel(xStart uint16, yStart uin
 //	* ColorRed
 //	* ColorGray
 func (device *EPaper296x128Bricklet) FillDisplay(color Color) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, color);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, color);
 
-    resultBytes, err := device.device.Set(uint8(FunctionFillDisplay), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionFillDisplay), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Draws a text with up to 50 characters at the pixel position (x, y).
@@ -674,8 +674,8 @@ func (device *EPaper296x128Bricklet) FillDisplay(color Color) (err error) {
 //	* OrientationHorizontal
 //	* OrientationVertical
 func (device *EPaper296x128Bricklet) DrawText(positionX uint16, positionY uint8, font Font, color Color, orientation Orientation, text string) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, positionX);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, positionX);
 	binary.Write(&buf, binary.LittleEndian, positionY);
 	binary.Write(&buf, binary.LittleEndian, font);
 	binary.Write(&buf, binary.LittleEndian, color);
@@ -684,23 +684,23 @@ func (device *EPaper296x128Bricklet) DrawText(positionX uint16, positionY uint8,
 	if err != nil { return }
 	buf.Write(text_byte_slice)
 
-    resultBytes, err := device.device.Set(uint8(FunctionDrawText), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionDrawText), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Draws a line from (x, y)-start to (x, y)-end in the given color.
@@ -714,30 +714,30 @@ func (device *EPaper296x128Bricklet) DrawText(positionX uint16, positionY uint8,
 //	* ColorRed
 //	* ColorGray
 func (device *EPaper296x128Bricklet) DrawLine(positionXStart uint16, positionYStart uint8, positionXEnd uint16, positionYEnd uint8, color Color) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, positionXStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, positionXStart);
 	binary.Write(&buf, binary.LittleEndian, positionYStart);
 	binary.Write(&buf, binary.LittleEndian, positionXEnd);
 	binary.Write(&buf, binary.LittleEndian, positionYEnd);
 	binary.Write(&buf, binary.LittleEndian, color);
 
-    resultBytes, err := device.device.Set(uint8(FunctionDrawLine), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionDrawLine), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Draws a box from (x, y)-start to (x, y)-end in the given color.
@@ -754,31 +754,31 @@ func (device *EPaper296x128Bricklet) DrawLine(positionXStart uint16, positionYSt
 //	* ColorRed
 //	* ColorGray
 func (device *EPaper296x128Bricklet) DrawBox(positionXStart uint16, positionYStart uint8, positionXEnd uint16, positionYEnd uint8, fill bool, color Color) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, positionXStart);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, positionXStart);
 	binary.Write(&buf, binary.LittleEndian, positionYStart);
 	binary.Write(&buf, binary.LittleEndian, positionXEnd);
 	binary.Write(&buf, binary.LittleEndian, positionYEnd);
 	binary.Write(&buf, binary.LittleEndian, fill);
 	binary.Write(&buf, binary.LittleEndian, color);
 
-    resultBytes, err := device.device.Set(uint8(FunctionDrawBox), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionDrawBox), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Note
@@ -822,26 +822,26 @@ func (device *EPaper296x128Bricklet) DrawBox(positionXStart uint16, positionYSta
 //	* UpdateModeBlackWhite
 //	* UpdateModeDelta
 func (device *EPaper296x128Bricklet) SetUpdateMode(updateMode UpdateMode) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, updateMode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, updateMode);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetUpdateMode), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetUpdateMode), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the update mode as set by SetUpdateMode.
@@ -852,26 +852,26 @@ func (device *EPaper296x128Bricklet) SetUpdateMode(updateMode UpdateMode) (err e
 //	* UpdateModeBlackWhite
 //	* UpdateModeDelta
 func (device *EPaper296x128Bricklet) GetUpdateMode() (updateMode UpdateMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetUpdateMode), buf.Bytes())
-    if err != nil {
-        return updateMode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetUpdateMode), buf.Bytes())
+	if err != nil {
+		return updateMode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return updateMode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return updateMode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &updateMode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &updateMode)
 
-    }
+	}
 
-    return updateMode, nil
+	return updateMode, nil
 }
 
 // Sets the type of the display. The e-paper display is available
@@ -884,26 +884,26 @@ func (device *EPaper296x128Bricklet) GetUpdateMode() (updateMode UpdateMode, err
 //	* DisplayTypeBlackWhiteRed
 //	* DisplayTypeBlackWhiteGray
 func (device *EPaper296x128Bricklet) SetDisplayType(displayType DisplayType) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, displayType);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, displayType);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDisplayType), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDisplayType), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the type of the e-paper display. It can either be
@@ -914,26 +914,26 @@ func (device *EPaper296x128Bricklet) SetDisplayType(displayType DisplayType) (er
 //	* DisplayTypeBlackWhiteRed
 //	* DisplayTypeBlackWhiteGray
 func (device *EPaper296x128Bricklet) GetDisplayType() (displayType DisplayType, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDisplayType), buf.Bytes())
-    if err != nil {
-        return displayType, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDisplayType), buf.Bytes())
+	if err != nil {
+		return displayType, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return displayType, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return displayType, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &displayType)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &displayType)
 
-    }
+	}
 
-    return displayType, nil
+	return displayType, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -948,29 +948,29 @@ func (device *EPaper296x128Bricklet) GetDisplayType() (displayType DisplayType, 
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *EPaper296x128Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -997,27 +997,27 @@ func (device *EPaper296x128Bricklet) GetSPITFPErrorCount() (errorCountAckChecksu
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *EPaper296x128Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -1030,26 +1030,26 @@ func (device *EPaper296x128Bricklet) SetBootloaderMode(mode BootloaderMode) (sta
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *EPaper296x128Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -1059,26 +1059,26 @@ func (device *EPaper296x128Bricklet) GetBootloaderMode() (mode BootloaderMode, e
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *EPaper296x128Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -1090,27 +1090,27 @@ func (device *EPaper296x128Bricklet) SetWriteFirmwarePointer(pointer uint32) (er
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *EPaper296x128Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -1128,26 +1128,26 @@ func (device *EPaper296x128Bricklet) WriteFirmware(data [64]uint8) (status uint8
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *EPaper296x128Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -1159,26 +1159,26 @@ func (device *EPaper296x128Bricklet) SetStatusLEDConfig(config StatusLEDConfig) 
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *EPaper296x128Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -1188,26 +1188,26 @@ func (device *EPaper296x128Bricklet) GetStatusLEDConfig() (config StatusLEDConfi
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *EPaper296x128Bricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -1217,25 +1217,25 @@ func (device *EPaper296x128Bricklet) GetChipTemperature() (temperature int16, er
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *EPaper296x128Bricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -1244,51 +1244,51 @@ func (device *EPaper296x128Bricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *EPaper296x128Bricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *EPaper296x128Bricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1300,29 +1300,29 @@ func (device *EPaper296x128Bricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *EPaper296x128Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

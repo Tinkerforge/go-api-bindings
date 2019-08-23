@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Detects inclination of Bricklet (tilt switch open/closed).
+// Detects inclination of Bricklet (tilt switch open/closed).
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Tilt_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package tilt_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetTiltState Function = 1
+	FunctionGetTiltState Function = 1
 	FunctionEnableTiltStateCallback Function = 2
 	FunctionDisableTiltStateCallback Function = 3
 	FunctionIsTiltStateCallbackEnabled Function = 4
@@ -33,15 +33,15 @@ const (
 	FunctionCallbackTiltState Function = 5
 )
 
-type TiltState uint8
+type TiltState = uint8
 
 const (
-    TiltStateClosed TiltState = 0
+	TiltStateClosed TiltState = 0
 	TiltStateOpen TiltState = 1
 	TiltStateClosedVibrating TiltState = 2
 )
 
-type TiltBricklet struct{
+type TiltBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 239
@@ -49,17 +49,17 @@ const DeviceDisplayName = "Tilt Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (TiltBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return TiltBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetTiltState] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return TiltBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetTiltState] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionEnableTiltStateCallback] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionDisableTiltStateCallback] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionIsTiltStateCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return TiltBricklet{dev}, nil
+	return TiltBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -77,7 +77,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (TiltBricklet, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *TiltBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -89,7 +89,7 @@ func (device *TiltBricklet) GetResponseExpected(functionID Function) (bool, erro
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *TiltBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -99,7 +99,7 @@ func (device *TiltBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *TiltBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback provides the current tilt state. It is called every time the
@@ -107,18 +107,18 @@ func (device *TiltBricklet) GetAPIVersion() [3]uint8 {
 // 
 // See GetTiltState for a description of the states.
 func (device *TiltBricklet) RegisterTiltStateCallback(fn func(TiltState)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var state TiltState
-                binary.Read(buf, binary.LittleEndian, &state)
-                fn(state)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackTiltState), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var state TiltState
+		binary.Read(buf, binary.LittleEndian, &state)
+		fn(state)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackTiltState), wrapper)
 }
 
-//Remove a registered Tilt State callback.
-func (device *TiltBricklet) DeregisterTiltStateCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTiltState), registrationID)
+// Remove a registered Tilt State callback.
+func (device *TiltBricklet) DeregisterTiltStateCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackTiltState), registrationId)
 }
 
 
@@ -140,96 +140,96 @@ func (device *TiltBricklet) DeregisterTiltStateCallback(registrationID uint64) {
 //	* TiltStateOpen
 //	* TiltStateClosedVibrating
 func (device *TiltBricklet) GetTiltState() (state TiltState, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTiltState), buf.Bytes())
-    if err != nil {
-        return state, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTiltState), buf.Bytes())
+	if err != nil {
+		return state, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return state, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return state, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &state)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &state)
 
-    }
+	}
 
-    return state, nil
+	return state, nil
 }
 
 // Enables the RegisterTiltStateCallback callback.
 func (device *TiltBricklet) EnableTiltStateCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableTiltStateCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableTiltStateCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the RegisterTiltStateCallback callback.
 func (device *TiltBricklet) DisableTiltStateCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableTiltStateCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableTiltStateCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the RegisterTiltStateCallback callback is enabled.
 func (device *TiltBricklet) IsTiltStateCallbackEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsTiltStateCallbackEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsTiltStateCallbackEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -241,29 +241,29 @@ func (device *TiltBricklet) IsTiltStateCallbackEnabled() (enabled bool, err erro
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *TiltBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

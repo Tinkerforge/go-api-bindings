@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures sound intensity.
+// Measures sound intensity.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/SoundIntensity_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package sound_intensity_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetIntensity Function = 1
+	FunctionGetIntensity Function = 1
 	FunctionSetIntensityCallbackPeriod Function = 2
 	FunctionGetIntensityCallbackPeriod Function = 3
 	FunctionSetIntensityCallbackThreshold Function = 4
@@ -37,17 +37,17 @@ const (
 	FunctionCallbackIntensityReached Function = 9
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type SoundIntensityBricklet struct{
+type SoundIntensityBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 238
@@ -55,12 +55,12 @@ const DeviceDisplayName = "Sound Intensity Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (SoundIntensityBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return SoundIntensityBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetIntensity] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return SoundIntensityBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetIntensity] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetIntensityCallbackPeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetIntensityCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetIntensityCallbackThreshold] = ResponseExpectedFlagTrue;
@@ -68,7 +68,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SoundIntensityBricklet, 
 	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return SoundIntensityBricklet{dev}, nil
+	return SoundIntensityBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -86,7 +86,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SoundIntensityBricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *SoundIntensityBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -98,7 +98,7 @@ func (device *SoundIntensityBricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *SoundIntensityBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -108,7 +108,7 @@ func (device *SoundIntensityBricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *SoundIntensityBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -118,18 +118,18 @@ func (device *SoundIntensityBricklet) GetAPIVersion() [3]uint8 {
 // The RegisterIntensityCallback callback is only triggered if the intensity has changed
 // since the last triggering.
 func (device *SoundIntensityBricklet) RegisterIntensityCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var intensity uint16
-                binary.Read(buf, binary.LittleEndian, &intensity)
-                fn(intensity)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackIntensity), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var intensity uint16
+		binary.Read(buf, binary.LittleEndian, &intensity)
+		fn(intensity)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackIntensity), wrapper)
 }
 
-//Remove a registered Intensity callback.
-func (device *SoundIntensityBricklet) DeregisterIntensityCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIntensity), registrationID)
+// Remove a registered Intensity callback.
+func (device *SoundIntensityBricklet) DeregisterIntensityCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackIntensity), registrationId)
 }
 
 
@@ -140,18 +140,18 @@ func (device *SoundIntensityBricklet) DeregisterIntensityCallback(registrationID
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *SoundIntensityBricklet) RegisterIntensityReachedCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var intensity uint16
-                binary.Read(buf, binary.LittleEndian, &intensity)
-                fn(intensity)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackIntensityReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var intensity uint16
+		binary.Read(buf, binary.LittleEndian, &intensity)
+		fn(intensity)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackIntensityReached), wrapper)
 }
 
-//Remove a registered Intensity Reached callback.
-func (device *SoundIntensityBricklet) DeregisterIntensityReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIntensityReached), registrationID)
+// Remove a registered Intensity Reached callback.
+func (device *SoundIntensityBricklet) DeregisterIntensityReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackIntensityReached), registrationId)
 }
 
 
@@ -166,26 +166,26 @@ func (device *SoundIntensityBricklet) DeregisterIntensityReachedCallback(registr
 // RegisterIntensityCallback callback and set the period with
 // SetIntensityCallbackPeriod.
 func (device *SoundIntensityBricklet) GetIntensity() (intensity uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIntensity), buf.Bytes())
-    if err != nil {
-        return intensity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIntensity), buf.Bytes())
+	if err != nil {
+		return intensity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return intensity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return intensity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &intensity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &intensity)
 
-    }
+	}
 
-    return intensity, nil
+	return intensity, nil
 }
 
 // Sets the period in ms with which the RegisterIntensityCallback callback is triggered
@@ -196,50 +196,50 @@ func (device *SoundIntensityBricklet) GetIntensity() (intensity uint16, err erro
 // 
 // The default value is 0.
 func (device *SoundIntensityBricklet) SetIntensityCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetIntensityCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetIntensityCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetIntensityCallbackPeriod.
 func (device *SoundIntensityBricklet) GetIntensityCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIntensityCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIntensityCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterIntensityReachedCallback callback.
@@ -264,28 +264,28 @@ func (device *SoundIntensityBricklet) GetIntensityCallbackPeriod() (period uint3
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *SoundIntensityBricklet) SetIntensityCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetIntensityCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetIntensityCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetIntensityCallbackThreshold.
@@ -298,28 +298,28 @@ func (device *SoundIntensityBricklet) SetIntensityCallbackThreshold(option Thres
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *SoundIntensityBricklet) GetIntensityCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIntensityCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIntensityCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
@@ -334,50 +334,50 @@ func (device *SoundIntensityBricklet) GetIntensityCallbackThreshold() (option Th
 // 
 // The default value is 100.
 func (device *SoundIntensityBricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *SoundIntensityBricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -389,29 +389,29 @@ func (device *SoundIntensityBricklet) GetDebouncePeriod() (debounce uint32, err 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *SoundIntensityBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

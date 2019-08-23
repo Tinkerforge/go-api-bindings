@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Executes user programs and controls other Bricks/Bricklets standalone.
+// Executes user programs and controls other Bricks/Bricklets standalone.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricks/RED_Brick_Go.html.
@@ -18,14 +18,14 @@ package red_brick
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionCreateSession Function = 1
+	FunctionCreateSession Function = 1
 	FunctionExpireSession Function = 2
 	FunctionExpireSessionUnchecked Function = 3
 	FunctionKeepSessionAlive Function = 4
@@ -94,10 +94,10 @@ const (
 	FunctionCallbackProgramProcessSpawned Function = 66
 )
 
-type ErrorCode uint8
+type ErrorCode = uint8
 
 const (
-    ErrorCodeSuccess ErrorCode = 0
+	ErrorCodeSuccess ErrorCode = 0
 	ErrorCodeUnknownError ErrorCode = 1
 	ErrorCodeInvalidOperation ErrorCode = 2
 	ErrorCodeOperationAborted ErrorCode = 3
@@ -129,10 +129,10 @@ const (
 	ErrorCodeTooManyOpenFiles ErrorCode = 144
 )
 
-type ObjectType uint8
+type ObjectType = uint8
 
 const (
-    ObjectTypeString ObjectType = 0
+	ObjectTypeString ObjectType = 0
 	ObjectTypeList ObjectType = 1
 	ObjectTypeFile ObjectType = 2
 	ObjectTypeDirectory ObjectType = 3
@@ -140,10 +140,10 @@ const (
 	ObjectTypeProgram ObjectType = 5
 )
 
-type FileFlag uint32
+type FileFlag = uint32
 
 const (
-    FileFlagReadOnly FileFlag = 1
+	FileFlagReadOnly FileFlag = 1
 	FileFlagWriteOnly FileFlag = 2
 	FileFlagReadWrite FileFlag = 4
 	FileFlagAppend FileFlag = 8
@@ -155,10 +155,10 @@ const (
 	FileFlagReplace FileFlag = 512
 )
 
-type FilePermission uint16
+type FilePermission = uint16
 
 const (
-    FilePermissionUserAll FilePermission = 448
+	FilePermissionUserAll FilePermission = 448
 	FilePermissionUserRead FilePermission = 256
 	FilePermissionUserWrite FilePermission = 128
 	FilePermissionUserExecute FilePermission = 64
@@ -172,17 +172,17 @@ const (
 	FilePermissionOthersExecute FilePermission = 1
 )
 
-type PipeFlag uint32
+type PipeFlag = uint32
 
 const (
-    PipeFlagNonBlockingRead PipeFlag = 1
+	PipeFlagNonBlockingRead PipeFlag = 1
 	PipeFlagNonBlockingWrite PipeFlag = 2
 )
 
-type FileType uint8
+type FileType = uint8
 
 const (
-    FileTypeUnknown FileType = 0
+	FileTypeUnknown FileType = 0
 	FileTypeRegular FileType = 1
 	FileTypeDirectory FileType = 2
 	FileTypeCharacter FileType = 3
@@ -193,25 +193,25 @@ const (
 	FileTypePipe FileType = 8
 )
 
-type FileOrigin uint8
+type FileOrigin = uint8
 
 const (
-    FileOriginBeginning FileOrigin = 0
+	FileOriginBeginning FileOrigin = 0
 	FileOriginCurrent FileOrigin = 1
 	FileOriginEnd FileOrigin = 2
 )
 
-type FileEvent uint16
+type FileEvent = uint16
 
 const (
-    FileEventReadable FileEvent = 1
+	FileEventReadable FileEvent = 1
 	FileEventWritable FileEvent = 2
 )
 
-type DirectoryEntryType uint8
+type DirectoryEntryType = uint8
 
 const (
-    DirectoryEntryTypeUnknown DirectoryEntryType = 0
+	DirectoryEntryTypeUnknown DirectoryEntryType = 0
 	DirectoryEntryTypeRegular DirectoryEntryType = 1
 	DirectoryEntryTypeDirectory DirectoryEntryType = 2
 	DirectoryEntryTypeCharacter DirectoryEntryType = 3
@@ -221,17 +221,17 @@ const (
 	DirectoryEntryTypeSocket DirectoryEntryType = 7
 )
 
-type DirectoryFlag uint32
+type DirectoryFlag = uint32
 
 const (
-    DirectoryFlagRecursive DirectoryFlag = 1
+	DirectoryFlagRecursive DirectoryFlag = 1
 	DirectoryFlagExclusive DirectoryFlag = 2
 )
 
-type ProcessSignal uint8
+type ProcessSignal = uint8
 
 const (
-    ProcessSignalInterrupt ProcessSignal = 2
+	ProcessSignalInterrupt ProcessSignal = 2
 	ProcessSignalQuit ProcessSignal = 3
 	ProcessSignalAbort ProcessSignal = 6
 	ProcessSignalKill ProcessSignal = 9
@@ -242,10 +242,10 @@ const (
 	ProcessSignalStop ProcessSignal = 19
 )
 
-type ProcessState uint8
+type ProcessState = uint8
 
 const (
-    ProcessStateUnknown ProcessState = 0
+	ProcessStateUnknown ProcessState = 0
 	ProcessStateRunning ProcessState = 1
 	ProcessStateError ProcessState = 2
 	ProcessStateExited ProcessState = 3
@@ -253,10 +253,10 @@ const (
 	ProcessStateStopped ProcessState = 5
 )
 
-type ProgramStdioRedirection uint8
+type ProgramStdioRedirection = uint8
 
 const (
-    ProgramStdioRedirectionDevNull ProgramStdioRedirection = 0
+	ProgramStdioRedirectionDevNull ProgramStdioRedirection = 0
 	ProgramStdioRedirectionPipe ProgramStdioRedirection = 1
 	ProgramStdioRedirectionFile ProgramStdioRedirection = 2
 	ProgramStdioRedirectionIndividualLog ProgramStdioRedirection = 3
@@ -264,23 +264,23 @@ const (
 	ProgramStdioRedirectionStdout ProgramStdioRedirection = 5
 )
 
-type ProgramStartMode uint8
+type ProgramStartMode = uint8
 
 const (
-    ProgramStartModeNever ProgramStartMode = 0
+	ProgramStartModeNever ProgramStartMode = 0
 	ProgramStartModeAlways ProgramStartMode = 1
 	ProgramStartModeInterval ProgramStartMode = 2
 	ProgramStartModeCron ProgramStartMode = 3
 )
 
-type ProgramSchedulerState uint8
+type ProgramSchedulerState = uint8
 
 const (
-    ProgramSchedulerStateStopped ProgramSchedulerState = 0
+	ProgramSchedulerStateStopped ProgramSchedulerState = 0
 	ProgramSchedulerStateRunning ProgramSchedulerState = 1
 )
 
-type REDBrick struct{
+type REDBrick struct {
 	device Device
 }
 const DeviceIdentifier = 17
@@ -288,12 +288,12 @@ const DeviceDisplayName = "RED Brick"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (REDBrick, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return REDBrick{}, err
-    }
-    dev.ResponseExpected[FunctionCreateSession] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return REDBrick{}, err
+	}
+	dev.ResponseExpected[FunctionCreateSession] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionExpireSession] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionExpireSessionUnchecked] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionKeepSessionAlive] = ResponseExpectedFlagAlwaysTrue;
@@ -354,7 +354,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (REDBrick, error) {
 	dev.ResponseExpected[FunctionGetCustomProgramOptionValue] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionRemoveCustomProgramOption] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return REDBrick{dev}, nil
+	return REDBrick{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -372,7 +372,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (REDBrick, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *REDBrick) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -384,7 +384,7 @@ func (device *REDBrick) GetResponseExpected(functionID Function) (bool, error) {
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *REDBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -394,128 +394,128 @@ func (device *REDBrick) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *REDBrick) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback reports the result of a call to the ReadFileAsync
 // function.
 func (device *REDBrick) RegisterAsyncFileReadCallback(fn func(uint16, ErrorCode, [60]uint8, uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var fileId uint16
-var errorCode ErrorCode
-var buffer [60]uint8
-var lengthRead uint8
-                binary.Read(buf, binary.LittleEndian, &fileId)
-binary.Read(buf, binary.LittleEndian, &errorCode)
-binary.Read(buf, binary.LittleEndian, &buffer)
-binary.Read(buf, binary.LittleEndian, &lengthRead)
-                fn(fileId, errorCode, buffer, lengthRead)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAsyncFileRead), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var fileId uint16
+		var errorCode ErrorCode
+		var buffer [60]uint8
+		var lengthRead uint8
+		binary.Read(buf, binary.LittleEndian, &fileId)
+		binary.Read(buf, binary.LittleEndian, &errorCode)
+		binary.Read(buf, binary.LittleEndian, &buffer)
+		binary.Read(buf, binary.LittleEndian, &lengthRead)
+		fn(fileId, errorCode, buffer, lengthRead)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAsyncFileRead), wrapper)
 }
 
-//Remove a registered Async File Read callback.
-func (device *REDBrick) DeregisterAsyncFileReadCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAsyncFileRead), registrationID)
+// Remove a registered Async File Read callback.
+func (device *REDBrick) DeregisterAsyncFileReadCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAsyncFileRead), registrationId)
 }
 
 
 // This callback reports the result of a call to the WriteFileAsync
 // function.
 func (device *REDBrick) RegisterAsyncFileWriteCallback(fn func(uint16, ErrorCode, uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var fileId uint16
-var errorCode ErrorCode
-var lengthWritten uint8
-                binary.Read(buf, binary.LittleEndian, &fileId)
-binary.Read(buf, binary.LittleEndian, &errorCode)
-binary.Read(buf, binary.LittleEndian, &lengthWritten)
-                fn(fileId, errorCode, lengthWritten)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAsyncFileWrite), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var fileId uint16
+		var errorCode ErrorCode
+		var lengthWritten uint8
+		binary.Read(buf, binary.LittleEndian, &fileId)
+		binary.Read(buf, binary.LittleEndian, &errorCode)
+		binary.Read(buf, binary.LittleEndian, &lengthWritten)
+		fn(fileId, errorCode, lengthWritten)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAsyncFileWrite), wrapper)
 }
 
-//Remove a registered Async File Write callback.
-func (device *REDBrick) DeregisterAsyncFileWriteCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAsyncFileWrite), registrationID)
+// Remove a registered Async File Write callback.
+func (device *REDBrick) DeregisterAsyncFileWriteCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAsyncFileWrite), registrationId)
 }
 
 
 // 
 func (device *REDBrick) RegisterFileEventsOccurredCallback(fn func(uint16, FileEvent)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var fileId uint16
-var events FileEvent
-                binary.Read(buf, binary.LittleEndian, &fileId)
-binary.Read(buf, binary.LittleEndian, &events)
-                fn(fileId, events)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFileEventsOccurred), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var fileId uint16
+		var events FileEvent
+		binary.Read(buf, binary.LittleEndian, &fileId)
+		binary.Read(buf, binary.LittleEndian, &events)
+		fn(fileId, events)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFileEventsOccurred), wrapper)
 }
 
-//Remove a registered File Events Occurred callback.
-func (device *REDBrick) DeregisterFileEventsOccurredCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFileEventsOccurred), registrationID)
+// Remove a registered File Events Occurred callback.
+func (device *REDBrick) DeregisterFileEventsOccurredCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFileEventsOccurred), registrationId)
 }
 
 
 // 
 func (device *REDBrick) RegisterProcessStateChangedCallback(fn func(uint16, ProcessState, uint64, uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var processId uint16
-var state ProcessState
-var timestamp uint64
-var exitCode uint8
-                binary.Read(buf, binary.LittleEndian, &processId)
-binary.Read(buf, binary.LittleEndian, &state)
-binary.Read(buf, binary.LittleEndian, &timestamp)
-binary.Read(buf, binary.LittleEndian, &exitCode)
-                fn(processId, state, timestamp, exitCode)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackProcessStateChanged), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var processId uint16
+		var state ProcessState
+		var timestamp uint64
+		var exitCode uint8
+		binary.Read(buf, binary.LittleEndian, &processId)
+		binary.Read(buf, binary.LittleEndian, &state)
+		binary.Read(buf, binary.LittleEndian, &timestamp)
+		binary.Read(buf, binary.LittleEndian, &exitCode)
+		fn(processId, state, timestamp, exitCode)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackProcessStateChanged), wrapper)
 }
 
-//Remove a registered Process State Changed callback.
-func (device *REDBrick) DeregisterProcessStateChangedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackProcessStateChanged), registrationID)
+// Remove a registered Process State Changed callback.
+func (device *REDBrick) DeregisterProcessStateChangedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackProcessStateChanged), registrationId)
 }
 
 
 // 
 func (device *REDBrick) RegisterProgramSchedulerStateChangedCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var programId uint16
-                binary.Read(buf, binary.LittleEndian, &programId)
-                fn(programId)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackProgramSchedulerStateChanged), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var programId uint16
+		binary.Read(buf, binary.LittleEndian, &programId)
+		fn(programId)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackProgramSchedulerStateChanged), wrapper)
 }
 
-//Remove a registered Program Scheduler State Changed callback.
-func (device *REDBrick) DeregisterProgramSchedulerStateChangedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackProgramSchedulerStateChanged), registrationID)
+// Remove a registered Program Scheduler State Changed callback.
+func (device *REDBrick) DeregisterProgramSchedulerStateChangedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackProgramSchedulerStateChanged), registrationId)
 }
 
 
 // 
 func (device *REDBrick) RegisterProgramProcessSpawnedCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var programId uint16
-                binary.Read(buf, binary.LittleEndian, &programId)
-                fn(programId)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackProgramProcessSpawned), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var programId uint16
+		binary.Read(buf, binary.LittleEndian, &programId)
+		fn(programId)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackProgramProcessSpawned), wrapper)
 }
 
-//Remove a registered Program Process Spawned callback.
-func (device *REDBrick) DeregisterProgramProcessSpawnedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackProgramProcessSpawned), registrationID)
+// Remove a registered Program Process Spawned callback.
+func (device *REDBrick) DeregisterProgramProcessSpawnedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackProgramProcessSpawned), registrationId)
 }
 
 
@@ -554,28 +554,28 @@ func (device *REDBrick) DeregisterProgramProcessSpawnedCallback(registrationID u
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) CreateSession(lifetime uint32) (errorCode ErrorCode, sessionId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, lifetime);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, lifetime);
 
-    resultBytes, err := device.device.Get(uint8(FunctionCreateSession), buf.Bytes())
-    if err != nil {
-        return errorCode, sessionId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionCreateSession), buf.Bytes())
+	if err != nil {
+		return errorCode, sessionId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, sessionId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, sessionId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &sessionId)
 
-    }
+	}
 
-    return errorCode, sessionId, nil
+	return errorCode, sessionId, nil
 }
 
 // 
@@ -613,51 +613,51 @@ func (device *REDBrick) CreateSession(lifetime uint32) (errorCode ErrorCode, ses
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) ExpireSession(sessionId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sessionId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionExpireSession), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionExpireSession), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
 func (device *REDBrick) ExpireSessionUnchecked(sessionId uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sessionId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Set(uint8(FunctionExpireSessionUnchecked), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionExpireSessionUnchecked), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // 
@@ -695,28 +695,28 @@ func (device *REDBrick) ExpireSessionUnchecked(sessionId uint16) (err error) {
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) KeepSessionAlive(sessionId uint16, lifetime uint32) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sessionId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sessionId);
 	binary.Write(&buf, binary.LittleEndian, lifetime);
 
-    resultBytes, err := device.device.Get(uint8(FunctionKeepSessionAlive), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionKeepSessionAlive), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Decreases the reference count of an object by one and returns the resulting
@@ -755,53 +755,53 @@ func (device *REDBrick) KeepSessionAlive(sessionId uint16, lifetime uint32) (err
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) ReleaseObject(objectId uint16, sessionId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, objectId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, objectId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionReleaseObject), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionReleaseObject), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
 func (device *REDBrick) ReleaseObjectUnchecked(objectId uint16, sessionId uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, objectId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, objectId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Set(uint8(FunctionReleaseObjectUnchecked), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionReleaseObjectUnchecked), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Allocates a new string object, reserves ``length_to_reserve`` bytes memory
@@ -843,32 +843,32 @@ func (device *REDBrick) ReleaseObjectUnchecked(objectId uint16, sessionId uint16
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) AllocateString(lengthToReserve uint32, buffer string, sessionId uint16) (errorCode ErrorCode, stringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, lengthToReserve);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, lengthToReserve);
 	buffer_byte_slice, err := StringToByteSlice(buffer, 58)
 	if err != nil { return }
 	buf.Write(buffer_byte_slice)
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionAllocateString), buf.Bytes())
-    if err != nil {
-        return errorCode, stringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionAllocateString), buf.Bytes())
+	if err != nil {
+		return errorCode, stringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, stringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, stringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &stringId)
 
-    }
+	}
 
-    return errorCode, stringId, nil
+	return errorCode, stringId, nil
 }
 
 // Truncates a string object to ``length`` bytes and returns the resulting
@@ -907,28 +907,28 @@ func (device *REDBrick) AllocateString(lengthToReserve uint32, buffer string, se
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) TruncateString(stringId uint16, length uint32) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, stringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, stringId);
 	binary.Write(&buf, binary.LittleEndian, length);
 
-    resultBytes, err := device.device.Get(uint8(FunctionTruncateString), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionTruncateString), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Returns the length of a string object in bytes and the resulting error code.
@@ -966,28 +966,28 @@ func (device *REDBrick) TruncateString(stringId uint16, length uint32) (errorCod
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetStringLength(stringId uint16) (errorCode ErrorCode, length uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, stringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, stringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetStringLength), buf.Bytes())
-    if err != nil {
-        return errorCode, length, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetStringLength), buf.Bytes())
+	if err != nil {
+		return errorCode, length, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, length, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, length, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &length)
 
-    }
+	}
 
-    return errorCode, length, nil
+	return errorCode, length, nil
 }
 
 // Sets a chunk of up to 58 bytes in a string object beginning at ``offset``.
@@ -1027,31 +1027,31 @@ func (device *REDBrick) GetStringLength(stringId uint16) (errorCode ErrorCode, l
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetStringChunk(stringId uint16, offset uint32, buffer string) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, stringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, stringId);
 	binary.Write(&buf, binary.LittleEndian, offset);
 	buffer_byte_slice, err := StringToByteSlice(buffer, 58)
 	if err != nil { return }
 	buf.Write(buffer_byte_slice)
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetStringChunk), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetStringChunk), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Returns a chunk up to 63 bytes from a string object beginning at ``offset`` and
@@ -1090,29 +1090,29 @@ func (device *REDBrick) SetStringChunk(stringId uint16, offset uint32, buffer st
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetStringChunk(stringId uint16, offset uint32) (errorCode ErrorCode, buffer string, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, stringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, stringId);
 	binary.Write(&buf, binary.LittleEndian, offset);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetStringChunk), buf.Bytes())
-    if err != nil {
-        return errorCode, buffer, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetStringChunk), buf.Bytes())
+	if err != nil {
+		return errorCode, buffer, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, buffer, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, buffer, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	buffer = ByteSliceToString(resultBuf.Next(63))
 
-    }
+	}
 
-    return errorCode, buffer, nil
+	return errorCode, buffer, nil
 }
 
 // Allocates a new list object and reserves memory for ``length_to_reserve``
@@ -1157,29 +1157,29 @@ func (device *REDBrick) GetStringChunk(stringId uint16, offset uint32) (errorCod
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) AllocateList(lengthToReserve uint16, sessionId uint16) (errorCode ErrorCode, listId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, lengthToReserve);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, lengthToReserve);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionAllocateList), buf.Bytes())
-    if err != nil {
-        return errorCode, listId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionAllocateList), buf.Bytes())
+	if err != nil {
+		return errorCode, listId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, listId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, listId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &listId)
 
-    }
+	}
 
-    return errorCode, listId, nil
+	return errorCode, listId, nil
 }
 
 // Returns the length of a list object in items and the resulting error code.
@@ -1217,28 +1217,28 @@ func (device *REDBrick) AllocateList(lengthToReserve uint16, sessionId uint16) (
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetListLength(listId uint16) (errorCode ErrorCode, length uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, listId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, listId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetListLength), buf.Bytes())
-    if err != nil {
-        return errorCode, length, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetListLength), buf.Bytes())
+	if err != nil {
+		return errorCode, length, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, length, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, length, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &length)
 
-    }
+	}
 
-    return errorCode, length, nil
+	return errorCode, length, nil
 }
 
 // Returns the object ID and type of the object stored at ``index`` in a list
@@ -1292,31 +1292,31 @@ func (device *REDBrick) GetListLength(listId uint16) (errorCode ErrorCode, lengt
 //	* ObjectTypeProcess
 //	* ObjectTypeProgram
 func (device *REDBrick) GetListItem(listId uint16, index uint16, sessionId uint16) (errorCode ErrorCode, itemObjectId uint16, type_ ObjectType, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, listId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, listId);
 	binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetListItem), buf.Bytes())
-    if err != nil {
-        return errorCode, itemObjectId, type_, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetListItem), buf.Bytes())
+	if err != nil {
+		return errorCode, itemObjectId, type_, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, itemObjectId, type_, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, itemObjectId, type_, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &itemObjectId)
 	binary.Read(resultBuf, binary.LittleEndian, &type_)
 
-    }
+	}
 
-    return errorCode, itemObjectId, type_, nil
+	return errorCode, itemObjectId, type_, nil
 }
 
 // Appends an object to a list object and increases the reference count of the
@@ -1357,28 +1357,28 @@ func (device *REDBrick) GetListItem(listId uint16, index uint16, sessionId uint1
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) AppendToList(listId uint16, itemObjectId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, listId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, listId);
 	binary.Write(&buf, binary.LittleEndian, itemObjectId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionAppendToList), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionAppendToList), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Removes the object stored at ``index`` from a list object and decreases the
@@ -1419,28 +1419,28 @@ func (device *REDBrick) AppendToList(listId uint16, itemObjectId uint16) (errorC
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) RemoveFromList(listId uint16, index uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, listId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, listId);
 	binary.Write(&buf, binary.LittleEndian, index);
 
-    resultBytes, err := device.device.Get(uint8(FunctionRemoveFromList), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionRemoveFromList), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Opens an existing file or creates a new file and allocates a new file object
@@ -1540,33 +1540,33 @@ func (device *REDBrick) RemoveFromList(listId uint16, index uint16) (errorCode E
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) OpenFile(nameStringId uint16, flags FileFlag, permissions FilePermission, uid uint32, gid uint32, sessionId uint16) (errorCode ErrorCode, fileId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, nameStringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, nameStringId);
 	binary.Write(&buf, binary.LittleEndian, flags);
 	binary.Write(&buf, binary.LittleEndian, permissions);
 	binary.Write(&buf, binary.LittleEndian, uid);
 	binary.Write(&buf, binary.LittleEndian, gid);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionOpenFile), buf.Bytes())
-    if err != nil {
-        return errorCode, fileId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionOpenFile), buf.Bytes())
+	if err != nil {
+		return errorCode, fileId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, fileId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &fileId)
 
-    }
+	}
 
-    return errorCode, fileId, nil
+	return errorCode, fileId, nil
 }
 
 // Creates a new pipe and allocates a new file object for it.
@@ -1617,30 +1617,30 @@ func (device *REDBrick) OpenFile(nameStringId uint16, flags FileFlag, permission
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) CreatePipe(flags PipeFlag, length uint64, sessionId uint16) (errorCode ErrorCode, fileId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, flags);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, flags);
 	binary.Write(&buf, binary.LittleEndian, length);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionCreatePipe), buf.Bytes())
-    if err != nil {
-        return errorCode, fileId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionCreatePipe), buf.Bytes())
+	if err != nil {
+		return errorCode, fileId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, fileId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &fileId)
 
-    }
+	}
 
-    return errorCode, fileId, nil
+	return errorCode, fileId, nil
 }
 
 // Returns various information about a file and the resulting error code.
@@ -1721,24 +1721,24 @@ func (device *REDBrick) CreatePipe(flags PipeFlag, length uint64, sessionId uint
 //	* FilePermissionOthersWrite
 //	* FilePermissionOthersExecute
 func (device *REDBrick) GetFileInfo(fileId uint16, sessionId uint16) (errorCode ErrorCode, type_ FileType, nameStringId uint16, flags uint32, permissions FilePermission, uid uint32, gid uint32, length uint64, accessTimestamp uint64, modificationTimestamp uint64, statusChangeTimestamp uint64, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetFileInfo), buf.Bytes())
-    if err != nil {
-        return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetFileInfo), buf.Bytes())
+	if err != nil {
+		return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &type_)
 	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
 	binary.Read(resultBuf, binary.LittleEndian, &flags)
@@ -1750,9 +1750,9 @@ func (device *REDBrick) GetFileInfo(fileId uint16, sessionId uint16) (errorCode 
 	binary.Read(resultBuf, binary.LittleEndian, &modificationTimestamp)
 	binary.Read(resultBuf, binary.LittleEndian, &statusChangeTimestamp)
 
-    }
+	}
 
-    return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, nil
+	return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, nil
 }
 
 // Reads up to 62 bytes from a file object.
@@ -1801,30 +1801,30 @@ func (device *REDBrick) GetFileInfo(fileId uint16, sessionId uint16) (errorCode 
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) ReadFile(fileId uint16, lengthToRead uint8) (errorCode ErrorCode, buffer [62]uint8, lengthRead uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, lengthToRead);
 
-    resultBytes, err := device.device.Get(uint8(FunctionReadFile), buf.Bytes())
-    if err != nil {
-        return errorCode, buffer, lengthRead, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionReadFile), buf.Bytes())
+	if err != nil {
+		return errorCode, buffer, lengthRead, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, buffer, lengthRead, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, buffer, lengthRead, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &buffer)
 	binary.Read(resultBuf, binary.LittleEndian, &lengthRead)
 
-    }
+	}
 
-    return errorCode, buffer, lengthRead, nil
+	return errorCode, buffer, lengthRead, nil
 }
 
 // Reads up to 2\ :sup:`63`\  - 1 bytes from a file object asynchronously.
@@ -1840,27 +1840,27 @@ func (device *REDBrick) ReadFile(fileId uint16, lengthToRead uint8) (errorCode E
 // flag or by CreatePipe without the *NonBlockingRead* flag then the error
 // code *NotSupported* is reported via the RegisterAsyncFileReadCallback callback.
 func (device *REDBrick) ReadFileAsync(fileId uint16, lengthToRead uint64) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, lengthToRead);
 
-    resultBytes, err := device.device.Set(uint8(FunctionReadFileAsync), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionReadFileAsync), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Aborts a ReadFileAsync operation in progress.
@@ -1902,27 +1902,27 @@ func (device *REDBrick) ReadFileAsync(fileId uint16, lengthToRead uint64) (err e
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) AbortAsyncFileRead(fileId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionAbortAsyncFileRead), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionAbortAsyncFileRead), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Writes up to 61 bytes to a file object.
@@ -1966,30 +1966,30 @@ func (device *REDBrick) AbortAsyncFileRead(fileId uint16) (errorCode ErrorCode, 
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) WriteFile(fileId uint16, buffer [61]uint8, lengthToWrite uint8) (errorCode ErrorCode, lengthWritten uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, buffer);
 	binary.Write(&buf, binary.LittleEndian, lengthToWrite);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFile), buf.Bytes())
-    if err != nil {
-        return errorCode, lengthWritten, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFile), buf.Bytes())
+	if err != nil {
+		return errorCode, lengthWritten, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, lengthWritten, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, lengthWritten, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &lengthWritten)
 
-    }
+	}
 
-    return errorCode, lengthWritten, nil
+	return errorCode, lengthWritten, nil
 }
 
 // Writes up to 61 bytes to a file object.
@@ -2001,28 +2001,28 @@ func (device *REDBrick) WriteFile(fileId uint16, buffer [61]uint8, lengthToWrite
 // flag or by CreatePipe without the *NonBlockingWrite* flag then the
 // write operation will fail silently.
 func (device *REDBrick) WriteFileUnchecked(fileId uint16, buffer [61]uint8, lengthToWrite uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, buffer);
 	binary.Write(&buf, binary.LittleEndian, lengthToWrite);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteFileUnchecked), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteFileUnchecked), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes up to 61 bytes to a file object.
@@ -2034,28 +2034,28 @@ func (device *REDBrick) WriteFileUnchecked(fileId uint16, buffer [61]uint8, leng
 // flag or by CreatePipe without the *NonBlockingWrite* flag then the
 // error code *NotSupported* is reported via the RegisterAsyncFileWriteCallback callback.
 func (device *REDBrick) WriteFileAsync(fileId uint16, buffer [61]uint8, lengthToWrite uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, buffer);
 	binary.Write(&buf, binary.LittleEndian, lengthToWrite);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteFileAsync), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteFileAsync), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Set the current seek position of a file object in bytes relative to ``origin``.
@@ -2107,30 +2107,30 @@ func (device *REDBrick) WriteFileAsync(fileId uint16, buffer [61]uint8, lengthTo
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetFilePosition(fileId uint16, offset int64, origin FileOrigin) (errorCode ErrorCode, position uint64, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, offset);
 	binary.Write(&buf, binary.LittleEndian, origin);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetFilePosition), buf.Bytes())
-    if err != nil {
-        return errorCode, position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetFilePosition), buf.Bytes())
+	if err != nil {
+		return errorCode, position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return errorCode, position, nil
+	return errorCode, position, nil
 }
 
 // Returns the current seek position of a file object in bytes and returns the
@@ -2172,28 +2172,28 @@ func (device *REDBrick) SetFilePosition(fileId uint16, offset int64, origin File
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetFilePosition(fileId uint16) (errorCode ErrorCode, position uint64, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetFilePosition), buf.Bytes())
-    if err != nil {
-        return errorCode, position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetFilePosition), buf.Bytes())
+	if err != nil {
+		return errorCode, position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return errorCode, position, nil
+	return errorCode, position, nil
 }
 
 // 
@@ -2233,28 +2233,28 @@ func (device *REDBrick) GetFilePosition(fileId uint16) (errorCode ErrorCode, pos
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetFileEvents(fileId uint16, events FileEvent) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 	binary.Write(&buf, binary.LittleEndian, events);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetFileEvents), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetFileEvents), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -2294,28 +2294,28 @@ func (device *REDBrick) SetFileEvents(fileId uint16, events FileEvent) (errorCod
 //	* FileEventReadable
 //	* FileEventWritable
 func (device *REDBrick) GetFileEvents(fileId uint16) (errorCode ErrorCode, events FileEvent, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fileId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fileId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetFileEvents), buf.Bytes())
-    if err != nil {
-        return errorCode, events, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetFileEvents), buf.Bytes())
+	if err != nil {
+		return errorCode, events, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, events, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, events, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &events)
 
-    }
+	}
 
-    return errorCode, events, nil
+	return errorCode, events, nil
 }
 
 // Opens an existing directory and allocates a new directory object for it.
@@ -2362,29 +2362,29 @@ func (device *REDBrick) GetFileEvents(fileId uint16) (errorCode ErrorCode, event
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) OpenDirectory(nameStringId uint16, sessionId uint16) (errorCode ErrorCode, directoryId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, nameStringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, nameStringId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionOpenDirectory), buf.Bytes())
-    if err != nil {
-        return errorCode, directoryId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionOpenDirectory), buf.Bytes())
+	if err != nil {
+		return errorCode, directoryId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, directoryId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, directoryId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &directoryId)
 
-    }
+	}
 
-    return errorCode, directoryId, nil
+	return errorCode, directoryId, nil
 }
 
 // Returns the name of a directory object, as passed to OpenDirectory, and
@@ -2423,29 +2423,29 @@ func (device *REDBrick) OpenDirectory(nameStringId uint16, sessionId uint16) (er
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetDirectoryName(directoryId uint16, sessionId uint16) (errorCode ErrorCode, nameStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, directoryId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, directoryId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetDirectoryName), buf.Bytes())
-    if err != nil {
-        return errorCode, nameStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetDirectoryName), buf.Bytes())
+	if err != nil {
+		return errorCode, nameStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, nameStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, nameStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
 
-    }
+	}
 
-    return errorCode, nameStringId, nil
+	return errorCode, nameStringId, nil
 }
 
 // Returns the next entry in a directory object and the resulting error code.
@@ -2505,30 +2505,30 @@ func (device *REDBrick) GetDirectoryName(directoryId uint16, sessionId uint16) (
 //	* DirectoryEntryTypeSymlink
 //	* DirectoryEntryTypeSocket
 func (device *REDBrick) GetNextDirectoryEntry(directoryId uint16, sessionId uint16) (errorCode ErrorCode, nameStringId uint16, type_ DirectoryEntryType, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, directoryId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, directoryId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetNextDirectoryEntry), buf.Bytes())
-    if err != nil {
-        return errorCode, nameStringId, type_, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetNextDirectoryEntry), buf.Bytes())
+	if err != nil {
+		return errorCode, nameStringId, type_, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, nameStringId, type_, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, nameStringId, type_, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
 	binary.Read(resultBuf, binary.LittleEndian, &type_)
 
-    }
+	}
 
-    return errorCode, nameStringId, type_, nil
+	return errorCode, nameStringId, type_, nil
 }
 
 // Rewinds a directory object and returns the resulting error code.
@@ -2566,27 +2566,27 @@ func (device *REDBrick) GetNextDirectoryEntry(directoryId uint16, sessionId uint
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) RewindDirectory(directoryId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, directoryId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, directoryId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionRewindDirectory), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionRewindDirectory), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // FIXME: name has to be absolute
@@ -2638,31 +2638,31 @@ func (device *REDBrick) RewindDirectory(directoryId uint16) (errorCode ErrorCode
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) CreateDirectory(nameStringId uint16, flags DirectoryFlag, permissions FilePermission, uid uint32, gid uint32) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, nameStringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, nameStringId);
 	binary.Write(&buf, binary.LittleEndian, flags);
 	binary.Write(&buf, binary.LittleEndian, permissions);
 	binary.Write(&buf, binary.LittleEndian, uid);
 	binary.Write(&buf, binary.LittleEndian, gid);
 
-    resultBytes, err := device.device.Get(uint8(FunctionCreateDirectory), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionCreateDirectory), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -2700,28 +2700,28 @@ func (device *REDBrick) CreateDirectory(nameStringId uint16, flags DirectoryFlag
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProcesses(sessionId uint16) (errorCode ErrorCode, processesListId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sessionId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProcesses), buf.Bytes())
-    if err != nil {
-        return errorCode, processesListId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProcesses), buf.Bytes())
+	if err != nil {
+		return errorCode, processesListId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, processesListId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, processesListId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &processesListId)
 
-    }
+	}
 
-    return errorCode, processesListId, nil
+	return errorCode, processesListId, nil
 }
 
 // 
@@ -2759,8 +2759,8 @@ func (device *REDBrick) GetProcesses(sessionId uint16) (errorCode ErrorCode, pro
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SpawnProcess(executableStringId uint16, argumentsListId uint16, environmentListId uint16, workingDirectoryStringId uint16, uid uint32, gid uint32, stdinFileId uint16, stdoutFileId uint16, stderrFileId uint16, sessionId uint16) (errorCode ErrorCode, processId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, executableStringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, executableStringId);
 	binary.Write(&buf, binary.LittleEndian, argumentsListId);
 	binary.Write(&buf, binary.LittleEndian, environmentListId);
 	binary.Write(&buf, binary.LittleEndian, workingDirectoryStringId);
@@ -2771,25 +2771,25 @@ func (device *REDBrick) SpawnProcess(executableStringId uint16, argumentsListId 
 	binary.Write(&buf, binary.LittleEndian, stderrFileId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSpawnProcess), buf.Bytes())
-    if err != nil {
-        return errorCode, processId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSpawnProcess), buf.Bytes())
+	if err != nil {
+		return errorCode, processId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, processId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, processId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &processId)
 
-    }
+	}
 
-    return errorCode, processId, nil
+	return errorCode, processId, nil
 }
 
 // Sends a UNIX signal to a process object and returns the resulting error code.
@@ -2848,28 +2848,28 @@ func (device *REDBrick) SpawnProcess(executableStringId uint16, argumentsListId 
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) KillProcess(processId uint16, signal ProcessSignal) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, processId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, processId);
 	binary.Write(&buf, binary.LittleEndian, signal);
 
-    resultBytes, err := device.device.Get(uint8(FunctionKillProcess), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionKillProcess), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Returns the executable, arguments, environment and working directory used to
@@ -2909,32 +2909,32 @@ func (device *REDBrick) KillProcess(processId uint16, signal ProcessSignal) (err
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProcessCommand(processId uint16, sessionId uint16) (errorCode ErrorCode, executableStringId uint16, argumentsListId uint16, environmentListId uint16, workingDirectoryStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, processId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, processId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProcessCommand), buf.Bytes())
-    if err != nil {
-        return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProcessCommand), buf.Bytes())
+	if err != nil {
+		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
 	binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
 	binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
 	binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
 
-    }
+	}
 
-    return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
+	return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
 }
 
 // Returns the process ID and the user and group ID used to spawn a process object,
@@ -2976,30 +2976,30 @@ func (device *REDBrick) GetProcessCommand(processId uint16, sessionId uint16) (e
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProcessIdentity(processId uint16) (errorCode ErrorCode, pid uint32, uid uint32, gid uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, processId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, processId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProcessIdentity), buf.Bytes())
-    if err != nil {
-        return errorCode, pid, uid, gid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProcessIdentity), buf.Bytes())
+	if err != nil {
+		return errorCode, pid, uid, gid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, pid, uid, gid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, pid, uid, gid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &pid)
 	binary.Read(resultBuf, binary.LittleEndian, &uid)
 	binary.Read(resultBuf, binary.LittleEndian, &gid)
 
-    }
+	}
 
-    return errorCode, pid, uid, gid, nil
+	return errorCode, pid, uid, gid, nil
 }
 
 // Returns the stdin, stdout and stderr files used to spawn a process object, as
@@ -3038,31 +3038,31 @@ func (device *REDBrick) GetProcessIdentity(processId uint16) (errorCode ErrorCod
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProcessStdio(processId uint16, sessionId uint16) (errorCode ErrorCode, stdinFileId uint16, stdoutFileId uint16, stderrFileId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, processId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, processId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProcessStdio), buf.Bytes())
-    if err != nil {
-        return errorCode, stdinFileId, stdoutFileId, stderrFileId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProcessStdio), buf.Bytes())
+	if err != nil {
+		return errorCode, stdinFileId, stdoutFileId, stderrFileId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, stdinFileId, stdoutFileId, stderrFileId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, stdinFileId, stdoutFileId, stderrFileId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &stdinFileId)
 	binary.Read(resultBuf, binary.LittleEndian, &stdoutFileId)
 	binary.Read(resultBuf, binary.LittleEndian, &stderrFileId)
 
-    }
+	}
 
-    return errorCode, stdinFileId, stdoutFileId, stderrFileId, nil
+	return errorCode, stdinFileId, stdoutFileId, stderrFileId, nil
 }
 
 // Returns the current state, timestamp and exit code of a process object, and
@@ -3136,30 +3136,30 @@ func (device *REDBrick) GetProcessStdio(processId uint16, sessionId uint16) (err
 //	* ProcessStateKilled
 //	* ProcessStateStopped
 func (device *REDBrick) GetProcessState(processId uint16) (errorCode ErrorCode, state ProcessState, timestamp uint64, exitCode uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, processId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, processId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProcessState), buf.Bytes())
-    if err != nil {
-        return errorCode, state, timestamp, exitCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProcessState), buf.Bytes())
+	if err != nil {
+		return errorCode, state, timestamp, exitCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, state, timestamp, exitCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, state, timestamp, exitCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &state)
 	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
 	binary.Read(resultBuf, binary.LittleEndian, &exitCode)
 
-    }
+	}
 
-    return errorCode, state, timestamp, exitCode, nil
+	return errorCode, state, timestamp, exitCode, nil
 }
 
 // 
@@ -3197,28 +3197,28 @@ func (device *REDBrick) GetProcessState(processId uint16) (errorCode ErrorCode, 
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetPrograms(sessionId uint16) (errorCode ErrorCode, programsListId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sessionId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetPrograms), buf.Bytes())
-    if err != nil {
-        return errorCode, programsListId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetPrograms), buf.Bytes())
+	if err != nil {
+		return errorCode, programsListId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, programsListId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, programsListId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &programsListId)
 
-    }
+	}
 
-    return errorCode, programsListId, nil
+	return errorCode, programsListId, nil
 }
 
 // 
@@ -3256,29 +3256,29 @@ func (device *REDBrick) GetPrograms(sessionId uint16) (errorCode ErrorCode, prog
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) DefineProgram(identifierStringId uint16, sessionId uint16) (errorCode ErrorCode, programId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, identifierStringId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, identifierStringId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionDefineProgram), buf.Bytes())
-    if err != nil {
-        return errorCode, programId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionDefineProgram), buf.Bytes())
+	if err != nil {
+		return errorCode, programId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, programId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, programId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &programId)
 
-    }
+	}
 
-    return errorCode, programId, nil
+	return errorCode, programId, nil
 }
 
 // 
@@ -3316,28 +3316,28 @@ func (device *REDBrick) DefineProgram(identifierStringId uint16, sessionId uint1
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) PurgeProgram(programId uint16, cookie uint32) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, cookie);
 
-    resultBytes, err := device.device.Get(uint8(FunctionPurgeProgram), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionPurgeProgram), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -3375,29 +3375,29 @@ func (device *REDBrick) PurgeProgram(programId uint16, cookie uint32) (errorCode
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProgramIdentifier(programId uint16, sessionId uint16) (errorCode ErrorCode, identifierStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramIdentifier), buf.Bytes())
-    if err != nil {
-        return errorCode, identifierStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramIdentifier), buf.Bytes())
+	if err != nil {
+		return errorCode, identifierStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, identifierStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, identifierStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &identifierStringId)
 
-    }
+	}
 
-    return errorCode, identifierStringId, nil
+	return errorCode, identifierStringId, nil
 }
 
 // FIXME: root directory is absolute: <home>/programs/<identifier>
@@ -3435,29 +3435,29 @@ func (device *REDBrick) GetProgramIdentifier(programId uint16, sessionId uint16)
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProgramRootDirectory(programId uint16, sessionId uint16) (errorCode ErrorCode, rootDirectoryStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramRootDirectory), buf.Bytes())
-    if err != nil {
-        return errorCode, rootDirectoryStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramRootDirectory), buf.Bytes())
+	if err != nil {
+		return errorCode, rootDirectoryStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, rootDirectoryStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, rootDirectoryStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &rootDirectoryStringId)
 
-    }
+	}
 
-    return errorCode, rootDirectoryStringId, nil
+	return errorCode, rootDirectoryStringId, nil
 }
 
 // FIXME: working directory is relative to <home>/programs/<identifier>/bin
@@ -3495,31 +3495,31 @@ func (device *REDBrick) GetProgramRootDirectory(programId uint16, sessionId uint
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetProgramCommand(programId uint16, executableStringId uint16, argumentsListId uint16, environmentListId uint16, workingDirectoryStringId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, executableStringId);
 	binary.Write(&buf, binary.LittleEndian, argumentsListId);
 	binary.Write(&buf, binary.LittleEndian, environmentListId);
 	binary.Write(&buf, binary.LittleEndian, workingDirectoryStringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetProgramCommand), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetProgramCommand), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // FIXME: working directory is relative to <home>/programs/<identifier>/bin
@@ -3557,32 +3557,32 @@ func (device *REDBrick) SetProgramCommand(programId uint16, executableStringId u
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetProgramCommand(programId uint16, sessionId uint16) (errorCode ErrorCode, executableStringId uint16, argumentsListId uint16, environmentListId uint16, workingDirectoryStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramCommand), buf.Bytes())
-    if err != nil {
-        return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramCommand), buf.Bytes())
+	if err != nil {
+		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
 	binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
 	binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
 	binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
 
-    }
+	}
 
-    return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
+	return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
 }
 
 // FIXME: stdio file names are relative to <home>/programs/<identifier>/bin
@@ -3626,8 +3626,8 @@ func (device *REDBrick) GetProgramCommand(programId uint16, sessionId uint16) (e
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetProgramStdioRedirection(programId uint16, stdinRedirection ProgramStdioRedirection, stdinFileNameStringId uint16, stdoutRedirection ProgramStdioRedirection, stdoutFileNameStringId uint16, stderrRedirection ProgramStdioRedirection, stderrFileNameStringId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, stdinRedirection);
 	binary.Write(&buf, binary.LittleEndian, stdinFileNameStringId);
 	binary.Write(&buf, binary.LittleEndian, stdoutRedirection);
@@ -3635,24 +3635,24 @@ func (device *REDBrick) SetProgramStdioRedirection(programId uint16, stdinRedire
 	binary.Write(&buf, binary.LittleEndian, stderrRedirection);
 	binary.Write(&buf, binary.LittleEndian, stderrFileNameStringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetProgramStdioRedirection), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetProgramStdioRedirection), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // FIXME: stdio file names are relative to <home>/programs/<identifier>/bin
@@ -3696,24 +3696,24 @@ func (device *REDBrick) SetProgramStdioRedirection(programId uint16, stdinRedire
 //	* ProgramStdioRedirectionContinuousLog
 //	* ProgramStdioRedirectionStdout
 func (device *REDBrick) GetProgramStdioRedirection(programId uint16, sessionId uint16) (errorCode ErrorCode, stdinRedirection ProgramStdioRedirection, stdinFileNameStringId uint16, stdoutRedirection ProgramStdioRedirection, stdoutFileNameStringId uint16, stderrRedirection ProgramStdioRedirection, stderrFileNameStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramStdioRedirection), buf.Bytes())
-    if err != nil {
-        return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramStdioRedirection), buf.Bytes())
+	if err != nil {
+		return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &stdinRedirection)
 	binary.Read(resultBuf, binary.LittleEndian, &stdinFileNameStringId)
 	binary.Read(resultBuf, binary.LittleEndian, &stdoutRedirection)
@@ -3721,9 +3721,9 @@ func (device *REDBrick) GetProgramStdioRedirection(programId uint16, sessionId u
 	binary.Read(resultBuf, binary.LittleEndian, &stderrRedirection)
 	binary.Read(resultBuf, binary.LittleEndian, &stderrFileNameStringId)
 
-    }
+	}
 
-    return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, nil
+	return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, nil
 }
 
 // 
@@ -3765,31 +3765,31 @@ func (device *REDBrick) GetProgramStdioRedirection(programId uint16, sessionId u
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetProgramSchedule(programId uint16, startMode ProgramStartMode, continueAfterError bool, startInterval uint32, startFieldsStringId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, startMode);
 	binary.Write(&buf, binary.LittleEndian, continueAfterError);
 	binary.Write(&buf, binary.LittleEndian, startInterval);
 	binary.Write(&buf, binary.LittleEndian, startFieldsStringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetProgramSchedule), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetProgramSchedule), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -3831,32 +3831,32 @@ func (device *REDBrick) SetProgramSchedule(programId uint16, startMode ProgramSt
 //	* ProgramStartModeInterval
 //	* ProgramStartModeCron
 func (device *REDBrick) GetProgramSchedule(programId uint16, sessionId uint16) (errorCode ErrorCode, startMode ProgramStartMode, continueAfterError bool, startInterval uint32, startFieldsStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramSchedule), buf.Bytes())
-    if err != nil {
-        return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramSchedule), buf.Bytes())
+	if err != nil {
+		return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &startMode)
 	binary.Read(resultBuf, binary.LittleEndian, &continueAfterError)
 	binary.Read(resultBuf, binary.LittleEndian, &startInterval)
 	binary.Read(resultBuf, binary.LittleEndian, &startFieldsStringId)
 
-    }
+	}
 
-    return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, nil
+	return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, nil
 }
 
 // FIXME: message is currently valid in error-occurred state only
@@ -3896,31 +3896,31 @@ func (device *REDBrick) GetProgramSchedule(programId uint16, sessionId uint16) (
 //	* ProgramSchedulerStateStopped
 //	* ProgramSchedulerStateRunning
 func (device *REDBrick) GetProgramSchedulerState(programId uint16, sessionId uint16) (errorCode ErrorCode, state ProgramSchedulerState, timestamp uint64, messageStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProgramSchedulerState), buf.Bytes())
-    if err != nil {
-        return errorCode, state, timestamp, messageStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProgramSchedulerState), buf.Bytes())
+	if err != nil {
+		return errorCode, state, timestamp, messageStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, state, timestamp, messageStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, state, timestamp, messageStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &state)
 	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
 	binary.Read(resultBuf, binary.LittleEndian, &messageStringId)
 
-    }
+	}
 
-    return errorCode, state, timestamp, messageStringId, nil
+	return errorCode, state, timestamp, messageStringId, nil
 }
 
 // 
@@ -3958,27 +3958,27 @@ func (device *REDBrick) GetProgramSchedulerState(programId uint16, sessionId uin
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) ContinueProgramSchedule(programId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionContinueProgramSchedule), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionContinueProgramSchedule), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -4016,27 +4016,27 @@ func (device *REDBrick) ContinueProgramSchedule(programId uint16) (errorCode Err
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) StartProgram(programId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionStartProgram), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionStartProgram), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -4074,30 +4074,30 @@ func (device *REDBrick) StartProgram(programId uint16) (errorCode ErrorCode, err
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetLastSpawnedProgramProcess(programId uint16, sessionId uint16) (errorCode ErrorCode, processId uint16, timestamp uint64, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetLastSpawnedProgramProcess), buf.Bytes())
-    if err != nil {
-        return errorCode, processId, timestamp, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetLastSpawnedProgramProcess), buf.Bytes())
+	if err != nil {
+		return errorCode, processId, timestamp, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, processId, timestamp, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, processId, timestamp, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &processId)
 	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
 
-    }
+	}
 
-    return errorCode, processId, timestamp, nil
+	return errorCode, processId, timestamp, nil
 }
 
 // 
@@ -4135,29 +4135,29 @@ func (device *REDBrick) GetLastSpawnedProgramProcess(programId uint16, sessionId
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetCustomProgramOptionNames(programId uint16, sessionId uint16) (errorCode ErrorCode, namesListId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCustomProgramOptionNames), buf.Bytes())
-    if err != nil {
-        return errorCode, namesListId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCustomProgramOptionNames), buf.Bytes())
+	if err != nil {
+		return errorCode, namesListId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, namesListId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, namesListId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &namesListId)
 
-    }
+	}
 
-    return errorCode, namesListId, nil
+	return errorCode, namesListId, nil
 }
 
 // 
@@ -4195,29 +4195,29 @@ func (device *REDBrick) GetCustomProgramOptionNames(programId uint16, sessionId 
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) SetCustomProgramOptionValue(programId uint16, nameStringId uint16, valueStringId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, nameStringId);
 	binary.Write(&buf, binary.LittleEndian, valueStringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetCustomProgramOptionValue), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetCustomProgramOptionValue), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // 
@@ -4255,30 +4255,30 @@ func (device *REDBrick) SetCustomProgramOptionValue(programId uint16, nameString
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) GetCustomProgramOptionValue(programId uint16, nameStringId uint16, sessionId uint16) (errorCode ErrorCode, valueStringId uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, nameStringId);
 	binary.Write(&buf, binary.LittleEndian, sessionId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCustomProgramOptionValue), buf.Bytes())
-    if err != nil {
-        return errorCode, valueStringId, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCustomProgramOptionValue), buf.Bytes())
+	if err != nil {
+		return errorCode, valueStringId, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, valueStringId, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, valueStringId, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 	binary.Read(resultBuf, binary.LittleEndian, &valueStringId)
 
-    }
+	}
 
-    return errorCode, valueStringId, nil
+	return errorCode, valueStringId, nil
 }
 
 // 
@@ -4316,28 +4316,28 @@ func (device *REDBrick) GetCustomProgramOptionValue(programId uint16, nameString
 //	* ErrorCodeNotSupported
 //	* ErrorCodeTooManyOpenFiles
 func (device *REDBrick) RemoveCustomProgramOption(programId uint16, nameStringId uint16) (errorCode ErrorCode, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, programId);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, programId);
 	binary.Write(&buf, binary.LittleEndian, nameStringId);
 
-    resultBytes, err := device.device.Get(uint8(FunctionRemoveCustomProgramOption), buf.Bytes())
-    if err != nil {
-        return errorCode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionRemoveCustomProgramOption), buf.Bytes())
+	if err != nil {
+		return errorCode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
 
-    }
+	}
 
-    return errorCode, nil
+	return errorCode, nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
@@ -4349,29 +4349,29 @@ func (device *REDBrick) RemoveCustomProgramOption(programId uint16, nameStringId
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *REDBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

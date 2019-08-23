@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures acceleration in three axis.
+// Measures acceleration in three axis.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Accelerometer_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package accelerometer_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetAcceleration Function = 1
+	FunctionGetAcceleration Function = 1
 	FunctionSetAccelerationCallbackPeriod Function = 2
 	FunctionGetAccelerationCallbackPeriod Function = 3
 	FunctionSetAccelerationCallbackThreshold Function = 4
@@ -43,20 +43,20 @@ const (
 	FunctionCallbackAccelerationReached Function = 15
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type DataRate uint8
+type DataRate = uint8
 
 const (
-    DataRateOff DataRate = 0
+	DataRateOff DataRate = 0
 	DataRate3Hz DataRate = 1
 	DataRate6Hz DataRate = 2
 	DataRate12Hz DataRate = 3
@@ -68,26 +68,26 @@ const (
 	DataRate1600Hz DataRate = 9
 )
 
-type FullScale uint8
+type FullScale = uint8
 
 const (
-    FullScale2g FullScale = 0
+	FullScale2g FullScale = 0
 	FullScale4g FullScale = 1
 	FullScale6g FullScale = 2
 	FullScale8g FullScale = 3
 	FullScale16g FullScale = 4
 )
 
-type FilterBandwidth uint8
+type FilterBandwidth = uint8
 
 const (
-    FilterBandwidth800Hz FilterBandwidth = 0
+	FilterBandwidth800Hz FilterBandwidth = 0
 	FilterBandwidth400Hz FilterBandwidth = 1
 	FilterBandwidth200Hz FilterBandwidth = 2
 	FilterBandwidth50Hz FilterBandwidth = 3
 )
 
-type AccelerometerBricklet struct{
+type AccelerometerBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 250
@@ -95,12 +95,12 @@ const DeviceDisplayName = "Accelerometer Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return AccelerometerBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetAcceleration] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return AccelerometerBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetAcceleration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAccelerationCallbackPeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetAccelerationCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAccelerationCallbackThreshold] = ResponseExpectedFlagTrue;
@@ -114,7 +114,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerBricklet, e
 	dev.ResponseExpected[FunctionLEDOff] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionIsLEDOn] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return AccelerometerBricklet{dev}, nil
+	return AccelerometerBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -132,7 +132,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerBricklet, e
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *AccelerometerBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -144,7 +144,7 @@ func (device *AccelerometerBricklet) GetResponseExpected(functionID Function) (b
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *AccelerometerBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -154,7 +154,7 @@ func (device *AccelerometerBricklet) SetResponseExpectedAll(responseExpected boo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *AccelerometerBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -164,22 +164,22 @@ func (device *AccelerometerBricklet) GetAPIVersion() [3]uint8 {
 // The RegisterAccelerationCallback callback is only triggered if the acceleration has
 // changed since the last triggering.
 func (device *AccelerometerBricklet) RegisterAccelerationCallback(fn func(int16, int16, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x int16
-var y int16
-var z int16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-binary.Read(buf, binary.LittleEndian, &z)
-                fn(x, y, z)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAcceleration), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x int16
+		var y int16
+		var z int16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		binary.Read(buf, binary.LittleEndian, &z)
+		fn(x, y, z)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAcceleration), wrapper)
 }
 
-//Remove a registered Acceleration callback.
-func (device *AccelerometerBricklet) DeregisterAccelerationCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), registrationID)
+// Remove a registered Acceleration callback.
+func (device *AccelerometerBricklet) DeregisterAccelerationCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), registrationId)
 }
 
 
@@ -190,22 +190,22 @@ func (device *AccelerometerBricklet) DeregisterAccelerationCallback(registration
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *AccelerometerBricklet) RegisterAccelerationReachedCallback(fn func(int16, int16, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x int16
-var y int16
-var z int16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-binary.Read(buf, binary.LittleEndian, &z)
-                fn(x, y, z)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAccelerationReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x int16
+		var y int16
+		var z int16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		binary.Read(buf, binary.LittleEndian, &z)
+		fn(x, y, z)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAccelerationReached), wrapper)
 }
 
-//Remove a registered Acceleration Reached callback.
-func (device *AccelerometerBricklet) DeregisterAccelerationReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAccelerationReached), registrationID)
+// Remove a registered Acceleration Reached callback.
+func (device *AccelerometerBricklet) DeregisterAccelerationReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAccelerationReached), registrationId)
 }
 
 
@@ -216,28 +216,28 @@ func (device *AccelerometerBricklet) DeregisterAccelerationReachedCallback(regis
 // to use the RegisterAccelerationCallback callback and set the period with
 // SetAccelerationCallbackPeriod.
 func (device *AccelerometerBricklet) GetAcceleration() (x int16, y int16, z int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
-    if err != nil {
-        return x, y, z, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
+	if err != nil {
+		return x, y, z, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return x, y, z, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return x, y, z, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &x)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
-    }
+	}
 
-    return x, y, z, nil
+	return x, y, z, nil
 }
 
 // Sets the period in ms with which the RegisterAccelerationCallback callback is triggered
@@ -248,50 +248,50 @@ func (device *AccelerometerBricklet) GetAcceleration() (x int16, y int16, z int1
 // 
 // The default value is 0.
 func (device *AccelerometerBricklet) SetAccelerationCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetAccelerationCallbackPeriod.
 func (device *AccelerometerBricklet) GetAccelerationCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterAccelerationReachedCallback callback.
@@ -316,8 +316,8 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackPeriod() (period uin
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *AccelerometerBricklet) SetAccelerationCallbackThreshold(option ThresholdOption, minX int16, maxX int16, minY int16, maxY int16, minZ int16, maxZ int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, minX);
 	binary.Write(&buf, binary.LittleEndian, maxX);
 	binary.Write(&buf, binary.LittleEndian, minY);
@@ -325,23 +325,23 @@ func (device *AccelerometerBricklet) SetAccelerationCallbackThreshold(option Thr
 	binary.Write(&buf, binary.LittleEndian, minZ);
 	binary.Write(&buf, binary.LittleEndian, maxZ);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetAccelerationCallbackThreshold.
@@ -354,22 +354,22 @@ func (device *AccelerometerBricklet) SetAccelerationCallbackThreshold(option Thr
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option ThresholdOption, minX int16, maxX int16, minY int16, maxY int16, minZ int16, maxZ int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, minX, maxX, minY, maxY, minZ, maxZ, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, minX, maxX, minY, maxY, minZ, maxZ, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, minX, maxX, minY, maxY, minZ, maxZ, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, minX, maxX, minY, maxY, minZ, maxZ, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &minX)
 	binary.Read(resultBuf, binary.LittleEndian, &maxX)
 	binary.Read(resultBuf, binary.LittleEndian, &minY)
@@ -377,9 +377,9 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 	binary.Read(resultBuf, binary.LittleEndian, &minZ)
 	binary.Read(resultBuf, binary.LittleEndian, &maxZ)
 
-    }
+	}
 
-    return option, minX, maxX, minY, maxY, minZ, maxZ, nil
+	return option, minX, maxX, minY, maxY, minZ, maxZ, nil
 }
 
 // Sets the period in ms with which the threshold callback
@@ -394,74 +394,74 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 // 
 // The default value is 100.
 func (device *AccelerometerBricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *AccelerometerBricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Returns the temperature of the accelerometer in °C.
 func (device *AccelerometerBricklet) GetTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Configures the data rate, full scale range and filter bandwidth.
@@ -499,28 +499,28 @@ func (device *AccelerometerBricklet) GetTemperature() (temperature int16, err er
 //	* FilterBandwidth200Hz
 //	* FilterBandwidth50Hz
 func (device *AccelerometerBricklet) SetConfiguration(dataRate DataRate, fullScale FullScale, filterBandwidth FilterBandwidth) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, dataRate);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, dataRate);
 	binary.Write(&buf, binary.LittleEndian, fullScale);
 	binary.Write(&buf, binary.LittleEndian, filterBandwidth);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
@@ -547,98 +547,98 @@ func (device *AccelerometerBricklet) SetConfiguration(dataRate DataRate, fullSca
 //	* FilterBandwidth200Hz
 //	* FilterBandwidth50Hz
 func (device *AccelerometerBricklet) GetConfiguration() (dataRate DataRate, fullScale FullScale, filterBandwidth FilterBandwidth, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
-    if err != nil {
-        return dataRate, fullScale, filterBandwidth, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
+	if err != nil {
+		return dataRate, fullScale, filterBandwidth, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return dataRate, fullScale, filterBandwidth, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return dataRate, fullScale, filterBandwidth, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &dataRate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &dataRate)
 	binary.Read(resultBuf, binary.LittleEndian, &fullScale)
 	binary.Read(resultBuf, binary.LittleEndian, &filterBandwidth)
 
-    }
+	}
 
-    return dataRate, fullScale, filterBandwidth, nil
+	return dataRate, fullScale, filterBandwidth, nil
 }
 
 // Enables the LED on the Bricklet.
 func (device *AccelerometerBricklet) LEDOn() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionLEDOn), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionLEDOn), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the LED on the Bricklet.
 func (device *AccelerometerBricklet) LEDOff() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionLEDOff), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionLEDOff), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the LED is enabled, *false* otherwise.
 func (device *AccelerometerBricklet) IsLEDOn() (on bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsLEDOn), buf.Bytes())
-    if err != nil {
-        return on, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsLEDOn), buf.Bytes())
+	if err != nil {
+		return on, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return on, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return on, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &on)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &on)
 
-    }
+	}
 
-    return on, nil
+	return on, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -650,29 +650,29 @@ func (device *AccelerometerBricklet) IsLEDOn() (on bool, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *AccelerometerBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

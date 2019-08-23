@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//4 channel counter up to 4MHz.
+// 4 channel counter up to 4MHz.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialCounter_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package industrial_counter_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetCounter Function = 1
+	FunctionGetCounter Function = 1
 	FunctionGetAllCounter Function = 2
 	FunctionSetCounter Function = 3
 	FunctionSetAllCounter Function = 4
@@ -59,36 +59,36 @@ const (
 	FunctionCallbackAllSignalData Function = 20
 )
 
-type Channel uint8
+type Channel = uint8
 
 const (
-    Channel0 Channel = 0
+	Channel0 Channel = 0
 	Channel1 Channel = 1
 	Channel2 Channel = 2
 	Channel3 Channel = 3
 )
 
-type CountEdge uint8
+type CountEdge = uint8
 
 const (
-    CountEdgeRising CountEdge = 0
+	CountEdgeRising CountEdge = 0
 	CountEdgeFalling CountEdge = 1
 	CountEdgeBoth CountEdge = 2
 )
 
-type CountDirection uint8
+type CountDirection = uint8
 
 const (
-    CountDirectionUp CountDirection = 0
+	CountDirectionUp CountDirection = 0
 	CountDirectionDown CountDirection = 1
 	CountDirectionExternalUp CountDirection = 2
 	CountDirectionExternalDown CountDirection = 3
 )
 
-type DutyCyclePrescaler uint8
+type DutyCyclePrescaler = uint8
 
 const (
-    DutyCyclePrescaler1 DutyCyclePrescaler = 0
+	DutyCyclePrescaler1 DutyCyclePrescaler = 0
 	DutyCyclePrescaler2 DutyCyclePrescaler = 1
 	DutyCyclePrescaler4 DutyCyclePrescaler = 2
 	DutyCyclePrescaler8 DutyCyclePrescaler = 3
@@ -106,10 +106,10 @@ const (
 	DutyCyclePrescaler32768 DutyCyclePrescaler = 15
 )
 
-type FrequencyIntegrationTime uint8
+type FrequencyIntegrationTime = uint8
 
 const (
-    FrequencyIntegrationTime128MS FrequencyIntegrationTime = 0
+	FrequencyIntegrationTime128MS FrequencyIntegrationTime = 0
 	FrequencyIntegrationTime256MS FrequencyIntegrationTime = 1
 	FrequencyIntegrationTime512MS FrequencyIntegrationTime = 2
 	FrequencyIntegrationTime1024MS FrequencyIntegrationTime = 3
@@ -120,29 +120,29 @@ const (
 	FrequencyIntegrationTime32768MS FrequencyIntegrationTime = 8
 )
 
-type ChannelLEDConfig uint8
+type ChannelLEDConfig = uint8
 
 const (
-    ChannelLEDConfigOff ChannelLEDConfig = 0
+	ChannelLEDConfigOff ChannelLEDConfig = 0
 	ChannelLEDConfigOn ChannelLEDConfig = 1
 	ChannelLEDConfigShowHeartbeat ChannelLEDConfig = 2
 	ChannelLEDConfigShowChannelStatus ChannelLEDConfig = 3
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -150,16 +150,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type IndustrialCounterBricklet struct{
+type IndustrialCounterBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 293
@@ -167,12 +167,12 @@ const DeviceDisplayName = "Industrial Counter Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialCounterBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return IndustrialCounterBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetCounter] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return IndustrialCounterBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetCounter] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetAllCounter] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetCounter] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionSetAllCounter] = ResponseExpectedFlagFalse;
@@ -202,7 +202,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialCounterBrickle
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return IndustrialCounterBricklet{dev}, nil
+	return IndustrialCounterBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -220,7 +220,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialCounterBrickle
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IndustrialCounterBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -232,7 +232,7 @@ func (device *IndustrialCounterBricklet) GetResponseExpected(functionID Function
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *IndustrialCounterBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -242,7 +242,7 @@ func (device *IndustrialCounterBricklet) SetResponseExpectedAll(responseExpected
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *IndustrialCounterBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
@@ -250,18 +250,18 @@ func (device *IndustrialCounterBricklet) GetAPIVersion() [3]uint8 {
 // 
 // The parameters are the same as GetAllCounter.
 func (device *IndustrialCounterBricklet) RegisterAllCounterCallback(fn func([4]int64)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var counter [4]int64
-                binary.Read(buf, binary.LittleEndian, &counter)
-                fn(counter)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAllCounter), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var counter [4]int64
+		binary.Read(buf, binary.LittleEndian, &counter)
+		fn(counter)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAllCounter), wrapper)
 }
 
-//Remove a registered All Counter callback.
-func (device *IndustrialCounterBricklet) DeregisterAllCounterCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllCounter), registrationID)
+// Remove a registered All Counter callback.
+func (device *IndustrialCounterBricklet) DeregisterAllCounterCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAllCounter), registrationId)
 }
 
 
@@ -270,24 +270,24 @@ func (device *IndustrialCounterBricklet) DeregisterAllCounterCallback(registrati
 // 
 // The parameters are the same as GetAllSignalData.
 func (device *IndustrialCounterBricklet) RegisterAllSignalDataCallback(fn func([4]uint16, [4]uint64, [4]uint32, [4]bool)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var dutyCycle [4]uint16
-var period [4]uint64
-var frequency [4]uint32
-var value [4]bool
-                binary.Read(buf, binary.LittleEndian, &dutyCycle)
-binary.Read(buf, binary.LittleEndian, &period)
-binary.Read(buf, binary.LittleEndian, &frequency)
-binary.Read(buf, binary.LittleEndian, &value)
-                fn(dutyCycle, period, frequency, value)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAllSignalData), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var dutyCycle [4]uint16
+		var period [4]uint64
+		var frequency [4]uint32
+		var value [4]bool
+		binary.Read(buf, binary.LittleEndian, &dutyCycle)
+		binary.Read(buf, binary.LittleEndian, &period)
+		binary.Read(buf, binary.LittleEndian, &frequency)
+		binary.Read(buf, binary.LittleEndian, &value)
+		fn(dutyCycle, period, frequency, value)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAllSignalData), wrapper)
 }
 
-//Remove a registered All Signal Data callback.
-func (device *IndustrialCounterBricklet) DeregisterAllSignalDataCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllSignalData), registrationID)
+// Remove a registered All Signal Data callback.
+func (device *IndustrialCounterBricklet) DeregisterAllSignalDataCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAllSignalData), registrationId)
 }
 
 
@@ -300,51 +300,51 @@ func (device *IndustrialCounterBricklet) DeregisterAllSignalDataCallback(registr
 //	* Channel2
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetCounter(channel Channel) (counter int64, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCounter), buf.Bytes())
-    if err != nil {
-        return counter, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCounter), buf.Bytes())
+	if err != nil {
+		return counter, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return counter, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return counter, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &counter)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &counter)
 
-    }
+	}
 
-    return counter, nil
+	return counter, nil
 }
 
 // Returns the current counter values for all four channels.
 func (device *IndustrialCounterBricklet) GetAllCounter() (counter [4]int64, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllCounter), buf.Bytes())
-    if err != nil {
-        return counter, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounter), buf.Bytes())
+	if err != nil {
+		return counter, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return counter, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return counter, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &counter)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &counter)
 
-    }
+	}
 
-    return counter, nil
+	return counter, nil
 }
 
 // Sets the counter value for the given channel.
@@ -358,53 +358,53 @@ func (device *IndustrialCounterBricklet) GetAllCounter() (counter [4]int64, err 
 //	* Channel2
 //	* Channel3
 func (device *IndustrialCounterBricklet) SetCounter(channel Channel, counter int64) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, counter);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCounter), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCounter), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets the counter values for all four channels.
 // 
 // The default value for the counters on startup is 0.
 func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, counter);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, counter);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAllCounter), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounter), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the signal data (duty cycle, period, frequency and value) for the
@@ -424,30 +424,30 @@ func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err er
 //	* Channel2
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetSignalData(channel Channel) (dutyCycle uint16, period uint64, frequency uint32, value bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSignalData), buf.Bytes())
-    if err != nil {
-        return dutyCycle, period, frequency, value, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSignalData), buf.Bytes())
+	if err != nil {
+		return dutyCycle, period, frequency, value, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return dutyCycle, period, frequency, value, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return dutyCycle, period, frequency, value, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &dutyCycle)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &dutyCycle)
 	binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &frequency)
 	binary.Read(resultBuf, binary.LittleEndian, &value)
 
-    }
+	}
 
-    return dutyCycle, period, frequency, value, nil
+	return dutyCycle, period, frequency, value, nil
 }
 
 // Returns the signal data (duty cycle, period, frequency and value) for all four
@@ -460,29 +460,29 @@ func (device *IndustrialCounterBricklet) GetSignalData(channel Channel) (dutyCyc
 // * Frequency: mHz (1/1000 Hz)
 // * Value: true = high, false = low
 func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16, period [4]uint64, frequency [4]uint32, value [4]bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalData), buf.Bytes())
-    if err != nil {
-        return dutyCycle, period, frequency, value, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalData), buf.Bytes())
+	if err != nil {
+		return dutyCycle, period, frequency, value, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return dutyCycle, period, frequency, value, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return dutyCycle, period, frequency, value, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &dutyCycle)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &dutyCycle)
 	binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &frequency)
 	binary.Read(resultBuf, binary.LittleEndian, &value)
 
-    }
+	}
 
-    return dutyCycle, period, frequency, value, nil
+	return dutyCycle, period, frequency, value, nil
 }
 
 // Activates/deactivates the counter of the given channel.
@@ -498,27 +498,27 @@ func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16
 //	* Channel2
 //	* Channel3
 func (device *IndustrialCounterBricklet) SetCounterActive(channel Channel, active bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, active);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCounterActive), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCounterActive), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Activates/deactivates the counter of all four channels.
@@ -527,26 +527,26 @@ func (device *IndustrialCounterBricklet) SetCounterActive(channel Channel, activ
 // 
 // By default all channels are activated.
 func (device *IndustrialCounterBricklet) SetAllCounterActive(active [4]bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, active);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, active);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterActive), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterActive), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the activation state of the given channel.
@@ -560,53 +560,53 @@ func (device *IndustrialCounterBricklet) SetAllCounterActive(active [4]bool) (er
 //	* Channel2
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetCounterActive(channel Channel) (active bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCounterActive), buf.Bytes())
-    if err != nil {
-        return active, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCounterActive), buf.Bytes())
+	if err != nil {
+		return active, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return active, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return active, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &active)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &active)
 
-    }
+	}
 
-    return active, nil
+	return active, nil
 }
 
 // Returns the activation state of all four channels.
 // 
 // true = activated, false = deactivated.
 func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterActive), buf.Bytes())
-    if err != nil {
-        return active, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterActive), buf.Bytes())
+	if err != nil {
+		return active, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return active, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return active, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &active)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &active)
 
-    }
+	}
 
-    return active, nil
+	return active, nil
 }
 
 // Sets the counter configuration for the given channel.
@@ -663,30 +663,30 @@ func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, 
 //	* FrequencyIntegrationTime16384MS
 //	* FrequencyIntegrationTime32768MS
 func (device *IndustrialCounterBricklet) SetCounterConfiguration(channel Channel, countEdge CountEdge, countDirection CountDirection, dutyCyclePrescaler DutyCyclePrescaler, frequencyIntegrationTime FrequencyIntegrationTime) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, countEdge);
 	binary.Write(&buf, binary.LittleEndian, countDirection);
 	binary.Write(&buf, binary.LittleEndian, dutyCyclePrescaler);
 	binary.Write(&buf, binary.LittleEndian, frequencyIntegrationTime);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCounterConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCounterConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the counter configuration as set by SetCounterConfiguration.
@@ -730,30 +730,30 @@ func (device *IndustrialCounterBricklet) SetCounterConfiguration(channel Channel
 //	* FrequencyIntegrationTime16384MS
 //	* FrequencyIntegrationTime32768MS
 func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel) (countEdge CountEdge, countDirection CountDirection, dutyCyclePrescaler DutyCyclePrescaler, frequencyIntegrationTime FrequencyIntegrationTime, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCounterConfiguration), buf.Bytes())
-    if err != nil {
-        return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCounterConfiguration), buf.Bytes())
+	if err != nil {
+		return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &countEdge)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &countEdge)
 	binary.Read(resultBuf, binary.LittleEndian, &countDirection)
 	binary.Read(resultBuf, binary.LittleEndian, &dutyCyclePrescaler)
 	binary.Read(resultBuf, binary.LittleEndian, &frequencyIntegrationTime)
 
-    }
+	}
 
-    return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, nil
+	return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, nil
 }
 
 // The period in ms is the period with which the RegisterAllCounterCallback
@@ -768,53 +768,53 @@ func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel
 // 
 // The default value is (0, false).
 func (device *IndustrialCounterBricklet) SetAllCounterCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by
 // SetAllCounterCallbackConfiguration.
 func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, valueHasToChange, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, valueHasToChange, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
-    }
+	}
 
-    return period, valueHasToChange, nil
+	return period, valueHasToChange, nil
 }
 
 // The period in ms is the period with which the RegisterAllSignalDataCallback
@@ -829,53 +829,53 @@ func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (p
 // 
 // The default value is (0, false).
 func (device *IndustrialCounterBricklet) SetAllSignalDataCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAllSignalDataCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllSignalDataCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by
 // SetAllSignalDataCallbackConfiguration.
 func (device *IndustrialCounterBricklet) GetAllSignalDataCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalDataCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, valueHasToChange, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalDataCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, valueHasToChange, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 
-    }
+	}
 
-    return period, valueHasToChange, nil
+	return period, valueHasToChange, nil
 }
 
 // Each channel has a corresponding LED. You can turn the LED off, on or show a
@@ -895,27 +895,27 @@ func (device *IndustrialCounterBricklet) GetAllSignalDataCallbackConfiguration()
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialCounterBricklet) SetChannelLEDConfig(channel Channel, config ChannelLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetChannelLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetChannelLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the channel LED configuration as set by SetChannelLEDConfig
@@ -931,27 +931,27 @@ func (device *IndustrialCounterBricklet) SetChannelLEDConfig(channel Channel, co
 //	* ChannelLEDConfigShowHeartbeat
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialCounterBricklet) GetChannelLEDConfig(channel Channel) (config ChannelLEDConfig, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, channel);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, channel);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetChannelLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetChannelLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -966,29 +966,29 @@ func (device *IndustrialCounterBricklet) GetChannelLEDConfig(channel Channel) (c
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IndustrialCounterBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -1015,27 +1015,27 @@ func (device *IndustrialCounterBricklet) GetSPITFPErrorCount() (errorCountAckChe
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *IndustrialCounterBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -1048,26 +1048,26 @@ func (device *IndustrialCounterBricklet) SetBootloaderMode(mode BootloaderMode) 
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IndustrialCounterBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -1077,26 +1077,26 @@ func (device *IndustrialCounterBricklet) GetBootloaderMode() (mode BootloaderMod
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialCounterBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -1108,27 +1108,27 @@ func (device *IndustrialCounterBricklet) SetWriteFirmwarePointer(pointer uint32)
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialCounterBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -1146,26 +1146,26 @@ func (device *IndustrialCounterBricklet) WriteFirmware(data [64]uint8) (status u
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialCounterBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -1177,26 +1177,26 @@ func (device *IndustrialCounterBricklet) SetStatusLEDConfig(config StatusLEDConf
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialCounterBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -1206,26 +1206,26 @@ func (device *IndustrialCounterBricklet) GetStatusLEDConfig() (config StatusLEDC
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IndustrialCounterBricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -1235,25 +1235,25 @@ func (device *IndustrialCounterBricklet) GetChipTemperature() (temperature int16
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IndustrialCounterBricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -1262,51 +1262,51 @@ func (device *IndustrialCounterBricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IndustrialCounterBricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *IndustrialCounterBricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1318,29 +1318,29 @@ func (device *IndustrialCounterBricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialCounterBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

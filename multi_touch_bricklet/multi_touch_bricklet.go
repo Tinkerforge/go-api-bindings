@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Capacitive touch sensor for 12 electrodes.
+// Capacitive touch sensor for 12 electrodes.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/MultiTouch_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package multi_touch_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetTouchState Function = 1
+	FunctionGetTouchState Function = 1
 	FunctionRecalibrate Function = 2
 	FunctionSetElectrodeConfig Function = 3
 	FunctionGetElectrodeConfig Function = 4
@@ -35,7 +35,7 @@ const (
 	FunctionCallbackTouchState Function = 5
 )
 
-type MultiTouchBricklet struct{
+type MultiTouchBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 234
@@ -43,19 +43,19 @@ const DeviceDisplayName = "Multi Touch Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (MultiTouchBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return MultiTouchBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetTouchState] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return MultiTouchBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetTouchState] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionRecalibrate] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionSetElectrodeConfig] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetElectrodeConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetElectrodeSensitivity] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetElectrodeSensitivity] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return MultiTouchBricklet{dev}, nil
+	return MultiTouchBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -73,7 +73,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MultiTouchBricklet, erro
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MultiTouchBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -85,7 +85,7 @@ func (device *MultiTouchBricklet) GetResponseExpected(functionID Function) (bool
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *MultiTouchBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -95,7 +95,7 @@ func (device *MultiTouchBricklet) SetResponseExpectedAll(responseExpected bool) 
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *MultiTouchBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // Returns the current touch state, see GetTouchState for
@@ -103,18 +103,18 @@ func (device *MultiTouchBricklet) GetAPIVersion() [3]uint8 {
 // 
 // This callback is triggered every time the touch state changes.
 func (device *MultiTouchBricklet) RegisterTouchStateCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var state uint16
-                binary.Read(buf, binary.LittleEndian, &state)
-                fn(state)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackTouchState), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var state uint16
+		binary.Read(buf, binary.LittleEndian, &state)
+		fn(state)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackTouchState), wrapper)
 }
 
-//Remove a registered Touch State callback.
-func (device *MultiTouchBricklet) DeregisterTouchStateCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackTouchState), registrationID)
+// Remove a registered Touch State callback.
+func (device *MultiTouchBricklet) DeregisterTouchStateCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackTouchState), registrationId)
 }
 
 
@@ -137,50 +137,50 @@ func (device *MultiTouchBricklet) DeregisterTouchStateCallback(registrationID ui
 // or similar on top of a electrode to build a touch panel with
 // a professional look.
 func (device *MultiTouchBricklet) GetTouchState() (state uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTouchState), buf.Bytes())
-    if err != nil {
-        return state, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTouchState), buf.Bytes())
+	if err != nil {
+		return state, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return state, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return state, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &state)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &state)
 
-    }
+	}
 
-    return state, nil
+	return state, nil
 }
 
 // Recalibrates the electrodes. Call this function whenever you changed
 // or moved you electrodes.
 func (device *MultiTouchBricklet) Recalibrate() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionRecalibrate), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionRecalibrate), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Enables/disables electrodes with a bitfield (see GetTouchState).
@@ -198,50 +198,50 @@ func (device *MultiTouchBricklet) Recalibrate() (err error) {
 // 
 // Default: 8191 = 0x1FFF = 0b1111111111111 (all electrodes enabled)
 func (device *MultiTouchBricklet) SetElectrodeConfig(enabledElectrodes uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, enabledElectrodes);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enabledElectrodes);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetElectrodeConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetElectrodeConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the electrode configuration, as set by SetElectrodeConfig.
 func (device *MultiTouchBricklet) GetElectrodeConfig() (enabledElectrodes uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetElectrodeConfig), buf.Bytes())
-    if err != nil {
-        return enabledElectrodes, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetElectrodeConfig), buf.Bytes())
+	if err != nil {
+		return enabledElectrodes, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabledElectrodes, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabledElectrodes, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabledElectrodes)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabledElectrodes)
 
-    }
+	}
 
-    return enabledElectrodes, nil
+	return enabledElectrodes, nil
 }
 
 // Sets the sensitivity of the electrodes. An electrode with a high sensitivity
@@ -258,50 +258,50 @@ func (device *MultiTouchBricklet) GetElectrodeConfig() (enabledElectrodes uint16
 // 
 // The default sensitivity value is 181.
 func (device *MultiTouchBricklet) SetElectrodeSensitivity(sensitivity uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensitivity);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensitivity);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetElectrodeSensitivity), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetElectrodeSensitivity), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current sensitivity, as set by SetElectrodeSensitivity.
 func (device *MultiTouchBricklet) GetElectrodeSensitivity() (sensitivity uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetElectrodeSensitivity), buf.Bytes())
-    if err != nil {
-        return sensitivity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetElectrodeSensitivity), buf.Bytes())
+	if err != nil {
+		return sensitivity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return sensitivity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return sensitivity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &sensitivity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &sensitivity)
 
-    }
+	}
 
-    return sensitivity, nil
+	return sensitivity, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -313,29 +313,29 @@ func (device *MultiTouchBricklet) GetElectrodeSensitivity() (sensitivity uint8, 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *MultiTouchBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

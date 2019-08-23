@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Silently drives one bipolar stepper motor with up to 46V and 1.6A per phase.
+// Silently drives one bipolar stepper motor with up to 46V and 1.6A per phase.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricks/SilentStepper_Brick_Go.html.
@@ -18,14 +18,14 @@ package silent_stepper_brick
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionSetMaxVelocity Function = 1
+	FunctionSetMaxVelocity Function = 1
 	FunctionGetMaxVelocity Function = 2
 	FunctionGetCurrentVelocity Function = 3
 	FunctionSetSpeedRamping Function = 4
@@ -87,10 +87,10 @@ const (
 	FunctionCallbackNewState Function = 48
 )
 
-type StepResolution uint8
+type StepResolution = uint8
 
 const (
-    StepResolution1 StepResolution = 8
+	StepResolution1 StepResolution = 8
 	StepResolution2 StepResolution = 7
 	StepResolution4 StepResolution = 6
 	StepResolution8 StepResolution = 5
@@ -101,84 +101,84 @@ const (
 	StepResolution256 StepResolution = 0
 )
 
-type ChopperMode uint8
+type ChopperMode = uint8
 
 const (
-    ChopperModeSpreadCycle ChopperMode = 0
+	ChopperModeSpreadCycle ChopperMode = 0
 	ChopperModeFastDecay ChopperMode = 1
 )
 
-type FreewheelMode uint8
+type FreewheelMode = uint8
 
 const (
-    FreewheelModeNormal FreewheelMode = 0
+	FreewheelModeNormal FreewheelMode = 0
 	FreewheelModeFreewheeling FreewheelMode = 1
 	FreewheelModeCoilShortLS FreewheelMode = 2
 	FreewheelModeCoilShortHS FreewheelMode = 3
 )
 
-type CurrentUpStepIncrement uint8
+type CurrentUpStepIncrement = uint8
 
 const (
-    CurrentUpStepIncrement1 CurrentUpStepIncrement = 0
+	CurrentUpStepIncrement1 CurrentUpStepIncrement = 0
 	CurrentUpStepIncrement2 CurrentUpStepIncrement = 1
 	CurrentUpStepIncrement4 CurrentUpStepIncrement = 2
 	CurrentUpStepIncrement8 CurrentUpStepIncrement = 3
 )
 
-type CurrentDownStepDecrement uint8
+type CurrentDownStepDecrement = uint8
 
 const (
-    CurrentDownStepDecrement1 CurrentDownStepDecrement = 0
+	CurrentDownStepDecrement1 CurrentDownStepDecrement = 0
 	CurrentDownStepDecrement2 CurrentDownStepDecrement = 1
 	CurrentDownStepDecrement8 CurrentDownStepDecrement = 2
 	CurrentDownStepDecrement32 CurrentDownStepDecrement = 3
 )
 
-type MinimumCurrent uint8
+type MinimumCurrent = uint8
 
 const (
-    MinimumCurrentHalf MinimumCurrent = 0
+	MinimumCurrentHalf MinimumCurrent = 0
 	MinimumCurrentQuarter MinimumCurrent = 1
 )
 
-type StallguardMode uint8
+type StallguardMode = uint8
 
 const (
-    StallguardModeStandard StallguardMode = 0
+	StallguardModeStandard StallguardMode = 0
 	StallguardModeFiltered StallguardMode = 1
 )
 
-type OpenLoad uint8
+type OpenLoad = uint8
 
 const (
-    OpenLoadNone OpenLoad = 0
+	OpenLoadNone OpenLoad = 0
 	OpenLoadPhaseA OpenLoad = 1
 	OpenLoadPhaseB OpenLoad = 2
 	OpenLoadPhaseAB OpenLoad = 3
 )
 
-type ShortToGround uint8
+type ShortToGround = uint8
 
 const (
-    ShortToGroundNone ShortToGround = 0
+	ShortToGroundNone ShortToGround = 0
 	ShortToGroundPhaseA ShortToGround = 1
 	ShortToGroundPhaseB ShortToGround = 2
 	ShortToGroundPhaseAB ShortToGround = 3
 )
 
-type OverTemperature uint8
+type OverTemperature = uint8
 
 const (
-    OverTemperatureNone OverTemperature = 0
+	OverTemperatureNone OverTemperature = 0
 	OverTemperatureWarning OverTemperature = 1
 	OverTemperatureLimit OverTemperature = 2
 )
 
-type State uint8
+type State = uint8
 
 const (
-    StateStop State = 1
+	StateStop State = 1
 	StateAcceleration State = 2
 	StateRun State = 3
 	StateDeacceleration State = 4
@@ -186,10 +186,10 @@ const (
 	StateDirectionChangeToBackward State = 6
 )
 
-type CommunicationMethod uint8
+type CommunicationMethod = uint8
 
 const (
-    CommunicationMethodNone CommunicationMethod = 0
+	CommunicationMethodNone CommunicationMethod = 0
 	CommunicationMethodUSB CommunicationMethod = 1
 	CommunicationMethodSPIStack CommunicationMethod = 2
 	CommunicationMethodChibi CommunicationMethod = 3
@@ -199,7 +199,7 @@ const (
 	CommunicationMethodWIFIV2 CommunicationMethod = 7
 )
 
-type SilentStepperBrick struct{
+type SilentStepperBrick struct {
 	device Device
 }
 const DeviceIdentifier = 19
@@ -207,12 +207,12 @@ const DeviceDisplayName = "Silent Stepper Brick"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (SilentStepperBrick, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return SilentStepperBrick{}, err
-    }
-    dev.ResponseExpected[FunctionSetMaxVelocity] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return SilentStepperBrick{}, err
+	}
+	dev.ResponseExpected[FunctionSetMaxVelocity] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetMaxVelocity] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetCurrentVelocity] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetSpeedRamping] = ResponseExpectedFlagFalse;
@@ -268,7 +268,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SilentStepperBrick, erro
 	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return SilentStepperBrick{dev}, nil
+	return SilentStepperBrick{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -286,7 +286,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SilentStepperBrick, erro
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *SilentStepperBrick) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -298,7 +298,7 @@ func (device *SilentStepperBrick) GetResponseExpected(functionID Function) (bool
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *SilentStepperBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -308,25 +308,25 @@ func (device *SilentStepperBrick) SetResponseExpectedAll(responseExpected bool) 
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *SilentStepperBrick) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered when the input voltage drops below the value set by
 // SetMinimumVoltage. The parameter is the current voltage given
 // in mV.
 func (device *SilentStepperBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var voltage uint16
-                binary.Read(buf, binary.LittleEndian, &voltage)
-                fn(voltage)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackUnderVoltage), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltage uint16
+		binary.Read(buf, binary.LittleEndian, &voltage)
+		fn(voltage)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackUnderVoltage), wrapper)
 }
 
-//Remove a registered Under Voltage callback.
-func (device *SilentStepperBrick) DeregisterUnderVoltageCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationID)
+// Remove a registered Under Voltage callback.
+func (device *SilentStepperBrick) DeregisterUnderVoltageCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationId)
 }
 
 
@@ -339,18 +339,18 @@ func (device *SilentStepperBrick) DeregisterUnderVoltageCallback(registrationID 
 //  maximum acceleration of the motor. Otherwise the motor will lag behind the
 //  control value and the callback will be triggered too early.
 func (device *SilentStepperBrick) RegisterPositionReachedCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var position int32
-                binary.Read(buf, binary.LittleEndian, &position)
-                fn(position)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var position int32
+		binary.Read(buf, binary.LittleEndian, &position)
+		fn(position)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
 }
 
-//Remove a registered Position Reached callback.
-func (device *SilentStepperBrick) DeregisterPositionReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationID)
+// Remove a registered Position Reached callback.
+func (device *SilentStepperBrick) DeregisterPositionReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationId)
 }
 
 
@@ -359,48 +359,48 @@ func (device *SilentStepperBrick) DeregisterPositionReachedCallback(registration
 // the current position, the remaining steps, the stack voltage, the external
 // voltage and the current consumption of the stepper motor.
 func (device *SilentStepperBrick) RegisterAllDataCallback(fn func(uint16, int32, int32, uint16, uint16, uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var currentVelocity uint16
-var currentPosition int32
-var remainingSteps int32
-var stackVoltage uint16
-var externalVoltage uint16
-var currentConsumption uint16
-                binary.Read(buf, binary.LittleEndian, &currentVelocity)
-binary.Read(buf, binary.LittleEndian, &currentPosition)
-binary.Read(buf, binary.LittleEndian, &remainingSteps)
-binary.Read(buf, binary.LittleEndian, &stackVoltage)
-binary.Read(buf, binary.LittleEndian, &externalVoltage)
-binary.Read(buf, binary.LittleEndian, &currentConsumption)
-                fn(currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAllData), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var currentVelocity uint16
+		var currentPosition int32
+		var remainingSteps int32
+		var stackVoltage uint16
+		var externalVoltage uint16
+		var currentConsumption uint16
+		binary.Read(buf, binary.LittleEndian, &currentVelocity)
+		binary.Read(buf, binary.LittleEndian, &currentPosition)
+		binary.Read(buf, binary.LittleEndian, &remainingSteps)
+		binary.Read(buf, binary.LittleEndian, &stackVoltage)
+		binary.Read(buf, binary.LittleEndian, &externalVoltage)
+		binary.Read(buf, binary.LittleEndian, &currentConsumption)
+		fn(currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAllData), wrapper)
 }
 
-//Remove a registered All Data callback.
-func (device *SilentStepperBrick) DeregisterAllDataCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAllData), registrationID)
+// Remove a registered All Data callback.
+func (device *SilentStepperBrick) DeregisterAllDataCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAllData), registrationId)
 }
 
 
 // This callback is triggered whenever the Silent Stepper Brick enters a new state.
 // It returns the new state as well as the previous state.
 func (device *SilentStepperBrick) RegisterNewStateCallback(fn func(State, State)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var stateNew State
-var statePrevious State
-                binary.Read(buf, binary.LittleEndian, &stateNew)
-binary.Read(buf, binary.LittleEndian, &statePrevious)
-                fn(stateNew, statePrevious)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackNewState), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var stateNew State
+		var statePrevious State
+		binary.Read(buf, binary.LittleEndian, &stateNew)
+		binary.Read(buf, binary.LittleEndian, &statePrevious)
+		fn(stateNew, statePrevious)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackNewState), wrapper)
 }
 
-//Remove a registered New State callback.
-func (device *SilentStepperBrick) DeregisterNewStateCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackNewState), registrationID)
+// Remove a registered New State callback.
+func (device *SilentStepperBrick) DeregisterNewStateCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackNewState), registrationId)
 }
 
 
@@ -410,74 +410,74 @@ func (device *SilentStepperBrick) DeregisterNewStateCallback(registrationID uint
 // either SetTargetPosition, SetSteps, DriveForward or
 // DriveBackward.
 func (device *SilentStepperBrick) SetMaxVelocity(velocity uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, velocity);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, velocity);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMaxVelocity), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMaxVelocity), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the velocity as set by SetMaxVelocity.
 func (device *SilentStepperBrick) GetMaxVelocity() (velocity uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMaxVelocity), buf.Bytes())
-    if err != nil {
-        return velocity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMaxVelocity), buf.Bytes())
+	if err != nil {
+		return velocity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return velocity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return velocity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &velocity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
-    }
+	}
 
-    return velocity, nil
+	return velocity, nil
 }
 
 // Returns the *current* velocity of the stepper motor in steps per second.
 func (device *SilentStepperBrick) GetCurrentVelocity() (velocity uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
-    if err != nil {
-        return velocity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
+	if err != nil {
+		return velocity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return velocity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return velocity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &velocity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
-    }
+	}
 
-    return velocity, nil
+	return velocity, nil
 }
 
 // Sets the acceleration and deacceleration of the stepper motor. The values
@@ -493,53 +493,53 @@ func (device *SilentStepperBrick) GetCurrentVelocity() (velocity uint16, err err
 // 
 // The default value is 1000 for both
 func (device *SilentStepperBrick) SetSpeedRamping(acceleration uint16, deacceleration uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, acceleration);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, acceleration);
 	binary.Write(&buf, binary.LittleEndian, deacceleration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSpeedRamping), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSpeedRamping), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the acceleration and deacceleration as set by
 // SetSpeedRamping.
 func (device *SilentStepperBrick) GetSpeedRamping() (acceleration uint16, deacceleration uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSpeedRamping), buf.Bytes())
-    if err != nil {
-        return acceleration, deacceleration, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSpeedRamping), buf.Bytes())
+	if err != nil {
+		return acceleration, deacceleration, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return acceleration, deacceleration, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return acceleration, deacceleration, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &acceleration)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &acceleration)
 	binary.Read(resultBuf, binary.LittleEndian, &deacceleration)
 
-    }
+	}
 
-    return acceleration, deacceleration, nil
+	return acceleration, deacceleration, nil
 }
 
 // Executes an active full brake.
@@ -551,51 +551,51 @@ func (device *SilentStepperBrick) GetSpeedRamping() (acceleration uint16, deacce
 // 
 // Call Stop if you just want to stop the motor.
 func (device *SilentStepperBrick) FullBrake() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionFullBrake), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionFullBrake), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets the current steps of the internal step counter. This can be used to
 // set the current position to 0 when some kind of starting position
 // is reached (e.g. when a CNC machine reaches a corner).
 func (device *SilentStepperBrick) SetCurrentPosition(position int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, position);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, position);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCurrentPosition), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentPosition), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current position of the stepper motor in steps. On startup
@@ -604,26 +604,26 @@ func (device *SilentStepperBrick) SetCurrentPosition(position int32) (err error)
 // DriveBackward). It also is possible to reset the steps to 0 or
 // set them to any other desired value with SetCurrentPosition.
 func (device *SilentStepperBrick) GetCurrentPosition() (position int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentPosition), buf.Bytes())
-    if err != nil {
-        return position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentPosition), buf.Bytes())
+	if err != nil {
+		return position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &position)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return position, nil
+	return position, nil
 }
 
 // Sets the target position of the stepper motor in steps. For example,
@@ -636,50 +636,50 @@ func (device *SilentStepperBrick) GetCurrentPosition() (position int32, err erro
 // a call of SetSteps with the parameter
 // (*x* - GetCurrentPosition).
 func (device *SilentStepperBrick) SetTargetPosition(position int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, position);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, position);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetTargetPosition), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetTargetPosition), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the last target position as set by SetTargetPosition.
 func (device *SilentStepperBrick) GetTargetPosition() (position int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTargetPosition), buf.Bytes())
-    if err != nil {
-        return position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTargetPosition), buf.Bytes())
+	if err != nil {
+		return position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &position)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return position, nil
+	return position, nil
 }
 
 // Sets the number of steps the stepper motor should run. Positive values
@@ -687,50 +687,50 @@ func (device *SilentStepperBrick) GetTargetPosition() (position int32, err error
 // The velocity, acceleration and deacceleration as set by
 // SetMaxVelocity and SetSpeedRamping will be used.
 func (device *SilentStepperBrick) SetSteps(steps int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, steps);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, steps);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSteps), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSteps), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the last steps as set by SetSteps.
 func (device *SilentStepperBrick) GetSteps() (steps int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSteps), buf.Bytes())
-    if err != nil {
-        return steps, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSteps), buf.Bytes())
+	if err != nil {
+		return steps, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return steps, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return steps, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &steps)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &steps)
 
-    }
+	}
 
-    return steps, nil
+	return steps, nil
 }
 
 // Returns the remaining steps of the last call of SetSteps.
@@ -738,26 +738,26 @@ func (device *SilentStepperBrick) GetSteps() (steps int32, err error) {
 // GetRemainingSteps is called after the motor has run for 500 steps,
 // it will return 1500.
 func (device *SilentStepperBrick) GetRemainingSteps() (steps int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetRemainingSteps), buf.Bytes())
-    if err != nil {
-        return steps, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetRemainingSteps), buf.Bytes())
+	if err != nil {
+		return steps, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return steps, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return steps, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &steps)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &steps)
 
-    }
+	}
 
-    return steps, nil
+	return steps, nil
 }
 
 // Sets the step resolution from full-step up to 1/256-step.
@@ -786,27 +786,27 @@ func (device *SilentStepperBrick) GetRemainingSteps() (steps int32, err error) {
 //	* StepResolution128
 //	* StepResolution256
 func (device *SilentStepperBrick) SetStepConfiguration(stepResolution StepResolution, interpolation bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, stepResolution);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, stepResolution);
 	binary.Write(&buf, binary.LittleEndian, interpolation);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStepConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStepConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the step mode as set by SetStepConfiguration.
@@ -823,127 +823,127 @@ func (device *SilentStepperBrick) SetStepConfiguration(stepResolution StepResolu
 //	* StepResolution128
 //	* StepResolution256
 func (device *SilentStepperBrick) GetStepConfiguration() (stepResolution StepResolution, interpolation bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStepConfiguration), buf.Bytes())
-    if err != nil {
-        return stepResolution, interpolation, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStepConfiguration), buf.Bytes())
+	if err != nil {
+		return stepResolution, interpolation, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return stepResolution, interpolation, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return stepResolution, interpolation, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &stepResolution)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &stepResolution)
 	binary.Read(resultBuf, binary.LittleEndian, &interpolation)
 
-    }
+	}
 
-    return stepResolution, interpolation, nil
+	return stepResolution, interpolation, nil
 }
 
 // Drives the stepper motor forward until DriveBackward or
 // Stop is called. The velocity, acceleration and deacceleration as
 // set by SetMaxVelocity and SetSpeedRamping will be used.
 func (device *SilentStepperBrick) DriveForward() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDriveForward), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDriveForward), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Drives the stepper motor backward until DriveForward or
 // Stop is triggered. The velocity, acceleration and deacceleration as
 // set by SetMaxVelocity and SetSpeedRamping will be used.
 func (device *SilentStepperBrick) DriveBackward() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDriveBackward), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDriveBackward), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Stops the stepper motor with the deacceleration as set by
 // SetSpeedRamping.
 func (device *SilentStepperBrick) Stop() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionStop), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionStop), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the stack input voltage in mV. The stack input voltage is the
 // voltage that is supplied via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
 func (device *SilentStepperBrick) GetStackInputVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Returns the external input voltage in mV. The external input voltage is
@@ -959,26 +959,26 @@ func (device *SilentStepperBrick) GetStackInputVoltage() (voltage uint16, err er
 //  the external connection, it will immediately be driven by the high
 //  stack voltage
 func (device *SilentStepperBrick) GetExternalInputVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Sets the current in mA with which the motor will be driven.
@@ -989,122 +989,122 @@ func (device *SilentStepperBrick) GetExternalInputVoltage() (voltage uint16, err
 //  Do not set this value above the specifications of your stepper motor.
 //  Otherwise it may damage your motor.
 func (device *SilentStepperBrick) SetMotorCurrent(current uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, current);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, current);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMotorCurrent), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMotorCurrent), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current as set by SetMotorCurrent.
 func (device *SilentStepperBrick) GetMotorCurrent() (current uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMotorCurrent), buf.Bytes())
-    if err != nil {
-        return current, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMotorCurrent), buf.Bytes())
+	if err != nil {
+		return current, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return current, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &current)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
 
-    }
+	}
 
-    return current, nil
+	return current, nil
 }
 
 // Enables the driver chip. The driver parameters can be configured (maximum velocity,
 // acceleration, etc) before it is enabled.
 func (device *SilentStepperBrick) Enable() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the driver chip. The configurations are kept (maximum velocity,
 // acceleration, etc) but the motor is not driven until it is enabled again.
 func (device *SilentStepperBrick) Disable() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the driver chip is enabled, *false* otherwise.
 func (device *SilentStepperBrick) IsEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Sets the basic configuration parameters for the different modes (Stealth, Coolstep, Classic).
@@ -1160,8 +1160,8 @@ func (device *SilentStepperBrick) IsEnabled() (enabled bool, err error) {
 // * Classic Threshold: 1000
 // * High Velocity Shopper Mode: false
 func (device *SilentStepperBrick) SetBasicConfiguration(standstillCurrent uint16, motorRunCurrent uint16, standstillDelayTime uint16, powerDownTime uint16, stealthThreshold uint16, coolstepThreshold uint16, classicThreshold uint16, highVelocityChopperMode bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, standstillCurrent);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, standstillCurrent);
 	binary.Write(&buf, binary.LittleEndian, motorRunCurrent);
 	binary.Write(&buf, binary.LittleEndian, standstillDelayTime);
 	binary.Write(&buf, binary.LittleEndian, powerDownTime);
@@ -1170,43 +1170,43 @@ func (device *SilentStepperBrick) SetBasicConfiguration(standstillCurrent uint16
 	binary.Write(&buf, binary.LittleEndian, classicThreshold);
 	binary.Write(&buf, binary.LittleEndian, highVelocityChopperMode);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetBasicConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetBasicConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetBasicConfiguration.
 func (device *SilentStepperBrick) GetBasicConfiguration() (standstillCurrent uint16, motorRunCurrent uint16, standstillDelayTime uint16, powerDownTime uint16, stealthThreshold uint16, coolstepThreshold uint16, classicThreshold uint16, highVelocityChopperMode bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBasicConfiguration), buf.Bytes())
-    if err != nil {
-        return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBasicConfiguration), buf.Bytes())
+	if err != nil {
+		return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &standstillCurrent)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &standstillCurrent)
 	binary.Read(resultBuf, binary.LittleEndian, &motorRunCurrent)
 	binary.Read(resultBuf, binary.LittleEndian, &standstillDelayTime)
 	binary.Read(resultBuf, binary.LittleEndian, &powerDownTime)
@@ -1215,9 +1215,9 @@ func (device *SilentStepperBrick) GetBasicConfiguration() (standstillCurrent uin
 	binary.Read(resultBuf, binary.LittleEndian, &classicThreshold)
 	binary.Read(resultBuf, binary.LittleEndian, &highVelocityChopperMode)
 
-    }
+	}
 
-    return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, nil
+	return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, nil
 }
 
 // Note: If you don't know what any of this means you can very likely keep all of
@@ -1277,8 +1277,8 @@ func (device *SilentStepperBrick) GetBasicConfiguration() (standstillCurrent uin
 //	* ChopperModeSpreadCycle
 //	* ChopperModeFastDecay
 func (device *SilentStepperBrick) SetSpreadcycleConfiguration(slowDecayDuration uint8, enableRandomSlowDecay bool, fastDecayDuration uint8, hysteresisStartValue uint8, hysteresisEndValue int8, sineWaveOffset int8, chopperMode ChopperMode, comparatorBlankTime uint8, fastDecayWithoutComparator bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, slowDecayDuration);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, slowDecayDuration);
 	binary.Write(&buf, binary.LittleEndian, enableRandomSlowDecay);
 	binary.Write(&buf, binary.LittleEndian, fastDecayDuration);
 	binary.Write(&buf, binary.LittleEndian, hysteresisStartValue);
@@ -1288,23 +1288,23 @@ func (device *SilentStepperBrick) SetSpreadcycleConfiguration(slowDecayDuration 
 	binary.Write(&buf, binary.LittleEndian, comparatorBlankTime);
 	binary.Write(&buf, binary.LittleEndian, fastDecayWithoutComparator);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSpreadcycleConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSpreadcycleConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetBasicConfiguration.
@@ -1314,22 +1314,22 @@ func (device *SilentStepperBrick) SetSpreadcycleConfiguration(slowDecayDuration 
 //	* ChopperModeSpreadCycle
 //	* ChopperModeFastDecay
 func (device *SilentStepperBrick) GetSpreadcycleConfiguration() (slowDecayDuration uint8, enableRandomSlowDecay bool, fastDecayDuration uint8, hysteresisStartValue uint8, hysteresisEndValue int8, sineWaveOffset int8, chopperMode ChopperMode, comparatorBlankTime uint8, fastDecayWithoutComparator bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSpreadcycleConfiguration), buf.Bytes())
-    if err != nil {
-        return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSpreadcycleConfiguration), buf.Bytes())
+	if err != nil {
+		return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &slowDecayDuration)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &slowDecayDuration)
 	binary.Read(resultBuf, binary.LittleEndian, &enableRandomSlowDecay)
 	binary.Read(resultBuf, binary.LittleEndian, &fastDecayDuration)
 	binary.Read(resultBuf, binary.LittleEndian, &hysteresisStartValue)
@@ -1339,9 +1339,9 @@ func (device *SilentStepperBrick) GetSpreadcycleConfiguration() (slowDecayDurati
 	binary.Read(resultBuf, binary.LittleEndian, &comparatorBlankTime)
 	binary.Read(resultBuf, binary.LittleEndian, &fastDecayWithoutComparator)
 
-    }
+	}
 
-    return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, nil
+	return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, nil
 }
 
 // Note: If you don't know what any of this means you can very likely keep all of
@@ -1384,31 +1384,31 @@ func (device *SilentStepperBrick) GetSpreadcycleConfiguration() (slowDecayDurati
 //	* FreewheelModeCoilShortLS
 //	* FreewheelModeCoilShortHS
 func (device *SilentStepperBrick) SetStealthConfiguration(enableStealth bool, amplitude uint8, gradient uint8, enableAutoscale bool, forceSymmetric bool, freewheelMode FreewheelMode) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, enableStealth);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enableStealth);
 	binary.Write(&buf, binary.LittleEndian, amplitude);
 	binary.Write(&buf, binary.LittleEndian, gradient);
 	binary.Write(&buf, binary.LittleEndian, enableAutoscale);
 	binary.Write(&buf, binary.LittleEndian, forceSymmetric);
 	binary.Write(&buf, binary.LittleEndian, freewheelMode);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStealthConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStealthConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStealthConfiguration.
@@ -1420,31 +1420,31 @@ func (device *SilentStepperBrick) SetStealthConfiguration(enableStealth bool, am
 //	* FreewheelModeCoilShortLS
 //	* FreewheelModeCoilShortHS
 func (device *SilentStepperBrick) GetStealthConfiguration() (enableStealth bool, amplitude uint8, gradient uint8, enableAutoscale bool, forceSymmetric bool, freewheelMode FreewheelMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStealthConfiguration), buf.Bytes())
-    if err != nil {
-        return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStealthConfiguration), buf.Bytes())
+	if err != nil {
+		return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enableStealth)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enableStealth)
 	binary.Read(resultBuf, binary.LittleEndian, &amplitude)
 	binary.Read(resultBuf, binary.LittleEndian, &gradient)
 	binary.Read(resultBuf, binary.LittleEndian, &enableAutoscale)
 	binary.Read(resultBuf, binary.LittleEndian, &forceSymmetric)
 	binary.Read(resultBuf, binary.LittleEndian, &freewheelMode)
 
-    }
+	}
 
-    return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, nil
+	return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, nil
 }
 
 // Note: If you don't know what any of this means you can very likely keep all of
@@ -1500,8 +1500,8 @@ func (device *SilentStepperBrick) GetStealthConfiguration() (enableStealth bool,
 //	* StallguardModeStandard
 //	* StallguardModeFiltered
 func (device *SilentStepperBrick) SetCoolstepConfiguration(minimumStallguardValue uint8, maximumStallguardValue uint8, currentUpStepWidth CurrentUpStepIncrement, currentDownStepWidth CurrentDownStepDecrement, minimumCurrent MinimumCurrent, stallguardThresholdValue int8, stallguardMode StallguardMode) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, minimumStallguardValue);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, minimumStallguardValue);
 	binary.Write(&buf, binary.LittleEndian, maximumStallguardValue);
 	binary.Write(&buf, binary.LittleEndian, currentUpStepWidth);
 	binary.Write(&buf, binary.LittleEndian, currentDownStepWidth);
@@ -1509,23 +1509,23 @@ func (device *SilentStepperBrick) SetCoolstepConfiguration(minimumStallguardValu
 	binary.Write(&buf, binary.LittleEndian, stallguardThresholdValue);
 	binary.Write(&buf, binary.LittleEndian, stallguardMode);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCoolstepConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCoolstepConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetCoolstepConfiguration.
@@ -1545,22 +1545,22 @@ func (device *SilentStepperBrick) SetCoolstepConfiguration(minimumStallguardValu
 //	* StallguardModeStandard
 //	* StallguardModeFiltered
 func (device *SilentStepperBrick) GetCoolstepConfiguration() (minimumStallguardValue uint8, maximumStallguardValue uint8, currentUpStepWidth CurrentUpStepIncrement, currentDownStepWidth CurrentDownStepDecrement, minimumCurrent MinimumCurrent, stallguardThresholdValue int8, stallguardMode StallguardMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCoolstepConfiguration), buf.Bytes())
-    if err != nil {
-        return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCoolstepConfiguration), buf.Bytes())
+	if err != nil {
+		return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &minimumStallguardValue)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &minimumStallguardValue)
 	binary.Read(resultBuf, binary.LittleEndian, &maximumStallguardValue)
 	binary.Read(resultBuf, binary.LittleEndian, &currentUpStepWidth)
 	binary.Read(resultBuf, binary.LittleEndian, &currentDownStepWidth)
@@ -1568,9 +1568,9 @@ func (device *SilentStepperBrick) GetCoolstepConfiguration() (minimumStallguardV
 	binary.Read(resultBuf, binary.LittleEndian, &stallguardThresholdValue)
 	binary.Read(resultBuf, binary.LittleEndian, &stallguardMode)
 
-    }
+	}
 
-    return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, nil
+	return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, nil
 }
 
 // Note: If you don't know what any of this means you can very likely keep all of
@@ -1592,52 +1592,52 @@ func (device *SilentStepperBrick) GetCoolstepConfiguration() (minimumStallguardV
 // * Disable Short To Ground Protection: 0
 // * Synchronize Phase Frequency: 0
 func (device *SilentStepperBrick) SetMiscConfiguration(disableShortToGroundProtection bool, synchronizePhaseFrequency uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, disableShortToGroundProtection);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, disableShortToGroundProtection);
 	binary.Write(&buf, binary.LittleEndian, synchronizePhaseFrequency);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMiscConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMiscConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetMiscConfiguration.
 func (device *SilentStepperBrick) GetMiscConfiguration() (disableShortToGroundProtection bool, synchronizePhaseFrequency uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMiscConfiguration), buf.Bytes())
-    if err != nil {
-        return disableShortToGroundProtection, synchronizePhaseFrequency, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMiscConfiguration), buf.Bytes())
+	if err != nil {
+		return disableShortToGroundProtection, synchronizePhaseFrequency, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return disableShortToGroundProtection, synchronizePhaseFrequency, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return disableShortToGroundProtection, synchronizePhaseFrequency, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &disableShortToGroundProtection)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &disableShortToGroundProtection)
 	binary.Read(resultBuf, binary.LittleEndian, &synchronizePhaseFrequency)
 
-    }
+	}
 
-    return disableShortToGroundProtection, synchronizePhaseFrequency, nil
+	return disableShortToGroundProtection, synchronizePhaseFrequency, nil
 }
 
 // Returns the current driver status.
@@ -1682,22 +1682,22 @@ func (device *SilentStepperBrick) GetMiscConfiguration() (disableShortToGroundPr
 //	* OverTemperatureWarning
 //	* OverTemperatureLimit
 func (device *SilentStepperBrick) GetDriverStatus() (openLoad OpenLoad, shortToGround ShortToGround, overTemperature OverTemperature, motorStalled bool, actualMotorCurrent uint8, fullStepActive bool, stallguardResult uint8, stealthVoltageAmplitude uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDriverStatus), buf.Bytes())
-    if err != nil {
-        return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDriverStatus), buf.Bytes())
+	if err != nil {
+		return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &openLoad)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &openLoad)
 	binary.Read(resultBuf, binary.LittleEndian, &shortToGround)
 	binary.Read(resultBuf, binary.LittleEndian, &overTemperature)
 	binary.Read(resultBuf, binary.LittleEndian, &motorStalled)
@@ -1706,9 +1706,9 @@ func (device *SilentStepperBrick) GetDriverStatus() (openLoad OpenLoad, shortToG
 	binary.Read(resultBuf, binary.LittleEndian, &stallguardResult)
 	binary.Read(resultBuf, binary.LittleEndian, &stealthVoltageAmplitude)
 
-    }
+	}
 
-    return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, nil
+	return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, nil
 }
 
 // Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
@@ -1720,50 +1720,50 @@ func (device *SilentStepperBrick) GetDriverStatus() (openLoad OpenLoad, shortToG
 // 
 // The default value is 8V.
 func (device *SilentStepperBrick) SetMinimumVoltage(voltage uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, voltage);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, voltage);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMinimumVoltage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMinimumVoltage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the minimum voltage as set by SetMinimumVoltage.
 func (device *SilentStepperBrick) GetMinimumVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Sets the time base of the velocity and the acceleration of the Silent Stepper
@@ -1775,50 +1775,50 @@ func (device *SilentStepperBrick) GetMinimumVoltage() (voltage uint16, err error
 // 
 // The default value is 1.
 func (device *SilentStepperBrick) SetTimeBase(timeBase uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, timeBase);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, timeBase);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetTimeBase), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetTimeBase), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the time base as set by SetTimeBase.
 func (device *SilentStepperBrick) GetTimeBase() (timeBase uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTimeBase), buf.Bytes())
-    if err != nil {
-        return timeBase, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTimeBase), buf.Bytes())
+	if err != nil {
+		return timeBase, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return timeBase, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return timeBase, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &timeBase)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timeBase)
 
-    }
+	}
 
-    return timeBase, nil
+	return timeBase, nil
 }
 
 // Returns the following parameters: The current velocity,
@@ -1835,80 +1835,80 @@ func (device *SilentStepperBrick) GetTimeBase() (timeBase uint32, err error) {
 // 
 // There is also a callback for this function, see RegisterAllDataCallback callback.
 func (device *SilentStepperBrick) GetAllData() (currentVelocity uint16, currentPosition int32, remainingSteps int32, stackVoltage uint16, externalVoltage uint16, currentConsumption uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllData), buf.Bytes())
-    if err != nil {
-        return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllData), buf.Bytes())
+	if err != nil {
+		return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &currentVelocity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &currentVelocity)
 	binary.Read(resultBuf, binary.LittleEndian, &currentPosition)
 	binary.Read(resultBuf, binary.LittleEndian, &remainingSteps)
 	binary.Read(resultBuf, binary.LittleEndian, &stackVoltage)
 	binary.Read(resultBuf, binary.LittleEndian, &externalVoltage)
 	binary.Read(resultBuf, binary.LittleEndian, &currentConsumption)
 
-    }
+	}
 
-    return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, nil
+	return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, nil
 }
 
 // Sets the period in ms with which the RegisterAllDataCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *SilentStepperBrick) SetAllDataPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAllDataPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllDataPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetAllDataPeriod.
 func (device *SilentStepperBrick) GetAllDataPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAllDataPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllDataPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
@@ -1936,54 +1936,54 @@ func (device *SilentStepperBrick) GetAllDataPeriod() (period uint32, err error) 
 // 
 // .. versionadded:: 2.0.4$nbsp;(Firmware)
 func (device *SilentStepperBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrateConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrateConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
 // 
 // .. versionadded:: 2.0.4$nbsp;(Firmware)
 func (device *SilentStepperBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
-    if err != nil {
-        return enableDynamicBaudrate, minimumDynamicBaudrate, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
+	if err != nil {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
-    }
+	}
 
-    return enableDynamicBaudrate, minimumDynamicBaudrate, nil
+	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
@@ -2004,27 +2004,27 @@ func (device *SilentStepperBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudra
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
 func (device *SilentStepperBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, communicationMethod);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSendTimeoutCount), buf.Bytes())
-    if err != nil {
-        return timeoutCount, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSendTimeoutCount), buf.Bytes())
+	if err != nil {
+		return timeoutCount, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return timeoutCount, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return timeoutCount, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
-    }
+	}
 
-    return timeoutCount, nil
+	return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
@@ -2044,52 +2044,52 @@ func (device *SilentStepperBrick) GetSendTimeoutCount(communicationMethod Commun
 // 
 // The default baudrate for all ports is 1400000.
 func (device *SilentStepperBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrate), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrate), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
 func (device *SilentStepperBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrate), buf.Bytes())
-    if err != nil {
-        return baudrate, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrate), buf.Bytes())
+	if err != nil {
+		return baudrate, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return baudrate, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return baudrate, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
-    }
+	}
 
-    return baudrate, nil
+	return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -2104,30 +2104,30 @@ func (device *SilentStepperBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate
 // The errors counts are for errors that occur on the Brick side. All
 // Bricklets have a similar function that returns the errors on the Bricklet side.
 func (device *SilentStepperBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
@@ -2137,25 +2137,25 @@ func (device *SilentStepperBrick) GetSPITFPErrorCount(brickletPort rune) (errorC
 // 
 // The default state is enabled.
 func (device *SilentStepperBrick) EnableStatusLED() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the status LED.
@@ -2165,49 +2165,49 @@ func (device *SilentStepperBrick) EnableStatusLED() (err error) {
 // 
 // The default state is enabled.
 func (device *SilentStepperBrick) DisableStatusLED() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
 func (device *SilentStepperBrick) IsStatusLEDEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
@@ -2216,58 +2216,58 @@ func (device *SilentStepperBrick) IsStatusLEDEnabled() (enabled bool, err error)
 // This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
 // plugins.
 func (device *SilentStepperBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, port);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProtocol1BrickletName), buf.Bytes())
-    if err != nil {
-        return protocolVersion, firmwareVersion, name, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProtocol1BrickletName), buf.Bytes())
+	if err != nil {
+		return protocolVersion, firmwareVersion, name, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	name = ByteSliceToString(resultBuf.Next(40))
 
-    }
+	}
 
-    return protocolVersion, firmwareVersion, name, nil
+	return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has an
-// accuracy of +-15%. Practically it is only useful as an indicator for
+// accuracy of ±15%. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *SilentStepperBrick) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
@@ -2277,25 +2277,25 @@ func (device *SilentStepperBrick) GetChipTemperature() (temperature int16, err e
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *SilentStepperBrick) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
@@ -2307,29 +2307,29 @@ func (device *SilentStepperBrick) Reset() (err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *SilentStepperBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

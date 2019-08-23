@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures ambient light up to 64000lux.
+// Measures ambient light up to 64000lux.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AmbientLightV2_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package ambient_light_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetIlluminance Function = 1
+	FunctionGetIlluminance Function = 1
 	FunctionSetIlluminanceCallbackPeriod Function = 2
 	FunctionGetIlluminanceCallbackPeriod Function = 3
 	FunctionSetIlluminanceCallbackThreshold Function = 4
@@ -39,20 +39,20 @@ const (
 	FunctionCallbackIlluminanceReached Function = 11
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type IlluminanceRange uint8
+type IlluminanceRange = uint8
 
 const (
-    IlluminanceRangeUnlimited IlluminanceRange = 6
+	IlluminanceRangeUnlimited IlluminanceRange = 6
 	IlluminanceRange64000Lux IlluminanceRange = 0
 	IlluminanceRange32000Lux IlluminanceRange = 1
 	IlluminanceRange16000Lux IlluminanceRange = 2
@@ -61,10 +61,10 @@ const (
 	IlluminanceRange600Lux IlluminanceRange = 5
 )
 
-type IntegrationTime uint8
+type IntegrationTime = uint8
 
 const (
-    IntegrationTime50ms IntegrationTime = 0
+	IntegrationTime50ms IntegrationTime = 0
 	IntegrationTime100ms IntegrationTime = 1
 	IntegrationTime150ms IntegrationTime = 2
 	IntegrationTime200ms IntegrationTime = 3
@@ -74,7 +74,7 @@ const (
 	IntegrationTime400ms IntegrationTime = 7
 )
 
-type AmbientLightV2Bricklet struct{
+type AmbientLightV2Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 259
@@ -82,12 +82,12 @@ const DeviceDisplayName = "Ambient Light Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return AmbientLightV2Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return AmbientLightV2Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetIlluminanceCallbackPeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetIlluminanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetIlluminanceCallbackThreshold] = ResponseExpectedFlagTrue;
@@ -97,7 +97,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, 
 	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return AmbientLightV2Bricklet{dev}, nil
+	return AmbientLightV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -115,7 +115,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *AmbientLightV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -127,7 +127,7 @@ func (device *AmbientLightV2Bricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *AmbientLightV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -137,7 +137,7 @@ func (device *AmbientLightV2Bricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *AmbientLightV2Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -147,18 +147,18 @@ func (device *AmbientLightV2Bricklet) GetAPIVersion() [3]uint8 {
 // The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed since the
 // last triggering.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var illuminance uint32
-                binary.Read(buf, binary.LittleEndian, &illuminance)
-                fn(illuminance)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackIlluminance), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var illuminance uint32
+		binary.Read(buf, binary.LittleEndian, &illuminance)
+		fn(illuminance)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackIlluminance), wrapper)
 }
 
-//Remove a registered Illuminance callback.
-func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationID)
+// Remove a registered Illuminance callback.
+func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationId)
 }
 
 
@@ -169,18 +169,18 @@ func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(registration
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceReachedCallback(fn func(uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var illuminance uint32
-                binary.Read(buf, binary.LittleEndian, &illuminance)
-                fn(illuminance)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackIlluminanceReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var illuminance uint32
+		binary.Read(buf, binary.LittleEndian, &illuminance)
+		fn(illuminance)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackIlluminanceReached), wrapper)
 }
 
-//Remove a registered Illuminance Reached callback.
-func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackIlluminanceReached), registrationID)
+// Remove a registered Illuminance Reached callback.
+func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackIlluminanceReached), registrationId)
 }
 
 
@@ -197,26 +197,26 @@ func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(regis
 // RegisterIlluminanceCallback callback and set the period with
 // SetIlluminanceCallbackPeriod.
 func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
-    if err != nil {
-        return illuminance, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
+	if err != nil {
+		return illuminance, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return illuminance, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return illuminance, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &illuminance)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &illuminance)
 
-    }
+	}
 
-    return illuminance, nil
+	return illuminance, nil
 }
 
 // Sets the period in ms with which the RegisterIlluminanceCallback callback is triggered
@@ -227,50 +227,50 @@ func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err 
 // 
 // The default value is 0.
 func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetIlluminanceCallbackPeriod.
 func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterIlluminanceReachedCallback callback.
@@ -295,28 +295,28 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option ThresholdOption, min uint32, max uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetIlluminanceCallbackThreshold.
@@ -329,28 +329,28 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option Thr
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option ThresholdOption, min uint32, max uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
@@ -365,50 +365,50 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option 
 // 
 // The default value is 100.
 func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Sets the configuration. It is possible to configure an illuminance range
@@ -455,27 +455,27 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
 //	* IntegrationTime350ms
 //	* IntegrationTime400ms
 func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange IlluminanceRange, integrationTime IntegrationTime) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, illuminanceRange);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, illuminanceRange);
 	binary.Write(&buf, binary.LittleEndian, integrationTime);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
@@ -498,27 +498,27 @@ func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange Illumina
 //	* IntegrationTime350ms
 //	* IntegrationTime400ms
 func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange IlluminanceRange, integrationTime IntegrationTime, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
-    if err != nil {
-        return illuminanceRange, integrationTime, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
+	if err != nil {
+		return illuminanceRange, integrationTime, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return illuminanceRange, integrationTime, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return illuminanceRange, integrationTime, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &illuminanceRange)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &illuminanceRange)
 	binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
-    }
+	}
 
-    return illuminanceRange, integrationTime, nil
+	return illuminanceRange, integrationTime, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -530,29 +530,29 @@ func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange Illum
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

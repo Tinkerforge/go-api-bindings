@@ -7,7 +7,7 @@
 2019-01-29: 2.0.2 (2617875)
 - Add support for Accelerometer 2.0 and Ambient Light 3.0 Bricklet
 
-2019-05-21: 2.0.3 (<unknown>)
+2019-05-21: 2.0.3 (a3d0573)
 - Add support for CO2 2.0, E-Paper 296x128, Hall Effect 2.0, Joystick 2.0,
   Laser Range Finder 2.0, Linear Poti 2.0, Piezo Speaker 2.0, RGB LED 2.0 and
   Segment Display 4x7 2.0 Bricklet and HAT and HAT Zero Brick
@@ -16,3 +16,11 @@
 - Properly check UIDs and report invalid UIDs
 - Fix IP Connection auto-reconnect setting
 - Properly strip trailing NUL-bytes from UIDs in enumerate callback
+
+2019-08-23: 2.0.4 (<unknown>)
+- Add support for Color 2.0, Compass, Distance US 2.0, Energy Monitor,
+  Multi Touch 2.0, Rotary Poti 2.0 and XMC1400 Breakout Bricklet
+- Add Get/SetFilterConfiguration functions to Accelerometer Bricklet 2.0 API
+- Add ConversionTime constants to Voltage/Current Bricklet 2.0 API
+- Break API to remove enumerate response structure: enumerate callback uses
+  parameters directly, which is more in line with all other callbacks

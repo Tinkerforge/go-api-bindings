@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Passive infrared (PIR) motion sensor with 7m range.
+// Passive infrared (PIR) motion sensor with 7m range.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/MotionDetector_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package motion_detector_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetMotionDetected Function = 1
+	FunctionGetMotionDetected Function = 1
 	FunctionSetStatusLEDConfig Function = 4
 	FunctionGetStatusLEDConfig Function = 5
 	FunctionGetIdentity Function = 255
@@ -33,22 +33,22 @@ const (
 	FunctionCallbackDetectionCycleEnded Function = 3
 )
 
-type Motion uint8
+type Motion = uint8
 
 const (
-    MotionNotDetected Motion = 0
+	MotionNotDetected Motion = 0
 	MotionDetected Motion = 1
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowStatus StatusLEDConfig = 2
 )
 
-type MotionDetectorBricklet struct{
+type MotionDetectorBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 233
@@ -56,16 +56,16 @@ const DeviceDisplayName = "Motion Detector Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (MotionDetectorBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return MotionDetectorBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetMotionDetected] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return MotionDetectorBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetMotionDetected] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return MotionDetectorBricklet{dev}, nil
+	return MotionDetectorBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -83,7 +83,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (MotionDetectorBricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *MotionDetectorBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -95,7 +95,7 @@ func (device *MotionDetectorBricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *MotionDetectorBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -105,23 +105,23 @@ func (device *MotionDetectorBricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *MotionDetectorBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is called after a motion was detected.
 func (device *MotionDetectorBricklet) RegisterMotionDetectedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackMotionDetected), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackMotionDetected), wrapper)
 }
 
-//Remove a registered Motion Detected callback.
-func (device *MotionDetectorBricklet) DeregisterMotionDetectedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMotionDetected), registrationID)
+// Remove a registered Motion Detected callback.
+func (device *MotionDetectorBricklet) DeregisterMotionDetectedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackMotionDetected), registrationId)
 }
 
 
@@ -129,18 +129,18 @@ func (device *MotionDetectorBricklet) DeregisterMotionDetectedCallback(registrat
 // callback is called, a new motion can be detected again after approximately 2
 // seconds.
 func (device *MotionDetectorBricklet) RegisterDetectionCycleEndedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackDetectionCycleEnded), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackDetectionCycleEnded), wrapper)
 }
 
-//Remove a registered Detection Cycle Ended callback.
-func (device *MotionDetectorBricklet) DeregisterDetectionCycleEndedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDetectionCycleEnded), registrationID)
+// Remove a registered Detection Cycle Ended callback.
+func (device *MotionDetectorBricklet) DeregisterDetectionCycleEndedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackDetectionCycleEnded), registrationId)
 }
 
 
@@ -157,26 +157,26 @@ func (device *MotionDetectorBricklet) DeregisterDetectionCycleEndedCallback(regi
 //	* MotionNotDetected
 //	* MotionDetected
 func (device *MotionDetectorBricklet) GetMotionDetected() (motion Motion, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMotionDetected), buf.Bytes())
-    if err != nil {
-        return motion, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMotionDetected), buf.Bytes())
+	if err != nil {
+		return motion, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return motion, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return motion, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &motion)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &motion)
 
-    }
+	}
 
-    return motion, nil
+	return motion, nil
 }
 
 // Sets the status led configuration.
@@ -194,26 +194,26 @@ func (device *MotionDetectorBricklet) GetMotionDetected() (motion Motion, err er
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowStatus
 func (device *MotionDetectorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig.
@@ -226,26 +226,26 @@ func (device *MotionDetectorBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowStatus
 func (device *MotionDetectorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -257,29 +257,29 @@ func (device *MotionDetectorBricklet) GetStatusLEDConfig() (config StatusLEDConf
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *MotionDetectorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

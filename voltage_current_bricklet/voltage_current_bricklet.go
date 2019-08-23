@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures power, DC voltage and DC current up to 720W/36V/20A‍.
+// Measures power, DC voltage and DC current up to 720W/36V/20A‍.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/VoltageCurrent_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package voltage_current_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetCurrent Function = 1
+	FunctionGetCurrent Function = 1
 	FunctionGetVoltage Function = 2
 	FunctionGetPower Function = 3
 	FunctionSetConfiguration Function = 4
@@ -55,10 +55,10 @@ const (
 	FunctionCallbackPowerReached Function = 27
 )
 
-type Averaging uint8
+type Averaging = uint8
 
 const (
-    Averaging1 Averaging = 0
+	Averaging1 Averaging = 0
 	Averaging4 Averaging = 1
 	Averaging16 Averaging = 2
 	Averaging64 Averaging = 3
@@ -68,17 +68,17 @@ const (
 	Averaging1024 Averaging = 7
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type VoltageCurrentBricklet struct{
+type VoltageCurrentBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 227
@@ -86,12 +86,12 @@ const DeviceDisplayName = "Voltage/Current Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (VoltageCurrentBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return VoltageCurrentBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return VoltageCurrentBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetPower] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
@@ -113,7 +113,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (VoltageCurrentBricklet, 
 	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return VoltageCurrentBricklet{dev}, nil
+	return VoltageCurrentBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -131,7 +131,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (VoltageCurrentBricklet, 
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *VoltageCurrentBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -143,7 +143,7 @@ func (device *VoltageCurrentBricklet) GetResponseExpected(functionID Function) (
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *VoltageCurrentBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -153,7 +153,7 @@ func (device *VoltageCurrentBricklet) SetResponseExpectedAll(responseExpected bo
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *VoltageCurrentBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -163,18 +163,18 @@ func (device *VoltageCurrentBricklet) GetAPIVersion() [3]uint8 {
 // The RegisterCurrentCallback callback is only triggered if the current has changed since
 // the last triggering.
 func (device *VoltageCurrentBricklet) RegisterCurrentCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var current int32
-                binary.Read(buf, binary.LittleEndian, &current)
-                fn(current)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCurrent), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var current int32
+		binary.Read(buf, binary.LittleEndian, &current)
+		fn(current)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCurrent), wrapper)
 }
 
-//Remove a registered Current callback.
-func (device *VoltageCurrentBricklet) DeregisterCurrentCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), registrationID)
+// Remove a registered Current callback.
+func (device *VoltageCurrentBricklet) DeregisterCurrentCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), registrationId)
 }
 
 
@@ -185,18 +185,18 @@ func (device *VoltageCurrentBricklet) DeregisterCurrentCallback(registrationID u
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
 func (device *VoltageCurrentBricklet) RegisterVoltageCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var voltage int32
-                binary.Read(buf, binary.LittleEndian, &voltage)
-                fn(voltage)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackVoltage), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltage int32
+		binary.Read(buf, binary.LittleEndian, &voltage)
+		fn(voltage)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackVoltage), wrapper)
 }
 
-//Remove a registered Voltage callback.
-func (device *VoltageCurrentBricklet) DeregisterVoltageCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVoltage), registrationID)
+// Remove a registered Voltage callback.
+func (device *VoltageCurrentBricklet) DeregisterVoltageCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackVoltage), registrationId)
 }
 
 
@@ -207,18 +207,18 @@ func (device *VoltageCurrentBricklet) DeregisterVoltageCallback(registrationID u
 // The RegisterPowerCallback callback is only triggered if the power has changed since the
 // last triggering.
 func (device *VoltageCurrentBricklet) RegisterPowerCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var power int32
-                binary.Read(buf, binary.LittleEndian, &power)
-                fn(power)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPower), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var power int32
+		binary.Read(buf, binary.LittleEndian, &power)
+		fn(power)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPower), wrapper)
 }
 
-//Remove a registered Power callback.
-func (device *VoltageCurrentBricklet) DeregisterPowerCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPower), registrationID)
+// Remove a registered Power callback.
+func (device *VoltageCurrentBricklet) DeregisterPowerCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPower), registrationId)
 }
 
 
@@ -229,18 +229,18 @@ func (device *VoltageCurrentBricklet) DeregisterPowerCallback(registrationID uin
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterCurrentReachedCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var current int32
-                binary.Read(buf, binary.LittleEndian, &current)
-                fn(current)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCurrentReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var current int32
+		binary.Read(buf, binary.LittleEndian, &current)
+		fn(current)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCurrentReached), wrapper)
 }
 
-//Remove a registered Current Reached callback.
-func (device *VoltageCurrentBricklet) DeregisterCurrentReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrentReached), registrationID)
+// Remove a registered Current Reached callback.
+func (device *VoltageCurrentBricklet) DeregisterCurrentReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCurrentReached), registrationId)
 }
 
 
@@ -251,18 +251,18 @@ func (device *VoltageCurrentBricklet) DeregisterCurrentReachedCallback(registrat
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterVoltageReachedCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var voltage int32
-                binary.Read(buf, binary.LittleEndian, &voltage)
-                fn(voltage)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackVoltageReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltage int32
+		binary.Read(buf, binary.LittleEndian, &voltage)
+		fn(voltage)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackVoltageReached), wrapper)
 }
 
-//Remove a registered Voltage Reached callback.
-func (device *VoltageCurrentBricklet) DeregisterVoltageReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVoltageReached), registrationID)
+// Remove a registered Voltage Reached callback.
+func (device *VoltageCurrentBricklet) DeregisterVoltageReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackVoltageReached), registrationId)
 }
 
 
@@ -273,18 +273,18 @@ func (device *VoltageCurrentBricklet) DeregisterVoltageReachedCallback(registrat
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterPowerReachedCallback(fn func(int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var power int32
-                binary.Read(buf, binary.LittleEndian, &power)
-                fn(power)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPowerReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var power int32
+		binary.Read(buf, binary.LittleEndian, &power)
+		fn(power)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPowerReached), wrapper)
 }
 
-//Remove a registered Power Reached callback.
-func (device *VoltageCurrentBricklet) DeregisterPowerReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPowerReached), registrationID)
+// Remove a registered Power Reached callback.
+func (device *VoltageCurrentBricklet) DeregisterPowerReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPowerReached), registrationId)
 }
 
 
@@ -295,26 +295,26 @@ func (device *VoltageCurrentBricklet) DeregisterPowerReachedCallback(registratio
 // RegisterCurrentCallback callback and set the period with
 // SetCurrentCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetCurrent() (current int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
-    if err != nil {
-        return current, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
+	if err != nil {
+		return current, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return current, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &current)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
 
-    }
+	}
 
-    return current, nil
+	return current, nil
 }
 
 // Returns the voltage. The value is in mV
@@ -324,26 +324,26 @@ func (device *VoltageCurrentBricklet) GetCurrent() (current int32, err error) {
 // RegisterVoltageCallback callback and set the period with
 // SetVoltageCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetVoltage() (voltage int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Returns the power. The value is in mW
@@ -353,26 +353,26 @@ func (device *VoltageCurrentBricklet) GetVoltage() (voltage int32, err error) {
 // RegisterPowerCallback callback and set the period with
 // SetPowerCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetPower() (power int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPower), buf.Bytes())
-    if err != nil {
-        return power, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPower), buf.Bytes())
+	if err != nil {
+		return power, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return power, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return power, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &power)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &power)
 
-    }
+	}
 
-    return power, nil
+	return power, nil
 }
 
 // Sets the configuration of the Voltage/Current Bricklet. It is
@@ -419,28 +419,28 @@ func (device *VoltageCurrentBricklet) GetPower() (power int32, err error) {
 //	* Averaging512
 //	* Averaging1024
 func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, voltageConversionTime uint8, currentConversionTime uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, averaging);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, averaging);
 	binary.Write(&buf, binary.LittleEndian, voltageConversionTime);
 	binary.Write(&buf, binary.LittleEndian, currentConversionTime);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
@@ -456,28 +456,28 @@ func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, volt
 //	* Averaging512
 //	* Averaging1024
 func (device *VoltageCurrentBricklet) GetConfiguration() (averaging Averaging, voltageConversionTime uint8, currentConversionTime uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
-    if err != nil {
-        return averaging, voltageConversionTime, currentConversionTime, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
+	if err != nil {
+		return averaging, voltageConversionTime, currentConversionTime, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return averaging, voltageConversionTime, currentConversionTime, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return averaging, voltageConversionTime, currentConversionTime, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &averaging)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &averaging)
 	binary.Read(resultBuf, binary.LittleEndian, &voltageConversionTime)
 	binary.Read(resultBuf, binary.LittleEndian, &currentConversionTime)
 
-    }
+	}
 
-    return averaging, voltageConversionTime, currentConversionTime, nil
+	return averaging, voltageConversionTime, currentConversionTime, nil
 }
 
 // Since the shunt resistor that is used to measure the current is not
@@ -488,52 +488,52 @@ func (device *VoltageCurrentBricklet) GetConfiguration() (averaging Averaging, v
 // are measuring 1023mA, you can calibrate the Voltage/Current Bricklet
 // by setting the multiplier to 1000 and the divisor to 1023.
 func (device *VoltageCurrentBricklet) SetCalibration(gainMultiplier uint16, gainDivisor uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, gainMultiplier);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, gainMultiplier);
 	binary.Write(&buf, binary.LittleEndian, gainDivisor);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCalibration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCalibration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the calibration as set by SetCalibration.
 func (device *VoltageCurrentBricklet) GetCalibration() (gainMultiplier uint16, gainDivisor uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCalibration), buf.Bytes())
-    if err != nil {
-        return gainMultiplier, gainDivisor, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCalibration), buf.Bytes())
+	if err != nil {
+		return gainMultiplier, gainDivisor, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return gainMultiplier, gainDivisor, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return gainMultiplier, gainDivisor, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &gainMultiplier)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &gainMultiplier)
 	binary.Read(resultBuf, binary.LittleEndian, &gainDivisor)
 
-    }
+	}
 
-    return gainMultiplier, gainDivisor, nil
+	return gainMultiplier, gainDivisor, nil
 }
 
 // Sets the period in ms with which the RegisterCurrentCallback callback is triggered
@@ -544,50 +544,50 @@ func (device *VoltageCurrentBricklet) GetCalibration() (gainMultiplier uint16, g
 // 
 // The default value is 0.
 func (device *VoltageCurrentBricklet) SetCurrentCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetCurrentCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetCurrentCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterVoltageCallback callback is triggered
@@ -598,50 +598,50 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackPeriod() (period uint32,
 // 
 // The default value is 0.
 func (device *VoltageCurrentBricklet) SetVoltageCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetVoltageCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetVoltageCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterPowerCallback callback is triggered
@@ -652,50 +652,50 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackPeriod() (period uint32,
 // 
 // The default value is 0.
 func (device *VoltageCurrentBricklet) SetPowerCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPowerCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPowerCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by GetPowerCallbackPeriod.
 func (device *VoltageCurrentBricklet) GetPowerCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPowerCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPowerCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterCurrentReachedCallback callback.
@@ -720,28 +720,28 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackPeriod() (period uint32, e
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) SetCurrentCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetCurrentCallbackThreshold.
@@ -754,28 +754,28 @@ func (device *VoltageCurrentBricklet) SetCurrentCallbackThreshold(option Thresho
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) GetCurrentCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterVoltageReachedCallback callback.
@@ -800,28 +800,28 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackThreshold() (option Thre
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) SetVoltageCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetVoltageCallbackThreshold.
@@ -834,28 +834,28 @@ func (device *VoltageCurrentBricklet) SetVoltageCallbackThreshold(option Thresho
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) GetVoltageCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the thresholds for the RegisterPowerReachedCallback callback.
@@ -880,28 +880,28 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackThreshold() (option Thre
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) SetPowerCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPowerCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPowerCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetPowerCallbackThreshold.
@@ -914,28 +914,28 @@ func (device *VoltageCurrentBricklet) SetPowerCallbackThreshold(option Threshold
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *VoltageCurrentBricklet) GetPowerCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPowerCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPowerCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
@@ -954,50 +954,50 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackThreshold() (option Thresh
 // 
 // The default value is 100.
 func (device *VoltageCurrentBricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1009,29 +1009,29 @@ func (device *VoltageCurrentBricklet) GetDebouncePeriod() (debounce uint32, err 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *VoltageCurrentBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

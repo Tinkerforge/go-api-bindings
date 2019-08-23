@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Creates 1kHz beep.
+// Creates 1kHz beep.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/PiezoBuzzer_Bricklet_Go.html.
@@ -18,21 +18,21 @@ package piezo_buzzer_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionBeep Function = 1
+	FunctionBeep Function = 1
 	FunctionMorseCode Function = 2
 	FunctionGetIdentity Function = 255
 	FunctionCallbackBeepFinished Function = 3
 	FunctionCallbackMorseCodeFinished Function = 4
 )
 
-type PiezoBuzzerBricklet struct{
+type PiezoBuzzerBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 214
@@ -40,15 +40,15 @@ const DeviceDisplayName = "Piezo Buzzer Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (PiezoBuzzerBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return PiezoBuzzerBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionBeep] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return PiezoBuzzerBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionBeep] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionMorseCode] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return PiezoBuzzerBricklet{dev}, nil
+	return PiezoBuzzerBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -66,7 +66,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (PiezoBuzzerBricklet, err
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *PiezoBuzzerBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -78,7 +78,7 @@ func (device *PiezoBuzzerBricklet) GetResponseExpected(functionID Function) (boo
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *PiezoBuzzerBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -88,67 +88,67 @@ func (device *PiezoBuzzerBricklet) SetResponseExpectedAll(responseExpected bool)
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *PiezoBuzzerBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered if a beep set by Beep is finished
 func (device *PiezoBuzzerBricklet) RegisterBeepFinishedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackBeepFinished), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackBeepFinished), wrapper)
 }
 
-//Remove a registered Beep Finished callback.
-func (device *PiezoBuzzerBricklet) DeregisterBeepFinishedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackBeepFinished), registrationID)
+// Remove a registered Beep Finished callback.
+func (device *PiezoBuzzerBricklet) DeregisterBeepFinishedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackBeepFinished), registrationId)
 }
 
 
 // This callback is triggered if the playback of the morse code set by
 // MorseCode is finished.
 func (device *PiezoBuzzerBricklet) RegisterMorseCodeFinishedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackMorseCodeFinished), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackMorseCodeFinished), wrapper)
 }
 
-//Remove a registered Morse Code Finished callback.
-func (device *PiezoBuzzerBricklet) DeregisterMorseCodeFinishedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMorseCodeFinished), registrationID)
+// Remove a registered Morse Code Finished callback.
+func (device *PiezoBuzzerBricklet) DeregisterMorseCodeFinishedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackMorseCodeFinished), registrationId)
 }
 
 
 // Beeps with the duration in ms. For example: If you set a value of 1000,
 // the piezo buzzer will beep for one second.
 func (device *PiezoBuzzerBricklet) Beep(duration uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, duration);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, duration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionBeep), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionBeep), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets morse code that will be played by the piezo buzzer. The morse code
@@ -161,28 +161,28 @@ func (device *PiezoBuzzerBricklet) Beep(duration uint32) (err error) {
 // 
 // The maximum string size is 60.
 func (device *PiezoBuzzerBricklet) MorseCode(morse string) (err error) {
-        var buf bytes.Buffer
-    morse_byte_slice, err := StringToByteSlice(morse, 60)
+	var buf bytes.Buffer
+	morse_byte_slice, err := StringToByteSlice(morse, 60)
 	if err != nil { return }
 	buf.Write(morse_byte_slice)
 
-    resultBytes, err := device.device.Set(uint8(FunctionMorseCode), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionMorseCode), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -194,29 +194,29 @@ func (device *PiezoBuzzerBricklet) MorseCode(morse string) (err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *PiezoBuzzerBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

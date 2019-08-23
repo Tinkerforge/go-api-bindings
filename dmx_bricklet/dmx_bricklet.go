@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//DMX master and slave.
+// DMX master and slave.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/DMX_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package dmx_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionSetDMXMode Function = 1
+	FunctionSetDMXMode Function = 1
 	FunctionGetDMXMode Function = 2
 	FunctionWriteFrameLowLevel Function = 3
 	FunctionReadFrameLowLevel Function = 4
@@ -56,45 +56,45 @@ const (
 	FunctionCallbackFrameErrorCount Function = 17
 )
 
-type DMXMode uint8
+type DMXMode = uint8
 
 const (
-    DMXModeMaster DMXMode = 0
+	DMXModeMaster DMXMode = 0
 	DMXModeSlave DMXMode = 1
 )
 
-type CommunicationLEDConfig uint8
+type CommunicationLEDConfig = uint8
 
 const (
-    CommunicationLEDConfigOff CommunicationLEDConfig = 0
+	CommunicationLEDConfigOff CommunicationLEDConfig = 0
 	CommunicationLEDConfigOn CommunicationLEDConfig = 1
 	CommunicationLEDConfigShowHeartbeat CommunicationLEDConfig = 2
 	CommunicationLEDConfigShowCommunication CommunicationLEDConfig = 3
 )
 
-type ErrorLEDConfig uint8
+type ErrorLEDConfig = uint8
 
 const (
-    ErrorLEDConfigOff ErrorLEDConfig = 0
+	ErrorLEDConfigOff ErrorLEDConfig = 0
 	ErrorLEDConfigOn ErrorLEDConfig = 1
 	ErrorLEDConfigShowHeartbeat ErrorLEDConfig = 2
 	ErrorLEDConfigShowError ErrorLEDConfig = 3
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -102,16 +102,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type DMXBricklet struct{
+type DMXBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 285
@@ -119,12 +119,12 @@ const DeviceDisplayName = "DMX Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DMXBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 3)
-    if err != nil {
-        return DMXBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionSetDMXMode] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 3)
+	if err != nil {
+		return DMXBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionSetDMXMode] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetDMXMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionWriteFrameLowLevel] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionReadFrameLowLevel] = ResponseExpectedFlagAlwaysTrue;
@@ -149,7 +149,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DMXBricklet, error) {
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return DMXBricklet{dev}, nil
+	return DMXBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -167,7 +167,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DMXBricklet, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *DMXBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -179,7 +179,7 @@ func (device *DMXBricklet) GetResponseExpected(functionID Function) (bool, error
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *DMXBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -189,7 +189,7 @@ func (device *DMXBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *DMXBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered as soon as a new frame write is started.
@@ -202,18 +202,18 @@ func (device *DMXBricklet) GetAPIVersion() [3]uint8 {
 // 
 // This callback can only be triggered in master mode.
 func (device *DMXBricklet) RegisterFrameStartedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameStarted), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameStarted), wrapper)
 }
 
-//Remove a registered Frame Started callback.
-func (device *DMXBricklet) DeregisterFrameStartedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameStarted), registrationID)
+// Remove a registered Frame Started callback.
+func (device *DMXBricklet) DeregisterFrameStartedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameStarted), registrationId)
 }
 
 
@@ -227,18 +227,18 @@ func (device *DMXBricklet) DeregisterFrameStartedCallback(registrationID uint64)
 // 
 // This callback can only be triggered in slave mode.
 func (device *DMXBricklet) RegisterFrameAvailableCallback(fn func(uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var frameNumber uint32
-                binary.Read(buf, binary.LittleEndian, &frameNumber)
-                fn(frameNumber)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameAvailable), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var frameNumber uint32
+		binary.Read(buf, binary.LittleEndian, &frameNumber)
+		fn(frameNumber)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameAvailable), wrapper)
 }
 
-//Remove a registered Frame Available callback.
-func (device *DMXBricklet) DeregisterFrameAvailableCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameAvailable), registrationID)
+// Remove a registered Frame Available callback.
+func (device *DMXBricklet) DeregisterFrameAvailableCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameAvailable), registrationId)
 }
 
 
@@ -252,24 +252,24 @@ func (device *DMXBricklet) DeregisterFrameAvailableCallback(registrationID uint6
 // 
 // This callback can only be triggered in slave mode.
 func (device *DMXBricklet) RegisterFrameLowLevelCallback(fn func(uint16, uint16, [56]uint8, uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var frameLength uint16
-var frameChunkOffset uint16
-var frameChunkData [56]uint8
-var frameNumber uint32
-                binary.Read(buf, binary.LittleEndian, &frameLength)
-binary.Read(buf, binary.LittleEndian, &frameChunkOffset)
-copy(frameChunkData[:], ByteSliceToUint8Slice(buf.Next(8 * 56/8)))
-binary.Read(buf, binary.LittleEndian, &frameNumber)
-                fn(frameLength, frameChunkOffset, frameChunkData, frameNumber)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameLowLevel), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var frameLength uint16
+		var frameChunkOffset uint16
+		var frameChunkData [56]uint8
+		var frameNumber uint32
+		binary.Read(buf, binary.LittleEndian, &frameLength)
+		binary.Read(buf, binary.LittleEndian, &frameChunkOffset)
+		copy(frameChunkData[:], ByteSliceToUint8Slice(buf.Next(8 * 56/8)))
+		binary.Read(buf, binary.LittleEndian, &frameNumber)
+		fn(frameLength, frameChunkOffset, frameChunkData, frameNumber)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameLowLevel), wrapper)
 }
 
-//Remove a registered Frame Low Level callback.
-func (device *DMXBricklet) DeregisterFrameLowLevelCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameLowLevel), registrationID)
+// Remove a registered Frame Low Level callback.
+func (device *DMXBricklet) DeregisterFrameLowLevelCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameLowLevel), registrationId)
 }
 
 
@@ -283,47 +283,47 @@ func (device *DMXBricklet) DeregisterFrameLowLevelCallback(registrationID uint64
 // 
 // This callback can only be triggered in slave mode.
 func (device *DMXBricklet) RegisterFrameCallback(fn func(uint32, []uint8)) uint64 {
-    buf := make([]uint8, 0)
-    wrapper := func(frameLength uint16, frameChunkOffset uint16, frameChunkData [56]uint8, frameNumber uint32)  {
-        if int(frameChunkOffset) != len(buf) {
-            buf = make([]uint8, 0)
-            if frameChunkOffset != 0 {
-                return
-            }
-        }
-        toRead := MinU(uint64(frameLength-frameChunkOffset), uint64(len(frameChunkData[:])))
-        buf = append(buf, frameChunkData[:toRead]...)
-        if len(buf) >= int(frameLength) {
-            fn(frameNumber, buf)
-            buf = make([]uint8, 0)
-        }
-    }
-    return device.RegisterFrameLowLevelCallback(wrapper)
+	buf := make([]uint8, 0)
+	wrapper := func(frameLength uint16, frameChunkOffset uint16, frameChunkData [56]uint8, frameNumber uint32)  {
+		if int(frameChunkOffset) != len(buf) {
+			buf = make([]uint8, 0)
+			if frameChunkOffset != 0 {
+				return
+			}
+		}
+		toRead := MinU(uint64(frameLength-frameChunkOffset), uint64(len(frameChunkData[:])))
+		buf = append(buf, frameChunkData[:toRead]...)
+		if len(buf) >= int(frameLength) {
+			fn(frameNumber, buf)
+			buf = make([]uint8, 0)
+		}
+	}
+	return device.RegisterFrameLowLevelCallback(wrapper)
 }
 
-//Remove a registered Frame Low Level callback.
-func (device *DMXBricklet) DeregisterFrameCallback(registrationID uint64) {
-    device.DeregisterFrameLowLevelCallback(registrationID)
+// Remove a registered Frame Low Level callback.
+func (device *DMXBricklet) DeregisterFrameCallback(registrationId uint64) {
+	device.DeregisterFrameLowLevelCallback(registrationId)
 }
 
 
 // This callback is called if a new error occurs. It returns
 // the current overrun and framing error count.
 func (device *DMXBricklet) RegisterFrameErrorCountCallback(fn func(uint32, uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var overrunErrorCount uint32
-var framingErrorCount uint32
-                binary.Read(buf, binary.LittleEndian, &overrunErrorCount)
-binary.Read(buf, binary.LittleEndian, &framingErrorCount)
-                fn(overrunErrorCount, framingErrorCount)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameErrorCount), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var overrunErrorCount uint32
+		var framingErrorCount uint32
+		binary.Read(buf, binary.LittleEndian, &overrunErrorCount)
+		binary.Read(buf, binary.LittleEndian, &framingErrorCount)
+		fn(overrunErrorCount, framingErrorCount)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameErrorCount), wrapper)
 }
 
-//Remove a registered Frame Error Count callback.
-func (device *DMXBricklet) DeregisterFrameErrorCountCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameErrorCount), registrationID)
+// Remove a registered Frame Error Count callback.
+func (device *DMXBricklet) DeregisterFrameErrorCountCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameErrorCount), registrationId)
 }
 
 
@@ -338,26 +338,26 @@ func (device *DMXBricklet) DeregisterFrameErrorCountCallback(registrationID uint
 //	* DMXModeMaster
 //	* DMXModeSlave
 func (device *DMXBricklet) SetDMXMode(dmxMode DMXMode) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, dmxMode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, dmxMode);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDMXMode), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDMXMode), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the DMX mode, as set by SetDMXMode.
@@ -367,26 +367,26 @@ func (device *DMXBricklet) SetDMXMode(dmxMode DMXMode) (err error) {
 //	* DMXModeMaster
 //	* DMXModeSlave
 func (device *DMXBricklet) GetDMXMode() (dmxMode DMXMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDMXMode), buf.Bytes())
-    if err != nil {
-        return dmxMode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDMXMode), buf.Bytes())
+	if err != nil {
+		return dmxMode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return dmxMode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return dmxMode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &dmxMode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &dmxMode)
 
-    }
+	}
 
-    return dmxMode, nil
+	return dmxMode, nil
 }
 
 // Writes a DMX frame. The maximum frame size is 512 byte. Each byte represents one channel.
@@ -410,28 +410,28 @@ func (device *DMXBricklet) GetDMXMode() (dmxMode DMXMode, err error) {
 // 
 // This function can only be called in master mode.
 func (device *DMXBricklet) WriteFrameLowLevel(frameLength uint16, frameChunkOffset uint16, frameChunkData [60]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frameLength);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frameLength);
 	binary.Write(&buf, binary.LittleEndian, frameChunkOffset);
 	buf.Write(Uint8SliceToByteSlice(frameChunkData[:]))
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteFrameLowLevel), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteFrameLowLevel), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a DMX frame. The maximum frame size is 512 byte. Each byte represents one channel.
@@ -455,29 +455,29 @@ func (device *DMXBricklet) WriteFrameLowLevel(frameLength uint16, frameChunkOffs
 // 
 // This function can only be called in master mode.
 	func (device *DMXBricklet) WriteFrame(frame []uint8) (err error) {
-        _, err = device.device.SetHighLevel(func(frameLength uint64, frameChunkOffset uint64, frameChunkData []byte) (LowLevelWriteResult, error) {
-            arr := [60]uint8{}
-            copy(arr[:], ByteSliceToUint8Slice(frameChunkData))
+		_, err = device.device.SetHighLevel(func(frameLength uint64, frameChunkOffset uint64, frameChunkData []byte) (LowLevelWriteResult, error) {
+			arr := [60]uint8{}
+			copy(arr[:], ByteSliceToUint8Slice(frameChunkData))
 
-            err := device.WriteFrameLowLevel(uint16(frameLength), uint16(frameChunkOffset), arr)
+			err := device.WriteFrameLowLevel(uint16(frameLength), uint16(frameChunkOffset), arr)
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelWriteResult{
-                uint64(60),
-                lowLevelResults.Bytes()}, err
-        }, 0, 8, 480, Uint8SliceToByteSlice(frame))
+			return LowLevelWriteResult{
+				uint64(60),
+				lowLevelResults.Bytes()}, err
+		}, 0, 8, 480, Uint8SliceToByteSlice(frame))
 
-         if err != nil {
-            return
-        }
+		if err != nil {
+			return
+		}
 
-        
-        
-        
-        return
-    }
+		
+		
+		
+		return
+	}
 
 // Returns the last frame that was written by the DMX master. The size of the array
 // is equivalent to the number of channels in the frame. Each byte represents one channel.
@@ -499,29 +499,29 @@ func (device *DMXBricklet) WriteFrameLowLevel(frameLength uint16, frameChunkOffs
 // 
 // This function can only be called in slave mode.
 func (device *DMXBricklet) ReadFrameLowLevel() (frameLength uint16, frameChunkOffset uint16, frameChunkData [56]uint8, frameNumber uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadFrameLowLevel), buf.Bytes())
-    if err != nil {
-        return frameLength, frameChunkOffset, frameChunkData, frameNumber, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadFrameLowLevel), buf.Bytes())
+	if err != nil {
+		return frameLength, frameChunkOffset, frameChunkData, frameNumber, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return frameLength, frameChunkOffset, frameChunkData, frameNumber, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return frameLength, frameChunkOffset, frameChunkData, frameNumber, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &frameLength)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frameLength)
 	binary.Read(resultBuf, binary.LittleEndian, &frameChunkOffset)
 	copy(frameChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 56/8)))
 	binary.Read(resultBuf, binary.LittleEndian, &frameNumber)
 
-    }
+	}
 
-    return frameLength, frameChunkOffset, frameChunkData, frameNumber, nil
+	return frameLength, frameChunkOffset, frameChunkData, frameNumber, nil
 }
 
 // Returns the last frame that was written by the DMX master. The size of the array
@@ -544,31 +544,31 @@ func (device *DMXBricklet) ReadFrameLowLevel() (frameLength uint16, frameChunkOf
 // 
 // This function can only be called in slave mode.
 	func (device *DMXBricklet) ReadFrame() (frame []uint8, frameNumber uint32, err error) {
-        buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            frameLength, frameChunkOffset, frameChunkData, frameNumber, err := device.ReadFrameLowLevel()
+		buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			frameLength, frameChunkOffset, frameChunkData, frameNumber, err := device.ReadFrameLowLevel()
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            binary.Write(&lowLevelResults, binary.LittleEndian, frameNumber);
+			var lowLevelResults bytes.Buffer
+			binary.Write(&lowLevelResults, binary.LittleEndian, frameNumber);
 
-            return LowLevelResult{
-                uint64(frameLength),
-                uint64(frameChunkOffset),
-                Uint8SliceToByteSlice(frameChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            1,
-            8)
-        if err != nil {
-            return ByteSliceToUint8Slice(buf), frameNumber, err
-        }
-        resultBuf := bytes.NewBuffer(result)
-        binary.Read(resultBuf, binary.LittleEndian, &frameNumber)
-        return ByteSliceToUint8Slice(buf), frameNumber, nil
-    }
+			return LowLevelResult{
+				uint64(frameLength),
+				uint64(frameChunkOffset),
+				Uint8SliceToByteSlice(frameChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			1,
+			8)
+		if err != nil {
+			return ByteSliceToUint8Slice(buf), frameNumber, err
+		}
+		resultBuf := bytes.NewBuffer(result)
+		binary.Read(resultBuf, binary.LittleEndian, &frameNumber)
+		return ByteSliceToUint8Slice(buf), frameNumber, nil
+	}
 
 // Sets the duration of a frame in ms.
 // 
@@ -582,75 +582,75 @@ func (device *DMXBricklet) ReadFrameLowLevel() (frameLength uint16, frameChunkOf
 // 
 // Default value: 100ms (10 frames per second).
 func (device *DMXBricklet) SetFrameDuration(frameDuration uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frameDuration);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frameDuration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetFrameDuration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetFrameDuration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the frame duration as set by SetFrameDuration.
 func (device *DMXBricklet) GetFrameDuration() (frameDuration uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetFrameDuration), buf.Bytes())
-    if err != nil {
-        return frameDuration, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFrameDuration), buf.Bytes())
+	if err != nil {
+		return frameDuration, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return frameDuration, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return frameDuration, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &frameDuration)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frameDuration)
 
-    }
+	}
 
-    return frameDuration, nil
+	return frameDuration, nil
 }
 
 // Returns the current number of overrun and framing errors.
 func (device *DMXBricklet) GetFrameErrorCount() (overrunErrorCount uint32, framingErrorCount uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetFrameErrorCount), buf.Bytes())
-    if err != nil {
-        return overrunErrorCount, framingErrorCount, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFrameErrorCount), buf.Bytes())
+	if err != nil {
+		return overrunErrorCount, framingErrorCount, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return overrunErrorCount, framingErrorCount, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return overrunErrorCount, framingErrorCount, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &overrunErrorCount)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &overrunErrorCount)
 	binary.Read(resultBuf, binary.LittleEndian, &framingErrorCount)
 
-    }
+	}
 
-    return overrunErrorCount, framingErrorCount, nil
+	return overrunErrorCount, framingErrorCount, nil
 }
 
 // Sets the communication LED configuration. By default the LED shows
@@ -667,26 +667,26 @@ func (device *DMXBricklet) GetFrameErrorCount() (overrunErrorCount uint32, frami
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
 func (device *DMXBricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCommunicationLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCommunicationLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetCommunicationLEDConfig
@@ -698,26 +698,26 @@ func (device *DMXBricklet) SetCommunicationLEDConfig(config CommunicationLEDConf
 //	* CommunicationLEDConfigShowHeartbeat
 //	* CommunicationLEDConfigShowCommunication
 func (device *DMXBricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Sets the error LED configuration.
@@ -737,26 +737,26 @@ func (device *DMXBricklet) GetCommunicationLEDConfig() (config CommunicationLEDC
 //	* ErrorLEDConfigShowHeartbeat
 //	* ErrorLEDConfigShowError
 func (device *DMXBricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetErrorLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetErrorLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetErrorLEDConfig.
@@ -768,26 +768,26 @@ func (device *DMXBricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error) 
 //	* ErrorLEDConfigShowHeartbeat
 //	* ErrorLEDConfigShowError
 func (device *DMXBricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetErrorLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetErrorLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Enables/Disables the different callbacks. By default the
@@ -798,56 +798,56 @@ func (device *DMXBricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error
 // the cb:`Frame Available` callback at the same time. It becomes redundant in
 // this case.
 func (device *DMXBricklet) SetFrameCallbackConfig(frameStartedCallbackEnabled bool, frameAvailableCallbackEnabled bool, frameCallbackEnabled bool, frameErrorCountCallbackEnabled bool) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frameStartedCallbackEnabled);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frameStartedCallbackEnabled);
 	binary.Write(&buf, binary.LittleEndian, frameAvailableCallbackEnabled);
 	binary.Write(&buf, binary.LittleEndian, frameCallbackEnabled);
 	binary.Write(&buf, binary.LittleEndian, frameErrorCountCallbackEnabled);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetFrameCallbackConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetFrameCallbackConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the frame callback config as set by SetFrameCallbackConfig.
 func (device *DMXBricklet) GetFrameCallbackConfig() (frameStartedCallbackEnabled bool, frameAvailableCallbackEnabled bool, frameCallbackEnabled bool, frameErrorCountCallbackEnabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetFrameCallbackConfig), buf.Bytes())
-    if err != nil {
-        return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFrameCallbackConfig), buf.Bytes())
+	if err != nil {
+		return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &frameStartedCallbackEnabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frameStartedCallbackEnabled)
 	binary.Read(resultBuf, binary.LittleEndian, &frameAvailableCallbackEnabled)
 	binary.Read(resultBuf, binary.LittleEndian, &frameCallbackEnabled)
 	binary.Read(resultBuf, binary.LittleEndian, &frameErrorCountCallbackEnabled)
 
-    }
+	}
 
-    return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, nil
+	return frameStartedCallbackEnabled, frameAvailableCallbackEnabled, frameCallbackEnabled, frameErrorCountCallbackEnabled, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -862,29 +862,29 @@ func (device *DMXBricklet) GetFrameCallbackConfig() (frameStartedCallbackEnabled
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *DMXBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -911,27 +911,27 @@ func (device *DMXBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, 
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *DMXBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -944,26 +944,26 @@ func (device *DMXBricklet) SetBootloaderMode(mode BootloaderMode) (status Bootlo
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *DMXBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -973,26 +973,26 @@ func (device *DMXBricklet) GetBootloaderMode() (mode BootloaderMode, err error) 
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *DMXBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -1004,27 +1004,27 @@ func (device *DMXBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *DMXBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -1042,26 +1042,26 @@ func (device *DMXBricklet) WriteFirmware(data [64]uint8) (status uint8, err erro
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *DMXBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -1073,26 +1073,26 @@ func (device *DMXBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *DMXBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -1102,26 +1102,26 @@ func (device *DMXBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err err
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *DMXBricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -1131,25 +1131,25 @@ func (device *DMXBricklet) GetChipTemperature() (temperature int16, err error) {
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *DMXBricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -1158,51 +1158,51 @@ func (device *DMXBricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *DMXBricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *DMXBricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1214,29 +1214,29 @@ func (device *DMXBricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *DMXBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

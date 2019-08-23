@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures two DC currents between 0mA and 20mA (IEC 60381-1).
+// Measures two DC currents between 0mA and 20mA (IEC 60381-1).
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialDual020mA_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package industrial_dual_0_20ma_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetCurrent Function = 1
+	FunctionGetCurrent Function = 1
 	FunctionSetCurrentCallbackPeriod Function = 2
 	FunctionGetCurrentCallbackPeriod Function = 3
 	FunctionSetCurrentCallbackThreshold Function = 4
@@ -39,26 +39,26 @@ const (
 	FunctionCallbackCurrentReached Function = 11
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type SampleRate uint8
+type SampleRate = uint8
 
 const (
-    SampleRate240SPS SampleRate = 0
+	SampleRate240SPS SampleRate = 0
 	SampleRate60SPS SampleRate = 1
 	SampleRate15SPS SampleRate = 2
 	SampleRate4SPS SampleRate = 3
 )
 
-type IndustrialDual020mABricklet struct{
+type IndustrialDual020mABricklet struct {
 	device Device
 }
 const DeviceIdentifier = 228
@@ -66,12 +66,12 @@ const DeviceDisplayName = "Industrial Dual 0-20mA Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDual020mABricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return IndustrialDual020mABricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return IndustrialDual020mABricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetCurrentCallbackPeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetCurrentCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetCurrentCallbackThreshold] = ResponseExpectedFlagTrue;
@@ -81,7 +81,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDual020mABrick
 	dev.ResponseExpected[FunctionSetSampleRate] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetSampleRate] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return IndustrialDual020mABricklet{dev}, nil
+	return IndustrialDual020mABricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -99,7 +99,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDual020mABrick
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *IndustrialDual020mABricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -111,7 +111,7 @@ func (device *IndustrialDual020mABricklet) GetResponseExpected(functionID Functi
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *IndustrialDual020mABricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -121,7 +121,7 @@ func (device *IndustrialDual020mABricklet) SetResponseExpectedAll(responseExpect
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *IndustrialDual020mABricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -131,20 +131,20 @@ func (device *IndustrialDual020mABricklet) GetAPIVersion() [3]uint8 {
 // The RegisterCurrentCallback callback is only triggered if the current has changed since the
 // last triggering.
 func (device *IndustrialDual020mABricklet) RegisterCurrentCallback(fn func(uint8, int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var sensor uint8
-var current int32
-                binary.Read(buf, binary.LittleEndian, &sensor)
-binary.Read(buf, binary.LittleEndian, &current)
-                fn(sensor, current)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCurrent), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var sensor uint8
+		var current int32
+		binary.Read(buf, binary.LittleEndian, &sensor)
+		binary.Read(buf, binary.LittleEndian, &current)
+		fn(sensor, current)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCurrent), wrapper)
 }
 
-//Remove a registered Current callback.
-func (device *IndustrialDual020mABricklet) DeregisterCurrentCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), registrationID)
+// Remove a registered Current callback.
+func (device *IndustrialDual020mABricklet) DeregisterCurrentCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCurrent), registrationId)
 }
 
 
@@ -155,20 +155,20 @@ func (device *IndustrialDual020mABricklet) DeregisterCurrentCallback(registratio
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *IndustrialDual020mABricklet) RegisterCurrentReachedCallback(fn func(uint8, int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var sensor uint8
-var current int32
-                binary.Read(buf, binary.LittleEndian, &sensor)
-binary.Read(buf, binary.LittleEndian, &current)
-                fn(sensor, current)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCurrentReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var sensor uint8
+		var current int32
+		binary.Read(buf, binary.LittleEndian, &sensor)
+		binary.Read(buf, binary.LittleEndian, &current)
+		fn(sensor, current)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCurrentReached), wrapper)
 }
 
-//Remove a registered Current Reached callback.
-func (device *IndustrialDual020mABricklet) DeregisterCurrentReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCurrentReached), registrationID)
+// Remove a registered Current Reached callback.
+func (device *IndustrialDual020mABricklet) DeregisterCurrentReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCurrentReached), registrationId)
 }
 
 
@@ -186,27 +186,27 @@ func (device *IndustrialDual020mABricklet) DeregisterCurrentReachedCallback(regi
 // RegisterCurrentCallback callback and set the period with
 // SetCurrentCallbackPeriod.
 func (device *IndustrialDual020mABricklet) GetCurrent(sensor uint8) (current int32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensor);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensor);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
-    if err != nil {
-        return current, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
+	if err != nil {
+		return current, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return current, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &current)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
 
-    }
+	}
 
-    return current, nil
+	return current, nil
 }
 
 // Sets the period in ms with which the RegisterCurrentCallback callback is triggered
@@ -217,52 +217,52 @@ func (device *IndustrialDual020mABricklet) GetCurrent(sensor uint8) (current int
 // 
 // The default value is 0.
 func (device *IndustrialDual020mABricklet) SetCurrentCallbackPeriod(sensor uint8, period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensor);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensor);
 	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetCurrentCallbackPeriod.
 func (device *IndustrialDual020mABricklet) GetCurrentCallbackPeriod(sensor uint8) (period uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensor);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensor);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterCurrentReachedCallback callback for the given
@@ -288,29 +288,29 @@ func (device *IndustrialDual020mABricklet) GetCurrentCallbackPeriod(sensor uint8
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *IndustrialDual020mABricklet) SetCurrentCallbackThreshold(sensor uint8, option ThresholdOption, min int32, max int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensor);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensor);
 	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetCurrentCallbackThreshold.
@@ -323,29 +323,29 @@ func (device *IndustrialDual020mABricklet) SetCurrentCallbackThreshold(sensor ui
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *IndustrialDual020mABricklet) GetCurrentCallbackThreshold(sensor uint8) (option ThresholdOption, min int32, max int32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sensor);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sensor);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return option, min, max, nil
+	return option, min, max, nil
 }
 
 // Sets the period in ms with which the threshold callback
@@ -360,50 +360,50 @@ func (device *IndustrialDual020mABricklet) GetCurrentCallbackThreshold(sensor ui
 // 
 // The default value is 100.
 func (device *IndustrialDual020mABricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *IndustrialDual020mABricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Sets the sample rate to either 240, 60, 15 or 4 samples per second.
@@ -425,26 +425,26 @@ func (device *IndustrialDual020mABricklet) GetDebouncePeriod() (debounce uint32,
 //	* SampleRate15SPS
 //	* SampleRate4SPS
 func (device *IndustrialDual020mABricklet) SetSampleRate(rate SampleRate) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, rate);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, rate);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSampleRate), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSampleRate), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the sample rate as set by SetSampleRate.
@@ -456,26 +456,26 @@ func (device *IndustrialDual020mABricklet) SetSampleRate(rate SampleRate) (err e
 //	* SampleRate15SPS
 //	* SampleRate4SPS
 func (device *IndustrialDual020mABricklet) GetSampleRate() (rate SampleRate, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSampleRate), buf.Bytes())
-    if err != nil {
-        return rate, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSampleRate), buf.Bytes())
+	if err != nil {
+		return rate, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return rate, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return rate, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &rate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &rate)
 
-    }
+	}
 
-    return rate, nil
+	return rate, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -487,29 +487,29 @@ func (device *IndustrialDual020mABricklet) GetSampleRate() (rate SampleRate, err
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialDual020mABricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Communicates with CAN bus devices.
+// Communicates with CAN bus devices.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/CAN_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package can_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionWriteFrame Function = 1
+	FunctionWriteFrame Function = 1
 	FunctionReadFrame Function = 2
 	FunctionEnableFrameReadCallback Function = 3
 	FunctionDisableFrameReadCallback Function = 4
@@ -39,19 +39,19 @@ const (
 	FunctionCallbackFrameRead Function = 11
 )
 
-type FrameType uint8
+type FrameType = uint8
 
 const (
-    FrameTypeStandardData FrameType = 0
+	FrameTypeStandardData FrameType = 0
 	FrameTypeStandardRemote FrameType = 1
 	FrameTypeExtendedData FrameType = 2
 	FrameTypeExtendedRemote FrameType = 3
 )
 
-type BaudRate uint8
+type BaudRate = uint8
 
 const (
-    BaudRate10kbps BaudRate = 0
+	BaudRate10kbps BaudRate = 0
 	BaudRate20kbps BaudRate = 1
 	BaudRate50kbps BaudRate = 2
 	BaudRate125kbps BaudRate = 3
@@ -61,25 +61,25 @@ const (
 	BaudRate1000kbps BaudRate = 7
 )
 
-type TransceiverMode uint8
+type TransceiverMode = uint8
 
 const (
-    TransceiverModeNormal TransceiverMode = 0
+	TransceiverModeNormal TransceiverMode = 0
 	TransceiverModeLoopback TransceiverMode = 1
 	TransceiverModeReadOnly TransceiverMode = 2
 )
 
-type FilterMode uint8
+type FilterMode = uint8
 
 const (
-    FilterModeDisabled FilterMode = 0
+	FilterModeDisabled FilterMode = 0
 	FilterModeAcceptAll FilterMode = 1
 	FilterModeMatchStandard FilterMode = 2
 	FilterModeMatchStandardAndData FilterMode = 3
 	FilterModeMatchExtended FilterMode = 4
 )
 
-type CANBricklet struct{
+type CANBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 270
@@ -87,12 +87,12 @@ const DeviceDisplayName = "CAN Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (CANBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return CANBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionWriteFrame] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return CANBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionWriteFrame] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReadFrame] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionEnableFrameReadCallback] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionDisableFrameReadCallback] = ResponseExpectedFlagTrue;
@@ -103,7 +103,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (CANBricklet, error) {
 	dev.ResponseExpected[FunctionGetReadFilter] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetErrorLog] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return CANBricklet{dev}, nil
+	return CANBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -121,7 +121,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (CANBricklet, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *CANBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -133,7 +133,7 @@ func (device *CANBricklet) GetResponseExpected(functionID Function) (bool, error
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *CANBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -143,7 +143,7 @@ func (device *CANBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *CANBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered if a data or remote frame was received by the CAN
@@ -159,24 +159,24 @@ func (device *CANBricklet) GetAPIVersion() [3]uint8 {
 // 
 // To enable this callback, use EnableFrameReadCallback.
 func (device *CANBricklet) RegisterFrameReadCallback(fn func(FrameType, uint32, [8]uint8, uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var frameType FrameType
-var identifier uint32
-var data [8]uint8
-var length uint8
-                binary.Read(buf, binary.LittleEndian, &frameType)
-binary.Read(buf, binary.LittleEndian, &identifier)
-binary.Read(buf, binary.LittleEndian, &data)
-binary.Read(buf, binary.LittleEndian, &length)
-                fn(frameType, identifier, data, length)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameRead), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var frameType FrameType
+		var identifier uint32
+		var data [8]uint8
+		var length uint8
+		binary.Read(buf, binary.LittleEndian, &frameType)
+		binary.Read(buf, binary.LittleEndian, &identifier)
+		binary.Read(buf, binary.LittleEndian, &data)
+		binary.Read(buf, binary.LittleEndian, &length)
+		fn(frameType, identifier, data, length)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameRead), wrapper)
 }
 
-//Remove a registered Frame Read callback.
-func (device *CANBricklet) DeregisterFrameReadCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameRead), registrationID)
+// Remove a registered Frame Read callback.
+func (device *CANBricklet) DeregisterFrameReadCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameRead), registrationId)
 }
 
 
@@ -209,30 +209,30 @@ func (device *CANBricklet) DeregisterFrameReadCallback(registrationID uint64) {
 //	* FrameTypeExtendedData
 //	* FrameTypeExtendedRemote
 func (device *CANBricklet) WriteFrame(frameType FrameType, identifier uint32, data [8]uint8, length uint8) (success bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frameType);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frameType);
 	binary.Write(&buf, binary.LittleEndian, identifier);
 	binary.Write(&buf, binary.LittleEndian, data);
 	binary.Write(&buf, binary.LittleEndian, length);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFrame), buf.Bytes())
-    if err != nil {
-        return success, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFrame), buf.Bytes())
+	if err != nil {
+		return success, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return success, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return success, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &success)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &success)
 
-    }
+	}
 
-    return success, nil
+	return success, nil
 }
 
 // Tries to read the next data or remote frame from the read buffer and return it.
@@ -260,104 +260,104 @@ func (device *CANBricklet) WriteFrame(frameType FrameType, identifier uint32, da
 //	* FrameTypeExtendedData
 //	* FrameTypeExtendedRemote
 func (device *CANBricklet) ReadFrame() (success bool, frameType FrameType, identifier uint32, data [8]uint8, length uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadFrame), buf.Bytes())
-    if err != nil {
-        return success, frameType, identifier, data, length, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadFrame), buf.Bytes())
+	if err != nil {
+		return success, frameType, identifier, data, length, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return success, frameType, identifier, data, length, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return success, frameType, identifier, data, length, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &success)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &success)
 	binary.Read(resultBuf, binary.LittleEndian, &frameType)
 	binary.Read(resultBuf, binary.LittleEndian, &identifier)
 	binary.Read(resultBuf, binary.LittleEndian, &data)
 	binary.Read(resultBuf, binary.LittleEndian, &length)
 
-    }
+	}
 
-    return success, frameType, identifier, data, length, nil
+	return success, frameType, identifier, data, length, nil
 }
 
 // Enables the RegisterFrameReadCallback callback.
 // 
 // By default the callback is disabled.
 func (device *CANBricklet) EnableFrameReadCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableFrameReadCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableFrameReadCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the RegisterFrameReadCallback callback.
 // 
 // By default the callback is disabled.
 func (device *CANBricklet) DisableFrameReadCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableFrameReadCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableFrameReadCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the RegisterFrameReadCallback callback is enabled, *false* otherwise.
 func (device *CANBricklet) IsFrameReadCallbackEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsFrameReadCallbackEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsFrameReadCallbackEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Sets the configuration for the CAN bus communication.
@@ -401,28 +401,28 @@ func (device *CANBricklet) IsFrameReadCallbackEnabled() (enabled bool, err error
 //	* TransceiverModeLoopback
 //	* TransceiverModeReadOnly
 func (device *CANBricklet) SetConfiguration(baudRate BaudRate, transceiverMode TransceiverMode, writeTimeout int32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, baudRate);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, baudRate);
 	binary.Write(&buf, binary.LittleEndian, transceiverMode);
 	binary.Write(&buf, binary.LittleEndian, writeTimeout);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
@@ -441,28 +441,28 @@ func (device *CANBricklet) SetConfiguration(baudRate BaudRate, transceiverMode T
 //	* TransceiverModeLoopback
 //	* TransceiverModeReadOnly
 func (device *CANBricklet) GetConfiguration() (baudRate BaudRate, transceiverMode TransceiverMode, writeTimeout int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
-    if err != nil {
-        return baudRate, transceiverMode, writeTimeout, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
+	if err != nil {
+		return baudRate, transceiverMode, writeTimeout, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return baudRate, transceiverMode, writeTimeout, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return baudRate, transceiverMode, writeTimeout, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &baudRate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &baudRate)
 	binary.Read(resultBuf, binary.LittleEndian, &transceiverMode)
 	binary.Read(resultBuf, binary.LittleEndian, &writeTimeout)
 
-    }
+	}
 
-    return baudRate, transceiverMode, writeTimeout, nil
+	return baudRate, transceiverMode, writeTimeout, nil
 }
 
 // Set the read filter configuration. This can be used to define which frames
@@ -526,29 +526,29 @@ func (device *CANBricklet) GetConfiguration() (baudRate BaudRate, transceiverMod
 //	* FilterModeMatchStandardAndData
 //	* FilterModeMatchExtended
 func (device *CANBricklet) SetReadFilter(mode FilterMode, mask uint32, filter1 uint32, filter2 uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 	binary.Write(&buf, binary.LittleEndian, mask);
 	binary.Write(&buf, binary.LittleEndian, filter1);
 	binary.Write(&buf, binary.LittleEndian, filter2);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetReadFilter), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetReadFilter), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the read filter as set by SetReadFilter.
@@ -561,29 +561,29 @@ func (device *CANBricklet) SetReadFilter(mode FilterMode, mask uint32, filter1 u
 //	* FilterModeMatchStandardAndData
 //	* FilterModeMatchExtended
 func (device *CANBricklet) GetReadFilter() (mode FilterMode, mask uint32, filter1 uint32, filter2 uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetReadFilter), buf.Bytes())
-    if err != nil {
-        return mode, mask, filter1, filter2, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetReadFilter), buf.Bytes())
+	if err != nil {
+		return mode, mask, filter1, filter2, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, mask, filter1, filter2, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, mask, filter1, filter2, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 	binary.Read(resultBuf, binary.LittleEndian, &mask)
 	binary.Read(resultBuf, binary.LittleEndian, &filter1)
 	binary.Read(resultBuf, binary.LittleEndian, &filter2)
 
-    }
+	}
 
-    return mode, mask, filter1, filter2, nil
+	return mode, mask, filter1, filter2, nil
 }
 
 // Returns information about different kinds of errors.
@@ -620,31 +620,31 @@ func (device *CANBricklet) GetReadFilter() (mode FilterMode, mask uint32, filter
 //   function. Using the RegisterFrameReadCallback callback ensures that the read buffer
 //   can not overflow.
 func (device *CANBricklet) GetErrorLog() (writeErrorLevel uint8, readErrorLevel uint8, transceiverDisabled bool, writeTimeoutCount uint32, readRegisterOverflowCount uint32, readBufferOverflowCount uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetErrorLog), buf.Bytes())
-    if err != nil {
-        return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetErrorLog), buf.Bytes())
+	if err != nil {
+		return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &writeErrorLevel)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &writeErrorLevel)
 	binary.Read(resultBuf, binary.LittleEndian, &readErrorLevel)
 	binary.Read(resultBuf, binary.LittleEndian, &transceiverDisabled)
 	binary.Read(resultBuf, binary.LittleEndian, &writeTimeoutCount)
 	binary.Read(resultBuf, binary.LittleEndian, &readRegisterOverflowCount)
 	binary.Read(resultBuf, binary.LittleEndian, &readBufferOverflowCount)
 
-    }
+	}
 
-    return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, nil
+	return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -656,29 +656,29 @@ func (device *CANBricklet) GetErrorLog() (writeErrorLevel uint8, readErrorLevel 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *CANBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

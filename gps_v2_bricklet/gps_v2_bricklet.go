@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Determine position, velocity and altitude using GPS‍.
+// Determine position, velocity and altitude using GPS‍.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/GPSV2_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package gps_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetCoordinates Function = 1
+	FunctionGetCoordinates Function = 1
 	FunctionGetStatus Function = 2
 	FunctionGetAltitude Function = 3
 	FunctionGetMotion Function = 4
@@ -67,62 +67,62 @@ const (
 	FunctionCallbackDateTime Function = 26
 )
 
-type RestartType uint8
+type RestartType = uint8
 
 const (
-    RestartTypeHotStart RestartType = 0
+	RestartTypeHotStart RestartType = 0
 	RestartTypeWarmStart RestartType = 1
 	RestartTypeColdStart RestartType = 2
 	RestartTypeFactoryReset RestartType = 3
 )
 
-type SatelliteSystem uint8
+type SatelliteSystem = uint8
 
 const (
-    SatelliteSystemGPS SatelliteSystem = 0
+	SatelliteSystemGPS SatelliteSystem = 0
 	SatelliteSystemGLONASS SatelliteSystem = 1
 	SatelliteSystemGalileo SatelliteSystem = 2
 )
 
-type Fix uint8
+type Fix = uint8
 
 const (
-    FixNoFix Fix = 1
+	FixNoFix Fix = 1
 	Fix2DFix Fix = 2
 	Fix3DFix Fix = 3
 )
 
-type FixLEDConfig uint8
+type FixLEDConfig = uint8
 
 const (
-    FixLEDConfigOff FixLEDConfig = 0
+	FixLEDConfigOff FixLEDConfig = 0
 	FixLEDConfigOn FixLEDConfig = 1
 	FixLEDConfigShowHeartbeat FixLEDConfig = 2
 	FixLEDConfigShowFix FixLEDConfig = 3
 	FixLEDConfigShowPPS FixLEDConfig = 4
 )
 
-type SBAS uint8
+type SBAS = uint8
 
 const (
-    SBASEnabled SBAS = 0
+	SBASEnabled SBAS = 0
 	SBASDisabled SBAS = 1
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -130,16 +130,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type GPSV2Bricklet struct{
+type GPSV2Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 276
@@ -147,12 +147,12 @@ const DeviceDisplayName = "GPS Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (GPSV2Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 1)
-    if err != nil {
-        return GPSV2Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetCoordinates] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 1)
+	if err != nil {
+		return GPSV2Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetCoordinates] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetStatus] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetAltitude] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetMotion] = ResponseExpectedFlagAlwaysTrue;
@@ -186,7 +186,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (GPSV2Bricklet, error) {
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return GPSV2Bricklet{dev}, nil
+	return GPSV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -204,7 +204,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (GPSV2Bricklet, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *GPSV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -216,7 +216,7 @@ func (device *GPSV2Bricklet) GetResponseExpected(functionID Function) (bool, err
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *GPSV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -226,7 +226,7 @@ func (device *GPSV2Bricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *GPSV2Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered precisely once per second,
@@ -237,18 +237,18 @@ func (device *GPSV2Bricklet) GetAPIVersion() [3]uint8 {
 // long run this will be very precise. For example a count of
 // 3600 pulses will take exactly 1 hour.
 func (device *GPSV2Bricklet) RegisterPulsePerSecondCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPulsePerSecond), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPulsePerSecond), wrapper)
 }
 
-//Remove a registered Pulse Per Second callback.
-func (device *GPSV2Bricklet) DeregisterPulsePerSecondCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPulsePerSecond), registrationID)
+// Remove a registered Pulse Per Second callback.
+func (device *GPSV2Bricklet) DeregisterPulsePerSecondCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPulsePerSecond), registrationId)
 }
 
 
@@ -260,24 +260,24 @@ func (device *GPSV2Bricklet) DeregisterPulsePerSecondCallback(registrationID uin
 // since the last triggering and if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) RegisterCoordinatesCallback(fn func(uint32, rune, uint32, rune)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var latitude uint32
-var ns rune
-var longitude uint32
-var ew rune
-                binary.Read(buf, binary.LittleEndian, &latitude)
-ns = rune(buf.Next(1)[0])
-binary.Read(buf, binary.LittleEndian, &longitude)
-ew = rune(buf.Next(1)[0])
-                fn(latitude, ns, longitude, ew)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackCoordinates), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var latitude uint32
+		var ns rune
+		var longitude uint32
+		var ew rune
+		binary.Read(buf, binary.LittleEndian, &latitude)
+		ns = rune(buf.Next(1)[0])
+		binary.Read(buf, binary.LittleEndian, &longitude)
+		ew = rune(buf.Next(1)[0])
+		fn(latitude, ns, longitude, ew)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCoordinates), wrapper)
 }
 
-//Remove a registered Coordinates callback.
-func (device *GPSV2Bricklet) DeregisterCoordinatesCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackCoordinates), registrationID)
+// Remove a registered Coordinates callback.
+func (device *GPSV2Bricklet) DeregisterCoordinatesCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCoordinates), registrationId)
 }
 
 
@@ -288,20 +288,20 @@ func (device *GPSV2Bricklet) DeregisterCoordinatesCallback(registrationID uint64
 // The RegisterStatusCallback callback is only triggered if the status changed since the
 // last triggering.
 func (device *GPSV2Bricklet) RegisterStatusCallback(fn func(bool, uint8)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var hasFix bool
-var satellitesView uint8
-                binary.Read(buf, binary.LittleEndian, &hasFix)
-binary.Read(buf, binary.LittleEndian, &satellitesView)
-                fn(hasFix, satellitesView)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackStatus), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var hasFix bool
+		var satellitesView uint8
+		binary.Read(buf, binary.LittleEndian, &hasFix)
+		binary.Read(buf, binary.LittleEndian, &satellitesView)
+		fn(hasFix, satellitesView)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackStatus), wrapper)
 }
 
-//Remove a registered Status callback.
-func (device *GPSV2Bricklet) DeregisterStatusCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackStatus), registrationID)
+// Remove a registered Status callback.
+func (device *GPSV2Bricklet) DeregisterStatusCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackStatus), registrationId)
 }
 
 
@@ -313,20 +313,20 @@ func (device *GPSV2Bricklet) DeregisterStatusCallback(registrationID uint64) {
 // last triggering and if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) RegisterAltitudeCallback(fn func(int32, int32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var altitude int32
-var geoidalSeparation int32
-                binary.Read(buf, binary.LittleEndian, &altitude)
-binary.Read(buf, binary.LittleEndian, &geoidalSeparation)
-                fn(altitude, geoidalSeparation)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAltitude), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var altitude int32
+		var geoidalSeparation int32
+		binary.Read(buf, binary.LittleEndian, &altitude)
+		binary.Read(buf, binary.LittleEndian, &geoidalSeparation)
+		fn(altitude, geoidalSeparation)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAltitude), wrapper)
 }
 
-//Remove a registered Altitude callback.
-func (device *GPSV2Bricklet) DeregisterAltitudeCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAltitude), registrationID)
+// Remove a registered Altitude callback.
+func (device *GPSV2Bricklet) DeregisterAltitudeCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAltitude), registrationId)
 }
 
 
@@ -338,20 +338,20 @@ func (device *GPSV2Bricklet) DeregisterAltitudeCallback(registrationID uint64) {
 // last triggering and if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) RegisterMotionCallback(fn func(uint32, uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var course uint32
-var speed uint32
-                binary.Read(buf, binary.LittleEndian, &course)
-binary.Read(buf, binary.LittleEndian, &speed)
-                fn(course, speed)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackMotion), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var course uint32
+		var speed uint32
+		binary.Read(buf, binary.LittleEndian, &course)
+		binary.Read(buf, binary.LittleEndian, &speed)
+		fn(course, speed)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackMotion), wrapper)
 }
 
-//Remove a registered Motion callback.
-func (device *GPSV2Bricklet) DeregisterMotionCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackMotion), registrationID)
+// Remove a registered Motion callback.
+func (device *GPSV2Bricklet) DeregisterMotionCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackMotion), registrationId)
 }
 
 
@@ -362,20 +362,20 @@ func (device *GPSV2Bricklet) DeregisterMotionCallback(registrationID uint64) {
 // The RegisterDateTimeCallback callback is only triggered if the date or time changed
 // since the last triggering.
 func (device *GPSV2Bricklet) RegisterDateTimeCallback(fn func(uint32, uint32)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var date uint32
-var time uint32
-                binary.Read(buf, binary.LittleEndian, &date)
-binary.Read(buf, binary.LittleEndian, &time)
-                fn(date, time)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackDateTime), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var date uint32
+		var time uint32
+		binary.Read(buf, binary.LittleEndian, &date)
+		binary.Read(buf, binary.LittleEndian, &time)
+		fn(date, time)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackDateTime), wrapper)
 }
 
-//Remove a registered Date Time callback.
-func (device *GPSV2Bricklet) DeregisterDateTimeCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationID)
+// Remove a registered Date Time callback.
+func (device *GPSV2Bricklet) DeregisterDateTimeCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationId)
 }
 
 
@@ -388,29 +388,29 @@ func (device *GPSV2Bricklet) DeregisterDateTimeCallback(registrationID uint64) {
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) GetCoordinates() (latitude uint32, ns rune, longitude uint32, ew rune, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCoordinates), buf.Bytes())
-    if err != nil {
-        return latitude, ns, longitude, ew, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCoordinates), buf.Bytes())
+	if err != nil {
+		return latitude, ns, longitude, ew, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return latitude, ns, longitude, ew, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return latitude, ns, longitude, ew, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &latitude)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &latitude)
 	ns = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &longitude)
 	ew = rune(resultBuf.Next(1)[0])
 
-    }
+	}
 
-    return latitude, ns, longitude, ew, nil
+	return latitude, ns, longitude, ew, nil
 }
 
 // Returns if a fix is currently available as well as the, the number of
@@ -419,27 +419,27 @@ func (device *GPSV2Bricklet) GetCoordinates() (latitude uint32, ns rune, longitu
 // There is also a `green LED <gps_v2_bricklet_fix_led>` on the Bricklet that
 // indicates the fix status.
 func (device *GPSV2Bricklet) GetStatus() (hasFix bool, satellitesView uint8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatus), buf.Bytes())
-    if err != nil {
-        return hasFix, satellitesView, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatus), buf.Bytes())
+	if err != nil {
+		return hasFix, satellitesView, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return hasFix, satellitesView, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return hasFix, satellitesView, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &hasFix)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &hasFix)
 	binary.Read(resultBuf, binary.LittleEndian, &satellitesView)
 
-    }
+	}
 
-    return hasFix, satellitesView, nil
+	return hasFix, satellitesView, nil
 }
 
 // Returns the current altitude and corresponding geoidal separation.
@@ -449,27 +449,27 @@ func (device *GPSV2Bricklet) GetStatus() (hasFix bool, satellitesView uint8, err
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) GetAltitude() (altitude int32, geoidalSeparation int32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAltitude), buf.Bytes())
-    if err != nil {
-        return altitude, geoidalSeparation, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAltitude), buf.Bytes())
+	if err != nil {
+		return altitude, geoidalSeparation, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return altitude, geoidalSeparation, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return altitude, geoidalSeparation, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &altitude)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &altitude)
 	binary.Read(resultBuf, binary.LittleEndian, &geoidalSeparation)
 
-    }
+	}
 
-    return altitude, geoidalSeparation, nil
+	return altitude, geoidalSeparation, nil
 }
 
 // Returns the current course and speed. Course is given in hundredths degree
@@ -482,27 +482,27 @@ func (device *GPSV2Bricklet) GetAltitude() (altitude int32, geoidalSeparation in
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) GetMotion() (course uint32, speed uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMotion), buf.Bytes())
-    if err != nil {
-        return course, speed, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMotion), buf.Bytes())
+	if err != nil {
+		return course, speed, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return course, speed, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return course, speed, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &course)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &course)
 	binary.Read(resultBuf, binary.LittleEndian, &speed)
 
-    }
+	}
 
-    return course, speed, nil
+	return course, speed, nil
 }
 
 // Returns the current date and time. The date is
@@ -510,27 +510,27 @@ func (device *GPSV2Bricklet) GetMotion() (course uint32, speed uint32, err error
 // in the format ``hhmmss.sss``. For example, 140713 means
 // 14.05.13 as date and 195923568 means 19:59:23.568 as time.
 func (device *GPSV2Bricklet) GetDateTime() (date uint32, time uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
-    if err != nil {
-        return date, time, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
+	if err != nil {
+		return date, time, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return date, time, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return date, time, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &date)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &date)
 	binary.Read(resultBuf, binary.LittleEndian, &time)
 
-    }
+	}
 
-    return date, time, nil
+	return date, time, nil
 }
 
 // Restarts the GPS Bricklet, the following restart types are available:
@@ -549,26 +549,26 @@ func (device *GPSV2Bricklet) GetDateTime() (date uint32, time uint32, err error)
 //	* RestartTypeColdStart
 //	* RestartTypeFactoryReset
 func (device *GPSV2Bricklet) Restart(restartType RestartType) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, restartType);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, restartType);
 
-    resultBytes, err := device.device.Set(uint8(FunctionRestart), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionRestart), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the
@@ -595,32 +595,32 @@ func (device *GPSV2Bricklet) Restart(restartType RestartType) (err error) {
 //	* Fix2DFix
 //	* Fix3DFix
 func (device *GPSV2Bricklet) GetSatelliteSystemStatusLowLevel(satelliteSystem SatelliteSystem) (satelliteNumbersLength uint8, satelliteNumbersData [12]uint8, fix Fix, pdop uint16, hdop uint16, vdop uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, satelliteSystem);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, satelliteSystem);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSatelliteSystemStatusLowLevel), buf.Bytes())
-    if err != nil {
-        return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSatelliteSystemStatusLowLevel), buf.Bytes())
+	if err != nil {
+		return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &satelliteNumbersLength)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &satelliteNumbersLength)
 	copy(satelliteNumbersData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 12/8)))
 	binary.Read(resultBuf, binary.LittleEndian, &fix)
 	binary.Read(resultBuf, binary.LittleEndian, &pdop)
 	binary.Read(resultBuf, binary.LittleEndian, &hdop)
 	binary.Read(resultBuf, binary.LittleEndian, &vdop)
 
-    }
+	}
 
-    return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, nil
+	return satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, nil
 }
 
 // Returns the
@@ -638,37 +638,37 @@ func (device *GPSV2Bricklet) GetSatelliteSystemStatusLowLevel(satelliteSystem Sa
 // the numbers of the satellites that are currently utilized. The number 0 is not
 // a valid satellite number and can be ignored in the list.
 	func (device *GPSV2Bricklet) GetSatelliteSystemStatus(satelliteSystem SatelliteSystem) (satelliteNumbers []uint8, fix Fix, pdop uint16, hdop uint16, vdop uint16, err error) {
-        buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, err := device.GetSatelliteSystemStatusLowLevel(satelliteSystem)
+		buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			satelliteNumbersLength, satelliteNumbersData, fix, pdop, hdop, vdop, err := device.GetSatelliteSystemStatusLowLevel(satelliteSystem)
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            binary.Write(&lowLevelResults, binary.LittleEndian, fix);
+			var lowLevelResults bytes.Buffer
+			binary.Write(&lowLevelResults, binary.LittleEndian, fix);
 	binary.Write(&lowLevelResults, binary.LittleEndian, pdop);
 	binary.Write(&lowLevelResults, binary.LittleEndian, hdop);
 	binary.Write(&lowLevelResults, binary.LittleEndian, vdop);
 
-            return LowLevelResult{
-                uint64(satelliteNumbersLength),
-                uint64(satelliteNumbersLength),
-                Uint8SliceToByteSlice(satelliteNumbersData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            0,
-            8)
-        if err != nil {
-            return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, err
-        }
-        resultBuf := bytes.NewBuffer(result)
-        binary.Read(resultBuf, binary.LittleEndian, &fix)
+			return LowLevelResult{
+				uint64(satelliteNumbersLength),
+				uint64(satelliteNumbersLength),
+				Uint8SliceToByteSlice(satelliteNumbersData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			0,
+			8)
+		if err != nil {
+			return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, err
+		}
+		resultBuf := bytes.NewBuffer(result)
+		binary.Read(resultBuf, binary.LittleEndian, &fix)
 	binary.Read(resultBuf, binary.LittleEndian, &pdop)
 	binary.Read(resultBuf, binary.LittleEndian, &hdop)
 	binary.Read(resultBuf, binary.LittleEndian, &vdop)
-        return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, nil
-    }
+		return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, nil
+	}
 
 // Returns the current
 // 
@@ -689,30 +689,30 @@ func (device *GPSV2Bricklet) GetSatelliteSystemStatusLowLevel(satelliteSystem Sa
 //	* SatelliteSystemGLONASS
 //	* SatelliteSystemGalileo
 func (device *GPSV2Bricklet) GetSatelliteStatus(satelliteSystem SatelliteSystem, satelliteNumber uint8) (elevation int16, azimuth int16, snr int16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, satelliteSystem);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, satelliteSystem);
 	binary.Write(&buf, binary.LittleEndian, satelliteNumber);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSatelliteStatus), buf.Bytes())
-    if err != nil {
-        return elevation, azimuth, snr, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSatelliteStatus), buf.Bytes())
+	if err != nil {
+		return elevation, azimuth, snr, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return elevation, azimuth, snr, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return elevation, azimuth, snr, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &elevation)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &elevation)
 	binary.Read(resultBuf, binary.LittleEndian, &azimuth)
 	binary.Read(resultBuf, binary.LittleEndian, &snr)
 
-    }
+	}
 
-    return elevation, azimuth, snr, nil
+	return elevation, azimuth, snr, nil
 }
 
 // Sets the fix LED configuration. By default the LED shows if
@@ -732,26 +732,26 @@ func (device *GPSV2Bricklet) GetSatelliteStatus(satelliteSystem SatelliteSystem,
 //	* FixLEDConfigShowFix
 //	* FixLEDConfigShowPPS
 func (device *GPSV2Bricklet) SetFixLEDConfig(config FixLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetFixLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetFixLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetFixLEDConfig
@@ -764,26 +764,26 @@ func (device *GPSV2Bricklet) SetFixLEDConfig(config FixLEDConfig) (err error) {
 //	* FixLEDConfigShowFix
 //	* FixLEDConfigShowPPS
 func (device *GPSV2Bricklet) GetFixLEDConfig() (config FixLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetFixLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFixLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Sets the period in ms with which the RegisterCoordinatesCallback callback is triggered
@@ -794,50 +794,50 @@ func (device *GPSV2Bricklet) GetFixLEDConfig() (config FixLEDConfig, err error) 
 // 
 // The default value is 0.
 func (device *GPSV2Bricklet) SetCoordinatesCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetCoordinatesCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetCoordinatesCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetCoordinatesCallbackPeriod.
 func (device *GPSV2Bricklet) GetCoordinatesCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetCoordinatesCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetCoordinatesCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterStatusCallback callback is triggered
@@ -848,50 +848,50 @@ func (device *GPSV2Bricklet) GetCoordinatesCallbackPeriod() (period uint32, err 
 // 
 // The default value is 0.
 func (device *GPSV2Bricklet) SetStatusCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetStatusCallbackPeriod.
 func (device *GPSV2Bricklet) GetStatusCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterAltitudeCallback callback is triggered
@@ -902,50 +902,50 @@ func (device *GPSV2Bricklet) GetStatusCallbackPeriod() (period uint32, err error
 // 
 // The default value is 0.
 func (device *GPSV2Bricklet) SetAltitudeCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAltitudeCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAltitudeCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetAltitudeCallbackPeriod.
 func (device *GPSV2Bricklet) GetAltitudeCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAltitudeCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAltitudeCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterMotionCallback callback is triggered
@@ -956,50 +956,50 @@ func (device *GPSV2Bricklet) GetAltitudeCallbackPeriod() (period uint32, err err
 // 
 // The default value is 0.
 func (device *GPSV2Bricklet) SetMotionCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMotionCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMotionCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetMotionCallbackPeriod.
 func (device *GPSV2Bricklet) GetMotionCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMotionCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMotionCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterDateTimeCallback callback is triggered
@@ -1010,50 +1010,50 @@ func (device *GPSV2Bricklet) GetMotionCallbackPeriod() (period uint32, err error
 // 
 // The default value is 0.
 func (device *GPSV2Bricklet) SetDateTimeCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetDateTimeCallbackPeriod.
 func (device *GPSV2Bricklet) GetDateTimeCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // If https://en.wikipedia.org/wiki/GNSS_augmentation#Satellite-based_augmentation_system is enabled,
@@ -1069,26 +1069,26 @@ func (device *GPSV2Bricklet) GetDateTimeCallbackPeriod() (period uint32, err err
 //	* SBASEnabled
 //	* SBASDisabled
 func (device *GPSV2Bricklet) SetSBASConfig(sbasConfig SBAS) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, sbasConfig);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sbasConfig);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSBASConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSBASConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the SBAS configuration as set by SetSBASConfig
@@ -1100,26 +1100,26 @@ func (device *GPSV2Bricklet) SetSBASConfig(sbasConfig SBAS) (err error) {
 //	* SBASEnabled
 //	* SBASDisabled
 func (device *GPSV2Bricklet) GetSBASConfig() (sbasConfig SBAS, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSBASConfig), buf.Bytes())
-    if err != nil {
-        return sbasConfig, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSBASConfig), buf.Bytes())
+	if err != nil {
+		return sbasConfig, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return sbasConfig, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return sbasConfig, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &sbasConfig)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &sbasConfig)
 
-    }
+	}
 
-    return sbasConfig, nil
+	return sbasConfig, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -1134,29 +1134,29 @@ func (device *GPSV2Bricklet) GetSBASConfig() (sbasConfig SBAS, err error) {
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *GPSV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -1183,27 +1183,27 @@ func (device *GPSV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *GPSV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -1216,26 +1216,26 @@ func (device *GPSV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *GPSV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -1245,26 +1245,26 @@ func (device *GPSV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *GPSV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -1276,27 +1276,27 @@ func (device *GPSV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *GPSV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -1314,26 +1314,26 @@ func (device *GPSV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *GPSV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -1345,26 +1345,26 @@ func (device *GPSV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *GPSV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -1374,26 +1374,26 @@ func (device *GPSV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *GPSV2Bricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -1403,25 +1403,25 @@ func (device *GPSV2Bricklet) GetChipTemperature() (temperature int16, err error)
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *GPSV2Bricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -1430,51 +1430,51 @@ func (device *GPSV2Bricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *GPSV2Bricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *GPSV2Bricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -1486,29 +1486,29 @@ func (device *GPSV2Bricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *GPSV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

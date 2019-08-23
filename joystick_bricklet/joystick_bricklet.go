@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//2-axis joystick with push-button.
+// 2-axis joystick with push-button.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Joystick_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package joystick_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetPosition Function = 1
+	FunctionGetPosition Function = 1
 	FunctionIsPressed Function = 2
 	FunctionGetAnalogValue Function = 3
 	FunctionCalibrate Function = 4
@@ -48,17 +48,17 @@ const (
 	FunctionCallbackReleased Function = 20
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type JoystickBricklet struct{
+type JoystickBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 210
@@ -66,12 +66,12 @@ const DeviceDisplayName = "Joystick Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (JoystickBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return JoystickBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return JoystickBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionIsPressed] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionCalibrate] = ResponseExpectedFlagFalse;
@@ -86,7 +86,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (JoystickBricklet, error)
 	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return JoystickBricklet{dev}, nil
+	return JoystickBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -104,7 +104,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (JoystickBricklet, error)
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *JoystickBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -116,7 +116,7 @@ func (device *JoystickBricklet) GetResponseExpected(functionID Function) (bool, 
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *JoystickBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -126,7 +126,7 @@ func (device *JoystickBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *JoystickBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
@@ -136,20 +136,20 @@ func (device *JoystickBricklet) GetAPIVersion() [3]uint8 {
 // The RegisterPositionCallback callback is only triggered if the position has changed since the
 // last triggering.
 func (device *JoystickBricklet) RegisterPositionCallback(fn func(int16, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x int16
-var y int16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-                fn(x, y)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPosition), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x int16
+		var y int16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		fn(x, y)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPosition), wrapper)
 }
 
-//Remove a registered Position callback.
-func (device *JoystickBricklet) DeregisterPositionCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPosition), registrationID)
+// Remove a registered Position callback.
+func (device *JoystickBricklet) DeregisterPositionCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPosition), registrationId)
 }
 
 
@@ -160,20 +160,20 @@ func (device *JoystickBricklet) DeregisterPositionCallback(registrationID uint64
 // The RegisterAnalogValueCallback callback is only triggered if the values have changed
 // since the last triggering.
 func (device *JoystickBricklet) RegisterAnalogValueCallback(fn func(uint16, uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x uint16
-var y uint16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-                fn(x, y)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAnalogValue), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x uint16
+		var y uint16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		fn(x, y)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAnalogValue), wrapper)
 }
 
-//Remove a registered Analog Value callback.
-func (device *JoystickBricklet) DeregisterAnalogValueCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationID)
+// Remove a registered Analog Value callback.
+func (device *JoystickBricklet) DeregisterAnalogValueCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
 
@@ -184,20 +184,20 @@ func (device *JoystickBricklet) DeregisterAnalogValueCallback(registrationID uin
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *JoystickBricklet) RegisterPositionReachedCallback(fn func(int16, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x int16
-var y int16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-                fn(x, y)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x int16
+		var y int16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		fn(x, y)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
 }
 
-//Remove a registered Position Reached callback.
-func (device *JoystickBricklet) DeregisterPositionReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationID)
+// Remove a registered Position Reached callback.
+func (device *JoystickBricklet) DeregisterPositionReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationId)
 }
 
 
@@ -208,54 +208,54 @@ func (device *JoystickBricklet) DeregisterPositionReachedCallback(registrationID
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *JoystickBricklet) RegisterAnalogValueReachedCallback(fn func(uint16, uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var x uint16
-var y uint16
-                binary.Read(buf, binary.LittleEndian, &x)
-binary.Read(buf, binary.LittleEndian, &y)
-                fn(x, y)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAnalogValueReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var x uint16
+		var y uint16
+		binary.Read(buf, binary.LittleEndian, &x)
+		binary.Read(buf, binary.LittleEndian, &y)
+		fn(x, y)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAnalogValueReached), wrapper)
 }
 
-//Remove a registered Analog Value Reached callback.
-func (device *JoystickBricklet) DeregisterAnalogValueReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationID)
+// Remove a registered Analog Value Reached callback.
+func (device *JoystickBricklet) DeregisterAnalogValueReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
 
 // This callback is triggered when the button is pressed.
 func (device *JoystickBricklet) RegisterPressedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPressed), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPressed), wrapper)
 }
 
-//Remove a registered Pressed callback.
-func (device *JoystickBricklet) DeregisterPressedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPressed), registrationID)
+// Remove a registered Pressed callback.
+func (device *JoystickBricklet) DeregisterPressedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPressed), registrationId)
 }
 
 
 // This callback is triggered when the button is released.
 func (device *JoystickBricklet) RegisterReleasedCallback(fn func()) uint64 {
-            wrapper := func(byteSlice []byte) {
-                
-                
-                
-                fn()
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackReleased), wrapper)
+	wrapper := func(byteSlice []byte) {
+		
+		
+		
+		fn()
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackReleased), wrapper)
 }
 
-//Remove a registered Released callback.
-func (device *JoystickBricklet) DeregisterReleasedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackReleased), registrationID)
+// Remove a registered Released callback.
+func (device *JoystickBricklet) DeregisterReleasedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackReleased), registrationId)
 }
 
 
@@ -267,27 +267,27 @@ func (device *JoystickBricklet) DeregisterReleasedCallback(registrationID uint64
 // RegisterPositionCallback callback and set the period with
 // SetPositionCallbackPeriod.
 func (device *JoystickBricklet) GetPosition() (x int16, y int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
-    if err != nil {
-        return x, y, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
+	if err != nil {
+		return x, y, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return x, y, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return x, y, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &x)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 
-    }
+	}
 
-    return x, y, nil
+	return x, y, nil
 }
 
 // Returns *true* if the button is pressed and *false* otherwise.
@@ -295,26 +295,26 @@ func (device *JoystickBricklet) GetPosition() (x int16, y int16, err error) {
 // It is recommended to use the RegisterPressedCallback and RegisterReleasedCallback callbacks
 // to handle the button.
 func (device *JoystickBricklet) IsPressed() (pressed bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsPressed), buf.Bytes())
-    if err != nil {
-        return pressed, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsPressed), buf.Bytes())
+	if err != nil {
+		return pressed, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return pressed, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return pressed, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &pressed)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &pressed)
 
-    }
+	}
 
-    return pressed, nil
+	return pressed, nil
 }
 
 // Returns the values as read by a 12-bit analog-to-digital converter.
@@ -330,27 +330,27 @@ func (device *JoystickBricklet) IsPressed() (pressed bool, err error) {
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *JoystickBricklet) GetAnalogValue() (x uint16, y uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
-    if err != nil {
-        return x, y, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
+	if err != nil {
+		return x, y, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return x, y, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return x, y, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &x)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 
-    }
+	}
 
-    return x, y, nil
+	return x, y, nil
 }
 
 // Calibrates the middle position of the joystick. If your Joystick Bricklet
@@ -360,25 +360,25 @@ func (device *JoystickBricklet) GetAnalogValue() (x uint16, y uint16, err error)
 // The resulting calibration will be saved on the EEPROM of the Joystick
 // Bricklet, thus you only have to calibrate it once.
 func (device *JoystickBricklet) Calibrate() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionCalibrate), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionCalibrate), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Sets the period in ms with which the RegisterPositionCallback callback is triggered
@@ -389,50 +389,50 @@ func (device *JoystickBricklet) Calibrate() (err error) {
 // 
 // The default value is 0.
 func (device *JoystickBricklet) SetPositionCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetPositionCallbackPeriod.
 func (device *JoystickBricklet) GetPositionCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
@@ -443,50 +443,50 @@ func (device *JoystickBricklet) GetPositionCallbackPeriod() (period uint32, err 
 // 
 // The default value is 0.
 func (device *JoystickBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *JoystickBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the thresholds for the RegisterPositionReachedCallback callback.
@@ -511,30 +511,30 @@ func (device *JoystickBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *JoystickBricklet) SetPositionCallbackThreshold(option ThresholdOption, minX int16, maxX int16, minY int16, maxY int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, minX);
 	binary.Write(&buf, binary.LittleEndian, maxX);
 	binary.Write(&buf, binary.LittleEndian, minY);
 	binary.Write(&buf, binary.LittleEndian, maxY);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetPositionCallbackThreshold.
@@ -547,30 +547,30 @@ func (device *JoystickBricklet) SetPositionCallbackThreshold(option ThresholdOpt
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *JoystickBricklet) GetPositionCallbackThreshold() (option ThresholdOption, minX int16, maxX int16, minY int16, maxY int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, minX, maxX, minY, maxY, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, minX, maxX, minY, maxY, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, minX, maxX, minY, maxY, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, minX, maxX, minY, maxY, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &minX)
 	binary.Read(resultBuf, binary.LittleEndian, &maxX)
 	binary.Read(resultBuf, binary.LittleEndian, &minY)
 	binary.Read(resultBuf, binary.LittleEndian, &maxY)
 
-    }
+	}
 
-    return option, minX, maxX, minY, maxY, nil
+	return option, minX, maxX, minY, maxY, nil
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
@@ -595,30 +595,30 @@ func (device *JoystickBricklet) GetPositionCallbackThreshold() (option Threshold
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *JoystickBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, minX uint16, maxX uint16, minY uint16, maxY uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, option);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, minX);
 	binary.Write(&buf, binary.LittleEndian, maxX);
 	binary.Write(&buf, binary.LittleEndian, minY);
 	binary.Write(&buf, binary.LittleEndian, maxY);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the threshold as set by SetAnalogValueCallbackThreshold.
@@ -631,30 +631,30 @@ func (device *JoystickBricklet) SetAnalogValueCallbackThreshold(option Threshold
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *JoystickBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, minX uint16, maxX uint16, minY uint16, maxY uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
-    if err != nil {
-        return option, minX, maxX, minY, maxY, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
+	if err != nil {
+		return option, minX, maxX, minY, maxY, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return option, minX, maxX, minY, maxY, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return option, minX, maxX, minY, maxY, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &option)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &minX)
 	binary.Read(resultBuf, binary.LittleEndian, &maxX)
 	binary.Read(resultBuf, binary.LittleEndian, &minY)
 	binary.Read(resultBuf, binary.LittleEndian, &maxY)
 
-    }
+	}
 
-    return option, minX, maxX, minY, maxY, nil
+	return option, minX, maxX, minY, maxY, nil
 }
 
 // Sets the period in ms with which the threshold callbacks
@@ -671,50 +671,50 @@ func (device *JoystickBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 // 
 // The default value is 100.
 func (device *JoystickBricklet) SetDebouncePeriod(debounce uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, debounce);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, debounce);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *JoystickBricklet) GetDebouncePeriod() (debounce uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
-    if err != nil {
-        return debounce, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
+	if err != nil {
+		return debounce, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return debounce, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-    }
+	}
 
-    return debounce, nil
+	return debounce, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -726,29 +726,29 @@ func (device *JoystickBricklet) GetDebouncePeriod() (debounce uint32, err error)
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *JoystickBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Controls up to 320 RGB LEDs.
+// Controls up to 320 RGB LEDs.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/LEDStrip_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package led_strip_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionSetRGBValues Function = 1
+	FunctionSetRGBValues Function = 1
 	FunctionGetRGBValues Function = 2
 	FunctionSetFrameDuration Function = 3
 	FunctionGetFrameDuration Function = 4
@@ -45,20 +45,20 @@ const (
 	FunctionCallbackFrameRendered Function = 6
 )
 
-type ChipType uint16
+type ChipType = uint16
 
 const (
-    ChipTypeWS2801 ChipType = 2801
+	ChipTypeWS2801 ChipType = 2801
 	ChipTypeWS2811 ChipType = 2811
 	ChipTypeWS2812 ChipType = 2812
 	ChipTypeLPD8806 ChipType = 8806
 	ChipTypeAPA102 ChipType = 102
 )
 
-type ChannelMapping uint8
+type ChannelMapping = uint8
 
 const (
-    ChannelMappingRGB ChannelMapping = 6
+	ChannelMappingRGB ChannelMapping = 6
 	ChannelMappingRBG ChannelMapping = 9
 	ChannelMappingBRG ChannelMapping = 33
 	ChannelMappingBGR ChannelMapping = 36
@@ -90,7 +90,7 @@ const (
 	ChannelMappingWBRG ChannelMapping = 225
 )
 
-type LEDStripBricklet struct{
+type LEDStripBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 231
@@ -98,12 +98,12 @@ const DeviceDisplayName = "LED Strip Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (LEDStripBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,3 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return LEDStripBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionSetRGBValues] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,3 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return LEDStripBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionSetRGBValues] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetRGBValues] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetFrameDuration] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetFrameDuration] = ResponseExpectedFlagAlwaysTrue;
@@ -120,7 +120,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LEDStripBricklet, error)
 	dev.ResponseExpected[FunctionDisableFrameRenderedCallback] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionIsFrameRenderedCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return LEDStripBricklet{dev}, nil
+	return LEDStripBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -138,7 +138,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (LEDStripBricklet, error)
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *LEDStripBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -150,7 +150,7 @@ func (device *LEDStripBricklet) GetResponseExpected(functionID Function) (bool, 
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *LEDStripBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -160,7 +160,7 @@ func (device *LEDStripBricklet) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *LEDStripBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered directly after a new frame is rendered. The
@@ -171,18 +171,18 @@ func (device *LEDStripBricklet) GetAPIVersion() [3]uint8 {
 // 
 // For an explanation of the general approach see SetRGBValues.
 func (device *LEDStripBricklet) RegisterFrameRenderedCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var length uint16
-                binary.Read(buf, binary.LittleEndian, &length)
-                fn(length)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackFrameRendered), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var length uint16
+		binary.Read(buf, binary.LittleEndian, &length)
+		fn(length)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameRendered), wrapper)
 }
 
-//Remove a registered Frame Rendered callback.
-func (device *LEDStripBricklet) DeregisterFrameRenderedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackFrameRendered), registrationID)
+// Remove a registered Frame Rendered callback.
+func (device *LEDStripBricklet) DeregisterFrameRenderedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameRendered), registrationId)
 }
 
 
@@ -229,30 +229,30 @@ func (device *LEDStripBricklet) DeregisterFrameRenderedCallback(registrationID u
 // information. A call of SetRGBValues with index + length above the
 // bounds is ignored completely.
 func (device *LEDStripBricklet) SetRGBValues(index uint16, length uint8, r [16]uint8, g [16]uint8, b [16]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, index);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, length);
 	binary.Write(&buf, binary.LittleEndian, r);
 	binary.Write(&buf, binary.LittleEndian, g);
 	binary.Write(&buf, binary.LittleEndian, b);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetRGBValues), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetRGBValues), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns RGB value with the given *length* starting from the
@@ -260,30 +260,30 @@ func (device *LEDStripBricklet) SetRGBValues(index uint16, length uint8, r [16]u
 // 
 // The values are the last values that were set by SetRGBValues.
 func (device *LEDStripBricklet) GetRGBValues(index uint16, length uint8) (r [16]uint8, g [16]uint8, b [16]uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, index);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, length);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetRGBValues), buf.Bytes())
-    if err != nil {
-        return r, g, b, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetRGBValues), buf.Bytes())
+	if err != nil {
+		return r, g, b, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return r, g, b, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return r, g, b, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &r)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &r)
 	binary.Read(resultBuf, binary.LittleEndian, &g)
 	binary.Read(resultBuf, binary.LittleEndian, &b)
 
-    }
+	}
 
-    return r, g, b, nil
+	return r, g, b, nil
 }
 
 // Sets the frame duration in ms.
@@ -295,74 +295,74 @@ func (device *LEDStripBricklet) GetRGBValues(index uint16, length uint8) (r [16]
 // 
 // Default value: 100ms (10 frames per second).
 func (device *LEDStripBricklet) SetFrameDuration(duration uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, duration);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, duration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetFrameDuration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetFrameDuration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the frame duration in ms as set by SetFrameDuration.
 func (device *LEDStripBricklet) GetFrameDuration() (duration uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetFrameDuration), buf.Bytes())
-    if err != nil {
-        return duration, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFrameDuration), buf.Bytes())
+	if err != nil {
+		return duration, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return duration, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return duration, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &duration)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &duration)
 
-    }
+	}
 
-    return duration, nil
+	return duration, nil
 }
 
 // Returns the current supply voltage of the LEDs. The voltage is given in mV.
 func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSupplyVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSupplyVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Sets the frequency of the clock in Hz. The range is 10000Hz (10kHz) up to
@@ -386,52 +386,52 @@ func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *LEDStripBricklet) SetClockFrequency(frequency uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, frequency);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frequency);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetClockFrequency), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetClockFrequency), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the currently used clock frequency as set by SetClockFrequency.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *LEDStripBricklet) GetClockFrequency() (frequency uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetClockFrequency), buf.Bytes())
-    if err != nil {
-        return frequency, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetClockFrequency), buf.Bytes())
+	if err != nil {
+		return frequency, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return frequency, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return frequency, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &frequency)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frequency)
 
-    }
+	}
 
-    return frequency, nil
+	return frequency, nil
 }
 
 // Sets the type of the LED driver chip. We currently support the chips
@@ -455,26 +455,26 @@ func (device *LEDStripBricklet) GetClockFrequency() (frequency uint32, err error
 //	* ChipTypeLPD8806
 //	* ChipTypeAPA102
 func (device *LEDStripBricklet) SetChipType(chip ChipType) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, chip);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, chip);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetChipType), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetChipType), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the currently used chip type as set by SetChipType.
@@ -489,26 +489,26 @@ func (device *LEDStripBricklet) SetChipType(chip ChipType) (err error) {
 //	* ChipTypeLPD8806
 //	* ChipTypeAPA102
 func (device *LEDStripBricklet) GetChipType() (chip ChipType, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipType), buf.Bytes())
-    if err != nil {
-        return chip, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipType), buf.Bytes())
+	if err != nil {
+		return chip, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return chip, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return chip, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &chip)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &chip)
 
-    }
+	}
 
-    return chip, nil
+	return chip, nil
 }
 
 // Sets the RGBW values for the LEDs with the given *length* starting
@@ -567,31 +567,31 @@ func (device *LEDStripBricklet) GetChipType() (chip ChipType, err error) {
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *LEDStripBricklet) SetRGBWValues(index uint16, length uint8, r [12]uint8, g [12]uint8, b [12]uint8, w [12]uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, index);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, length);
 	binary.Write(&buf, binary.LittleEndian, r);
 	binary.Write(&buf, binary.LittleEndian, g);
 	binary.Write(&buf, binary.LittleEndian, b);
 	binary.Write(&buf, binary.LittleEndian, w);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetRGBWValues), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetRGBWValues), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns RGBW values with the given *length* starting from the
@@ -601,31 +601,31 @@ func (device *LEDStripBricklet) SetRGBWValues(index uint16, length uint8, r [12]
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *LEDStripBricklet) GetRGBWValues(index uint16, length uint8) (r [12]uint8, g [12]uint8, b [12]uint8, w [12]uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, index);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, index);
 	binary.Write(&buf, binary.LittleEndian, length);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetRGBWValues), buf.Bytes())
-    if err != nil {
-        return r, g, b, w, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetRGBWValues), buf.Bytes())
+	if err != nil {
+		return r, g, b, w, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return r, g, b, w, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return r, g, b, w, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &r)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &r)
 	binary.Read(resultBuf, binary.LittleEndian, &g)
 	binary.Read(resultBuf, binary.LittleEndian, &b)
 	binary.Read(resultBuf, binary.LittleEndian, &w)
 
-    }
+	}
 
-    return r, g, b, w, nil
+	return r, g, b, w, nil
 }
 
 // Sets the channel mapping for the connected LEDs.
@@ -685,26 +685,26 @@ func (device *LEDStripBricklet) GetRGBWValues(index uint16, length uint8) (r [12
 //	* ChannelMappingWBGR
 //	* ChannelMappingWBRG
 func (device *LEDStripBricklet) SetChannelMapping(mapping ChannelMapping) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mapping);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mapping);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetChannelMapping), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetChannelMapping), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the currently used channel mapping as set by SetChannelMapping.
@@ -744,26 +744,26 @@ func (device *LEDStripBricklet) SetChannelMapping(mapping ChannelMapping) (err e
 //	* ChannelMappingWBGR
 //	* ChannelMappingWBRG
 func (device *LEDStripBricklet) GetChannelMapping() (mapping ChannelMapping, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChannelMapping), buf.Bytes())
-    if err != nil {
-        return mapping, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChannelMapping), buf.Bytes())
+	if err != nil {
+		return mapping, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mapping, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mapping, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mapping)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mapping)
 
-    }
+	}
 
-    return mapping, nil
+	return mapping, nil
 }
 
 // Enables the RegisterFrameRenderedCallback callback.
@@ -772,25 +772,25 @@ func (device *LEDStripBricklet) GetChannelMapping() (mapping ChannelMapping, err
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *LEDStripBricklet) EnableFrameRenderedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableFrameRenderedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableFrameRenderedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the RegisterFrameRenderedCallback callback.
@@ -799,51 +799,51 @@ func (device *LEDStripBricklet) EnableFrameRenderedCallback() (err error) {
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *LEDStripBricklet) DisableFrameRenderedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableFrameRenderedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableFrameRenderedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the RegisterFrameRenderedCallback callback is enabled, *false* otherwise.
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *LEDStripBricklet) IsFrameRenderedCallbackEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsFrameRenderedCallbackEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsFrameRenderedCallbackEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -855,29 +855,29 @@ func (device *LEDStripBricklet) IsFrameRenderedCallbackEnabled() (enabled bool, 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *LEDStripBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

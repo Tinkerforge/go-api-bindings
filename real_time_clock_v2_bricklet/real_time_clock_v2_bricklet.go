@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Battery-backed real-time clock.
+// Battery-backed real-time clock.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RealTimeClockV2_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package real_time_clock_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionSetDateTime Function = 1
+	FunctionSetDateTime Function = 1
 	FunctionGetDateTime Function = 2
 	FunctionGetTimestamp Function = 3
 	FunctionSetOffset Function = 4
@@ -50,10 +50,10 @@ const (
 	FunctionCallbackAlarm Function = 11
 )
 
-type Weekday uint8
+type Weekday = uint8
 
 const (
-    WeekdayMonday Weekday = 1
+	WeekdayMonday Weekday = 1
 	WeekdayTuesday Weekday = 2
 	WeekdayWednesday Weekday = 3
 	WeekdayThursday Weekday = 4
@@ -62,32 +62,32 @@ const (
 	WeekdaySunday Weekday = 7
 )
 
-type AlarmMatch int8
+type AlarmMatch = int8
 
 const (
-    AlarmMatchDisabled AlarmMatch = -1
+	AlarmMatchDisabled AlarmMatch = -1
 )
 
-type AlarmInterval int32
+type AlarmInterval = int32
 
 const (
-    AlarmIntervalDisabled AlarmInterval = -1
+	AlarmIntervalDisabled AlarmInterval = -1
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -95,16 +95,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type RealTimeClockV2Bricklet struct{
+type RealTimeClockV2Bricklet struct {
 	device Device
 }
 const DeviceIdentifier = 2106
@@ -112,12 +112,12 @@ const DeviceDisplayName = "Real-Time Clock Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RealTimeClockV2Bricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return RealTimeClockV2Bricklet{}, err
-    }
-    dev.ResponseExpected[FunctionSetDateTime] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return RealTimeClockV2Bricklet{}, err
+	}
+	dev.ResponseExpected[FunctionSetDateTime] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetDateTime] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetTimestamp] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetOffset] = ResponseExpectedFlagFalse;
@@ -138,7 +138,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RealTimeClockV2Bricklet,
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return RealTimeClockV2Bricklet{dev}, nil
+	return RealTimeClockV2Bricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -156,7 +156,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RealTimeClockV2Bricklet,
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *RealTimeClockV2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -168,7 +168,7 @@ func (device *RealTimeClockV2Bricklet) GetResponseExpected(functionID Function) 
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *RealTimeClockV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -178,41 +178,41 @@ func (device *RealTimeClockV2Bricklet) SetResponseExpectedAll(responseExpected b
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *RealTimeClockV2Bricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically with the period that is set by
 // SetDateTimeCallbackConfiguration. The parameters are the
 // same as for GetDateTime.
 func (device *RealTimeClockV2Bricklet) RegisterDateTimeCallback(fn func(uint16, uint8, uint8, uint8, uint8, uint8, uint8, Weekday, int64)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var year uint16
-var month uint8
-var day uint8
-var hour uint8
-var minute uint8
-var second uint8
-var centisecond uint8
-var weekday Weekday
-var timestamp int64
-                binary.Read(buf, binary.LittleEndian, &year)
-binary.Read(buf, binary.LittleEndian, &month)
-binary.Read(buf, binary.LittleEndian, &day)
-binary.Read(buf, binary.LittleEndian, &hour)
-binary.Read(buf, binary.LittleEndian, &minute)
-binary.Read(buf, binary.LittleEndian, &second)
-binary.Read(buf, binary.LittleEndian, &centisecond)
-binary.Read(buf, binary.LittleEndian, &weekday)
-binary.Read(buf, binary.LittleEndian, &timestamp)
-                fn(year, month, day, hour, minute, second, centisecond, weekday, timestamp)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackDateTime), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var year uint16
+		var month uint8
+		var day uint8
+		var hour uint8
+		var minute uint8
+		var second uint8
+		var centisecond uint8
+		var weekday Weekday
+		var timestamp int64
+		binary.Read(buf, binary.LittleEndian, &year)
+		binary.Read(buf, binary.LittleEndian, &month)
+		binary.Read(buf, binary.LittleEndian, &day)
+		binary.Read(buf, binary.LittleEndian, &hour)
+		binary.Read(buf, binary.LittleEndian, &minute)
+		binary.Read(buf, binary.LittleEndian, &second)
+		binary.Read(buf, binary.LittleEndian, &centisecond)
+		binary.Read(buf, binary.LittleEndian, &weekday)
+		binary.Read(buf, binary.LittleEndian, &timestamp)
+		fn(year, month, day, hour, minute, second, centisecond, weekday, timestamp)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackDateTime), wrapper)
 }
 
-//Remove a registered Date Time callback.
-func (device *RealTimeClockV2Bricklet) DeregisterDateTimeCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationID)
+// Remove a registered Date Time callback.
+func (device *RealTimeClockV2Bricklet) DeregisterDateTimeCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationId)
 }
 
 
@@ -220,34 +220,34 @@ func (device *RealTimeClockV2Bricklet) DeregisterDateTimeCallback(registrationID
 // configured alarm (see SetAlarm). The parameters are the same
 // as for GetDateTime.
 func (device *RealTimeClockV2Bricklet) RegisterAlarmCallback(fn func(uint16, uint8, uint8, uint8, uint8, uint8, uint8, Weekday, int64)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var year uint16
-var month uint8
-var day uint8
-var hour uint8
-var minute uint8
-var second uint8
-var centisecond uint8
-var weekday Weekday
-var timestamp int64
-                binary.Read(buf, binary.LittleEndian, &year)
-binary.Read(buf, binary.LittleEndian, &month)
-binary.Read(buf, binary.LittleEndian, &day)
-binary.Read(buf, binary.LittleEndian, &hour)
-binary.Read(buf, binary.LittleEndian, &minute)
-binary.Read(buf, binary.LittleEndian, &second)
-binary.Read(buf, binary.LittleEndian, &centisecond)
-binary.Read(buf, binary.LittleEndian, &weekday)
-binary.Read(buf, binary.LittleEndian, &timestamp)
-                fn(year, month, day, hour, minute, second, centisecond, weekday, timestamp)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackAlarm), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var year uint16
+		var month uint8
+		var day uint8
+		var hour uint8
+		var minute uint8
+		var second uint8
+		var centisecond uint8
+		var weekday Weekday
+		var timestamp int64
+		binary.Read(buf, binary.LittleEndian, &year)
+		binary.Read(buf, binary.LittleEndian, &month)
+		binary.Read(buf, binary.LittleEndian, &day)
+		binary.Read(buf, binary.LittleEndian, &hour)
+		binary.Read(buf, binary.LittleEndian, &minute)
+		binary.Read(buf, binary.LittleEndian, &second)
+		binary.Read(buf, binary.LittleEndian, &centisecond)
+		binary.Read(buf, binary.LittleEndian, &weekday)
+		binary.Read(buf, binary.LittleEndian, &timestamp)
+		fn(year, month, day, hour, minute, second, centisecond, weekday, timestamp)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAlarm), wrapper)
 }
 
-//Remove a registered Alarm callback.
-func (device *RealTimeClockV2Bricklet) DeregisterAlarmCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackAlarm), registrationID)
+// Remove a registered Alarm callback.
+func (device *RealTimeClockV2Bricklet) DeregisterAlarmCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAlarm), registrationId)
 }
 
 
@@ -282,8 +282,8 @@ func (device *RealTimeClockV2Bricklet) DeregisterAlarmCallback(registrationID ui
 //	* WeekdaySaturday
 //	* WeekdaySunday
 func (device *RealTimeClockV2Bricklet) SetDateTime(year uint16, month uint8, day uint8, hour uint8, minute uint8, second uint8, centisecond uint8, weekday Weekday) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, year);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, year);
 	binary.Write(&buf, binary.LittleEndian, month);
 	binary.Write(&buf, binary.LittleEndian, day);
 	binary.Write(&buf, binary.LittleEndian, hour);
@@ -292,23 +292,23 @@ func (device *RealTimeClockV2Bricklet) SetDateTime(year uint16, month uint8, day
 	binary.Write(&buf, binary.LittleEndian, centisecond);
 	binary.Write(&buf, binary.LittleEndian, weekday);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDateTime), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDateTime), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current date (including weekday) and the current time of the
@@ -327,22 +327,22 @@ func (device *RealTimeClockV2Bricklet) SetDateTime(year uint16, month uint8, day
 //	* WeekdaySaturday
 //	* WeekdaySunday
 func (device *RealTimeClockV2Bricklet) GetDateTime() (year uint16, month uint8, day uint8, hour uint8, minute uint8, second uint8, centisecond uint8, weekday Weekday, timestamp int64, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
-    if err != nil {
-        return year, month, day, hour, minute, second, centisecond, weekday, timestamp, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
+	if err != nil {
+		return year, month, day, hour, minute, second, centisecond, weekday, timestamp, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return year, month, day, hour, minute, second, centisecond, weekday, timestamp, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return year, month, day, hour, minute, second, centisecond, weekday, timestamp, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &year)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &year)
 	binary.Read(resultBuf, binary.LittleEndian, &month)
 	binary.Read(resultBuf, binary.LittleEndian, &day)
 	binary.Read(resultBuf, binary.LittleEndian, &hour)
@@ -352,35 +352,35 @@ func (device *RealTimeClockV2Bricklet) GetDateTime() (year uint16, month uint8, 
 	binary.Read(resultBuf, binary.LittleEndian, &weekday)
 	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
 
-    }
+	}
 
-    return year, month, day, hour, minute, second, centisecond, weekday, timestamp, nil
+	return year, month, day, hour, minute, second, centisecond, weekday, timestamp, nil
 }
 
 // Returns the current date and the time of the real-time clock converted to
 // milliseconds. The timestamp has an effective resolution of hundredths of a
 // second.
 func (device *RealTimeClockV2Bricklet) GetTimestamp() (timestamp int64, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetTimestamp), buf.Bytes())
-    if err != nil {
-        return timestamp, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTimestamp), buf.Bytes())
+	if err != nil {
+		return timestamp, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return timestamp, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return timestamp, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &timestamp)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timestamp)
 
-    }
+	}
 
-    return timestamp, nil
+	return timestamp, nil
 }
 
 // Sets the offset the real-time clock should compensate for in 2.17 ppm steps
@@ -409,50 +409,50 @@ func (device *RealTimeClockV2Bricklet) GetTimestamp() (timestamp int64, err erro
 // The offset is saved in the EEPROM of the Bricklet and only needs to be
 // configured once.
 func (device *RealTimeClockV2Bricklet) SetOffset(offset int8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, offset);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, offset);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetOffset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetOffset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the offset as set by SetOffset.
 func (device *RealTimeClockV2Bricklet) GetOffset() (offset int8, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetOffset), buf.Bytes())
-    if err != nil {
-        return offset, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetOffset), buf.Bytes())
+	if err != nil {
+		return offset, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return offset, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return offset, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &offset)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &offset)
 
-    }
+	}
 
-    return offset, nil
+	return offset, nil
 }
 
 // Sets the period in ms with which the RegisterDateTimeCallback callback is triggered
@@ -460,50 +460,50 @@ func (device *RealTimeClockV2Bricklet) GetOffset() (offset int8, err error) {
 // 
 // The default value is 0.
 func (device *RealTimeClockV2Bricklet) SetDateTimeCallbackConfiguration(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period as set by SetDateTimeCallbackConfiguration.
 func (device *RealTimeClockV2Bricklet) GetDateTimeCallbackConfiguration() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Configures a repeatable alarm. The RegisterAlarmCallback callback is triggered if the
@@ -536,8 +536,8 @@ func (device *RealTimeClockV2Bricklet) GetDateTimeCallbackConfiguration() (perio
 //	* AlarmMatchDisabled
 //	* AlarmIntervalDisabled
 func (device *RealTimeClockV2Bricklet) SetAlarm(month AlarmMatch, day AlarmMatch, hour AlarmMatch, minute AlarmMatch, second AlarmMatch, weekday AlarmMatch, interval AlarmInterval) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, month);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, month);
 	binary.Write(&buf, binary.LittleEndian, day);
 	binary.Write(&buf, binary.LittleEndian, hour);
 	binary.Write(&buf, binary.LittleEndian, minute);
@@ -545,23 +545,23 @@ func (device *RealTimeClockV2Bricklet) SetAlarm(month AlarmMatch, day AlarmMatch
 	binary.Write(&buf, binary.LittleEndian, weekday);
 	binary.Write(&buf, binary.LittleEndian, interval);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAlarm), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAlarm), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the alarm configuration as set by SetAlarm.
@@ -571,22 +571,22 @@ func (device *RealTimeClockV2Bricklet) SetAlarm(month AlarmMatch, day AlarmMatch
 //	* AlarmMatchDisabled
 //	* AlarmIntervalDisabled
 func (device *RealTimeClockV2Bricklet) GetAlarm() (month AlarmMatch, day AlarmMatch, hour AlarmMatch, minute AlarmMatch, second AlarmMatch, weekday AlarmMatch, interval AlarmInterval, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
-    if err != nil {
-        return month, day, hour, minute, second, weekday, interval, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
+	if err != nil {
+		return month, day, hour, minute, second, weekday, interval, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return month, day, hour, minute, second, weekday, interval, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return month, day, hour, minute, second, weekday, interval, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &month)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &month)
 	binary.Read(resultBuf, binary.LittleEndian, &day)
 	binary.Read(resultBuf, binary.LittleEndian, &hour)
 	binary.Read(resultBuf, binary.LittleEndian, &minute)
@@ -594,9 +594,9 @@ func (device *RealTimeClockV2Bricklet) GetAlarm() (month AlarmMatch, day AlarmMa
 	binary.Read(resultBuf, binary.LittleEndian, &weekday)
 	binary.Read(resultBuf, binary.LittleEndian, &interval)
 
-    }
+	}
 
-    return month, day, hour, minute, second, weekday, interval, nil
+	return month, day, hour, minute, second, weekday, interval, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -611,29 +611,29 @@ func (device *RealTimeClockV2Bricklet) GetAlarm() (month AlarmMatch, day AlarmMa
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *RealTimeClockV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -660,27 +660,27 @@ func (device *RealTimeClockV2Bricklet) GetSPITFPErrorCount() (errorCountAckCheck
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *RealTimeClockV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -693,26 +693,26 @@ func (device *RealTimeClockV2Bricklet) SetBootloaderMode(mode BootloaderMode) (s
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *RealTimeClockV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -722,26 +722,26 @@ func (device *RealTimeClockV2Bricklet) GetBootloaderMode() (mode BootloaderMode,
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RealTimeClockV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -753,27 +753,27 @@ func (device *RealTimeClockV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RealTimeClockV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -791,26 +791,26 @@ func (device *RealTimeClockV2Bricklet) WriteFirmware(data [64]uint8) (status uin
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *RealTimeClockV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -822,26 +822,26 @@ func (device *RealTimeClockV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *RealTimeClockV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -851,26 +851,26 @@ func (device *RealTimeClockV2Bricklet) GetStatusLEDConfig() (config StatusLEDCon
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *RealTimeClockV2Bricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -880,25 +880,25 @@ func (device *RealTimeClockV2Bricklet) GetChipTemperature() (temperature int16, 
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *RealTimeClockV2Bricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -907,51 +907,51 @@ func (device *RealTimeClockV2Bricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *RealTimeClockV2Bricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *RealTimeClockV2Bricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -963,29 +963,29 @@ func (device *RealTimeClockV2Bricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RealTimeClockV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

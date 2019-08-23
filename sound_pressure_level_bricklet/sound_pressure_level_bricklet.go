@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Measures Sound Pressure Level in dB(A/B/C/D/Z).
+// Measures Sound Pressure Level in dB(A/B/C/D/Z).
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/SoundPressureLevel_Bricklet_Go.html.
@@ -18,14 +18,14 @@ package sound_pressure_level_bricklet
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionGetDecibel Function = 1
+	FunctionGetDecibel Function = 1
 	FunctionSetDecibelCallbackConfiguration Function = 2
 	FunctionGetDecibelCallbackConfiguration Function = 3
 	FunctionGetSpectrumLowLevel Function = 5
@@ -49,29 +49,29 @@ const (
 	FunctionCallbackSpectrumLowLevel Function = 8
 )
 
-type ThresholdOption rune
+type ThresholdOption = rune
 
 const (
-    ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
 	ThresholdOptionInside ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type FFTSize uint8
+type FFTSize = uint8
 
 const (
-    FFTSize128 FFTSize = 0
+	FFTSize128 FFTSize = 0
 	FFTSize256 FFTSize = 1
 	FFTSize512 FFTSize = 2
 	FFTSize1024 FFTSize = 3
 )
 
-type Weighting uint8
+type Weighting = uint8
 
 const (
-    WeightingA Weighting = 0
+	WeightingA Weighting = 0
 	WeightingB Weighting = 1
 	WeightingC Weighting = 2
 	WeightingD Weighting = 3
@@ -79,20 +79,20 @@ const (
 	WeightingITUR468 Weighting = 5
 )
 
-type BootloaderMode uint8
+type BootloaderMode = uint8
 
 const (
-    BootloaderModeBootloader BootloaderMode = 0
+	BootloaderModeBootloader BootloaderMode = 0
 	BootloaderModeFirmware BootloaderMode = 1
 	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
 	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
-type BootloaderStatus uint8
+type BootloaderStatus = uint8
 
 const (
-    BootloaderStatusOK BootloaderStatus = 0
+	BootloaderStatusOK BootloaderStatus = 0
 	BootloaderStatusInvalidMode BootloaderStatus = 1
 	BootloaderStatusNoChange BootloaderStatus = 2
 	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
@@ -100,16 +100,16 @@ const (
 	BootloaderStatusCRCMismatch BootloaderStatus = 5
 )
 
-type StatusLEDConfig uint8
+type StatusLEDConfig = uint8
 
 const (
-    StatusLEDConfigOff StatusLEDConfig = 0
+	StatusLEDConfigOff StatusLEDConfig = 0
 	StatusLEDConfigOn StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type SoundPressureLevelBricklet struct{
+type SoundPressureLevelBricklet struct {
 	device Device
 }
 const DeviceIdentifier = 290
@@ -117,12 +117,12 @@ const DeviceDisplayName = "Sound Pressure Level Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (SoundPressureLevelBricklet, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 2)
-    if err != nil {
-        return SoundPressureLevelBricklet{}, err
-    }
-    dev.ResponseExpected[FunctionGetDecibel] = ResponseExpectedFlagAlwaysTrue;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 2)
+	if err != nil {
+		return SoundPressureLevelBricklet{}, err
+	}
+	dev.ResponseExpected[FunctionGetDecibel] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetDecibelCallbackConfiguration] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetDecibelCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSpectrumLowLevel] = ResponseExpectedFlagAlwaysTrue;
@@ -142,7 +142,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SoundPressureLevelBrickl
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return SoundPressureLevelBricklet{dev}, nil
+	return SoundPressureLevelBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -160,7 +160,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SoundPressureLevelBrickl
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *SoundPressureLevelBricklet) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -172,7 +172,7 @@ func (device *SoundPressureLevelBricklet) GetResponseExpected(functionID Functio
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *SoundPressureLevelBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -182,7 +182,7 @@ func (device *SoundPressureLevelBricklet) SetResponseExpectedAll(responseExpecte
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *SoundPressureLevelBricklet) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
@@ -190,18 +190,18 @@ func (device *SoundPressureLevelBricklet) GetAPIVersion() [3]uint8 {
 // 
 // The parameter is the same as GetDecibel.
 func (device *SoundPressureLevelBricklet) RegisterDecibelCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var decibel uint16
-                binary.Read(buf, binary.LittleEndian, &decibel)
-                fn(decibel)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackDecibel), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var decibel uint16
+		binary.Read(buf, binary.LittleEndian, &decibel)
+		fn(decibel)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackDecibel), wrapper)
 }
 
-//Remove a registered Decibel callback.
-func (device *SoundPressureLevelBricklet) DeregisterDecibelCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackDecibel), registrationID)
+// Remove a registered Decibel callback.
+func (device *SoundPressureLevelBricklet) DeregisterDecibelCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackDecibel), registrationId)
 }
 
 
@@ -210,22 +210,22 @@ func (device *SoundPressureLevelBricklet) DeregisterDecibelCallback(registration
 // 
 // The parameter is the same as GetSpectrum.
 func (device *SoundPressureLevelBricklet) RegisterSpectrumLowLevelCallback(fn func(uint16, uint16, [30]uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var spectrumLength uint16
-var spectrumChunkOffset uint16
-var spectrumChunkData [30]uint16
-                binary.Read(buf, binary.LittleEndian, &spectrumLength)
-binary.Read(buf, binary.LittleEndian, &spectrumChunkOffset)
-copy(spectrumChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 30/8)))
-                fn(spectrumLength, spectrumChunkOffset, spectrumChunkData)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackSpectrumLowLevel), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var spectrumLength uint16
+		var spectrumChunkOffset uint16
+		var spectrumChunkData [30]uint16
+		binary.Read(buf, binary.LittleEndian, &spectrumLength)
+		binary.Read(buf, binary.LittleEndian, &spectrumChunkOffset)
+		copy(spectrumChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 30/8)))
+		fn(spectrumLength, spectrumChunkOffset, spectrumChunkData)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackSpectrumLowLevel), wrapper)
 }
 
-//Remove a registered Spectrum Low Level callback.
-func (device *SoundPressureLevelBricklet) DeregisterSpectrumLowLevelCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackSpectrumLowLevel), registrationID)
+// Remove a registered Spectrum Low Level callback.
+func (device *SoundPressureLevelBricklet) DeregisterSpectrumLowLevelCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackSpectrumLowLevel), registrationId)
 }
 
 
@@ -234,27 +234,27 @@ func (device *SoundPressureLevelBricklet) DeregisterSpectrumLowLevelCallback(reg
 // 
 // The parameter is the same as GetSpectrum.
 func (device *SoundPressureLevelBricklet) RegisterSpectrumCallback(fn func([]uint16)) uint64 {
-    buf := make([]uint16, 0)
-    wrapper := func(spectrumLength uint16, spectrumChunkOffset uint16, spectrumChunkData [30]uint16)  {
-        if int(spectrumChunkOffset) != len(buf) {
-            buf = make([]uint16, 0)
-            if spectrumChunkOffset != 0 {
-                return
-            }
-        }
-        toRead := MinU(uint64(spectrumLength-spectrumChunkOffset), uint64(len(spectrumChunkData[:])))
-        buf = append(buf, spectrumChunkData[:toRead]...)
-        if len(buf) >= int(spectrumLength) {
-            fn(buf)
-            buf = make([]uint16, 0)
-        }
-    }
-    return device.RegisterSpectrumLowLevelCallback(wrapper)
+	buf := make([]uint16, 0)
+	wrapper := func(spectrumLength uint16, spectrumChunkOffset uint16, spectrumChunkData [30]uint16)  {
+		if int(spectrumChunkOffset) != len(buf) {
+			buf = make([]uint16, 0)
+			if spectrumChunkOffset != 0 {
+				return
+			}
+		}
+		toRead := MinU(uint64(spectrumLength-spectrumChunkOffset), uint64(len(spectrumChunkData[:])))
+		buf = append(buf, spectrumChunkData[:toRead]...)
+		if len(buf) >= int(spectrumLength) {
+			fn(buf)
+			buf = make([]uint16, 0)
+		}
+	}
+	return device.RegisterSpectrumLowLevelCallback(wrapper)
 }
 
-//Remove a registered Spectrum Low Level callback.
-func (device *SoundPressureLevelBricklet) DeregisterSpectrumCallback(registrationID uint64) {
-    device.DeregisterSpectrumLowLevelCallback(registrationID)
+// Remove a registered Spectrum Low Level callback.
+func (device *SoundPressureLevelBricklet) DeregisterSpectrumCallback(registrationId uint64) {
+	device.DeregisterSpectrumLowLevelCallback(registrationId)
 }
 
 
@@ -271,26 +271,26 @@ func (device *SoundPressureLevelBricklet) DeregisterSpectrumCallback(registratio
 // RegisterDecibelCallback callback. You can set the callback configuration
 // with SetDecibelCallbackConfiguration.
 func (device *SoundPressureLevelBricklet) GetDecibel() (decibel uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDecibel), buf.Bytes())
-    if err != nil {
-        return decibel, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDecibel), buf.Bytes())
+	if err != nil {
+		return decibel, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return decibel, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return decibel, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &decibel)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &decibel)
 
-    }
+	}
 
-    return decibel, nil
+	return decibel, nil
 }
 
 // The period in ms is the period with which the RegisterDecibelCallback callback is triggered
@@ -329,30 +329,30 @@ func (device *SoundPressureLevelBricklet) GetDecibel() (decibel uint16, err erro
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *SoundPressureLevelBricklet) SetDecibelCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
 	binary.Write(&buf, binary.LittleEndian, option);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDecibelCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDecibelCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by SetDecibelCallbackConfiguration.
@@ -365,30 +365,30 @@ func (device *SoundPressureLevelBricklet) SetDecibelCallbackConfiguration(period
 //	* ThresholdOptionSmaller
 //	* ThresholdOptionGreater
 func (device *SoundPressureLevelBricklet) GetDecibelCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetDecibelCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, valueHasToChange, option, min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDecibelCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, valueHasToChange, option, min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, option, min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
 	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return period, valueHasToChange, option, min, max, nil
+	return period, valueHasToChange, option, min, max, nil
 }
 
 // Returns the frequency spectrum. The length of the spectrum is between
@@ -410,28 +410,28 @@ func (device *SoundPressureLevelBricklet) GetDecibelCallbackConfiguration() (per
 // spectrum you have to apply the formula f(x) = 20*log10(max(1, x/sqrt(2)))
 // on each value.
 func (device *SoundPressureLevelBricklet) GetSpectrumLowLevel() (spectrumLength uint16, spectrumChunkOffset uint16, spectrumChunkData [30]uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSpectrumLowLevel), buf.Bytes())
-    if err != nil {
-        return spectrumLength, spectrumChunkOffset, spectrumChunkData, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSpectrumLowLevel), buf.Bytes())
+	if err != nil {
+		return spectrumLength, spectrumChunkOffset, spectrumChunkData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return spectrumLength, spectrumChunkOffset, spectrumChunkData, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return spectrumLength, spectrumChunkOffset, spectrumChunkData, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &spectrumLength)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &spectrumLength)
 	binary.Read(resultBuf, binary.LittleEndian, &spectrumChunkOffset)
 	copy(spectrumChunkData[:], ByteSliceToUint16Slice(resultBuf.Next(16 * 30/8)))
 
-    }
+	}
 
-    return spectrumLength, spectrumChunkOffset, spectrumChunkData, nil
+	return spectrumLength, spectrumChunkOffset, spectrumChunkData, nil
 }
 
 // Returns the frequency spectrum. The length of the spectrum is between
@@ -453,31 +453,31 @@ func (device *SoundPressureLevelBricklet) GetSpectrumLowLevel() (spectrumLength 
 // spectrum you have to apply the formula f(x) = 20*log10(max(1, x/sqrt(2)))
 // on each value.
 	func (device *SoundPressureLevelBricklet) GetSpectrum() (spectrum []uint16, err error) {
-        buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-            spectrumLength, spectrumChunkOffset, spectrumChunkData, err := device.GetSpectrumLowLevel()
+		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			spectrumLength, spectrumChunkOffset, spectrumChunkData, err := device.GetSpectrumLowLevel()
 
-            if err != nil {
-                return LowLevelResult{}, err
-            }
+			if err != nil {
+				return LowLevelResult{}, err
+			}
 
-            var lowLevelResults bytes.Buffer
-            
+			var lowLevelResults bytes.Buffer
+			
 
-            return LowLevelResult{
-                uint64(spectrumLength),
-                uint64(spectrumChunkOffset),
-                Uint16SliceToByteSlice(spectrumChunkData[:]),
-                lowLevelResults.Bytes()}, nil
-        },
-            0,
-            16)
-        if err != nil {
-            return ByteSliceToUint16Slice(buf), err
-        }
-        
-        
-        return ByteSliceToUint16Slice(buf), nil
-    }
+			return LowLevelResult{
+				uint64(spectrumLength),
+				uint64(spectrumChunkOffset),
+				Uint16SliceToByteSlice(spectrumChunkData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			0,
+			16)
+		if err != nil {
+			return ByteSliceToUint16Slice(buf), err
+		}
+		
+		
+		return ByteSliceToUint16Slice(buf), nil
+	}
 
 // The period in ms is the period with which the RegisterSpectrumCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
@@ -487,51 +487,51 @@ func (device *SoundPressureLevelBricklet) GetSpectrumLowLevel() (spectrumLength 
 // 
 // The default value is 0.
 func (device *SoundPressureLevelBricklet) SetSpectrumCallbackConfiguration(period uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, period);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSpectrumCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSpectrumCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the callback configuration as set by
 // GetSpectrumCallbackConfiguration.
 func (device *SoundPressureLevelBricklet) GetSpectrumCallbackConfiguration() (period uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSpectrumCallbackConfiguration), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSpectrumCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Sets the Sound Pressure Level Bricklet configuration.
@@ -571,27 +571,27 @@ func (device *SoundPressureLevelBricklet) GetSpectrumCallbackConfiguration() (pe
 //	* WeightingZ
 //	* WeightingITUR468
 func (device *SoundPressureLevelBricklet) SetConfiguration(fftSize FFTSize, weighting Weighting) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, fftSize);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, fftSize);
 	binary.Write(&buf, binary.LittleEndian, weighting);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetConfiguration.
@@ -609,27 +609,27 @@ func (device *SoundPressureLevelBricklet) SetConfiguration(fftSize FFTSize, weig
 //	* WeightingZ
 //	* WeightingITUR468
 func (device *SoundPressureLevelBricklet) GetConfiguration() (fftSize FFTSize, weighting Weighting, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
-    if err != nil {
-        return fftSize, weighting, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
+	if err != nil {
+		return fftSize, weighting, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return fftSize, weighting, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return fftSize, weighting, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &fftSize)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &fftSize)
 	binary.Read(resultBuf, binary.LittleEndian, &weighting)
 
-    }
+	}
 
-    return fftSize, weighting, nil
+	return fftSize, weighting, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -644,29 +644,29 @@ func (device *SoundPressureLevelBricklet) GetConfiguration() (fftSize FFTSize, w
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *SoundPressureLevelBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Sets the bootloader mode and returns the status after the requested
@@ -693,27 +693,27 @@ func (device *SoundPressureLevelBricklet) GetSPITFPErrorCount() (errorCountAckCh
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
 func (device *SoundPressureLevelBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, mode);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
 
-    resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Returns the current bootloader mode, see SetBootloaderMode.
@@ -726,26 +726,26 @@ func (device *SoundPressureLevelBricklet) SetBootloaderMode(mode BootloaderMode)
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *SoundPressureLevelBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
-    if err != nil {
-        return mode, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return mode, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &mode)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
 
-    }
+	}
 
-    return mode, nil
+	return mode, nil
 }
 
 // Sets the firmware pointer for WriteFirmware. The pointer has
@@ -755,26 +755,26 @@ func (device *SoundPressureLevelBricklet) GetBootloaderMode() (mode BootloaderMo
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *SoundPressureLevelBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, pointer);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, pointer);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes 64 Bytes of firmware at the position as written by
@@ -786,27 +786,27 @@ func (device *SoundPressureLevelBricklet) SetWriteFirmwarePointer(pointer uint32
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *SoundPressureLevelBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, data);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, data);
 
-    resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
-    if err != nil {
-        return status, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
+	if err != nil {
+		return status, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return status, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return status, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &status)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
 
-    }
+	}
 
-    return status, nil
+	return status, nil
 }
 
 // Sets the status LED configuration. By default the LED shows
@@ -824,26 +824,26 @@ func (device *SoundPressureLevelBricklet) WriteFirmware(data [64]uint8) (status 
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *SoundPressureLevelBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, config);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, config);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig
@@ -855,26 +855,26 @@ func (device *SoundPressureLevelBricklet) SetStatusLEDConfig(config StatusLEDCon
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
 func (device *SoundPressureLevelBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
-    if err != nil {
-        return config, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
+	if err != nil {
+		return config, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return config, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return config, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &config)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &config)
 
-    }
+	}
 
-    return config, nil
+	return config, nil
 }
 
 // Returns the temperature in °C as measured inside the microcontroller. The
@@ -884,26 +884,26 @@ func (device *SoundPressureLevelBricklet) GetStatusLEDConfig() (config StatusLED
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *SoundPressureLevelBricklet) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Bricklet. All configurations
@@ -913,25 +913,25 @@ func (device *SoundPressureLevelBricklet) GetChipTemperature() (temperature int1
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *SoundPressureLevelBricklet) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Writes a new UID into flash. If you want to set a new UID
@@ -940,51 +940,51 @@ func (device *SoundPressureLevelBricklet) Reset() (err error) {
 // 
 // We recommend that you use Brick Viewer to change the UID.
 func (device *SoundPressureLevelBricklet) WriteUID(uid uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, uid);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, uid);
 
-    resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
 func (device *SoundPressureLevelBricklet) ReadUID() (uid uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
-    if err != nil {
-        return uid, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
+	if err != nil {
+		return uid, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &uid)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
 
-    }
+	}
 
-    return uid, nil
+	return uid, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,
@@ -996,29 +996,29 @@ func (device *SoundPressureLevelBricklet) ReadUID() (uid uint32, err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *SoundPressureLevelBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

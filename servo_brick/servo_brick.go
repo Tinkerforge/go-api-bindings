@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-05-21.      *
+ * This file was automatically generated on 2019-08-23.      *
  *                                                           *
- * Go Bindings Version 2.0.3                                 *
+ * Go Bindings Version 2.0.4                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -9,7 +9,7 @@
  *************************************************************/
 
 
-//Drives up to 7 RC Servos with up to 3A‍.
+// Drives up to 7 RC Servos with up to 3A‍.
 // 
 // 
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricks/Servo_Brick_Go.html.
@@ -18,14 +18,14 @@ package servo_brick
 import (
 	"encoding/binary"
 	"bytes"
-    . "github.com/Tinkerforge/go-api-bindings/internal"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
+	. "github.com/Tinkerforge/go-api-bindings/internal"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
-type Function uint8
+type Function = uint8
 
 const (
-    FunctionEnable Function = 1
+	FunctionEnable Function = 1
 	FunctionDisable Function = 2
 	FunctionIsEnabled Function = 3
 	FunctionSetPosition Function = 4
@@ -74,10 +74,10 @@ const (
 	FunctionCallbackVelocityReached Function = 28
 )
 
-type CommunicationMethod uint8
+type CommunicationMethod = uint8
 
 const (
-    CommunicationMethodNone CommunicationMethod = 0
+	CommunicationMethodNone CommunicationMethod = 0
 	CommunicationMethodUSB CommunicationMethod = 1
 	CommunicationMethodSPIStack CommunicationMethod = 2
 	CommunicationMethodChibi CommunicationMethod = 3
@@ -87,7 +87,7 @@ const (
 	CommunicationMethodWIFIV2 CommunicationMethod = 7
 )
 
-type ServoBrick struct{
+type ServoBrick struct {
 	device Device
 }
 const DeviceIdentifier = 14
@@ -95,12 +95,12 @@ const DeviceDisplayName = "Servo Brick"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
-    internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-    dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0)
-    if err != nil {
-        return ServoBrick{}, err
-    }
-    dev.ResponseExpected[FunctionEnable] = ResponseExpectedFlagFalse;
+	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
+	dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0)
+	if err != nil {
+		return ServoBrick{}, err
+	}
+	dev.ResponseExpected[FunctionEnable] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionDisable] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionIsEnabled] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetPosition] = ResponseExpectedFlagFalse;
@@ -144,7 +144,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-    return ServoBrick{dev}, nil
+	return ServoBrick{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -162,7 +162,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
 func (device *ServoBrick) GetResponseExpected(functionID Function) (bool, error) {
-    return device.device.GetResponseExpected(uint8(functionID))
+	return device.device.GetResponseExpected(uint8(functionID))
 }
 
 // Changes the response expected flag of the function specified by the function ID parameter.
@@ -174,7 +174,7 @@ func (device *ServoBrick) GetResponseExpected(functionID Function) (bool, error)
 // for this purpose. If this flag is disabled for a setter function then no response is send
 // and errors are silently ignored, because they cannot be detected.
 func (device *ServoBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
-    return device.device.SetResponseExpected(uint8(functionID), responseExpected)
+	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
@@ -184,25 +184,25 @@ func (device *ServoBrick) SetResponseExpectedAll(responseExpected bool) {
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
 func (device *ServoBrick) GetAPIVersion() [3]uint8 {
-    return device.device.GetAPIVersion()
+	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered when the input voltage drops below the value set by
 // SetMinimumVoltage. The parameter is the current voltage given
 // in mV.
 func (device *ServoBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var voltage uint16
-                binary.Read(buf, binary.LittleEndian, &voltage)
-                fn(voltage)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackUnderVoltage), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltage uint16
+		binary.Read(buf, binary.LittleEndian, &voltage)
+		fn(voltage)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackUnderVoltage), wrapper)
 }
 
-//Remove a registered Under Voltage callback.
-func (device *ServoBrick) DeregisterUnderVoltageCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationID)
+// Remove a registered Under Voltage callback.
+func (device *ServoBrick) DeregisterUnderVoltageCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackUnderVoltage), registrationId)
 }
 
 
@@ -219,20 +219,20 @@ func (device *ServoBrick) DeregisterUnderVoltageCallback(registrationID uint64) 
 //  maximum velocity of the servo. Otherwise the servo will lag behind the
 //  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterPositionReachedCallback(fn func(uint8, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var servoNum uint8
-var position int16
-                binary.Read(buf, binary.LittleEndian, &servoNum)
-binary.Read(buf, binary.LittleEndian, &position)
-                fn(servoNum, position)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var servoNum uint8
+		var position int16
+		binary.Read(buf, binary.LittleEndian, &servoNum)
+		binary.Read(buf, binary.LittleEndian, &position)
+		fn(servoNum, position)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackPositionReached), wrapper)
 }
 
-//Remove a registered Position Reached callback.
-func (device *ServoBrick) DeregisterPositionReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationID)
+// Remove a registered Position Reached callback.
+func (device *ServoBrick) DeregisterPositionReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationId)
 }
 
 
@@ -247,96 +247,96 @@ func (device *ServoBrick) DeregisterPositionReachedCallback(registrationID uint6
 //  maximum acceleration of the servo. Otherwise the servo will lag behind the
 //  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterVelocityReachedCallback(fn func(uint8, int16)) uint64 {
-            wrapper := func(byteSlice []byte) {
-                buf := bytes.NewBuffer(byteSlice[8:])
-                var servoNum uint8
-var velocity int16
-                binary.Read(buf, binary.LittleEndian, &servoNum)
-binary.Read(buf, binary.LittleEndian, &velocity)
-                fn(servoNum, velocity)
-            }
-    return device.device.RegisterCallback(uint8(FunctionCallbackVelocityReached), wrapper)
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var servoNum uint8
+		var velocity int16
+		binary.Read(buf, binary.LittleEndian, &servoNum)
+		binary.Read(buf, binary.LittleEndian, &velocity)
+		fn(servoNum, velocity)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackVelocityReached), wrapper)
 }
 
-//Remove a registered Velocity Reached callback.
-func (device *ServoBrick) DeregisterVelocityReachedCallback(registrationID uint64) {
-    device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), registrationID)
+// Remove a registered Velocity Reached callback.
+func (device *ServoBrick) DeregisterVelocityReachedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackVelocityReached), registrationId)
 }
 
 
 // Enables a servo (0 to 6). If a servo is enabled, the configured position,
 // velocity, acceleration, etc. are applied immediately.
 func (device *ServoBrick) Enable(servoNum uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionEnable), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables a servo (0 to 6). Disabled servos are not driven at all, i.e. a
 // disabled servo will not hold its position if a load is applied.
 func (device *ServoBrick) Disable(servoNum uint8) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionDisable), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the specified servo is enabled, *false* otherwise.
 func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionIsEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Sets the position in °/100 for the specified servo.
@@ -348,79 +348,79 @@ func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
 // similar with the Servo Brick, you can also define lengths or speeds with
 // SetDegree.
 func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, position);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPosition), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPosition), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the position of the specified servo as set by SetPosition.
 func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
-    if err != nil {
-        return position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
+	if err != nil {
+		return position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &position)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return position, nil
+	return position, nil
 }
 
 // Returns the *current* position of the specified servo. This may not be the
 // value of SetPosition if the servo is currently approaching a
 // position goal.
 func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentPosition), buf.Bytes())
-    if err != nil {
-        return position, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentPosition), buf.Bytes())
+	if err != nil {
+		return position, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return position, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return position, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &position)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &position)
 
-    }
+	}
 
-    return position, nil
+	return position, nil
 }
 
 // Sets the maximum velocity of the specified servo in °/100s. The velocity
@@ -431,79 +431,79 @@ func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, er
 // 
 // The default value is 65535.
 func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, velocity);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetVelocity), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetVelocity), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the velocity of the specified servo as set by SetVelocity.
 func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetVelocity), buf.Bytes())
-    if err != nil {
-        return velocity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetVelocity), buf.Bytes())
+	if err != nil {
+		return velocity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return velocity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return velocity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &velocity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
-    }
+	}
 
-    return velocity, nil
+	return velocity, nil
 }
 
 // Returns the *current* velocity of the specified servo. This may not be the
 // value of SetVelocity if the servo is currently approaching a
 // velocity goal.
 func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
-    if err != nil {
-        return velocity, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
+	if err != nil {
+		return velocity, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return velocity, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return velocity, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &velocity)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &velocity)
 
-    }
+	}
 
-    return velocity, nil
+	return velocity, nil
 }
 
 // Sets the acceleration of the specified servo in °/100s².
@@ -513,53 +513,53 @@ func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, e
 // 
 // The default value is 65535.
 func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, acceleration);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetAcceleration), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetAcceleration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the acceleration for the specified servo as set by
 // SetAcceleration.
 func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
-    if err != nil {
-        return acceleration, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
+	if err != nil {
+		return acceleration, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return acceleration, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return acceleration, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &acceleration)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &acceleration)
 
-    }
+	}
 
-    return acceleration, nil
+	return acceleration, nil
 }
 
 // Sets the output voltages with which the servos are driven in mV.
@@ -573,50 +573,50 @@ func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, 
 // 
 // The default value is 5000.
 func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, voltage);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, voltage);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetOutputVoltage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetOutputVoltage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the output voltage as specified by SetOutputVoltage.
 func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetOutputVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetOutputVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Sets the minimum and maximum pulse width of the specified servo in µs.
@@ -637,55 +637,55 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
 // The default values are 1000µs (1ms) and 2000µs (2ms) for minimum and
 // maximum pulse width.
 func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPulseWidth), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPulseWidth), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the minimum and maximum pulse width for the specified servo as set by
 // SetPulseWidth.
 func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetPulseWidth), buf.Bytes())
-    if err != nil {
-        return min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetPulseWidth), buf.Bytes())
+	if err != nil {
+		return min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &min)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return min, max, nil
+	return min, max, nil
 }
 
 // Sets the minimum and maximum degree for the specified servo (by default
@@ -719,55 +719,55 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
 // 
 // The default values are -9000 and 9000 for the minimum and maximum degree.
 func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, min);
 	binary.Write(&buf, binary.LittleEndian, max);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetDegree), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetDegree), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the minimum and maximum degree for the specified servo as set by
 // SetDegree.
 func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetDegree), buf.Bytes())
-    if err != nil {
-        return min, max, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetDegree), buf.Bytes())
+	if err != nil {
+		return min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return min, max, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return min, max, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &min)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-    }
+	}
 
-    return min, max, nil
+	return min, max, nil
 }
 
 // Sets the period of the specified servo in µs.
@@ -786,127 +786,127 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
 // 
 // The default value is 19.5ms (19500µs).
 func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 	binary.Write(&buf, binary.LittleEndian, period);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetPeriod), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetPeriod), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the period for the specified servo as set by SetPeriod.
 func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetPeriod), buf.Bytes())
-    if err != nil {
-        return period, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetPeriod), buf.Bytes())
+	if err != nil {
+		return period, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return period, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &period)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
 
-    }
+	}
 
-    return period, nil
+	return period, nil
 }
 
 // Returns the current consumption of the specified servo in mA.
 func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, servoNum);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, servoNum);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetServoCurrent), buf.Bytes())
-    if err != nil {
-        return current, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetServoCurrent), buf.Bytes())
+	if err != nil {
+		return current, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return current, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &current)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
 
-    }
+	}
 
-    return current, nil
+	return current, nil
 }
 
 // Returns the current consumption of all servos together in mA.
 func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetOverallCurrent), buf.Bytes())
-    if err != nil {
-        return current, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetOverallCurrent), buf.Bytes())
+	if err != nil {
+		return current, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return current, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &current)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
 
-    }
+	}
 
-    return current, nil
+	return current, nil
 }
 
 // Returns the stack input voltage in mV. The stack input voltage is the
 // voltage that is supplied via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
 func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStackInputVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Returns the external input voltage in mV. The external input voltage is
@@ -922,26 +922,26 @@ func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
 //  the external connection, it will immediately be driven by the high
 //  stack voltage
 func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetExternalInputVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
@@ -952,50 +952,50 @@ func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) 
 // 
 // The default value is 5V (5000mV).
 func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, voltage);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, voltage);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetMinimumVoltage), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetMinimumVoltage), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the minimum voltage as set by SetMinimumVoltage
 func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
-    if err != nil {
-        return voltage, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMinimumVoltage), buf.Bytes())
+	if err != nil {
+		return voltage, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return voltage, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &voltage)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
 
-    }
+	}
 
-    return voltage, nil
+	return voltage, nil
 }
 
 // Enables the RegisterPositionReachedCallback callback.
@@ -1004,25 +1004,25 @@ func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnablePositionReachedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnablePositionReachedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the RegisterPositionReachedCallback callback.
@@ -1031,51 +1031,51 @@ func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisablePositionReachedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisablePositionReachedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if RegisterPositionReachedCallback callback is enabled, *false* otherwise.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsPositionReachedCallbackEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsPositionReachedCallbackEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Enables the RegisterVelocityReachedCallback callback.
@@ -1084,25 +1084,25 @@ func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err 
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableVelocityReachedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableVelocityReachedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the RegisterVelocityReachedCallback callback.
@@ -1111,51 +1111,51 @@ func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableVelocityReachedCallback), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableVelocityReachedCallback), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if RegisterVelocityReachedCallback callback is enabled, *false* otherwise.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsVelocityReachedCallbackEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsVelocityReachedCallbackEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // The SPITF protocol can be used with a dynamic baudrate. If the dynamic baudrate is
@@ -1183,54 +1183,54 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
 // 
 // .. versionadded:: 2.3.4$nbsp;(Firmware)
 func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
 	binary.Write(&buf, binary.LittleEndian, minimumDynamicBaudrate);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrateConfig), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrateConfig), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the baudrate config, see SetSPITFPBaudrateConfig.
 // 
 // .. versionadded:: 2.3.4$nbsp;(Firmware)
 func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, minimumDynamicBaudrate uint32, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
-    if err != nil {
-        return enableDynamicBaudrate, minimumDynamicBaudrate, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrateConfig), buf.Bytes())
+	if err != nil {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enableDynamicBaudrate, minimumDynamicBaudrate, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
-    }
+	}
 
-    return enableDynamicBaudrate, minimumDynamicBaudrate, nil
+	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
 
 // Returns the timeout count for the different communication methods.
@@ -1253,27 +1253,27 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 //	* CommunicationMethodEthernet
 //	* CommunicationMethodWIFIV2
 func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationMethod) (timeoutCount uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, communicationMethod);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, communicationMethod);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSendTimeoutCount), buf.Bytes())
-    if err != nil {
-        return timeoutCount, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSendTimeoutCount), buf.Bytes())
+	if err != nil {
+		return timeoutCount, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return timeoutCount, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return timeoutCount, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
 
-    }
+	}
 
-    return timeoutCount, nil
+	return timeoutCount, nil
 }
 
 // Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
@@ -1295,54 +1295,54 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
 // 
 // .. versionadded:: 2.3.2$nbsp;(Firmware)
 func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 	binary.Write(&buf, binary.LittleEndian, baudrate);
 
-    resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrate), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Set(uint8(FunctionSetSPITFPBaudrate), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the baudrate for a given Bricklet port, see SetSPITFPBaudrate.
 // 
 // .. versionadded:: 2.3.2$nbsp;(Firmware)
 func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrate), buf.Bytes())
-    if err != nil {
-        return baudrate, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPBaudrate), buf.Bytes())
+	if err != nil {
+		return baudrate, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return baudrate, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return baudrate, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 
-    }
+	}
 
-    return baudrate, nil
+	return baudrate, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -1359,30 +1359,30 @@ func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
 // 
 // .. versionadded:: 2.3.2$nbsp;(Firmware)
 func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, brickletPort);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, brickletPort);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
-    if err != nil {
-        return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
+	if err != nil {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-    }
+	}
 
-    return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
 
 // Enables the status LED.
@@ -1394,25 +1394,25 @@ func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
 // 
 // .. versionadded:: 2.3.1$nbsp;(Firmware)
 func (device *ServoBrick) EnableStatusLED() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionEnableStatusLED), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Disables the status LED.
@@ -1424,51 +1424,51 @@ func (device *ServoBrick) EnableStatusLED() (err error) {
 // 
 // .. versionadded:: 2.3.1$nbsp;(Firmware)
 func (device *ServoBrick) DisableStatusLED() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionDisableStatusLED), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns *true* if the status LED is enabled, *false* otherwise.
 // 
 // .. versionadded:: 2.3.1$nbsp;(Firmware)
 func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
-    if err != nil {
-        return enabled, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsStatusLEDEnabled), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return enabled, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &enabled)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
 
-    }
+	}
 
-    return enabled, nil
+	return enabled, nil
 }
 
 // Returns the firmware and protocol version and the name of the Bricklet for a
@@ -1477,58 +1477,58 @@ func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 // This functions sole purpose is to allow automatic flashing of v1.x.y Bricklet
 // plugins.
 func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint8, firmwareVersion [3]uint8, name string, err error) {
-        var buf bytes.Buffer
-    binary.Write(&buf, binary.LittleEndian, port);
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
 
-    resultBytes, err := device.device.Get(uint8(FunctionGetProtocol1BrickletName), buf.Bytes())
-    if err != nil {
-        return protocolVersion, firmwareVersion, name, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	resultBytes, err := device.device.Get(uint8(FunctionGetProtocol1BrickletName), buf.Bytes())
+	if err != nil {
+		return protocolVersion, firmwareVersion, name, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return protocolVersion, firmwareVersion, name, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	name = ByteSliceToString(resultBuf.Next(40))
 
-    }
+	}
 
-    return protocolVersion, firmwareVersion, name, nil
+	return protocolVersion, firmwareVersion, name, nil
 }
 
 // Returns the temperature in °C/10 as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has an
-// accuracy of +-15%. Practically it is only useful as an indicator for
+// accuracy of ±15%. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
-    if err != nil {
-        return temperature, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
+	if err != nil {
+		return temperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return temperature, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        binary.Read(resultBuf, binary.LittleEndian, &temperature)
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-    }
+	}
 
-    return temperature, nil
+	return temperature, nil
 }
 
 // Calling this function will reset the Brick. Calling this function
@@ -1538,25 +1538,25 @@ func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *ServoBrick) Reset() (err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
-    if err != nil {
-        return err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
 
-        bytes.NewBuffer(resultBytes[8:])
-        
-    }
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
 
-    return nil
+	return nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
@@ -1568,29 +1568,29 @@ func (device *ServoBrick) Reset() (err error) {
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
-        var buf bytes.Buffer
-    
-    resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
-    if err != nil {
-        return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
-    }
-    if len(resultBytes) > 0 {
-        var header PacketHeader
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
+	if err != nil {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-        header.FillFromBytes(resultBytes)
-        if header.ErrorCode != 0 {
-            return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, BrickletError(header.ErrorCode)
-        }
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
 
-        resultBuf := bytes.NewBuffer(resultBytes[8:])
-        uid = ByteSliceToString(resultBuf.Next(8))
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-    }
+	}
 
-    return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
+	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }
