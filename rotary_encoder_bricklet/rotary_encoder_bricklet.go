@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -225,13 +225,11 @@ func (device *RotaryEncoderBricklet) GetCount(reset bool) (count int32, err erro
 	return count, nil
 }
 
-// Sets the period in ms with which the RegisterCountCallback callback is triggered
+// Sets the period with which the RegisterCountCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterCountCallback callback is only triggered if the count has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *RotaryEncoderBricklet) SetCountCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -359,7 +357,7 @@ func (device *RotaryEncoderBricklet) GetCountCallbackThreshold() (option Thresho
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterCountReachedCallback
 // 
@@ -368,8 +366,6 @@ func (device *RotaryEncoderBricklet) GetCountCallbackThreshold() (option Thresho
 // * SetCountCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *RotaryEncoderBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

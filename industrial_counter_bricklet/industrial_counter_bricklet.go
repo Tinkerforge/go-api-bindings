@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -409,13 +409,6 @@ func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err er
 
 // Returns the signal data (duty cycle, period, frequency and value) for the
 // given channel.
-// 
-// The units are:
-// 
-// * Duty Cycle: 1/100 %
-// * Period: ns
-// * Frequency: mHz (1/1000 Hz)
-// * Value: true = high, false = low
 //
 // Associated constants:
 //
@@ -452,13 +445,6 @@ func (device *IndustrialCounterBricklet) GetSignalData(channel Channel) (dutyCyc
 
 // Returns the signal data (duty cycle, period, frequency and value) for all four
 // channels.
-// 
-// The units are:
-// 
-// * Duty Cycle: 1/100 %
-// * Period: ns
-// * Frequency: mHz (1/1000 Hz)
-// * Value: true = high, false = low
 func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16, period [4]uint64, frequency [4]uint32, value [4]bool, err error) {
 	var buf bytes.Buffer
 	
@@ -756,7 +742,7 @@ func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel
 	return countEdge, countDirection, dutyCyclePrescaler, frequencyIntegrationTime, nil
 }
 
-// The period in ms is the period with which the RegisterAllCounterCallback
+// The period is the period with which the RegisterAllCounterCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -765,8 +751,6 @@ func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IndustrialCounterBricklet) SetAllCounterCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -817,7 +801,7 @@ func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (p
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterAllSignalDataCallback
+// The period is the period with which the RegisterAllSignalDataCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -826,8 +810,6 @@ func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (p
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IndustrialCounterBricklet) SetAllSignalDataCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

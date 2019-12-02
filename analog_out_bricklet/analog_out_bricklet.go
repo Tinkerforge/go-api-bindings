@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -102,10 +102,8 @@ func (device *AnalogOutBricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// Sets the voltage in mV. The possible range is 0V to 5V (0-5000).
-// Calling this function will set the mode to 0 (see SetMode).
-// 
-// The default value is 0 (with mode 1).
+// Sets the voltage. Calling this function will set
+// the mode to 0 (see SetMode).
 func (device *AnalogOutBricklet) SetVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, voltage);
@@ -160,10 +158,8 @@ func (device *AnalogOutBricklet) GetVoltage() (voltage uint16, err error) {
 // * 2: 100k Ohm resistor to ground
 // * 3: 500k Ohm resistor to ground
 // 
-// Setting the mode to 0 will result in an output voltage of 0. You can jump
+// Setting the mode to 0 will result in an output voltage of 0 V. You can jump
 // to a higher output voltage directly by calling SetVoltage.
-// 
-// The default mode is 1.
 //
 // Associated constants:
 //

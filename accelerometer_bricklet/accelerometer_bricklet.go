@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -210,7 +210,7 @@ func (device *AccelerometerBricklet) DeregisterAccelerationReachedCallback(regis
 
 
 // Returns the acceleration in x, y and z direction. The values
-// are given in g/1000 (1g = 9.80665m/s²), not to be confused with grams.
+// are given in gₙ/1000 (1gₙ = 9.80665m/s²).
 // 
 // If you want to get the acceleration periodically, it is recommended
 // to use the RegisterAccelerationCallback callback and set the period with
@@ -240,13 +240,11 @@ func (device *AccelerometerBricklet) GetAcceleration() (x int16, y int16, z int1
 	return x, y, z, nil
 }
 
-// Sets the period in ms with which the RegisterAccelerationCallback callback is triggered
+// Sets the period with which the RegisterAccelerationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAccelerationCallback callback is only triggered if the acceleration has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *AccelerometerBricklet) SetAccelerationCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -305,8 +303,6 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackPeriod() (period uin
 //  'i'|    Callback is triggered when the acceleration is *inside* the min and max values
 //  '<'|    Callback is triggered when the acceleration is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the acceleration is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0, 0, 0, 0, 0).
 //
 // Associated constants:
 //
@@ -382,7 +378,7 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 	return option, minX, maxX, minY, maxY, minZ, maxZ, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterAccelerationReachedCallback
 // 
@@ -391,8 +387,6 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 // * SetAccelerationCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *AccelerometerBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -440,7 +434,7 @@ func (device *AccelerometerBricklet) GetDebouncePeriod() (debounce uint32, err e
 	return debounce, nil
 }
 
-// Returns the temperature of the accelerometer in °C.
+// Returns the temperature of the accelerometer.
 func (device *AccelerometerBricklet) GetTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
 	
@@ -468,14 +462,11 @@ func (device *AccelerometerBricklet) GetTemperature() (temperature int16, err er
 // Possible values are:
 // 
 // * Data rate of 0Hz to 1600Hz.
-// * Full scale range of -2G to +2G up to -16G to +16G.
+// * Full scale range of ±2gₙ up to ±16gₙ.
 // * Filter bandwidth between 50Hz and 800Hz.
 // 
 // Decreasing data rate or full scale range will also decrease the noise on
 // the data.
-// 
-// The default values are 100Hz data rate, -4G to +4G range and 200Hz
-// filter bandwidth.
 //
 // Associated constants:
 //

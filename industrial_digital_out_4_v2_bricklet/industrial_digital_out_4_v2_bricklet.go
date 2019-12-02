@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -271,7 +271,7 @@ func (device *IndustrialDigitalOut4V2Bricklet) SetSelectedValue(channel uint8, v
 }
 
 // The first parameter is the desired state of the channel (*true* means output *high*
-// and *false* means output *low*). The second parameter indicates the time (in ms) that
+// and *false* means output *low*). The second parameter indicates the time that
 // the channel should hold the state.
 // 
 // If this function is called with the parameters (true, 1500):
@@ -408,20 +408,17 @@ func (device *IndustrialDigitalOut4V2Bricklet) GetChannelLEDConfig(channel uint8
 	return config, nil
 }
 
-// Activates a PWM for the given channel with the frequency given in 1/10Hz and the duty
-// cycle given in 1/100%.
+// Activates a PWM for the given channel.
 // 
 // To turn the PWM off again, you can set the frequency to 0 or any other
 // function that changes a value of the channel (e.g. SetSelectedValue).
 // 
-// The maximum duty cycle value is 10000 (100%). The optocoupler of the Industrial Digital
+// The optocoupler of the Industrial Digital
 // Out 4 Bricklet 2.0 has a rise time and fall time of 11.5us (each) at 24V. So the maximum
 // useful frequency value is about 400000 (40kHz).
 // 
 // A running monoflop timer for the given channel will be aborted if this function
 // is called.
-// 
-// The default values are 0, 0.
 func (device *IndustrialDigitalOut4V2Bricklet) SetPWMConfiguration(channel uint8, frequency uint32, dutyCycle uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);

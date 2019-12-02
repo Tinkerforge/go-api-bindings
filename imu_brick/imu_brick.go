@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -955,10 +955,8 @@ func (device *IMUBrick) GetCalibration(typ CalibrationType) (data [10]int16, err
 	return data, nil
 }
 
-// Sets the period in ms with which the RegisterAccelerationCallback callback is triggered
+// Sets the period with which the RegisterAccelerationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
-// The default value is 0.
 func (device *IMUBrick) SetAccelerationPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -1006,7 +1004,7 @@ func (device *IMUBrick) GetAccelerationPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterMagneticFieldCallback callback is
+// Sets the period with which the RegisterMagneticFieldCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 func (device *IMUBrick) SetMagneticFieldPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1055,7 +1053,7 @@ func (device *IMUBrick) GetMagneticFieldPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAngularVelocityCallback callback is
+// Sets the period with which the RegisterAngularVelocityCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 func (device *IMUBrick) SetAngularVelocityPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1104,7 +1102,7 @@ func (device *IMUBrick) GetAngularVelocityPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAllDataCallback callback is triggered
+// Sets the period with which the RegisterAllDataCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUBrick) SetAllDataPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1153,7 +1151,7 @@ func (device *IMUBrick) GetAllDataPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterOrientationCallback callback is triggered
+// Sets the period with which the RegisterOrientationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUBrick) SetOrientationPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1202,7 +1200,7 @@ func (device *IMUBrick) GetOrientationPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterQuaternionCallback callback is triggered
+// Sets the period with which the RegisterQuaternionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUBrick) SetQuaternionPeriod(period uint32) (err error) {
 	var buf bytes.Buffer

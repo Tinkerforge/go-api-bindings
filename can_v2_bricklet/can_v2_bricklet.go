@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -221,19 +221,7 @@ func (device *CANV2Bricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// This callback is triggered if a data or remote frame was received by the CAN
-// transceiver.
-// 
-// The ``identifier`` return value follows the identifier format described for
-// WriteFrame.
-// 
-// For details on the ``data`` return value see ReadFrame.
-// 
-// A configurable read filter can be used to define which frames should be
-// received by the CAN transceiver and put into the read queue (see
-// SetQueueConfiguration).
-// 
-// To enable this callback, use SetFrameReadCallbackConfiguration.
+// See RegisterFrameReadCallback
 func (device *CANV2Bricklet) RegisterFrameReadLowLevelCallback(fn func(FrameType, uint32, uint8, [15]uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -269,11 +257,18 @@ func (device *CANV2Bricklet) DeregisterFrameReadLowLevelCallback(registrationId 
 // SetQueueConfiguration).
 // 
 // To enable this callback, use SetFrameReadCallbackConfiguration.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for data.
 func (device *CANV2Bricklet) RegisterFrameReadCallback(fn func(FrameType, uint32, []uint8)) uint64 {
 	buf := make([]uint8, 0)
 	wrapper := func(frameType FrameType, identifier uint32, dataLength uint8, dataData [15]uint8)  {
 		if int(0) != len(buf) {
-			buf = make([]uint8, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(frameType, identifier, buf)
+				buf = make([]uint8, 0)
+			}
 			if 0 != 0 {
 				return
 			}
@@ -571,9 +566,6 @@ func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, 
 
 // Sets the transceiver configuration for the CAN bus communication.
 // 
-// The baud rate can be configured in bit/s between 10 and 1000 kbit/s and the
-// sample point can be configured in 1/10 % between 50 and 90 %.
-// 
 // The CAN transceiver has three different modes:
 // 
 // * Normal: Reads from and writes to the CAN bus and performs active bus
@@ -583,8 +575,6 @@ func (device *CANV2Bricklet) GetFrameReadCallbackConfiguration() (enabled bool, 
 // * Read-Only: Only reads from the CAN bus, but does neither active bus error
 //   detection nor acknowledgement. Only the receiving part of the transceiver
 //   is connected to the CAN bus.
-// 
-// The default is: 125 kbit/s, 62.5 % and normal transceiver mode.
 //
 // Associated constants:
 //
@@ -680,7 +670,7 @@ func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, sam
 // 
 // A valid queue configuration fulfills these conditions::
 // 
-//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
+//  write_buffer_size + abs(read_buffer_size_0) + abs(read_buffer_size_1) + ... + abs(read_buffer_size_31) <= 32
 //  write_backlog_size + read_backlog_size <= 768
 // 
 // The write buffer timeout has three different modes that define how a failed
@@ -695,15 +685,6 @@ func (device *CANV2Bricklet) GetTransceiverConfiguration() (baudRate uint32, sam
 //   number of milliseconds then the frame is discarded.
 // 
 // The current content of the queues is lost when this function is called.
-// 
-// The default is:
-// 
-// * 8 write buffers,
-// * infinite write timeout,
-// * 383 write backlog frames,
-// * 16 read buffers for data frames,
-// * 8 read buffers for remote frames and
-// * 383 read backlog frames.
 func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBufferSizesLength uint8, readBufferSizesData [32]int8, readBacklogSize uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, writeBufferSize);
@@ -764,7 +745,7 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
 // 
 // A valid queue configuration fulfills these conditions::
 // 
-//  write_buffer_size + read_buffer_size_0 + read_buffer_size_1 + ... + read_buffer_size_31 <= 32
+//  write_buffer_size + abs(read_buffer_size_0) + abs(read_buffer_size_1) + ... + abs(read_buffer_size_31) <= 32
 //  write_backlog_size + read_backlog_size <= 768
 // 
 // The write buffer timeout has three different modes that define how a failed
@@ -779,15 +760,6 @@ func (device *CANV2Bricklet) SetQueueConfigurationLowLevel(writeBufferSize uint8
 //   number of milliseconds then the frame is discarded.
 // 
 // The current content of the queues is lost when this function is called.
-// 
-// The default is:
-// 
-// * 8 write buffers,
-// * infinite write timeout,
-// * 383 write backlog frames,
-// * 16 read buffers for data frames,
-// * 8 read buffers for remote frames and
-// * 383 read backlog frames.
 	func (device *CANV2Bricklet) SetQueueConfiguration(writeBufferSize uint8, writeBufferTimeout int32, writeBacklogSize uint16, readBacklogSize uint16, readBufferSizes []int8) (err error) {
 		_, err = device.device.SetHighLevel(func(readBufferSizesLength uint64, chunkOffset uint64, readBufferSizesData []byte) (LowLevelWriteResult, error) {
 			arr := [32]int8{}

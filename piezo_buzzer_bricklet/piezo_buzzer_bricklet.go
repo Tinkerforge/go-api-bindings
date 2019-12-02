@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -126,8 +126,7 @@ func (device *PiezoBuzzerBricklet) DeregisterMorseCodeFinishedCallback(registrat
 }
 
 
-// Beeps with the duration in ms. For example: If you set a value of 1000,
-// the piezo buzzer will beep for one second.
+// Beeps for the given duration.
 func (device *PiezoBuzzerBricklet) Beep(duration uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, duration);
@@ -158,8 +157,6 @@ func (device *PiezoBuzzerBricklet) Beep(duration uint32) (err error) {
 // For example: If you set the string ...---..., the piezo buzzer will beep
 // nine times with the durations short short short long long long short
 // short short.
-// 
-// The maximum string size is 60.
 func (device *PiezoBuzzerBricklet) MorseCode(morse string) (err error) {
 	var buf bytes.Buffer
 	morse_byte_slice, err := StringToByteSlice(morse, 60)

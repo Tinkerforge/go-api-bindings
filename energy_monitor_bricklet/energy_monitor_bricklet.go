@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -192,14 +192,14 @@ func (device *EnergyMonitorBricklet) DeregisterEnergyDataCallback(registrationId
 
 // Returns all of the measurements that are done by the Energy Monitor Bricklet.
 // 
-// * Voltage (V): Voltage RMS with a resolution of 10mV (example: 230.05V = 23005)
-// * Current (A): Current RMS with a resolution of 10mA (example: 1.42A = 142)
-// * Energy (Wh): Energy (integrated over time) with a resolution of 10mWh (example: 1.1kWh = 110000)
-// * Real Power (W): Real Power with a resolution of 10mW (example: 1234.56W = 123456)
-// * Apparent Power (VA): Apparent Power with a resolution of 10mVA (example: 1234.56VA = 123456)
-// * Reactive Power (VAR): Reactive Power with a resolution of 10mVAR (example: 1234.56VAR = 123456)
-// * Power Factor: Power Factor with a resolution of 1/1000 (example: PF 0.995 = 995)
-// * Frequency (Hz): AC Frequency of the mains voltage with a resolution of 1/100 Hz (example: 50Hz = 5000)
+// * Voltage RMS
+// * Current RMS
+// * Energy (integrated over time)
+// * Real Power
+// * Apparent Power
+// * Reactive Power
+// * Power Factor
+// * Frequency (AC Frequency of the mains voltage)
 // 
 // The frequency is recalculated every 6 seconds.
 // 
@@ -370,8 +370,6 @@ func (device *EnergyMonitorBricklet) GetTransformerStatus() (voltageTransformerC
 // 
 // The calibration is saved in non-volatile memory, you only have to set it once.
 // 
-// By default the voltage ratio is set to 1923 and the current ratio is set to 3000.
-// 
 // Set the phase shift to 0. It is for future use and currently not supported by the Bricklet.
 func (device *EnergyMonitorBricklet) SetTransformerCalibration(voltageRatio uint16, currentRatio uint16, phaseShift int16) (err error) {
 	var buf bytes.Buffer
@@ -458,7 +456,7 @@ func (device *EnergyMonitorBricklet) CalibrateOffset() (err error) {
 	return nil
 }
 
-// The period in ms is the period with which the RegisterEnergyDataCallback
+// The period is the period with which the RegisterEnergyDataCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -467,8 +465,6 @@ func (device *EnergyMonitorBricklet) CalibrateOffset() (err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *EnergyMonitorBricklet) SetEnergyDataCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

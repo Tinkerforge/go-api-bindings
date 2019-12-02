@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -275,13 +275,11 @@ func (device *VoltageBricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterVoltageCallback callback is triggered
+// Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *VoltageBricklet) SetVoltageCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -329,13 +327,11 @@ func (device *VoltageBricklet) GetVoltageCallbackPeriod() (period uint32, err er
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *VoltageBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -543,7 +539,7 @@ func (device *VoltageBricklet) GetAnalogValueCallbackThreshold() (option Thresho
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterVoltageReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -554,8 +550,6 @@ func (device *VoltageBricklet) GetAnalogValueCallbackThreshold() (option Thresho
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *VoltageBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

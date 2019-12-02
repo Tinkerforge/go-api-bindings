@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -193,9 +193,7 @@ func (device *RS232V2Bricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// This callback is called if new data is available.
-// 
-// To enable this callback, use EnableReadCallback.
+// See RegisterReadCallback
 func (device *RS232V2Bricklet) RegisterReadLowLevelCallback(fn func(uint16, uint16, [60]rune)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -219,11 +217,18 @@ func (device *RS232V2Bricklet) DeregisterReadLowLevelCallback(registrationId uin
 // This callback is called if new data is available.
 // 
 // To enable this callback, use EnableReadCallback.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for message.
 func (device *RS232V2Bricklet) RegisterReadCallback(fn func([]rune)) uint64 {
 	buf := make([]rune, 0)
 	wrapper := func(messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune)  {
 		if int(messageChunkOffset) != len(buf) {
-			buf = make([]rune, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(buf)
+				buf = make([]rune, 0)
+			}
 			if messageChunkOffset != 0 {
 				return
 			}

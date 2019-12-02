@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -221,9 +221,7 @@ func (device *BarometerBricklet) DeregisterAltitudeReachedCallback(registrationI
 }
 
 
-// Returns the air pressure of the air pressure sensor. The value
-// has a range of 10000 to 1200000 and is given in mbar/1000, i.e. a value
-// of 1001092 means that an air pressure of 1001.092 mbar is measured.
+// Returns the air pressure of the air pressure sensor.
 // 
 // If you want to get the air pressure periodically, it is recommended to use the
 // RegisterAirPressureCallback callback and set the period with
@@ -251,8 +249,8 @@ func (device *BarometerBricklet) GetAirPressure() (airPressure int32, err error)
 	return airPressure, nil
 }
 
-// Returns the relative altitude of the air pressure sensor. The value is given in
-// cm and is calculated based on the difference between the current air pressure
+// Returns the relative altitude of the air pressure sensor. The value is
+// calculated based on the difference between the current air pressure
 // and the reference air pressure that can be set with SetReferenceAirPressure.
 // 
 // If you want to get the altitude periodically, it is recommended to use the
@@ -281,13 +279,11 @@ func (device *BarometerBricklet) GetAltitude() (altitude int32, err error) {
 	return altitude, nil
 }
 
-// Sets the period in ms with which the RegisterAirPressureCallback callback is triggered
+// Sets the period with which the RegisterAirPressureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAirPressureCallback callback is only triggered if the air pressure has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *BarometerBricklet) SetAirPressureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -335,13 +331,11 @@ func (device *BarometerBricklet) GetAirPressureCallbackPeriod() (period uint32, 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAltitudeCallback callback is triggered
+// Sets the period with which the RegisterAltitudeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAltitudeCallback callback is only triggered if the altitude has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *BarometerBricklet) SetAltitudeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -400,8 +394,6 @@ func (device *BarometerBricklet) GetAltitudeCallbackPeriod() (period uint32, err
 //  'i'|    Callback is triggered when the air pressure is *inside* the min and max values
 //  '<'|    Callback is triggered when the air pressure is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the air pressure is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -480,8 +472,6 @@ func (device *BarometerBricklet) GetAirPressureCallbackThreshold() (option Thres
 //  'i'|    Callback is triggered when the altitude is *inside* the min and max values
 //  '<'|    Callback is triggered when the altitude is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the altitude is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -549,7 +539,7 @@ func (device *BarometerBricklet) GetAltitudeCallbackThreshold() (option Threshol
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterAirPressureReachedCallback,
 // * RegisterAltitudeReachedCallback
@@ -560,8 +550,6 @@ func (device *BarometerBricklet) GetAltitudeCallbackThreshold() (option Threshol
 // * SetAltitudeCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *BarometerBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -609,8 +597,7 @@ func (device *BarometerBricklet) GetDebouncePeriod() (debounce uint32, err error
 	return debounce, nil
 }
 
-// Sets the reference air pressure in mbar/1000 for the altitude calculation.
-// Valid values are between 10000 and 1200000.
+// Sets the reference air pressure for the altitude calculation.
 // Setting the reference to the current air pressure results in a calculated
 // altitude of 0cm. Passing 0 is a shortcut for passing the current air pressure as
 // reference.
@@ -619,8 +606,6 @@ func (device *BarometerBricklet) GetDebouncePeriod() (debounce uint32, err error
 // https://en.wikipedia.org/wiki/QNH and
 // https://en.wikipedia.org/wiki/Mean_sea_level_pressure#Mean_sea_level_pressure
 // used in aviation.
-// 
-// The default value is 1013.25mbar.
 func (device *BarometerBricklet) SetReferenceAirPressure(airPressure int32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, airPressure);
@@ -644,9 +629,7 @@ func (device *BarometerBricklet) SetReferenceAirPressure(airPressure int32) (err
 	return nil
 }
 
-// Returns the temperature of the air pressure sensor. The value
-// has a range of -4000 to 8500 and is given in °C/100, i.e. a value
-// of 2007 means that a temperature of 20.07 °C is measured.
+// Returns the temperature of the air pressure sensor.
 // 
 // This temperature is used internally for temperature compensation of the air
 // pressure measurement. It is not as accurate as the temperature measured by the
@@ -705,17 +688,11 @@ func (device *BarometerBricklet) GetReferenceAirPressure() (airPressure int32, e
 // for the pressure. The moving average is calculated from the normal
 // averages.  There is no moving average for the temperature.
 // 
-// The maximum length for the pressure average is 10, for the
-// temperature average is 255 and for the moving average is 25.
-// 
 // Setting the all three parameters to 0 will turn the averaging
 // completely off. If the averaging is off, there is lots of noise
 // on the data, but the data is without delay. Thus we recommend
 // to turn the averaging off if the Barometer Bricklet data is
 // to be used for sensor fusion with other sensors.
-// 
-// The default values are 10 for the normal averages and 25 for the
-// moving average.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *BarometerBricklet) SetAveraging(movingAveragePressure uint8, averagePressure uint8, averageTemperature uint8) (err error) {

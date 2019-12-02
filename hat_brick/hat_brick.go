@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -30,6 +30,8 @@ const (
 	FunctionSetBrickletPower Function = 3
 	FunctionGetBrickletPower Function = 4
 	FunctionGetVoltages Function = 5
+	FunctionSetVoltagesCallbackConfiguration Function = 6
+	FunctionGetVoltagesCallbackConfiguration Function = 7
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -42,6 +44,7 @@ const (
 	FunctionWriteUID Function = 248
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
+	FunctionCallbackVoltages Function = 8
 )
 
 type BootloaderMode = uint8
@@ -83,7 +86,7 @@ const DeviceDisplayName = "HAT Brick"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (HATBrick, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
 	if err != nil {
 		return HATBrick{}, err
 	}
@@ -92,6 +95,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (HATBrick, error) {
 	dev.ResponseExpected[FunctionSetBrickletPower] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetBrickletPower] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetVoltages] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetVoltagesCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetVoltagesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -147,11 +152,35 @@ func (device *HATBrick) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
+// This callback is triggered periodically according to the configuration set by
+// SetVoltagesCallbackConfiguration.
+// 
+// The parameters are the same as GetVoltages.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *HATBrick) RegisterVoltagesCallback(fn func(uint16, uint16)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltageUSB uint16
+		var voltageDC uint16
+		binary.Read(buf, binary.LittleEndian, &voltageUSB)
+		binary.Read(buf, binary.LittleEndian, &voltageDC)
+		fn(voltageUSB, voltageDC)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackVoltages), wrapper)
+}
+
+// Remove a registered Voltages callback.
+func (device *HATBrick) DeregisterVoltagesCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackVoltages), registrationId)
+}
+
+
 // Sets the sleep mode.
 // 
 // Note
 //  Calling this function will cut the Raspberry Pi's power after Power Off Delay seconds.
-//  You have to shut down the Operating System yourself, e.g. by calling 'sudo shutdown -h now'.
+//  You have to shut down the operating system yourself, e.g. by calling 'sudo shutdown -h now'.
 // 
 // Parameters:
 // 
@@ -310,6 +339,69 @@ func (device *HATBrick) GetVoltages() (voltageUSB uint16, voltageDC uint16, err 
 	}
 
 	return voltageUSB, voltageDC, nil
+}
+
+// The period is the period with which the RegisterVoltagesCallback
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *HATBrick) SetVoltagesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetVoltagesCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the callback configuration as set by
+// SetVoltagesCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Firmware)
+func (device *HATBrick) GetVoltagesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetVoltagesCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
+
+	}
+
+	return period, valueHasToChange, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

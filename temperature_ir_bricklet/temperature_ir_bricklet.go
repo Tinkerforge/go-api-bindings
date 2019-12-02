@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -215,10 +215,7 @@ func (device *TemperatureIRBricklet) DeregisterObjectTemperatureReachedCallback(
 }
 
 
-// Returns the ambient temperature of the sensor. The value
-// has a range of -400 to 1250 and is given in °C/10,
-// e.g. a value of 423 means that an ambient temperature of 42.3 °C is
-// measured.
+// Returns the ambient temperature of the sensor.
 // 
 // If you want to get the ambient temperature periodically, it is recommended
 // to use the RegisterAmbientTemperatureCallback callback and set the period with
@@ -247,10 +244,7 @@ func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16,
 }
 
 // Returns the object temperature of the sensor, i.e. the temperature
-// of the surface of the object the sensor is aimed at. The value
-// has a range of -700 to 3800 and is given in °C/10,
-// e.g. a value of 3001 means that a temperature of 300.1 °C is measured
-// on the surface of the object.
+// of the surface of the object the sensor is aimed at.
 // 
 // The temperature of different materials is dependent on their `emissivity
 // <https://en.wikipedia.org/wiki/Emissivity>`__. The emissivity of the material
@@ -293,9 +287,6 @@ func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, 
 // Note
 //  If you need a precise measurement for the object temperature, it is
 //  absolutely crucial that you also provide a precise emissivity.
-// 
-// The default emissivity is 1.0 (value of 65535) and the minimum emissivity the
-// sensor can handle is 0.1 (value of 6553).
 // 
 // The emissivity is stored in non-volatile memory and will still be used after a restart or power cycle of the Bricklet.
 func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error) {
@@ -345,13 +336,11 @@ func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err err
 	return emissivity, nil
 }
 
-// Sets the period in ms with which the RegisterAmbientTemperatureCallback callback is
+// Sets the period with which the RegisterAmbientTemperatureCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAmbientTemperatureCallback callback is only triggered if the temperature has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -399,13 +388,11 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (peri
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterObjectTemperatureCallback callback is
+// Sets the period with which the RegisterObjectTemperatureCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 // 
 // The RegisterObjectTemperatureCallback callback is only triggered if the temperature
 // has changed since the last triggering.
-// 
-// The default value is 0.
 func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -464,8 +451,6 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (perio
 //  'i'|    Callback is triggered when the ambient temperature is *inside* the min and max values
 //  '<'|    Callback is triggered when the ambient temperature is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the ambient temperature is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -544,8 +529,6 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (o
 //  'i'|    Callback is triggered when the object temperature is *inside* the min and max values
 //  '<'|    Callback is triggered when the object temperature is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the object temperature is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -613,7 +596,7 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (op
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterAmbientTemperatureReachedCallback,
 // * RegisterObjectTemperatureReachedCallback
@@ -624,8 +607,6 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (op
 // * SetObjectTemperatureCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

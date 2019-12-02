@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -159,8 +159,8 @@ func (device *DistanceUSBricklet) DeregisterDistanceReachedCallback(registration
 }
 
 
-// Returns the current distance value measured by the sensor. The value has a
-// range of 0 to 4095. A small value corresponds to a small distance, a big
+// Returns the current distance value measured by the sensor.
+// A small value corresponds to a small distance, a big
 // value corresponds to a big distance. The relation between the measured distance
 // value and the actual distance is affected by the 5V supply voltage (deviations
 // in the supply voltage result in deviations in the distance values) and is
@@ -192,13 +192,11 @@ func (device *DistanceUSBricklet) GetDistanceValue() (distance uint16, err error
 	return distance, nil
 }
 
-// Sets the period in ms with which the RegisterDistanceCallback callback is triggered
+// Sets the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // Der RegisterDistanceCallback callback is only triggered if the distance value has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *DistanceUSBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -257,8 +255,6 @@ func (device *DistanceUSBricklet) GetDistanceCallbackPeriod() (period uint32, er
 //  'i'|    Callback is triggered when the distance value is *inside* the min and max values
 //  '<'|    Callback is triggered when the distance value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the distance value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -326,7 +322,7 @@ func (device *DistanceUSBricklet) GetDistanceCallbackThreshold() (option Thresho
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterDistanceReachedCallback,
 // 
@@ -335,8 +331,6 @@ func (device *DistanceUSBricklet) GetDistanceCallbackThreshold() (option Thresho
 // * SetDistanceCallbackThreshold,
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *DistanceUSBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -389,10 +383,6 @@ func (device *DistanceUSBricklet) GetDebouncePeriod() (debounce uint32, err erro
 // 
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 0-100.
-// 
-// The default value is 20.
 func (device *DistanceUSBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);

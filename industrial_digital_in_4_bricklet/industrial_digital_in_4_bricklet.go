@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -128,6 +128,8 @@ func (device *IndustrialDigitalIn4Bricklet) GetAPIVersion() [3]uint8 {
 //   currently pin 0 is high and pins 1-3 are low.
 // * (9, 14) or (0b1001, 0b1110) means that interrupts on pins 0 and 3
 //   occurred and currently pin 0 is low and pins 1-3 are high.
+// 
+// The interrupts use the grouping as set by SetGroup.
 func (device *IndustrialDigitalIn4Bricklet) RegisterInterruptCallback(fn func(uint16, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -272,13 +274,11 @@ func (device *IndustrialDigitalIn4Bricklet) GetAvailableForGroup() (available ui
 	return available, nil
 }
 
-// Sets the debounce period of the RegisterInterruptCallback callback in ms.
+// Sets the debounce period of the RegisterInterruptCallback callback.
 // 
 // For example: If you set this value to 100, you will get the interrupt
 // maximal every 100ms. This is necessary if something that bounces is
 // connected to the Digital In 4 Bricklet, such as a button.
-// 
-// The default value is 100.
 func (device *IndustrialDigitalIn4Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -389,6 +389,8 @@ func (device *IndustrialDigitalIn4Bricklet) GetInterrupt() (interruptMask uint16
 // If you set the reset counter to *true*, the count is set back to 0
 // directly after it is read.
 // 
+// The edge counters use the grouping as set by SetGroup.
+// 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *IndustrialDigitalIn4Bricklet) GetEdgeCount(pin uint8, resetCounter bool) (count uint32, err error) {
 	var buf bytes.Buffer
@@ -421,18 +423,16 @@ func (device *IndustrialDigitalIn4Bricklet) GetEdgeCount(pin uint8, resetCounter
 // The edge type parameter configures if rising edges, falling edges or
 // both are counted if the pin is configured for input. Possible edge types are:
 // 
-// * 0 = rising (default)
+// * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
-// The debounce time is given in ms.
 // 
 // Configuring an edge counter resets its value to 0.
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
 // 
-// Default values: 0 (edge type) and 100ms (debounce time)
+// The edge counters use the grouping as set by SetGroup.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //

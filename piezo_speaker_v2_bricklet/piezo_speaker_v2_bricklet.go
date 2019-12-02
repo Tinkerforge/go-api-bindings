@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -199,20 +199,10 @@ func (device *PiezoSpeakerV2Bricklet) DeregisterAlarmFinishedCallback(registrati
 }
 
 
-// Beeps with the given frequency and volume for the duration in ms. 
-// 
-// For example: If you set a duration of 1000, with a volume of 10 and a frequency
-// value of 2000 the piezo buzzer will beep with maximum loudness for one 
-// second with a frequency of 2 kHz.
+// Beeps with the given frequency and volume for the duration.
 // 
 // A duration of 0 stops the current beep if any is ongoing.
 // A duration of 4294967295 results in an infinite beep.
-// 
-// The ranges are:
-// 
-// * Frequency: 50Hz - 15000Hz
-// * Volume: 0 - 10
-// * Duration: 0ms - 4294967295ms
 //
 // Associated constants:
 //
@@ -243,10 +233,10 @@ func (device *PiezoSpeakerV2Bricklet) SetBeep(frequency uint16, volume uint8, du
 	return nil
 }
 
-// Returns the last beep settings as set by SetBeep. If a beep is currently 
-// running it also returns the remaining duration of the beep in ms.
+// Returns the last beep settings as set by SetBeep. If a beep is currently
+// running it also returns the remaining duration of the beep.
 // 
-// If the frequency or volume is updated during a beep (with UpdateFrequency 
+// If the frequency or volume is updated during a beep (with UpdateFrequency
 // or UpdateVolume) this function returns the updated value.
 //
 // Associated constants:
@@ -354,11 +344,11 @@ func (device *PiezoSpeakerV2Bricklet) SetAlarm(startFrequency uint16, endFrequen
 	return nil
 }
 
-// Returns the last alarm settings as set by SetAlarm. If an alarm is currently 
+// Returns the last alarm settings as set by SetAlarm. If an alarm is currently
 // running it also returns the remaining duration of the alarm in ms as well as the
 // current frequency of the alarm in Hz.
 // 
-// If the volume is updated during a beep (with UpdateVolume) 
+// If the volume is updated during a beep (with UpdateVolume)
 // this function returns the updated value.
 //
 // Associated constants:

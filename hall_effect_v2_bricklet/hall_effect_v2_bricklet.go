@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -205,8 +205,7 @@ func (device *HallEffectV2Bricklet) DeregisterCounterCallback(registrationId uin
 }
 
 
-// Returns the https://en.wikipedia.org/wiki/Magnetic_flux
-// in https://en.wikipedia.org/wiki/Tesla_(unit).
+// Returns the https://en.wikipedia.org/wiki/Magnetic_flux.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -235,7 +234,7 @@ func (device *HallEffectV2Bricklet) GetMagneticFluxDensity() (magneticFluxDensit
 	return magneticFluxDensity, nil
 }
 
-// The period in ms is the period with which the RegisterMagneticFluxDensityCallback callback is triggered
+// The period is the period with which the RegisterMagneticFluxDensityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -260,8 +259,6 @@ func (device *HallEffectV2Bricklet) GetMagneticFluxDensity() (magneticFluxDensit
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -335,8 +332,8 @@ func (device *HallEffectV2Bricklet) GetMagneticFluxDensityCallbackConfiguration(
 
 // Returns the current value of the counter.
 // 
-// You can configure the low/high thresholds in µT and the debounce time
-// in us with SetCounterConfig.
+// You can configure the low/high thresholds and the debounce time
+// with SetCounterConfig.
 // 
 // If you set reset counter to *true*, the count is set back to 0
 // directly after it is read.
@@ -368,18 +365,12 @@ func (device *HallEffectV2Bricklet) GetCounter(resetCounter bool) (count uint32,
 	return count, nil
 }
 
-// Sets a high and a low threshold in µT as well as a debounce time in µs.
+// Sets a high and a low threshold as well as a debounce time.
 // 
 // If the measured magnetic flux density goes above the high threshold or
 // below the low threshold, the count of the counter is increased by 1.
 // 
 // The debounce time is the minimum time between two count increments.
-// 
-// The default values are
-// 
-// * High Threshold: 2000µT
-// * Low Threshold: -2000µT
-// * Debounce: 100000µs (100ms)
 func (device *HallEffectV2Bricklet) SetCounterConfig(highThreshold int16, lowThreshold int16, debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, highThreshold);
@@ -431,7 +422,7 @@ func (device *HallEffectV2Bricklet) GetCounterConfig() (highThreshold int16, low
 	return highThreshold, lowThreshold, debounce, nil
 }
 
-// The period in ms is the period with which the RegisterCounterCallback
+// The period is the period with which the RegisterCounterCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -440,8 +431,6 @@ func (device *HallEffectV2Bricklet) GetCounterConfig() (highThreshold int16, low
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *HallEffectV2Bricklet) SetCounterCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

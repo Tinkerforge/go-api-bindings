@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -127,8 +127,8 @@ func (device *AmbientLightBricklet) GetAPIVersion() [3]uint8 {
 // SetIlluminanceCallbackPeriod. The parameter is the illuminance of the
 // ambient light sensor.
 // 
-// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed since the
-// last triggering.
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
+// since the last triggering.
 func (device *AmbientLightBricklet) RegisterIlluminanceCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -149,8 +149,8 @@ func (device *AmbientLightBricklet) DeregisterIlluminanceCallback(registrationId
 // SetAnalogValueCallbackPeriod. The parameter is the analog value of the
 // ambient light sensor.
 // 
-// The RegisterAnalogValueCallback callback is only triggered if the analog value has changed since the
-// last triggering.
+// The RegisterAnalogValueCallback callback is only triggered if the analog value has
+// changed since the last triggering.
 func (device *AmbientLightBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -211,9 +211,7 @@ func (device *AmbientLightBricklet) DeregisterAnalogValueReachedCallback(registr
 }
 
 
-// Returns the illuminance of the ambient light sensor. The value
-// has a range of 0 to 9000 and is given in lux/10, i.e. a value
-// of 4500 means that an illuminance of 450lux is measured.
+// Returns the illuminance of the ambient light sensor.
 // 
 // If you want to get the illuminance periodically, it is recommended to use the
 // RegisterIlluminanceCallback callback and set the period with
@@ -242,7 +240,6 @@ func (device *AmbientLightBricklet) GetIlluminance() (illuminance uint16, err er
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// The value is between 0 and 4095.
 // 
 // Note
 //  The value returned by GetIlluminance is averaged over several samples
@@ -280,13 +277,11 @@ func (device *AmbientLightBricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterIlluminanceCallback callback is triggered
+// Sets the period with which the RegisterIlluminanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
-// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed since the
-// last triggering.
-// 
-// The default value is 0.
+// The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
+// since the last triggering.
 func (device *AmbientLightBricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -334,13 +329,11 @@ func (device *AmbientLightBricklet) GetIlluminanceCallbackPeriod() (period uint3
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
-// The RegisterAnalogValueCallback callback is only triggered if the analog value has changed since the
-// last triggering.
-// 
-// The default value is 0.
+// The RegisterAnalogValueCallback callback is only triggered if the analog value has
+// changed since the last triggering.
 func (device *AmbientLightBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -399,8 +392,6 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackPeriod() (period uint3
 //  'i'|    Callback is triggered when the illuminance is *inside* the min and max values
 //  '<'|    Callback is triggered when the illuminance is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the illuminance is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -479,8 +470,6 @@ func (device *AmbientLightBricklet) GetIlluminanceCallbackThreshold() (option Th
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
 //  '<'|    Callback is triggered when the analog value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the analog value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -548,7 +537,7 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackThreshold() (option Th
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterIlluminanceReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -559,8 +548,6 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackThreshold() (option Th
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *AmbientLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

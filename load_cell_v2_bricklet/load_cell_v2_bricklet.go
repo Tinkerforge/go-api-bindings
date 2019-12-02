@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -242,7 +242,7 @@ func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
 	return weight, nil
 }
 
-// The period in ms is the period with which the RegisterWeightCallback callback is triggered
+// The period is the period with which the RegisterWeightCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -267,8 +267,6 @@ func (device *LoadCellV2Bricklet) GetWeight() (weight int32, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -345,10 +343,6 @@ func (device *LoadCellV2Bricklet) GetWeightCallbackConfiguration() (period uint3
 // 
 // Setting the length to 1 will turn the averaging off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 1-100.
-// 
-// The default value is 4.
 func (device *LoadCellV2Bricklet) SetMovingAverage(average uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);
@@ -460,8 +454,7 @@ func (device *LoadCellV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig, err 
 // To calibrate your Load Cell Bricklet 2.0 you have to
 // 
 // * empty the scale and call this function with 0 and
-// * add a known weight to the scale and call this function with the weight in
-//   grams.
+// * add a known weight to the scale and call this function with the weight.
 // 
 // The calibration is saved in the flash of the Bricklet and only
 // needs to be done once.
@@ -526,8 +519,6 @@ func (device *LoadCellV2Bricklet) Tare() (err error) {
 // means the voltage range is ±15mV for most load cells (i.e. gain of 128x
 // is best). If you don't know what all of this means you should keep it at
 // 128x, it will most likely be correct.
-// 
-// The default rate is 10Hz and the default gain is 128x.
 //
 // Associated constants:
 //

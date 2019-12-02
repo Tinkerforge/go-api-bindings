@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -406,13 +406,11 @@ func (device *RealTimeClockBricklet) GetOffset() (offset int8, err error) {
 	return offset, nil
 }
 
-// Sets the period in ms with which the RegisterDateTimeCallback callback is triggered
+// Sets the period with which the RegisterDateTimeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterDateTimeCallback Callback is only triggered if the date or time changed
 // since the last triggering.
-// 
-// The default value is 0.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RealTimeClockBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) {

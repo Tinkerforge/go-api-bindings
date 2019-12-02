@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -231,9 +231,7 @@ func (device *HumidityV2Bricklet) DeregisterTemperatureCallback(registrationId u
 }
 
 
-// Returns the humidity measured by the sensor. The value
-// has a range of 0 to 10000 and is given in %RH/100 (Relative Humidity),
-// i.e. a value of 4223 means that a humidity of 42.23 %RH is measured.
+// Returns the humidity measured by the sensor.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -262,7 +260,7 @@ func (device *HumidityV2Bricklet) GetHumidity() (humidity uint16, err error) {
 	return humidity, nil
 }
 
-// The period in ms is the period with which the RegisterHumidityCallback callback is triggered
+// The period is the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -287,8 +285,6 @@ func (device *HumidityV2Bricklet) GetHumidity() (humidity uint16, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -360,9 +356,7 @@ func (device *HumidityV2Bricklet) GetHumidityCallbackConfiguration() (period uin
 	return period, valueHasToChange, option, min, max, nil
 }
 
-// Returns the temperature measured by the sensor. The value
-// has a range of -4000 to 16500 and is given in °C/100,
-// i.e. a value of 3200 means that a temperature of 32.00 °C is measured.
+// Returns the temperature measured by the sensor.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -391,7 +385,7 @@ func (device *HumidityV2Bricklet) GetTemperature() (temperature int16, err error
 	return temperature, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
+// The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -416,8 +410,6 @@ func (device *HumidityV2Bricklet) GetTemperature() (temperature int16, err error
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -491,8 +483,6 @@ func (device *HumidityV2Bricklet) GetTemperatureCallbackConfiguration() (period 
 
 // Enables/disables the heater. The heater can be used to dry the sensor in
 // extremely wet conditions.
-// 
-// By default the heater is disabled.
 //
 // Associated constants:
 //
@@ -556,13 +546,9 @@ func (device *HumidityV2Bricklet) GetHeaterConfiguration() (heaterConfig HeaterC
 // Setting the length to 1 will turn the averaging off. With less
 // averaging, there is more noise on the data.
 // 
-// The range for the averaging is 1-1000.
-// 
 // New data is gathered every 50ms*. With a moving average of length 1000 the resulting
 // averaging window has a length of 50s. If you want to do long term measurements the longest
 // moving average will give the cleanest results.
-// 
-// The default value is 5.
 // 
 // \* In firmware version 2.0.3 we added the SetSamplesPerSecond function. It
 // configures the measurement frequency. Since high frequencies can result in self-heating

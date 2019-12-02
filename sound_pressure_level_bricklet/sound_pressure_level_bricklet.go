@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -205,10 +205,7 @@ func (device *SoundPressureLevelBricklet) DeregisterDecibelCallback(registration
 }
 
 
-// This callback is triggered periodically according to the configuration set by
-// SetSpectrumCallbackConfiguration.
-// 
-// The parameter is the same as GetSpectrum.
+// See RegisterSpectrumCallback
 func (device *SoundPressureLevelBricklet) RegisterSpectrumLowLevelCallback(fn func(uint16, uint16, [30]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -233,11 +230,18 @@ func (device *SoundPressureLevelBricklet) DeregisterSpectrumLowLevelCallback(reg
 // SetSpectrumCallbackConfiguration.
 // 
 // The parameter is the same as GetSpectrum.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for spectrum.
 func (device *SoundPressureLevelBricklet) RegisterSpectrumCallback(fn func([]uint16)) uint64 {
 	buf := make([]uint16, 0)
 	wrapper := func(spectrumLength uint16, spectrumChunkOffset uint16, spectrumChunkData [30]uint16)  {
 		if int(spectrumChunkOffset) != len(buf) {
-			buf = make([]uint16, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(buf)
+				buf = make([]uint16, 0)
+			}
 			if spectrumChunkOffset != 0 {
 				return
 			}
@@ -293,7 +297,7 @@ func (device *SoundPressureLevelBricklet) GetDecibel() (decibel uint16, err erro
 	return decibel, nil
 }
 
-// The period in ms is the period with which the RegisterDecibelCallback callback is triggered
+// The period is the period with which the RegisterDecibelCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -318,8 +322,6 @@ func (device *SoundPressureLevelBricklet) GetDecibel() (decibel uint16, err erro
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -479,13 +481,11 @@ func (device *SoundPressureLevelBricklet) GetSpectrumLowLevel() (spectrumLength 
 		return ByteSliceToUint16Slice(buf), nil
 	}
 
-// The period in ms is the period with which the RegisterSpectrumCallback callback is
+// The period is the period with which the RegisterSpectrumCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 // 
 // Every new measured spectrum will be send at most once. Set the period to 1 to
 // make sure that you get every spectrum.
-// 
-// The default value is 0.
 func (device *SoundPressureLevelBricklet) SetSpectrumCallbackConfiguration(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -188,7 +188,7 @@ func (device *LoadCellBricklet) DeregisterWeightReachedCallback(registrationId u
 }
 
 
-// Returns the currently measured weight in grams.
+// Returns the currently measured weight.
 // 
 // If you want to get the weight periodically, it is recommended
 // to use the RegisterWeightCallback callback and set the period with
@@ -216,13 +216,11 @@ func (device *LoadCellBricklet) GetWeight() (weight int32, err error) {
 	return weight, nil
 }
 
-// Sets the period in ms with which the RegisterWeightCallback callback is triggered
+// Sets the period with which the RegisterWeightCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterWeightCallback callback is only triggered if the weight has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *LoadCellBricklet) SetWeightCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -281,8 +279,6 @@ func (device *LoadCellBricklet) GetWeightCallbackPeriod() (period uint32, err er
 //  'i'|    Callback is triggered when the weight is *inside* the min and max values
 //  '<'|    Callback is triggered when the weight is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the weight is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -350,7 +346,7 @@ func (device *LoadCellBricklet) GetWeightCallbackThreshold() (option ThresholdOp
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterWeightReachedCallback
 // 
@@ -359,8 +355,6 @@ func (device *LoadCellBricklet) GetWeightCallbackThreshold() (option ThresholdOp
 // * SetWeightCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *LoadCellBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -413,10 +407,6 @@ func (device *LoadCellBricklet) GetDebouncePeriod() (debounce uint32, err error)
 // 
 // Setting the length to 1 will turn the averaging off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 1-40.
-// 
-// The default value is 4.
 func (device *LoadCellBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);
@@ -537,8 +527,7 @@ func (device *LoadCellBricklet) IsLEDOn() (on bool, err error) {
 // To calibrate your Load Cell Bricklet you have to
 // 
 // * empty the scale and call this function with 0 and
-// * add a known weight to the scale and call this function with the weight in
-//   grams.
+// * add a known weight to the scale and call this function with the weight.
 // 
 // The calibration is saved in the EEPROM of the Bricklet and only
 // needs to be done once.
@@ -609,8 +598,6 @@ func (device *LoadCellBricklet) Tare() (err error) {
 // 
 // We recommend to use the Brick Viewer for configuration, you don't need
 // to call this function in your source code.
-// 
-// The default rate is 10Hz and the default gain is 128x.
 //
 // Associated constants:
 //

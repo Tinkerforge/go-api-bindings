@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -444,8 +444,6 @@ func (device *GPSV2Bricklet) GetStatus() (hasFix bool, satellitesView uint8, err
 
 // Returns the current altitude and corresponding geoidal separation.
 // 
-// Both values are given in cm.
-// 
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSV2Bricklet) GetAltitude() (altitude int32, geoidalSeparation int32, err error) {
@@ -472,8 +470,7 @@ func (device *GPSV2Bricklet) GetAltitude() (altitude int32, geoidalSeparation in
 	return altitude, geoidalSeparation, nil
 }
 
-// Returns the current course and speed. Course is given in hundredths degree
-// and speed is given in hundredths km/h. A course of 0° means the Bricklet is
+// Returns the current course and speed. A course of 0° means the Bricklet is
 // traveling north bound and 90° means it is traveling east bound.
 // 
 // Please note that this only returns useful values if an actual movement
@@ -508,7 +505,7 @@ func (device *GPSV2Bricklet) GetMotion() (course uint32, speed uint32, err error
 // Returns the current date and time. The date is
 // given in the format ``ddmmyy`` and the time is given
 // in the format ``hhmmss.sss``. For example, 140713 means
-// 14.05.13 as date and 195923568 means 19:59:23.568 as time.
+// 14.07.13 as date and 195923568 means 19:59:23.568 as time.
 func (device *GPSV2Bricklet) GetDateTime() (date uint32, time uint32, err error) {
 	var buf bytes.Buffer
 	
@@ -670,12 +667,7 @@ func (device *GPSV2Bricklet) GetSatelliteSystemStatusLowLevel(satelliteSystem Sa
 		return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, nil
 	}
 
-// Returns the current
-// 
-// * elevation (0° - 90°),
-// * azimuth (0° - 359°) and
-// * SNR (0dB - 99dB)
-// 
+// Returns the current elevation, azimuth and SNR
 // for a given satellite and satellite system.
 // 
 // The satellite number here always goes from 1 to 32. For GLONASS it corresponds to
@@ -786,13 +778,11 @@ func (device *GPSV2Bricklet) GetFixLEDConfig() (config FixLEDConfig, err error) 
 	return config, nil
 }
 
-// Sets the period in ms with which the RegisterCoordinatesCallback callback is triggered
+// Sets the period with which the RegisterCoordinatesCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterCoordinatesCallback callback is only triggered if the coordinates changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *GPSV2Bricklet) SetCoordinatesCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -840,13 +830,11 @@ func (device *GPSV2Bricklet) GetCoordinatesCallbackPeriod() (period uint32, err 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterStatusCallback callback is triggered
+// Sets the period with which the RegisterStatusCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterStatusCallback callback is only triggered if the status changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *GPSV2Bricklet) SetStatusCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -894,13 +882,11 @@ func (device *GPSV2Bricklet) GetStatusCallbackPeriod() (period uint32, err error
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAltitudeCallback callback is triggered
+// Sets the period with which the RegisterAltitudeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAltitudeCallback callback is only triggered if the altitude changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *GPSV2Bricklet) SetAltitudeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -948,13 +934,11 @@ func (device *GPSV2Bricklet) GetAltitudeCallbackPeriod() (period uint32, err err
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterMotionCallback callback is triggered
+// Sets the period with which the RegisterMotionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterMotionCallback callback is only triggered if the motion changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *GPSV2Bricklet) SetMotionCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -1002,13 +986,11 @@ func (device *GPSV2Bricklet) GetMotionCallbackPeriod() (period uint32, err error
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterDateTimeCallback callback is triggered
+// Sets the period with which the RegisterDateTimeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterDateTimeCallback callback is only triggered if the date or time changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *GPSV2Bricklet) SetDateTimeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

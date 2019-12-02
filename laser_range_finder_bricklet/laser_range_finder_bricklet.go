@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -248,8 +248,7 @@ func (device *LaserRangeFinderBricklet) DeregisterVelocityReachedCallback(regist
 }
 
 
-// Returns the measured distance. The value has a range of 0 to 4000
-// and is given in cm.
+// Returns the measured distance.
 // 
 // Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
 // measure distance and velocity at the same time. Therefore, the distance mode
@@ -283,8 +282,7 @@ func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err erro
 	return distance, nil
 }
 
-// Returns the measured velocity. The value has a range of -12800 to 12700
-// and is given in 1/100 m/s.
+// Returns the measured velocity.
 // 
 // Sensor hardware version 1 (see GetSensorHardwareVersion) cannot
 // measure distance and velocity at the same time. Therefore, the velocity mode
@@ -320,13 +318,11 @@ func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error
 	return velocity, nil
 }
 
-// Sets the period in ms with which the RegisterDistanceCallback callback is triggered
+// Sets the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterDistanceCallback callback is only triggered if the distance value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -374,13 +370,11 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterVelocityCallback callback is triggered
+// Sets the period with which the RegisterVelocityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterVelocityCallback callback is only triggered if the velocity value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -439,8 +433,6 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint
 //  'i'|    Callback is triggered when the distance value is *inside* the min and max values
 //  '<'|    Callback is triggered when the distance value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the distance value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -519,8 +511,6 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option T
 //  'i'|    Callback is triggered when the velocity is *inside* the min and max values
 //  '<'|    Callback is triggered when the velocity is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the velocity is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -588,7 +578,7 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option T
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterDistanceReachedCallback,
 // * RegisterVelocityReachedCallback,
@@ -599,8 +589,6 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option T
 // * SetVelocityCallbackThreshold,
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -653,10 +641,6 @@ func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, er
 // 
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 0-30.
-// 
-// The default value is 10.
 func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength uint8, velocityAverageLength uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, distanceAverageLength);
@@ -717,13 +701,11 @@ func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLengt
 // 
 // The following modes are available:
 // 
-// * 0: Distance is measured with resolution 1.0 cm and range 0-400 cm
+// * 0: Distance is measured with resolution 1.0 cm and range 0-4000 cm
 // * 1: Velocity is measured with resolution 0.1 m/s and range is 0-12.7 m/s
 // * 2: Velocity is measured with resolution 0.25 m/s and range is 0-31.75 m/s
 // * 3: Velocity is measured with resolution 0.5 m/s and range is 0-63.5 m/s
 // * 4: Velocity is measured with resolution 1.0 m/s and range is 0-127 m/s
-// 
-// The default mode is 0 (distance is measured).
 //
 // Associated constants:
 //
@@ -920,9 +902,6 @@ func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Vers
 // set a fixed measurement frequency. The lower the frequency, the higher is the resolution
 // of the calculated velocity. The allowed values are 10Hz-500Hz (and 0 to turn the fixed
 // frequency off).
-// 
-// The default values for Acquisition Count, Enable Quick Termination, Threshold Value and
-// Measurement Frequency are 128, false, 0 and 0.
 // 
 // .. versionadded:: 2.0.3$nbsp;(Plugin)
 func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8, enableQuickTermination bool, thresholdValue uint8, measurementFrequency uint16) (err error) {

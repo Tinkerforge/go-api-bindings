@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -226,8 +226,7 @@ func (device *IndustrialDual020mAV2Bricklet) DeregisterCurrentCallback(registrat
 }
 
 
-// Returns the current of the specified channel. The value is in nA and between
-// 0nA and 22505322nA (22.5mA).
+// Returns the current of the specified channel.
 // 
 // It is possible to detect if an IEC 60381-1 compatible sensor is connected
 // and if it works probably.
@@ -264,7 +263,7 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current 
 	return current, nil
 }
 
-// The period in ms is the period with which the RegisterCurrentCallback callback is triggered
+// The period is the period with which the RegisterCurrentCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -289,8 +288,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrent(channel uint8) (current 
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -373,8 +370,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetCurrentCallbackConfiguration(cha
 //  1|    60 samples per second| 14 bit resolution
 //  2|    15 samples per second| 16 bit resolution
 //  3|    4 samples per second| 18 bit resolution
-// 
-// The default value is 3 (4 samples per second with 18 bit resolution).
 //
 // Associated constants:
 //
@@ -441,8 +436,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetSampleRate() (rate SampleRate, e
 // 
 // Example: If you measure 0.5mA with a gain of 8x the return value will be
 // 4mA.
-// 
-// The default gain is 1x.
 //
 // Associated constants:
 //
@@ -510,8 +503,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetGain() (gain Gain, err error) {
 // of the LED can change with the measured value.
 // 
 // You can configure the channel status behavior with SetChannelLEDStatusConfig.
-// 
-// By default all channel LEDs are configured as Channel Status.
 //
 // Associated constants:
 //
@@ -595,9 +586,6 @@ func (device *IndustrialDual020mAV2Bricklet) GetChannelLEDConfig(channel uint8) 
 // on at 20mA and above and the brightness is linearly scaled between the values
 // 4mA and 20mA. If the min value is greater than the max value, the LED brightness
 // is scaled the other way around.
-// 
-// By default the channel LED status config is set to intensity with min=4mA and
-// max=20mA.
 //
 // Associated constants:
 //

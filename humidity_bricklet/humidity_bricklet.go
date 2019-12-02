@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -211,9 +211,7 @@ func (device *HumidityBricklet) DeregisterAnalogValueReachedCallback(registratio
 }
 
 
-// Returns the humidity of the sensor. The value
-// has a range of 0 to 1000 and is given in %RH/10 (Relative Humidity),
-// i.e. a value of 421 means that a humidity of 42.1 %RH is measured.
+// Returns the humidity of the sensor.
 // 
 // If you want to get the humidity periodically, it is recommended to use the
 // RegisterHumidityCallback callback and set the period with
@@ -242,7 +240,6 @@ func (device *HumidityBricklet) GetHumidity() (humidity uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// The value is between 0 and 4095.
 // 
 // Note
 //  The value returned by :func:https://github.com/Tinkerforge/humidity-bricklet/raw/master/datasheets/hih-5030.pdf.
@@ -273,13 +270,11 @@ func (device *HumidityBricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterHumidityCallback callback is triggered
+// Sets the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterHumidityCallback callback is only triggered if the humidity has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *HumidityBricklet) SetHumidityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -327,13 +322,11 @@ func (device *HumidityBricklet) GetHumidityCallbackPeriod() (period uint32, err 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *HumidityBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -392,8 +385,6 @@ func (device *HumidityBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 //  'i'|    Callback is triggered when the humidity is *inside* the min and max values
 //  '<'|    Callback is triggered when the humidity is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the humidity is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -472,8 +463,6 @@ func (device *HumidityBricklet) GetHumidityCallbackThreshold() (option Threshold
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
 //  '<'|    Callback is triggered when the analog value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the analog value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -541,7 +530,7 @@ func (device *HumidityBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterHumidityReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -552,8 +541,6 @@ func (device *HumidityBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *HumidityBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

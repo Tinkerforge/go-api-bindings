@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -164,7 +164,7 @@ func (device *LEDStripBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered directly after a new frame is rendered. The
-// parameter is the number of LEDs in that frame.
+// parameter is the number of RGB or RGBW LEDs in that frame.
 // 
 // You should send the data for the next frame directly after this callback
 // was triggered.
@@ -186,15 +186,11 @@ func (device *LEDStripBricklet) DeregisterFrameRenderedCallback(registrationId u
 }
 
 
-// Sets the RGB values for the LEDs with the given *length* starting
-// from *index*.
+// Sets *length* RGB values for the LEDs starting from *index*.
 // 
 // To make the colors show correctly you need to configure the chip type
 // (SetChipType) and a 3-channel channel mapping (SetChannelMapping)
 // according to the connected LEDs.
-// 
-// The maximum length is 16, the index goes from 0 to 319 and the rgb values
-// have 8 bits each.
 // 
 // Example: If you set
 // 
@@ -255,8 +251,8 @@ func (device *LEDStripBricklet) SetRGBValues(index uint16, length uint8, r [16]u
 	return nil
 }
 
-// Returns RGB value with the given *length* starting from the
-// given *index*.
+// Returns *length* R, G and B values starting from the
+// given LED *index*.
 // 
 // The values are the last values that were set by SetRGBValues.
 func (device *LEDStripBricklet) GetRGBValues(index uint16, length uint8) (r [16]uint8, g [16]uint8, b [16]uint8, err error) {
@@ -286,14 +282,12 @@ func (device *LEDStripBricklet) GetRGBValues(index uint16, length uint8) (r [16]
 	return r, g, b, nil
 }
 
-// Sets the frame duration in ms.
+// Sets the frame duration.
 // 
 // Example: If you want to achieve 20 frames per second, you should
 // set the frame duration to 50ms (50ms * 20 = 1 second).
 // 
 // For an explanation of the general approach see SetRGBValues.
-// 
-// Default value: 100ms (10 frames per second).
 func (device *LEDStripBricklet) SetFrameDuration(duration uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, duration);
@@ -317,7 +311,7 @@ func (device *LEDStripBricklet) SetFrameDuration(duration uint16) (err error) {
 	return nil
 }
 
-// Returns the frame duration in ms as set by SetFrameDuration.
+// Returns the frame duration as set by SetFrameDuration.
 func (device *LEDStripBricklet) GetFrameDuration() (duration uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -341,7 +335,7 @@ func (device *LEDStripBricklet) GetFrameDuration() (duration uint16, err error) 
 	return duration, nil
 }
 
-// Returns the current supply voltage of the LEDs. The voltage is given in mV.
+// Returns the current supply voltage of the LEDs.
 func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -365,8 +359,7 @@ func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
 	return voltage, nil
 }
 
-// Sets the frequency of the clock in Hz. The range is 10000Hz (10kHz) up to
-// 2000000Hz (2MHz).
+// Sets the frequency of the clock.
 // 
 // The Bricklet will choose the nearest achievable frequency, which may
 // be off by a few Hz. You can get the exact frequency that is used by
@@ -378,8 +371,6 @@ func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
 // 
 // With a decreasing frequency your maximum frames per second will decrease
 // too.
-// 
-// The default value is 1.66MHz.
 // 
 // Note
 //  The frequency in firmware version 2.0.0 is fixed at 2MHz.
@@ -442,8 +433,6 @@ func (device *LEDStripBricklet) GetClockFrequency() (frequency uint32, err error
 // * SK6812RGBW / NeoPixel RGBW (Chip Type = WS2812),
 // * LPD8806 and
 // * APA102 / DotStar.
-// 
-// The default value is WS2801 (2801).
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
@@ -511,8 +500,7 @@ func (device *LEDStripBricklet) GetChipType() (chip ChipType, err error) {
 	return chip, nil
 }
 
-// Sets the RGBW values for the LEDs with the given *length* starting
-// from *index*.
+// Sets *length* RGBW values for the LEDs starting from *index*.
 // 
 // To make the colors show correctly you need to configure the chip type
 // (SetChipType) and a 4-channel channel mapping (SetChannelMapping)
@@ -594,8 +582,7 @@ func (device *LEDStripBricklet) SetRGBWValues(index uint16, length uint8, r [12]
 	return nil
 }
 
-// Returns RGBW values with the given *length* starting from the
-// given *index*.
+// Returns *length* RGBW values starting from the given *index*.
 // 
 // The values are the last values that were set by SetRGBWValues.
 // 
@@ -647,8 +634,6 @@ func (device *LEDStripBricklet) GetRGBWValues(index uint16, length uint8) (r [12
 // results. Vice-versa if a 4-channel mapping is selected then
 // SetRGBWValues has to be used. Calling SetRGBValues with a
 // 4-channel mapping will produce incorrect results.
-// 
-// The default value is BGR (36).
 // 
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 //

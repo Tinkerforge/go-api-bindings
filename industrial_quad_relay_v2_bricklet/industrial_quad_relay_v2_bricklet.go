@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -240,7 +240,7 @@ func (device *IndustrialQuadRelayV2Bricklet) GetValue() (value [4]bool, err erro
 // The second parameter is the desired value of the specified
 // channel. A *true* means relay closed and a *false* means relay open.
 // 
-// The third parameter indicates the time (in ms) that the channels should hold
+// The third parameter indicates the time that the channels should hold
 // the value.
 // 
 // If this function is called with the parameters (0, 1, 1500) channel 0 will
@@ -340,8 +340,6 @@ func (device *IndustrialQuadRelayV2Bricklet) SetSelectedValue(channel uint8, val
 // Each channel has a corresponding LED. You can turn the LED off, on or show a
 // heartbeat. You can also set the LED to Channel Status. In this mode the
 // LED is on if the channel is high and off otherwise.
-// 
-// By default all channel LEDs are configured as Channel Status.
 //
 // Associated constants:
 //

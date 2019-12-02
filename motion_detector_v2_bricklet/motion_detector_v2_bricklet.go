@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -225,7 +225,7 @@ func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err 
 	return motion, nil
 }
 
-// Sets the sensitivity of the PIR sensor. The range is 0-100. At full
+// Sets the sensitivity of the PIR sensor. At full
 // sensitivity (100), the Bricklet can detect motion in a range of approximately 12m.
 // 
 // The actual range depends on many things in the environment (e.g. reflections) and the
@@ -233,8 +233,6 @@ func (device *MotionDetectorV2Bricklet) GetMotionDetected() (motion Motion, err 
 // of 10m a cat may only be detected at 2m distance with the same setting.
 // 
 // So you will have to find a good sensitivity for your application by trial and error.
-// 
-// The default value is 50.
 func (device *MotionDetectorV2Bricklet) SetSensitivity(sensitivity uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, sensitivity);
@@ -286,8 +284,6 @@ func (device *MotionDetectorV2Bricklet) GetSensitivity() (sensitivity uint8, err
 // three LEDs. The brightness of each LED can be controlled with a 8-bit value
 // (0-255). A value of 0 turns the LED off and a value of 255 turns the LED
 // to full brightness.
-// 
-// The default value is 0, 0, 0.
 func (device *MotionDetectorV2Bricklet) SetIndicator(topLeft uint8, topRight uint8, bottom uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, topLeft);

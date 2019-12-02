@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -241,7 +241,6 @@ func (device *LinearPotiBricklet) GetPosition() (position uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// The value is between 0 and 4095.
 // 
 // Note
 //  The value returned by GetPosition is averaged over several samples
@@ -275,13 +274,11 @@ func (device *LinearPotiBricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterPositionCallback callback is triggered
+// Sets the period with which the RegisterPositionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterPositionCallback callback is only triggered if the position has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *LinearPotiBricklet) SetPositionCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -329,13 +326,11 @@ func (device *LinearPotiBricklet) GetPositionCallbackPeriod() (period uint32, er
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *LinearPotiBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -394,8 +389,6 @@ func (device *LinearPotiBricklet) GetAnalogValueCallbackPeriod() (period uint32,
 //  'i'|    Callback is triggered when the position is *inside* the min and max values
 //  '<'|    Callback is triggered when the position is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the position is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -474,8 +467,6 @@ func (device *LinearPotiBricklet) GetPositionCallbackThreshold() (option Thresho
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
 //  '<'|    Callback is triggered when the analog value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the analog value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -543,7 +534,7 @@ func (device *LinearPotiBricklet) GetAnalogValueCallbackThreshold() (option Thre
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterPositionReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -554,8 +545,6 @@ func (device *LinearPotiBricklet) GetAnalogValueCallbackThreshold() (option Thre
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *LinearPotiBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

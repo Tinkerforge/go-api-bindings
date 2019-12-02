@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -536,13 +536,11 @@ func (device *VoltageCurrentBricklet) GetCalibration() (gainMultiplier uint16, g
 	return gainMultiplier, gainDivisor, nil
 }
 
-// Sets the period in ms with which the RegisterCurrentCallback callback is triggered
+// Sets the period with which the RegisterCurrentCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterCurrentCallback callback is only triggered if the current has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *VoltageCurrentBricklet) SetCurrentCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -590,13 +588,11 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackPeriod() (period uint32,
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterVoltageCallback callback is triggered
+// Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *VoltageCurrentBricklet) SetVoltageCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -644,13 +640,11 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackPeriod() (period uint32,
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterPowerCallback callback is triggered
+// Sets the period with which the RegisterPowerCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterPowerCallback callback is only triggered if the power has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *VoltageCurrentBricklet) SetPowerCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -938,7 +932,7 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackThreshold() (option Thresh
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterCurrentReachedCallback,
 // * RegisterVoltageReachedCallback,
@@ -951,8 +945,6 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackThreshold() (option Thresh
 // * SetPowerCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *VoltageCurrentBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

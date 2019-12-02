@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -378,8 +378,6 @@ func (device *NFCBricklet) DeregisterP2PStateChangedCallback(registrationId uint
 // If you change a mode, the Bricklet will reconfigure the hardware for this mode.
 // Therefore, you can only use functions corresponding to the current mode. For
 // example, in Reader mode you can only use Reader functions.
-// 
-// The default mode is off.
 //
 // Associated constants:
 //
@@ -637,7 +635,7 @@ func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err e
 	return state, idle, nil
 }
 
-// Writes NDEF formated data with a maximum of 255 bytes.
+// Writes NDEF formated data.
 // 
 // This function currently supports NFC Forum Type 2 and 4.
 // 
@@ -676,7 +674,7 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
 	return nil
 }
 
-// Writes NDEF formated data with a maximum of 255 bytes.
+// Writes NDEF formated data.
 // 
 // This function currently supports NFC Forum Type 2 and 4.
 // 
@@ -754,8 +752,6 @@ func (device *NFCBricklet) ReaderRequestNDEF() (err error) {
 
 // Returns the NDEF data from an internal buffer. To fill the buffer
 // with a NDEF message you have to call ReaderRequestNDEF beforehand.
-// 
-// The buffer can have a size of up to 8192 bytes.
 func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChunkOffset uint16, ndefChunkData [60]uint8, err error) {
 	var buf bytes.Buffer
 	
@@ -783,8 +779,6 @@ func (device *NFCBricklet) ReaderReadNDEFLowLevel() (ndefLength uint16, ndefChun
 
 // Returns the NDEF data from an internal buffer. To fill the buffer
 // with a NDEF message you have to call ReaderRequestNDEF beforehand.
-// 
-// The buffer can have a size of up to 8192 bytes.
 	func (device *NFCBricklet) ReaderReadNDEF() (ndef []uint8, err error) {
 		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
 			ndefLength, ndefChunkOffset, ndefChunkData, err := device.ReaderReadNDEFLowLevel()
@@ -1033,8 +1027,6 @@ func (device *NFCBricklet) ReaderRequestPage(page ReaderRequest, length uint16) 
 
 // Returns the page data from an internal buffer. To fill the buffer
 // with specific pages you have to call ReaderRequestPage beforehand.
-// 
-// The buffer can have a size of up to 8192 bytes.
 func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChunkOffset uint16, dataChunkData [60]uint8, err error) {
 	var buf bytes.Buffer
 	
@@ -1062,8 +1054,6 @@ func (device *NFCBricklet) ReaderReadPageLowLevel() (dataLength uint16, dataChun
 
 // Returns the page data from an internal buffer. To fill the buffer
 // with specific pages you have to call ReaderRequestPage beforehand.
-// 
-// The buffer can have a size of up to 8192 bytes.
 	func (device *NFCBricklet) ReaderReadPage() (data []uint8, err error) {
 		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
 			dataLength, dataChunkOffset, dataChunkData, err := device.ReaderReadPageLowLevel()
@@ -1465,7 +1455,6 @@ func (device *NFCBricklet) P2PStartTransfer(transfer P2PTransfer) (err error) {
 }
 
 // Returns the NDEF message that was written by a NFC peer in NFC P2P mode.
-// The maximum NDEF length is 8192 byte.
 // 
 // The NDEF message is ready if you called P2PStartTransfer with a
 // read transfer and the P2P state changed to *P2PTransferNDEFReady*.
@@ -1495,7 +1484,6 @@ func (device *NFCBricklet) P2PReadNDEFLowLevel() (ndefLength uint16, ndefChunkOf
 }
 
 // Returns the NDEF message that was written by a NFC peer in NFC P2P mode.
-// The maximum NDEF length is 8192 byte.
 // 
 // The NDEF message is ready if you called P2PStartTransfer with a
 // read transfer and the P2P state changed to *P2PTransferNDEFReady*.
@@ -1593,7 +1581,7 @@ func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, e
 	return config, nil
 }
 
-// Sets the maximum timeout in ms.
+// Sets the maximum timeout.
 // 
 // This is a global maximum used for all internal state timeouts. The timeouts depend heavily
 // on the used tags etc. For example: If you use a Type 2 tag and you want to detect if
@@ -1608,10 +1596,8 @@ func (device *NFCBricklet) GetDetectionLEDConfig() (config DetectionLEDConfig, e
 // If you need a fast response time to discover if a tag is present or not you can find
 // a good timeout value by trial and error for your specific tag.
 // 
-// By default we use a very conservative timeout, to be sure that any Tag can always
+// By default we use a very conservative timeout, to be sure that any tag can always
 // answer in time.
-// 
-// Default timeout: 2000ms.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *NFCBricklet) SetMaximumTimeout(timeout uint16) (err error) {

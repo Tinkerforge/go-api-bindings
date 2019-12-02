@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -217,7 +217,7 @@ func (device *OutdoorWeatherBricklet) DeregisterStationDataCallback(registration
 // Reports the sensor data every time a new data packet is received.
 // See GetSensorData for information about the data.
 // 
-// For each station the callback will be called about every 45 seconds.
+// For each sensor the callback will be called about every 45 seconds.
 // 
 // Turn the callback on/off with SetSensorCallbackConfiguration
 // (by default it is turned off).
@@ -382,14 +382,14 @@ func (device *OutdoorWeatherBricklet) GetSensorIdentifiersLowLevel() (identifier
 // 
 // The return values are:
 // 
-// * Temperature in °C/10,
-// * Humidity in %RH,
-// * Wind Speed in m/10s,
-// * Gust Speed in m/10s,
-// * Rain Fall in mm/10,
-// * Wind Direction (N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW),
-// * Battery Low (true or false) and
-// * Last Change (time in seconds since the reception of this data).
+// * Temperature,
+// * Humidity,
+// * Wind Speed,
+// * Gust Speed,
+// * Rain Fall,
+// * Wind Direction,
+// * Battery Low (true if battery is low) and
+// * Last Change (seconds since the reception of this data).
 //
 // Associated constants:
 //
@@ -446,9 +446,9 @@ func (device *OutdoorWeatherBricklet) GetStationData(identifier uint8) (temperat
 // 
 // The return values are:
 // 
-// * Temperature in °C/10,
-// * Humidity in %RH and
-// * Last Change (time in seconds since the last reception of data).
+// * Temperature,
+// * Humidity and
+// * Last Change (seconds since the last reception of data).
 func (device *OutdoorWeatherBricklet) GetSensorData(identifier uint8) (temperature int16, humidity uint8, lastChange uint16, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, identifier);
@@ -475,7 +475,7 @@ func (device *OutdoorWeatherBricklet) GetSensorData(identifier uint8) (temperatu
 	return temperature, humidity, lastChange, nil
 }
 
-// Turns callback for station data on or off. Default is off.
+// Turns callback for station data on or off.
 func (device *OutdoorWeatherBricklet) SetStationCallbackConfiguration(enableCallback bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enableCallback);
@@ -523,7 +523,7 @@ func (device *OutdoorWeatherBricklet) GetStationCallbackConfiguration() (enableC
 	return enableCallback, nil
 }
 
-// Turns callback for sensor data on or off. Default is off.
+// Turns callback for sensor data on or off.
 func (device *OutdoorWeatherBricklet) SetSensorCallbackConfiguration(enableCallback bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enableCallback);

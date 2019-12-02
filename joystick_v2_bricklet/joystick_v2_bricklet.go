@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -195,9 +195,8 @@ func (device *JoystickV2Bricklet) DeregisterPressedCallback(registrationId uint6
 }
 
 
-// Returns the position of the joystick. The value ranges between -100 and
-// 100 for both axis. The middle position of the joystick is x=0, y=0. The
-// returned values are averaged and calibrated (see Calibrate).
+// Returns the position of the joystick. The middle position of the joystick is x=0, y=0.
+// The returned values are averaged and calibrated (see Calibrate).
 // 
 // If you want to get the position periodically, it is recommended to use the
 // RegisterPositionCallback callback and set the period with
@@ -282,7 +281,7 @@ func (device *JoystickV2Bricklet) Calibrate() (err error) {
 	return nil
 }
 
-// The period in ms is the period with which the RegisterPositionCallback
+// The period is the period with which the RegisterPositionCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -291,8 +290,6 @@ func (device *JoystickV2Bricklet) Calibrate() (err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *JoystickV2Bricklet) SetPositionCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -343,7 +340,7 @@ func (device *JoystickV2Bricklet) GetPositionCallbackConfiguration() (period uin
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterPressedCallback
+// The period is the period with which the RegisterPressedCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -352,8 +349,6 @@ func (device *JoystickV2Bricklet) GetPositionCallbackConfiguration() (period uin
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *JoystickV2Bricklet) SetPressedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

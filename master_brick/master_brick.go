@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -166,7 +166,9 @@ const (
 	ChibiFrequencyOQPSK868MHz ChibiFrequency = 0
 	ChibiFrequencyOQPSK915MHz ChibiFrequency = 1
 	ChibiFrequencyOQPSK780MHz ChibiFrequency = 2
+	//Deprecated: Use BPSK40_915MHz instead.
 	ChibiFrequencyBPSK40915MHz ChibiFrequency = 3
+	ChibiFrequencyBPSK40_915MHz ChibiFrequency = 3
 )
 
 type RS485Parity = rune
@@ -2134,13 +2136,11 @@ func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {
 	return hostname, nil
 }
 
-// Sets the period in ms with which the RegisterStackCurrentCallback callback is triggered
+// Sets the period with which the RegisterStackCurrentCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterStackCurrentCallback callback is only triggered if the current has changed
 // since the last triggering.
-// 
-// The default value is 0.
 // 
 // .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err error) {
@@ -2192,13 +2192,11 @@ func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err e
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterStackVoltageCallback callback is triggered
+// Sets the period with which the RegisterStackVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterStackVoltageCallback callback is only triggered if the voltage has changed
 // since the last triggering.
-// 
-// The default value is 0.
 // 
 // .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err error) {
@@ -2250,13 +2248,11 @@ func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err e
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterUSBVoltageCallback callback is triggered
+// Sets the period with which the RegisterUSBVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterUSBVoltageCallback callback is only triggered if the voltage has changed
 // since the last triggering.
-// 
-// The default value is 0.
 // 
 // .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error) {
@@ -2560,7 +2556,7 @@ func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOpt
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterStackCurrentReachedCallback,
 // * RegisterStackVoltageReachedCallback,
@@ -2573,8 +2569,6 @@ func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOpt
 // * SetUSBVoltageCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 // 
 // .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {

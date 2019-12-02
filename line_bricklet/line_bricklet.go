@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -187,13 +187,11 @@ func (device *LineBricklet) GetReflectivity() (reflectivity uint16, err error) {
 	return reflectivity, nil
 }
 
-// Sets the period in ms with which the RegisterReflectivityCallback callback is triggered
+// Sets the period with which the RegisterReflectivityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterReflectivityCallback callback is only triggered if the reflectivity has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *LineBricklet) SetReflectivityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -252,8 +250,6 @@ func (device *LineBricklet) GetReflectivityCallbackPeriod() (period uint32, err 
 //  'i'|    Callback is triggered when the reflectivity is *inside* the min and max values
 //  '<'|    Callback is triggered when the reflectivity is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the reflectivity is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -321,7 +317,7 @@ func (device *LineBricklet) GetReflectivityCallbackThreshold() (option Threshold
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterReflectivityReachedCallback
 // 
@@ -330,8 +326,6 @@ func (device *LineBricklet) GetReflectivityCallbackThreshold() (option Threshold
 // * SetReflectivityCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *LineBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

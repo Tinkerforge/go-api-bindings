@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -198,7 +198,7 @@ func (device *DistanceUSV2Bricklet) DeregisterDistanceCallback(registrationId ui
 }
 
 
-// Returns the distance in mm.
+// Returns the distance.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -227,7 +227,7 @@ func (device *DistanceUSV2Bricklet) GetDistance() (distance uint16, err error) {
 	return distance, nil
 }
 
-// The period in ms is the period with which the RegisterDistanceCallback callback is triggered
+// The period is the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -252,8 +252,6 @@ func (device *DistanceUSV2Bricklet) GetDistance() (distance uint16, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -329,8 +327,6 @@ func (device *DistanceUSV2Bricklet) GetDistanceCallbackConfiguration() (period u
 // 
 // With 2 Hz update rate the noise is about ±1mm, while with 10 Hz update rate the noise
 // increases to about ±5mm.
-// 
-// The default update rate is 2 Hz.
 //
 // Associated constants:
 //
@@ -390,8 +386,6 @@ func (device *DistanceUSV2Bricklet) GetUpdateRate() (updateRate UpdateRate, err 
 
 // Configures the distance LED to be either turned off, turned on, blink in
 // heartbeat mode or show the distance (brighter = object is nearer).
-// 
-// The default value is 3 (show distance).
 //
 // Associated constants:
 //

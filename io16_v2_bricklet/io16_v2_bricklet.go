@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -366,8 +366,6 @@ func (device *IO16V2Bricklet) SetSelectedValue(channel uint8, value bool) (err e
 // 
 // A running monoflop timer for the specific channel will be aborted if this
 // function is called.
-// 
-// The default configuration is input with pull-up.
 //
 // Associated constants:
 //
@@ -431,7 +429,7 @@ func (device *IO16V2Bricklet) GetConfiguration(channel uint8) (direction Directi
 
 // This callback can be configured per channel.
 // 
-// The period in ms is the period with which the RegisterInputValueCallback
+// The period is the period with which the RegisterInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -440,8 +438,6 @@ func (device *IO16V2Bricklet) GetConfiguration(channel uint8) (direction Directi
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IO16V2Bricklet) SetInputValueCallbackConfiguration(channel uint8, period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);
@@ -494,7 +490,7 @@ func (device *IO16V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) 
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterAllInputValueCallback
+// The period is the period with which the RegisterAllInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -503,8 +499,6 @@ func (device *IO16V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) 
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IO16V2Bricklet) SetAllInputValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -560,7 +554,7 @@ func (device *IO16V2Bricklet) GetAllInputValueCallbackConfiguration() (period ui
 // The second parameter is the desired value of the specified
 // channel. A *true* means relay closed and a *false* means relay open.
 // 
-// The third parameter indicates the time (in ms) that the channels should hold
+// The third parameter indicates the time that the channels should hold
 // the value.
 // 
 // If this function is called with the parameters (0, 1, 1500) channel 0 will
@@ -663,18 +657,14 @@ func (device *IO16V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (co
 // The edge type parameter configures if rising edges, falling edges or
 // both are counted if the channel is configured for input. Possible edge types are:
 // 
-// * 0 = rising (default)
+// * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
-// The debounce time is given in ms.
 // 
 // Configuring an edge counter resets its value to 0.
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
-// 
-// Default values: 0 (edge type) and 100ms (debounce time)
 //
 // Associated constants:
 //

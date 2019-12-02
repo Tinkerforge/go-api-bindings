@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -132,10 +132,18 @@ const (
 type AccelerometerBandwidth = uint8
 
 const (
+	//Deprecated: Use 7_81Hz instead.
 	AccelerometerBandwidth781Hz AccelerometerBandwidth = 0
+	AccelerometerBandwidth7_81Hz AccelerometerBandwidth = 0
+	//Deprecated: Use 15_63Hz instead.
 	AccelerometerBandwidth1563Hz AccelerometerBandwidth = 1
+	AccelerometerBandwidth15_63Hz AccelerometerBandwidth = 1
+	//Deprecated: Use 31_25Hz instead.
 	AccelerometerBandwidth3125Hz AccelerometerBandwidth = 2
+	AccelerometerBandwidth31_25Hz AccelerometerBandwidth = 2
+	//Deprecated: Use 62_5Hz instead.
 	AccelerometerBandwidth625Hz AccelerometerBandwidth = 3
+	AccelerometerBandwidth62_5Hz AccelerometerBandwidth = 3
 	AccelerometerBandwidth125Hz AccelerometerBandwidth = 4
 	AccelerometerBandwidth250Hz AccelerometerBandwidth = 5
 	AccelerometerBandwidth500Hz AccelerometerBandwidth = 6
@@ -722,7 +730,7 @@ func (device *IMUV2Brick) GetGravityVector() (x int16, y int16, z int16, err err
 // Returns the current orientation (w, x, y, z) of the IMU Brick as
 // https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation.
 // 
-// You have to divide the returns values by 16383 (14 bit) to get
+// You have to divide the return values by 16383 (14 bit) to get
 // the usual range of -1.0 to +1.0 for quaternions.
 // 
 // If you want to get the quaternions periodically, it is recommended
@@ -919,10 +927,8 @@ func (device *IMUV2Brick) SaveCalibration() (calibrationDone bool, err error) {
 	return calibrationDone, nil
 }
 
-// Sets the period in ms with which the RegisterAccelerationCallback callback is triggered
+// Sets the period with which the RegisterAccelerationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
-// The default value is 0.
 func (device *IMUV2Brick) SetAccelerationPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -970,7 +976,7 @@ func (device *IMUV2Brick) GetAccelerationPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterMagneticFieldCallback callback is triggered
+// Sets the period with which the RegisterMagneticFieldCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetMagneticFieldPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1019,7 +1025,7 @@ func (device *IMUV2Brick) GetMagneticFieldPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAngularVelocityCallback callback is
+// Sets the period with which the RegisterAngularVelocityCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetAngularVelocityPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1068,7 +1074,7 @@ func (device *IMUV2Brick) GetAngularVelocityPeriod() (period uint32, err error) 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterTemperatureCallback callback is triggered
+// Sets the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetTemperaturePeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1117,7 +1123,7 @@ func (device *IMUV2Brick) GetTemperaturePeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterOrientationCallback callback is triggered
+// Sets the period with which the RegisterOrientationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetOrientationPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1166,7 +1172,7 @@ func (device *IMUV2Brick) GetOrientationPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterLinearAccelerationCallback callback is
+// Sets the period with which the RegisterLinearAccelerationCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetLinearAccelerationPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1215,7 +1221,7 @@ func (device *IMUV2Brick) GetLinearAccelerationPeriod() (period uint32, err erro
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterGravityVectorCallback callback is triggered
+// Sets the period with which the RegisterGravityVectorCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetGravityVectorPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1264,7 +1270,7 @@ func (device *IMUV2Brick) GetGravityVectorPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterQuaternionCallback callback is triggered
+// Sets the period with which the RegisterQuaternionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetQuaternionPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
@@ -1313,7 +1319,7 @@ func (device *IMUV2Brick) GetQuaternionPeriod() (period uint32, err error) {
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAllDataCallback callback is triggered
+// Sets the period with which the RegisterAllDataCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *IMUV2Brick) SetAllDataPeriod(period uint32) (err error) {
 	var buf bytes.Buffer

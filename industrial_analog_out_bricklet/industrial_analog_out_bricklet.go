@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -192,7 +192,7 @@ func (device *IndustrialAnalogOutBricklet) IsEnabled() (enabled bool, err error)
 	return enabled, nil
 }
 
-// Sets the output voltage in mV.
+// Sets the output voltage.
 // 
 // The output voltage and output current are linked. Changing the output voltage
 // also changes the output current.
@@ -243,7 +243,7 @@ func (device *IndustrialAnalogOutBricklet) GetVoltage() (voltage uint16, err err
 	return voltage, nil
 }
 
-// Sets the output current in µA.
+// Sets the output current.
 // 
 // The output current and output voltage are linked. Changing the output current
 // also changes the output voltage.
@@ -299,11 +299,11 @@ func (device *IndustrialAnalogOutBricklet) GetCurrent() (current uint16, err err
 // Possible voltage ranges are:
 // 
 // * 0V to 5V
-// * 0V to 10V (default)
+// * 0V to 10V
 // 
 // Possible current ranges are:
 // 
-// * 4mA to 20mA (default)
+// * 4mA to 20mA
 // * 0mA to 20mA
 // * 0mA to 24mA
 // 

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -222,8 +222,6 @@ func (device *DualButtonV2Bricklet) DeregisterStateChangedCallback(registrationI
 // If you just want to set one of the LEDs and don't know the current state
 // of the other LED, you can get the state with GetLEDState or you
 // can use SetSelectedLEDState.
-// 
-// The default value is (1, 1).
 //
 // Associated constants:
 //
@@ -320,7 +318,7 @@ func (device *DualButtonV2Bricklet) GetButtonState() (buttonL ButtonState, butto
 	return buttonL, buttonR, nil
 }
 
-// Sets the state of the selected LED (0 or 1).
+// Sets the state of the selected LED.
 // 
 // The other LED remains untouched.
 //
@@ -358,8 +356,6 @@ func (device *DualButtonV2Bricklet) SetSelectedLEDState(led LED, state LEDState)
 
 // If you enable this callback, the RegisterStateChangedCallback callback is triggered
 // every time a button is pressed/released
-// 
-// By default this callback is disabled.
 func (device *DualButtonV2Bricklet) SetStateChangedCallbackConfiguration(enabled bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enabled);

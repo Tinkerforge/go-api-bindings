@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -125,8 +125,6 @@ func (device *DualRelayBricklet) DeregisterMonoflopDoneCallback(registrationId u
 // can use SetSelectedState.
 // 
 // All running monoflop timers will be aborted if this function is called.
-// 
-// The default value is (*false*, *false*).
 func (device *DualRelayBricklet) SetState(relay1 bool, relay2 bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, relay1);
@@ -178,7 +176,7 @@ func (device *DualRelayBricklet) GetState() (relay1 bool, relay2 bool, err error
 
 // The first parameter can be 1 or 2 (relay 1 or relay 2). The second parameter
 // is the desired state of the relay (*true* means on and *false* means off).
-// The third parameter indicates the time (in ms) that the relay should hold
+// The third parameter indicates the time that the relay should hold
 // the state.
 // 
 // If this function is called with the parameters (1, true, 1500):

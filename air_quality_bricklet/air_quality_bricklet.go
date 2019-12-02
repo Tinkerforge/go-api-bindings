@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -334,7 +334,7 @@ func (device *AirQualityBricklet) DeregisterAirPressureCallback(registrationId u
 // * IAQ Index Accuracy: 0 = unreliable to 3 = high
 // * Temperature: in steps of 0.01 °C
 // * Humidity: in steps of 0.01 %RH
-// * Air Pressure: in steps of 0.01 mbar
+// * Air Pressure: in steps of 0.01 hPa
 //
 // Associated constants:
 //
@@ -369,8 +369,8 @@ func (device *AirQualityBricklet) GetAllValues() (iaqIndex int32, iaqIndexAccura
 	return iaqIndex, iaqIndexAccuracy, temperature, humidity, airPressure, nil
 }
 
-// Sets a temperature offset with resolution 1/100°C. A offset of 10 will decrease
-// the measured temperature by 0.1°C.
+// Sets a temperature offset with resolution 1/100 °C. A offset of 10 will decrease
+// the measured temperature by 0.1 °C.
 // 
 // If you install this Bricklet into an enclosure and you want to measure the ambient
 // temperature, you may have to decrease the measured temperature by some value to
@@ -432,7 +432,7 @@ func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err erro
 	return offset, nil
 }
 
-// The period in ms is the period with which the RegisterAllValuesCallback
+// The period is the period with which the RegisterAllValuesCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -441,8 +441,6 @@ func (device *AirQualityBricklet) GetTemperatureOffset() (offset int32, err erro
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *AirQualityBricklet) SetAllValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -536,7 +534,7 @@ func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccurac
 	return iaqIndex, iaqIndexAccuracy, nil
 }
 
-// The period in ms is the period with which the RegisterIAQIndexCallback
+// The period is the period with which the RegisterIAQIndexCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -545,8 +543,6 @@ func (device *AirQualityBricklet) GetIAQIndex() (iaqIndex int32, iaqIndexAccurac
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *AirQualityBricklet) SetIAQIndexCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -626,7 +622,7 @@ func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error
 	return temperature, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
+// The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -651,8 +647,6 @@ func (device *AirQualityBricklet) GetTemperature() (temperature int32, err error
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -753,7 +747,7 @@ func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
 	return humidity, nil
 }
 
-// The period in ms is the period with which the RegisterHumidityCallback callback is triggered
+// The period is the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -778,8 +772,6 @@ func (device *AirQualityBricklet) GetHumidity() (humidity int32, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -851,7 +843,7 @@ func (device *AirQualityBricklet) GetHumidityCallbackConfiguration() (period uin
 	return period, valueHasToChange, option, min, max, nil
 }
 
-// Returns air pressure in steps of 0.01 mbar.
+// Returns air pressure in steps of 0.01 hPa.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -880,7 +872,7 @@ func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error
 	return airPressure, nil
 }
 
-// The period in ms is the period with which the RegisterAirPressureCallback callback is triggered
+// The period is the period with which the RegisterAirPressureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -905,8 +897,6 @@ func (device *AirQualityBricklet) GetAirPressure() (airPressure int32, err error
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -1023,7 +1013,7 @@ func (device *AirQualityBricklet) RemoveCalibration() (err error) {
 // duration is saved in flash, so you should only have to call this function
 // once in the lifetime of the Bricklet.
 // 
-// The Bricklet has to be power cycled after this function is called 
+// The Bricklet has to be power cycled after this function is called
 // for a duration change to take effect.
 // 
 // Before firmware version 2.0.3 this was not configurable and the duration was
@@ -1060,7 +1050,7 @@ func (device *AirQualityBricklet) SetBackgroundCalibrationDuration(duration Dura
 	return nil
 }
 
-// Returns the background calibration duration as set by 
+// Returns the background calibration duration as set by
 // SetBackgroundCalibrationDuration.
 // 
 // .. versionadded:: 2.0.3$nbsp;(Plugin)

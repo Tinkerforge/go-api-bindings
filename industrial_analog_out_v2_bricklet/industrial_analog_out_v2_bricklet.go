@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -193,8 +193,6 @@ func (device *IndustrialAnalogOutV2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // Enables/disables the output of voltage and current.
-// 
-// The default is disabled.
 func (device *IndustrialAnalogOutV2Bricklet) SetEnabled(enabled bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enabled);
@@ -242,7 +240,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetEnabled() (enabled bool, err err
 	return enabled, nil
 }
 
-// Sets the output voltage in mV.
+// Sets the output voltage.
 // 
 // The output voltage and output current are linked. Changing the output voltage
 // also changes the output current.
@@ -293,7 +291,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetVoltage() (voltage uint16, err e
 	return voltage, nil
 }
 
-// Sets the output current in µA.
+// Sets the output current.
 // 
 // The output current and output voltage are linked. Changing the output current
 // also changes the output voltage.
@@ -349,11 +347,11 @@ func (device *IndustrialAnalogOutV2Bricklet) GetCurrent() (current uint16, err e
 // Possible voltage ranges are:
 // 
 // * 0V to 5V
-// * 0V to 10V (default)
+// * 0V to 10V
 // 
 // Possible current ranges are:
 // 
-// * 4mA to 20mA (default)
+// * 4mA to 20mA
 // * 0mA to 20mA
 // * 0mA to 24mA
 // 
@@ -430,8 +428,6 @@ func (device *IndustrialAnalogOutV2Bricklet) GetConfiguration() (voltageRange Vo
 // of the LED can change with the output value (voltage or current).
 // 
 // You can configure the channel status behavior with SetOutLEDStatusConfig.
-// 
-// By default the LED is configured as Out Status
 //
 // Associated constants:
 //
@@ -514,9 +510,6 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDCon
 // 8V and above and the brightness is linearly scaled between the values 2V and 8V.
 // If the min value is greater than the max value, the LED brightness is scaled the
 // other way around.
-// 
-// By default the channel LED status config is set to intensity with min=0V and
-// max=10V.
 //
 // Associated constants:
 //

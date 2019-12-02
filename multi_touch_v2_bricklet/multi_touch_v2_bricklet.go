@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -230,7 +230,7 @@ func (device *MultiTouchV2Bricklet) GetTouchState() (state [13]bool, err error) 
 	return state, nil
 }
 
-// The period in ms is the period with which the RegisterTouchStateCallback callback
+// The period is the period with which the RegisterTouchStateCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -239,8 +239,6 @@ func (device *MultiTouchV2Bricklet) GetTouchState() (state [13]bool, err error) 
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *MultiTouchV2Bricklet) SetTouchStateCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -327,8 +325,6 @@ func (device *MultiTouchV2Bricklet) Recalibrate() (err error) {
 // traffic that is produced by the RegisterTouchStateCallback callback.
 // 
 // Disabling electrodes will also reduce power consumption.
-// 
-// Default: All electrodes enabled.
 func (device *MultiTouchV2Bricklet) SetElectrodeConfig(enabledElectrodes [13]bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enabledElectrodes);
@@ -385,10 +381,6 @@ func (device *MultiTouchV2Bricklet) GetElectrodeConfig() (enabledElectrodes [13]
 // 
 // After a new sensitivity is set, you likely want to call Recalibrate
 // to calibrate the electrodes with the newly defined sensitivity.
-// 
-// The valid sensitivity value range is 5-201.
-// 
-// The default sensitivity value is 181.
 func (device *MultiTouchV2Bricklet) SetElectrodeSensitivity(sensitivity uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, sensitivity);
@@ -438,8 +430,6 @@ func (device *MultiTouchV2Bricklet) GetElectrodeSensitivity() (sensitivity uint8
 
 // Configures the touch LED to be either turned off, turned on, blink in
 // heartbeat mode or show the touch state (electrode touched = LED on).
-// 
-// The default value is 3 (show touch state).
 //
 // Associated constants:
 //

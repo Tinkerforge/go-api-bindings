@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -159,8 +159,8 @@ func (device *MoistureBricklet) DeregisterMoistureReachedCallback(registrationId
 }
 
 
-// Returns the current moisture value. The value has a range of
-// 0 to 4095. A small value corresponds to little moisture, a big
+// Returns the current moisture value.
+// A small value corresponds to little moisture, a big
 // value corresponds to much moisture.
 // 
 // If you want to get the moisture value periodically, it is recommended
@@ -189,13 +189,11 @@ func (device *MoistureBricklet) GetMoistureValue() (moisture uint16, err error) 
 	return moisture, nil
 }
 
-// Sets the period in ms with which the RegisterMoistureCallback callback is triggered
+// Sets the period with which the RegisterMoistureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterMoistureCallback callback is only triggered if the moisture value has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *MoistureBricklet) SetMoistureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -254,8 +252,6 @@ func (device *MoistureBricklet) GetMoistureCallbackPeriod() (period uint32, err 
 //  'i'|    Callback is triggered when the moisture value is *inside* the min and max values
 //  '<'|    Callback is triggered when the moisture value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the moisture value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -323,7 +319,7 @@ func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option Threshold
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterMoistureReachedCallback
 // 
@@ -332,8 +328,6 @@ func (device *MoistureBricklet) GetMoistureCallbackThreshold() (option Threshold
 // * SetMoistureCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *MoistureBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -386,10 +380,6 @@ func (device *MoistureBricklet) GetDebouncePeriod() (debounce uint32, err error)
 // 
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 0-100.
-// 
-// The default value is 100.
 func (device *MoistureBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);

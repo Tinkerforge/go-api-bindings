@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -1298,7 +1298,7 @@ func (device *StepperBrick) GetAllData() (currentVelocity uint16, currentPositio
 	return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, nil
 }
 
-// Sets the period in ms with which the RegisterAllDataCallback callback is triggered
+// Sets the period with which the RegisterAllDataCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 func (device *StepperBrick) SetAllDataPeriod(period uint32) (err error) {
 	var buf bytes.Buffer

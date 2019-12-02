@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -142,8 +142,6 @@ func (device *OLED128x64Bricklet) Write(data [64]uint8) (err error) {
 
 // Sets the window in which you can write with Write. One row
 // has a height of 8 pixels.
-// 
-// The columns have a range of 0 to 127 and the rows have a range of 0 to 7.
 func (device *OLED128x64Bricklet) NewWindow(columnFrom uint8, columnTo uint8, rowFrom uint8, rowTo uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, columnFrom);
@@ -197,8 +195,6 @@ func (device *OLED128x64Bricklet) ClearDisplay() (err error) {
 // 
 // You can set a contrast value from 0 to 255 and you can invert the color
 // (black/white) of the display.
-// 
-// The default values are contrast 143 and inverting off.
 func (device *OLED128x64Bricklet) SetDisplayConfiguration(contrast uint8, invert bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, contrast);
@@ -248,8 +244,8 @@ func (device *OLED128x64Bricklet) GetDisplayConfiguration() (contrast uint8, inv
 	return contrast, invert, nil
 }
 
-// Writes text to a specific line (0 to 7) with a specific position
-// (0 to 25). The text can have a maximum of 26 characters.
+// Writes text to a specific line with a specific position.
+// The text can have a maximum of 26 characters.
 // 
 // For example: (1, 10, Hello) will write *Hello* in the middle of the
 // second line of the display.

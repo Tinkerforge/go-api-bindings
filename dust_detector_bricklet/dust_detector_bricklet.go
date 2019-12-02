@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -159,7 +159,7 @@ func (device *DustDetectorBricklet) DeregisterDustDensityReachedCallback(registr
 }
 
 
-// Returns the dust density in µg/m³.
+// Returns the dust density.
 // 
 // If you want to get the dust density periodically, it is recommended
 // to use the RegisterDustDensityCallback callback and set the period with
@@ -187,13 +187,11 @@ func (device *DustDetectorBricklet) GetDustDensity() (dustDensity uint16, err er
 	return dustDensity, nil
 }
 
-// Sets the period in ms with which the RegisterDustDensityCallback callback is triggered
+// Sets the period with which the RegisterDustDensityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterDustDensityCallback callback is only triggered if the dust density has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *DustDetectorBricklet) SetDustDensityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -252,8 +250,6 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackPeriod() (period uint3
 //  'i'|    Callback is triggered when the dust density value is *inside* the min and max values
 //  '<'|    Callback is triggered when the dust density value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the dust density value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -321,7 +317,7 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackThreshold() (option Th
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterDustDensityReachedCallback
 // 
@@ -330,8 +326,6 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackThreshold() (option Th
 // * SetDustDensityCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *DustDetectorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -380,14 +374,10 @@ func (device *DustDetectorBricklet) GetDebouncePeriod() (debounce uint32, err er
 }
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
-// for the dust_density.
+// for the dust density.
 // 
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 0-100.
-// 
-// The default value is 100.
 func (device *DustDetectorBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -259,8 +259,6 @@ func (device *IO4Bricklet) GetValue() (valueMask uint8, err error) {
 // 
 // Running monoflop timers for the specified pins will be aborted if this
 // function is called.
-// 
-// The default configuration is input with pull-up.
 //
 // Associated constants:
 //
@@ -325,13 +323,11 @@ func (device *IO4Bricklet) GetConfiguration() (directionMask uint8, valueMask ui
 	return directionMask, valueMask, nil
 }
 
-// Sets the debounce period of the RegisterInterruptCallback callback in ms.
+// Sets the debounce period of the RegisterInterruptCallback callback.
 // 
 // For example: If you set this value to 100, you will get the interrupt
 // maximal every 100ms. This is necessary if something that bounces is
 // connected to the IO-4 Bricklet, such as a button.
-// 
-// The default value is 100.
 func (device *IO4Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -441,7 +437,7 @@ func (device *IO4Bricklet) GetInterrupt() (interruptMask uint8, err error) {
 // The second parameter is a bitmask with the desired value of the specified
 // output pins. A 1 in the bitmask means high and a 0 in the bitmask means low.
 // 
-// The third parameter indicates the time (in ms) that the pins should hold
+// The third parameter indicates the time that the pins should hold
 // the value.
 // 
 // If this function is called with the parameters (9, 1, 1500) or
@@ -593,8 +589,6 @@ func (device *IO4Bricklet) GetEdgeCount(pin uint8, resetCounter bool) (count uin
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
-// 
-// Default values: 0 (edge type) and 100ms (debounce time)
 // 
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //

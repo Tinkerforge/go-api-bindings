@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -56,11 +56,21 @@ const (
 type DataRate = uint8
 
 const (
+	//Deprecated: Use 0_781Hz instead.
 	DataRate0781Hz DataRate = 0
+	DataRate0_781Hz DataRate = 0
+	//Deprecated: Use 1_563Hz instead.
 	DataRate1563Hz DataRate = 1
+	DataRate1_563Hz DataRate = 1
+	//Deprecated: Use 3_125Hz instead.
 	DataRate3125Hz DataRate = 2
+	DataRate3_125Hz DataRate = 2
+	//Deprecated: Use 6_2512Hz instead.
 	DataRate62512Hz DataRate = 3
+	DataRate6_2512Hz DataRate = 3
+	//Deprecated: Use 12_5Hz instead.
 	DataRate125Hz DataRate = 4
+	DataRate12_5Hz DataRate = 4
 	DataRate25Hz DataRate = 5
 	DataRate50Hz DataRate = 6
 	DataRate100Hz DataRate = 7
@@ -258,9 +268,9 @@ func (device *AccelerometerV2Bricklet) DeregisterAccelerationCallback(registrati
 // full scale range (see SetConfiguration) to calculate
 // the data in g/10000 (same unit that is returned by GetAcceleration):
 // 
-// * Full scale 2G: acceleration = value*625/1024
-// * Full scale 4G: acceleration = value*1250/1024
-// * Full scale 8G: acceleration = value*2500/1024
+// * Full scale 2g: acceleration = value*625/1024
+// * Full scale 4g: acceleration = value*1250/1024
+// * Full scale 8g: acceleration = value*2500/1024
 // 
 // The data is formated in the sequence x, y, z, x, y, z, ... depending on
 // the enabled axis. Examples:
@@ -284,7 +294,7 @@ func (device *AccelerometerV2Bricklet) DeregisterContinuousAcceleration16BitCall
 }
 
 
-// Returns 30 acceleration values with 8 bit resolution. The data rate can
+// Returns 60 acceleration values with 8 bit resolution. The data rate can
 // be configured with SetConfiguration and this callback can be
 // enabled with SetContinuousAccelerationConfiguration.
 // 
@@ -298,9 +308,9 @@ func (device *AccelerometerV2Bricklet) DeregisterContinuousAcceleration16BitCall
 // full scale range (see SetConfiguration) to calculate
 // the data in g/10000 (same unit that is returned by GetAcceleration):
 // 
-// * Full scale 2G:  acceleration = value*256*625/1024
-// * Full scale 4G:  acceleration = value*256*1250/1024
-// * Full scale 8G:  acceleration = value*256*2500/1024
+// * Full scale 2g: acceleration = value*256*625/1024
+// * Full scale 4g: acceleration = value*256*1250/1024
+// * Full scale 8g: acceleration = value*256*2500/1024
 // 
 // The data is formated in the sequence x, y, z, x, y, z, ... depending on
 // the enabled axis. Examples:
@@ -325,7 +335,7 @@ func (device *AccelerometerV2Bricklet) DeregisterContinuousAcceleration8BitCallb
 
 
 // Returns the acceleration in x, y and z direction. The values
-// are given in g/10000 (1g = 9.80665m/s²), not to be confused with grams.
+// are given in gₙ/10000 (1gₙ = 9.80665m/s²).
 // 
 // If you want to get the acceleration periodically, it is recommended
 // to use the RegisterAccelerationCallback callback and set the period with
@@ -359,12 +369,10 @@ func (device *AccelerometerV2Bricklet) GetAcceleration() (x int32, y int32, z in
 // Possible values are:
 // 
 // * Data rate of 0.781Hz to 25600Hz.
-// * Full scale range of -2g to +2g up to -8g to +8g.
+// * Full scale range of ±2g up to ±8g.
 // 
 // Decreasing data rate or full scale range will also decrease the noise on
 // the data.
-// 
-// The default values are 100Hz data rate and -2g to +2g range.
 //
 // Associated constants:
 //
@@ -458,7 +466,7 @@ func (device *AccelerometerV2Bricklet) GetConfiguration() (dataRate DataRate, fu
 	return dataRate, fullScale, nil
 }
 
-// The period in ms is the period with which the RegisterAccelerationCallback
+// The period is the period with which the RegisterAccelerationCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -470,8 +478,6 @@ func (device *AccelerometerV2Bricklet) GetConfiguration() (dataRate DataRate, fu
 // 
 // If this callback is enabled, the RegisterContinuousAcceleration16BitCallback callback
 // and RegisterContinuousAcceleration8BitCallback callback will automatically be disabled.
-// 
-// The default value is (0, false).
 func (device *AccelerometerV2Bricklet) SetAccelerationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -605,16 +611,16 @@ func (device *AccelerometerV2Bricklet) GetInfoLEDConfig() (config InfoLEDConfig,
 // resolution (8/16 bit) and the full scale range (see SetConfiguration) to calculate
 // the data in g/10000 (same unit that is returned by GetAcceleration):
 // 
-// * 16 bit, full scale 2G: acceleration = value*625/1024
-// * 16 bit, full scale 4G: acceleration = value*1250/1024
-// * 16 bit, full scale 8G: acceleration = value*2500/1024
+// * 16 bit, full scale 2g: acceleration = value*625/1024
+// * 16 bit, full scale 4g: acceleration = value*1250/1024
+// * 16 bit, full scale 8g: acceleration = value*2500/1024
 // 
 // If a resolution of 8 bit is used, only the 8 most significant bits will be
 // transferred, so you can use the following formulas:
 // 
-// * 8 bit, full scale 2G:  acceleration = value*256*625/1024
-// * 8 bit, full scale 4G:  acceleration = value*256*1250/1024
-// * 8 bit, full scale 8G:  acceleration = value*256*2500/1024
+// * 8 bit, full scale 2g: acceleration = value*256*625/1024
+// * 8 bit, full scale 4g: acceleration = value*256*1250/1024
+// * 8 bit, full scale 8g: acceleration = value*256*2500/1024
 // 
 // If no axis is enabled, both callbacks are disabled. If one of the continuous
 // callbacks is enabled, the RegisterAccelerationCallback callback is disabled.
@@ -700,8 +706,6 @@ func (device *AccelerometerV2Bricklet) GetContinuousAccelerationConfiguration() 
 //    :alt: Accelerometer filter
 //    :align: center
 //    :target: ../../_images/Bricklets/bricklet_accelerometer_v2_filter.png
-// 
-// By default filtering is applied and the filter corner frequency is a ninth of the output data rate.
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 //

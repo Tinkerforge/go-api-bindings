@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -241,7 +241,7 @@ func (device *SegmentDisplay4x7V2Bricklet) GetSegments() (digit0 [8]bool, digit1
 	return digit0, digit1, digit2, digit3, colon, tick, nil
 }
 
-// The brightness can be set between 0 (dark) and 7 (bright). 
+// The brightness can be set between 0 (dark) and 7 (bright).
 // 
 // The default value is 7.
 func (device *SegmentDisplay4x7V2Bricklet) SetBrightness(brightness uint8) (err error) {

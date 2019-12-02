@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -253,10 +253,6 @@ func (device *MultiTouchBricklet) GetElectrodeConfig() (enabledElectrodes uint16
 // 
 // After a new sensitivity is set, you likely want to call Recalibrate
 // to calibrate the electrodes with the newly defined sensitivity.
-// 
-// The valid sensitivity value range is 5-201.
-// 
-// The default sensitivity value is 181.
 func (device *MultiTouchBricklet) SetElectrodeSensitivity(sensitivity uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, sensitivity);

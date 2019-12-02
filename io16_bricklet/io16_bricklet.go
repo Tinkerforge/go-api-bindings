@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -267,8 +267,6 @@ func (device *IO16Bricklet) GetPort(port rune) (valueMask uint8, err error) {
 // 
 // Running monoflop timers for the selected pins will be aborted if this
 // function is called.
-// 
-// The default configuration is input with pull-up.
 //
 // Associated constants:
 //
@@ -335,13 +333,11 @@ func (device *IO16Bricklet) GetPortConfiguration(port rune) (directionMask uint8
 	return directionMask, valueMask, nil
 }
 
-// Sets the debounce period of the RegisterInterruptCallback callback in ms.
+// Sets the debounce period of the RegisterInterruptCallback callback.
 // 
 // For example: If you set this value to 100, you will get the interrupt
 // maximal every 100ms. This is necessary if something that bounces is
 // connected to the IO-16 Bricklet, such as a button.
-// 
-// The default value is 100.
 func (device *IO16Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -454,7 +450,7 @@ func (device *IO16Bricklet) GetPortInterrupt(port rune) (interruptMask uint8, er
 // The third parameter is a bitmask with the desired value of the specified
 // output pins. A 1 in the bitmask means high and a 0 in the bitmask means low.
 // 
-// The forth parameter indicates the time (in ms) that the pins should hold
+// The forth parameter indicates the time that the pins should hold
 // the value.
 // 
 // If this function is called with the parameters ('a', 9, 1, 1500) or
@@ -600,18 +596,14 @@ func (device *IO16Bricklet) GetEdgeCount(pin uint8, resetCounter bool) (count ui
 // The edge type parameter configures if rising edges, falling edges or
 // both are counted if the pin is configured for input. Possible edge types are:
 // 
-// * 0 = rising (default)
+// * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
-// The debounce time is given in ms.
 // 
 // Configuring an edge counter resets its value to 0.
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
-// 
-// Default values: 0 (edge type) and 100ms (debounce time)
 // 
 // .. versionadded:: 2.0.3$nbsp;(Plugin)
 //

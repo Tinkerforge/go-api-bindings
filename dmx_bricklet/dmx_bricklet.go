@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -242,15 +242,7 @@ func (device *DMXBricklet) DeregisterFrameAvailableCallback(registrationId uint6
 }
 
 
-// This callback is called as soon as a new frame is available
-// (written by the DMX master).
-// 
-// The size of the array is equivalent to the number of channels in
-// the frame. Each byte represents one channel.
-// 
-// This callback can be enabled via SetFrameCallbackConfig.
-// 
-// This callback can only be triggered in slave mode.
+// See RegisterFrameCallback
 func (device *DMXBricklet) RegisterFrameLowLevelCallback(fn func(uint16, uint16, [56]uint8, uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -282,11 +274,18 @@ func (device *DMXBricklet) DeregisterFrameLowLevelCallback(registrationId uint64
 // This callback can be enabled via SetFrameCallbackConfig.
 // 
 // This callback can only be triggered in slave mode.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for frame.
 func (device *DMXBricklet) RegisterFrameCallback(fn func(uint32, []uint8)) uint64 {
 	buf := make([]uint8, 0)
 	wrapper := func(frameLength uint16, frameChunkOffset uint16, frameChunkData [56]uint8, frameNumber uint32)  {
 		if int(frameChunkOffset) != len(buf) {
-			buf = make([]uint8, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(frameNumber, buf)
+				buf = make([]uint8, 0)
+			}
 			if frameChunkOffset != 0 {
 				return
 			}
@@ -330,8 +329,6 @@ func (device *DMXBricklet) DeregisterFrameErrorCountCallback(registrationId uint
 // Sets the DMX mode to either master or slave.
 // 
 // Calling this function sets frame number to 0.
-// 
-// The default value is 0 (master).
 //
 // Associated constants:
 //
@@ -570,7 +567,7 @@ func (device *DMXBricklet) ReadFrameLowLevel() (frameLength uint16, frameChunkOf
 		return ByteSliceToUint8Slice(buf), frameNumber, nil
 	}
 
-// Sets the duration of a frame in ms.
+// Sets the duration of a frame.
 // 
 // Example: If you want to achieve 20 frames per second, you should
 // set the frame duration to 50ms (50ms * 20 = 1 second).
@@ -579,8 +576,6 @@ func (device *DMXBricklet) ReadFrameLowLevel() (frameLength uint16, frameChunkOf
 // this value to 0.
 // 
 // This setting is only used in master mode.
-// 
-// Default value: 100ms (10 frames per second).
 func (device *DMXBricklet) SetFrameDuration(frameDuration uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, frameDuration);

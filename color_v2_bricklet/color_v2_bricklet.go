@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -263,8 +263,7 @@ func (device *ColorV2Bricklet) DeregisterColorTemperatureCallback(registrationId
 }
 
 
-// Returns the measured color of the sensor. The values
-// have a range of 0 to 65535.
+// Returns the measured color of the sensor.
 // 
 // The red (r), green (g), blue (b) and clear (c) colors are measured
 // with four different photodiodes that are responsive at different
@@ -305,7 +304,7 @@ func (device *ColorV2Bricklet) GetColor() (r uint16, g uint16, b uint16, c uint1
 	return r, g, b, c, nil
 }
 
-// The period in ms is the period with which the RegisterColorCallback
+// The period is the period with which the RegisterColorCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -314,8 +313,6 @@ func (device *ColorV2Bricklet) GetColor() (r uint16, g uint16, b uint16, c uint1
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *ColorV2Bricklet) SetColorCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -403,7 +400,7 @@ func (device *ColorV2Bricklet) GetIlluminance() (illuminance uint32, err error) 
 	return illuminance, nil
 }
 
-// The period in ms is the period with which the RegisterIlluminanceCallback callback is triggered
+// The period is the period with which the RegisterIlluminanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -428,8 +425,6 @@ func (device *ColorV2Bricklet) GetIlluminance() (illuminance uint32, err error) 
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -501,7 +496,7 @@ func (device *ColorV2Bricklet) GetIlluminanceCallbackConfiguration() (period uin
 	return period, valueHasToChange, option, min, max, nil
 }
 
-// Returns the color temperature in Kelvin.
+// Returns the color temperature.
 // 
 // To get a correct color temperature measurement make sure that the color
 // values themselves are not saturated. The color value (R, G or B)
@@ -535,7 +530,7 @@ func (device *ColorV2Bricklet) GetColorTemperature() (colorTemperature uint16, e
 	return colorTemperature, nil
 }
 
-// The period in ms is the period with which the RegisterColorTemperatureCallback callback is triggered
+// The period is the period with which the RegisterColorTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -560,8 +555,6 @@ func (device *ColorV2Bricklet) GetColorTemperature() (colorTemperature uint16, e
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -706,8 +699,6 @@ func (device *ColorV2Bricklet) GetLight() (enable bool, err error) {
 // and accuracy. With a longer integration time the values read will
 // be more accurate but it will take longer to get the conversion
 // results.
-// 
-// The default values are 60x gain and 154ms integration time.
 //
 // Associated constants:
 //

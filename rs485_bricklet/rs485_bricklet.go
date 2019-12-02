@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -308,9 +308,7 @@ func (device *RS485Bricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// This callback is called if new data is available.
-// 
-// To enable this callback, use EnableReadCallback.
+// See RegisterReadCallback
 func (device *RS485Bricklet) RegisterReadLowLevelCallback(fn func(uint16, uint16, [60]rune)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -334,11 +332,18 @@ func (device *RS485Bricklet) DeregisterReadLowLevelCallback(registrationId uint6
 // This callback is called if new data is available.
 // 
 // To enable this callback, use EnableReadCallback.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for message.
 func (device *RS485Bricklet) RegisterReadCallback(fn func([]rune)) uint64 {
 	buf := make([]rune, 0)
 	wrapper := func(messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune)  {
 		if int(messageChunkOffset) != len(buf) {
-			buf = make([]rune, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(buf)
+				buf = make([]rune, 0)
+			}
 			if messageChunkOffset != 0 {
 				return
 			}
@@ -406,19 +411,7 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadCoilsRequestCallback(regis
 }
 
 
-// This callback is called only in Modbus master mode when the master receives a
-// valid response of a request to read coils.
-// 
-// The parameters are request ID
-// of the request, exception code of the response and the data as received by the
-// response.
-// 
-// Any non-zero exception code indicates a problem. If the exception code
-// is greater than 0 then the number represents a Modbus exception code. If it is
-// less than 0 then it represents other errors. For example, -1 indicates that
-// the request timed out or that the master did not receive any valid response of the
-// request within the master request timeout period as set by
-// SetModbusConfiguration.
+// See RegisterModbusMasterReadCoilsResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadCoilsResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [464]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -456,11 +449,18 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadCoilsResponseLowLevelCall
 // the request timed out or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for coils.
 func (device *RS485Bricklet) RegisterModbusMasterReadCoilsResponseCallback(fn func(uint8, ExceptionCode, []bool)) uint64 {
 	buf := make([]bool, 0)
 	wrapper := func(requestID uint8, exceptionCode ExceptionCode, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [464]bool)  {
 		if int(coilsChunkOffset) != len(buf) {
-			buf = make([]bool, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, exceptionCode, buf)
+				buf = make([]bool, 0)
+			}
 			if coilsChunkOffset != 0 {
 				return
 			}
@@ -508,19 +508,7 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadHoldingRegistersRequestCal
 }
 
 
-// This callback is called only in Modbus master mode when the master receives a
-// valid response of a request to read holding registers.
-// 
-// The parameters are
-// request ID of the request, exception code of the response and the data as received
-// by the response.
-// 
-// Any non-zero exception code indicates a problem. If the exception
-// code is greater than 0 then the number represents a Modbus exception code. If
-// it is less than 0 then it represents other errors. For example, -1 indicates that
-// the request timed out or that the master did not receive any valid response of the
-// request within the master request timeout period as set by
-// SetModbusConfiguration.
+// See RegisterModbusMasterReadHoldingRegistersResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadHoldingRegistersResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [29]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -558,11 +546,18 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadHoldingRegistersResponseL
 // the request timed out or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for holdingRegisters.
 func (device *RS485Bricklet) RegisterModbusMasterReadHoldingRegistersResponseCallback(fn func(uint8, ExceptionCode, []uint16)) uint64 {
 	buf := make([]uint16, 0)
 	wrapper := func(requestID uint8, exceptionCode ExceptionCode, holdingRegistersLength uint16, holdingRegistersChunkOffset uint16, holdingRegistersChunkData [29]uint16)  {
 		if int(holdingRegistersChunkOffset) != len(buf) {
-			buf = make([]uint16, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, exceptionCode, buf)
+				buf = make([]uint16, 0)
+			}
 			if holdingRegistersChunkOffset != 0 {
 				return
 			}
@@ -697,13 +692,7 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteSingleRegisterResponseCa
 }
 
 
-// This callback is called only in Modbus slave mode when the slave receives a
-// valid request from a Modbus master to write multiple coils. The parameters
-// are request ID of the request, the number of the first coil and the data to be written as
-// received by the request. The number of the first coil is called starting address for backwards compatibility reasons.
-// It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
-// To send a response of this request use ModbusSlaveAnswerWriteMultipleCoilsRequest.
+// See RegisterModbusSlaveWriteMultipleCoilsRequestCallback
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleCoilsRequestLowLevelCallback(fn func(uint8, uint32, uint16, uint16, [440]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -735,11 +724,18 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleCoilsRequestLowLe
 // It is not an address, but instead a coil number in the range of 1 to 65536.
 // 
 // To send a response of this request use ModbusSlaveAnswerWriteMultipleCoilsRequest.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for coils.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleCoilsRequestCallback(fn func(uint8, uint32, []bool)) uint64 {
 	buf := make([]bool, 0)
 	wrapper := func(requestID uint8, startingAddress uint32, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [440]bool)  {
 		if int(coilsChunkOffset) != len(buf) {
-			buf = make([]bool, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, startingAddress, buf)
+				buf = make([]bool, 0)
+			}
 			if coilsChunkOffset != 0 {
 				return
 			}
@@ -790,13 +786,7 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteMultipleCoilsResponseCal
 }
 
 
-// This callback is called only in Modbus slave mode when the slave receives a
-// valid request from a Modbus master to write multiple holding registers. The parameters
-// are request ID of the request, the number of the first holding register and the data to be written as
-// received by the request. The number of the first holding register is called starting address for backwards compatibility reasons.
-// It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is omitted.
-// 
-// To send a response of this request use ModbusSlaveAnswerWriteMultipleRegistersRequest.
+// See RegisterModbusSlaveWriteMultipleRegistersRequestCallback
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleRegistersRequestLowLevelCallback(fn func(uint8, uint32, uint16, uint16, [27]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -828,11 +818,18 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleRegistersRequestL
 // It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is omitted.
 // 
 // To send a response of this request use ModbusSlaveAnswerWriteMultipleRegistersRequest.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for registers.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleRegistersRequestCallback(fn func(uint8, uint32, []uint16)) uint64 {
 	buf := make([]uint16, 0)
 	wrapper := func(requestID uint8, startingAddress uint32, registersLength uint16, registersChunkOffset uint16, registersChunkData [27]uint16)  {
 		if int(registersChunkOffset) != len(buf) {
-			buf = make([]uint16, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, startingAddress, buf)
+				buf = make([]uint16, 0)
+			}
 			if registersChunkOffset != 0 {
 				return
 			}
@@ -910,19 +907,7 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadDiscreteInputsRequestCallb
 }
 
 
-// This callback is called only in Modbus master mode when the master receives a
-// valid response of a request to read discrete inputs.
-// 
-// The parameters are
-// request ID of the request, exception code of the response and the data as received
-// by the response.
-// 
-// Any non-zero exception code indicates a problem. If the exception
-// code is greater than 0 then the number represents a Modbus exception code. If
-// it is less than 0 then it represents other errors. For example, -1 indicates that
-// the request timedout or that the master did not receive any valid response of the
-// request within the master request timeout period as set by
-// SetModbusConfiguration.
+// See RegisterModbusMasterReadDiscreteInputsResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadDiscreteInputsResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [464]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -960,11 +945,18 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadDiscreteInputsResponseLow
 // the request timedout or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for discreteInputs.
 func (device *RS485Bricklet) RegisterModbusMasterReadDiscreteInputsResponseCallback(fn func(uint8, ExceptionCode, []bool)) uint64 {
 	buf := make([]bool, 0)
 	wrapper := func(requestID uint8, exceptionCode ExceptionCode, discreteInputsLength uint16, discreteInputsChunkOffset uint16, discreteInputsChunkData [464]bool)  {
 		if int(discreteInputsChunkOffset) != len(buf) {
-			buf = make([]bool, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, exceptionCode, buf)
+				buf = make([]bool, 0)
+			}
 			if discreteInputsChunkOffset != 0 {
 				return
 			}
@@ -1012,19 +1004,7 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadInputRegistersRequestCallb
 }
 
 
-// This callback is called only in Modbus master mode when the master receives a
-// valid response of a request to read input registers.
-// 
-// The parameters are
-// request ID of the request, exception code of the response and the data as received
-// by the response.
-// 
-// Any non-zero exception code indicates a problem. If the exception
-// code is greater than 0 then the number represents a Modbus exception code. If
-// it is less than 0 then it represents other errors. For example, -1 indicates that
-// the request timedout or that the master did not receive any valid response of the
-// request within the master request timeout period as set by
-// SetModbusConfiguration.
+// See RegisterModbusMasterReadInputRegistersResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadInputRegistersResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [29]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -1062,11 +1042,18 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadInputRegistersResponseLow
 // the request timedout or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for inputRegisters.
 func (device *RS485Bricklet) RegisterModbusMasterReadInputRegistersResponseCallback(fn func(uint8, ExceptionCode, []uint16)) uint64 {
 	buf := make([]uint16, 0)
 	wrapper := func(requestID uint8, exceptionCode ExceptionCode, inputRegistersLength uint16, inputRegistersChunkOffset uint16, inputRegistersChunkData [29]uint16)  {
 		if int(inputRegistersChunkOffset) != len(buf) {
-			buf = make([]uint16, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(requestID, exceptionCode, buf)
+				buf = make([]uint16, 0)
+			}
 			if inputRegistersChunkOffset != 0 {
 				return
 			}

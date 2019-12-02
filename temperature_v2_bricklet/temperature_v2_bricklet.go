@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -185,9 +185,7 @@ func (device *TemperatureV2Bricklet) DeregisterTemperatureCallback(registrationI
 }
 
 
-// Returns the temperature measured by the sensor. The value
-// has a range of -4500 to 13000 and is given in °C/100,
-// i.e. a value of 3200 means that a temperature of 32.00 °C is measured.
+// Returns the temperature measured by the sensor.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -216,7 +214,7 @@ func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err er
 	return temperature, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
+// The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -241,8 +239,6 @@ func (device *TemperatureV2Bricklet) GetTemperature() (temperature int16, err er
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //

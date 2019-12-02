@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -242,7 +242,7 @@ func (device *ColorBricklet) DeregisterIlluminanceCallback(registrationId uint64
 
 // This callback is triggered periodically with the period that is set by
 // SetColorTemperatureCallbackPeriod. The parameter is the
-// color temperature in Kelvin.
+// color temperature.
 // 
 // The RegisterColorTemperatureCallback callback is only triggered if the color temperature
 // has changed since the last triggering.
@@ -262,8 +262,7 @@ func (device *ColorBricklet) DeregisterColorTemperatureCallback(registrationId u
 }
 
 
-// Returns the measured color of the sensor. The values
-// have a range of 0 to 65535.
+// Returns the measured color of the sensor.
 // 
 // The red (r), green (g), blue (b) and clear (c) colors are measured
 // with four different photodiodes that are responsive at different
@@ -304,13 +303,11 @@ func (device *ColorBricklet) GetColor() (r uint16, g uint16, b uint16, c uint16,
 	return r, g, b, c, nil
 }
 
-// Sets the period in ms with which the RegisterColorCallback callback is triggered
+// Sets the period with which the RegisterColorCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterColorCallback callback is only triggered if the color has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *ColorBricklet) SetColorCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -369,8 +366,6 @@ func (device *ColorBricklet) GetColorCallbackPeriod() (period uint32, err error)
 //  'i'|    Callback is triggered when the temperature is *inside* the min and max values
 //  '<'|    Callback is triggered when the temperature is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the temperature is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0, 0, 0, 0, 0, 0, 0).
 //
 // Associated constants:
 //
@@ -450,7 +445,7 @@ func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption
 	return option, minR, maxR, minG, maxG, minB, maxB, minC, maxC, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterColorReachedCallback
 // 
@@ -459,8 +454,6 @@ func (device *ColorBricklet) GetColorCallbackThreshold() (option ThresholdOption
 // * SetColorCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *ColorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -611,8 +604,6 @@ func (device *ColorBricklet) IsLightOn() (light Light, err error) {
 // and accuracy. With a longer integration time the values read will
 // be more accurate but it will take longer time to get the conversion
 // results.
-// 
-// The default values are 60x gain and 154ms integration time.
 //
 // Associated constants:
 //
@@ -718,7 +709,7 @@ func (device *ColorBricklet) GetIlluminance() (illuminance uint32, err error) {
 	return illuminance, nil
 }
 
-// Returns the color temperature in Kelvin.
+// Returns the color temperature.
 // 
 // To get a correct color temperature measurement make sure that the color
 // values themselves are not saturated. The color value (R, G or B)
@@ -747,13 +738,11 @@ func (device *ColorBricklet) GetColorTemperature() (colorTemperature uint16, err
 	return colorTemperature, nil
 }
 
-// Sets the period in ms with which the RegisterIlluminanceCallback callback is triggered
+// Sets the period with which the RegisterIlluminanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *ColorBricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -801,13 +790,11 @@ func (device *ColorBricklet) GetIlluminanceCallbackPeriod() (period uint32, err 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterColorTemperatureCallback callback is
+// Sets the period with which the RegisterColorTemperatureCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 // 
 // The RegisterColorTemperatureCallback callback is only triggered if the color temperature
 // has changed since the last triggering.
-// 
-// The default value is 0.
 func (device *ColorBricklet) SetColorTemperatureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

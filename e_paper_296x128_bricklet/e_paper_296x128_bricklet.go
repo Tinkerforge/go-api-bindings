@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -304,9 +304,8 @@ func (device *EPaper296x128Bricklet) GetDrawStatus() (drawStatus DrawStatus, err
 
 // Writes black/white pixels to the specified window into the buffer.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The value 0 (false) corresponds to a black pixel and the value 1 (true) to a
 // white pixel.
@@ -346,9 +345,8 @@ func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, ySta
 
 // Writes black/white pixels to the specified window into the buffer.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The value 0 (false) corresponds to a black pixel and the value 1 (true) to a
 // white pixel.
@@ -384,9 +382,8 @@ func (device *EPaper296x128Bricklet) WriteBlackWhiteLowLevel(xStart uint16, ySta
 
 // Returns the current content of the black/white pixel buffer for the specified window.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are read into the window line by line top to bottom and
+// each line is read from left to right.
 // 
 // The current content of the buffer does not have to be the current content of the display.
 // It is possible that the data was not drawn to the display yet and after a restart of
@@ -422,9 +419,8 @@ func (device *EPaper296x128Bricklet) ReadBlackWhiteLowLevel(xStart uint16, yStar
 
 // Returns the current content of the black/white pixel buffer for the specified window.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are read into the window line by line top to bottom and
+// each line is read from left to right.
 // 
 // The current content of the buffer does not have to be the current content of the display.
 // It is possible that the data was not drawn to the display yet and after a restart of
@@ -460,9 +456,8 @@ func (device *EPaper296x128Bricklet) ReadBlackWhiteLowLevel(xStart uint16, yStar
 // black/white/gray. Depending on the model this function writes either red or
 // gray pixels to the specified window into the buffer.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The value 0 (false) means that this pixel does not have color. It will be either black
 // or white (see WriteBlackWhite). The value 1 (true) corresponds to a red or gray
@@ -505,9 +500,8 @@ func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart ui
 // black/white/gray. Depending on the model this function writes either red or
 // gray pixels to the specified window into the buffer.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The value 0 (false) means that this pixel does not have color. It will be either black
 // or white (see WriteBlackWhite). The value 1 (true) corresponds to a red or gray
@@ -544,9 +538,8 @@ func (device *EPaper296x128Bricklet) WriteColorLowLevel(xStart uint16, yStart ui
 
 // Returns the current content of the red or gray pixel buffer for the specified window.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The current content of the buffer does not have to be the current content of the display.
 // It is possible that the data was not drawn to the display yet and after a restart of
@@ -582,9 +575,8 @@ func (device *EPaper296x128Bricklet) ReadColorLowLevel(xStart uint16, yStart uin
 
 // Returns the current content of the red or gray pixel buffer for the specified window.
 // 
-// The x-axis goes from 0 to 295 and the y-axis from 0 to 127. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // The current content of the buffer does not have to be the current content of the display.
 // It is possible that the data was not drawn to the display yet and after a restart of
@@ -617,6 +609,9 @@ func (device *EPaper296x128Bricklet) ReadColorLowLevel(xStart uint16, yStart uin
 	}
 
 // Fills the complete content of the display with the given color.
+// 
+// This function writes the pixels into the black/white/red|gray pixel buffer, to draw the buffer
+// to the display use Draw.
 //
 // Associated constants:
 //
@@ -649,11 +644,11 @@ func (device *EPaper296x128Bricklet) FillDisplay(color Color) (err error) {
 
 // Draws a text with up to 50 characters at the pixel position (x, y).
 // 
-// The x values have to be within the range of 0 to 295 and the y
-// values have to be within the range of 0 to 127.
-// 
 // You can use one of 9 different font sizes and draw the text in
 // black/white/red|gray. The text can be drawn horizontal or vertical.
+// 
+// This function writes the pixels into the black/white/red|gray pixel buffer, to draw the buffer
+// to the display use Draw.
 //
 // Associated constants:
 //
@@ -704,8 +699,9 @@ func (device *EPaper296x128Bricklet) DrawText(positionX uint16, positionY uint8,
 }
 
 // Draws a line from (x, y)-start to (x, y)-end in the given color.
-// The x values have to be within the range of 0 to 295 and the y
-// values have t be within the range of 0 to 127.
+// 
+// This function writes the pixels into the black/white/red|gray pixel buffer, to draw the buffer
+// to the display use Draw.
 //
 // Associated constants:
 //
@@ -741,11 +737,12 @@ func (device *EPaper296x128Bricklet) DrawLine(positionXStart uint16, positionYSt
 }
 
 // Draws a box from (x, y)-start to (x, y)-end in the given color.
-// The x values have to be within the range of 0 to 295 and the y
-// values have to be within the range of 0 to 127.
 // 
 // If you set fill to true, the box will be filled with the
 // color. Otherwise only the outline will be drawn.
+// 
+// This function writes the pixels into the black/white/red|gray pixel buffer, to draw the buffer
+// to the display use Draw.
 //
 // Associated constants:
 //

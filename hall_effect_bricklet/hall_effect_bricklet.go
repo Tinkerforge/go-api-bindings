@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -210,8 +210,6 @@ func (device *HallEffectBricklet) GetEdgeCount(resetCounter bool) (count uint32,
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
-// 
-// Default values: 0 (edge type) and 100ms (debounce time)
 //
 // Associated constants:
 //
@@ -327,13 +325,11 @@ func (device *HallEffectBricklet) GetEdgeInterrupt() (edges uint32, err error) {
 	return edges, nil
 }
 
-// Sets the period in ms with which the RegisterEdgeCountCallback callback is triggered
+// Sets the period with which the RegisterEdgeCountCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterEdgeCountCallback callback is only triggered if the edge count has changed
 // since the last triggering.
-// 
-// The default value is 0.
 func (device *HallEffectBricklet) SetEdgeCountCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

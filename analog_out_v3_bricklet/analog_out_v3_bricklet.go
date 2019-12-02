@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -143,7 +143,7 @@ func (device *AnalogOutV3Bricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// Sets the voltage in mV. The possible range is 0V to 12V (0-12000).
+// Sets the voltage.
 func (device *AnalogOutV3Bricklet) SetOutputVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, voltage);
@@ -191,7 +191,7 @@ func (device *AnalogOutV3Bricklet) GetOutputVoltage() (voltage uint16, err error
 	return voltage, nil
 }
 
-// Returns the input voltage in mV.
+// Returns the input voltage.
 func (device *AnalogOutV3Bricklet) GetInputVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
 	

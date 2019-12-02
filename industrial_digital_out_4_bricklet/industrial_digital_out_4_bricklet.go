@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -190,7 +190,7 @@ func (device *IndustrialDigitalOut4Bricklet) GetValue() (valueMask uint16, err e
 // The second parameter is a bitmask with the desired value of the specified
 // pins. A 1 in the bitmask means high and a 0 in the bitmask means low.
 // 
-// The third parameter indicates the time (in ms) that the pins should hold
+// The third parameter indicates the time that the pins should hold
 // the value.
 // 
 // If this function is called with the parameters (9, 1, 1500) or

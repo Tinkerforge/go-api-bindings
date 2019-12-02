@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -215,8 +215,7 @@ func (device *AnalogInV2Bricklet) DeregisterAnalogValueReachedCallback(registrat
 }
 
 
-// Returns the measured voltage. The value is in mV and
-// between 0V and 42V. The resolution is approximately 10mV.
+// Returns the measured voltage. The resolution is approximately 10mV.
 // 
 // If you want to get the voltage periodically, it is recommended to use the
 // RegisterVoltageCallback callback and set the period with
@@ -245,7 +244,6 @@ func (device *AnalogInV2Bricklet) GetVoltage() (voltage uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// The value is between 0 and 4095.
 // 
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
@@ -273,13 +271,11 @@ func (device *AnalogInV2Bricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterVoltageCallback callback is triggered
+// Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *AnalogInV2Bricklet) SetVoltageCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -327,13 +323,11 @@ func (device *AnalogInV2Bricklet) GetVoltageCallbackPeriod() (period uint32, err
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *AnalogInV2Bricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -392,8 +386,6 @@ func (device *AnalogInV2Bricklet) GetAnalogValueCallbackPeriod() (period uint32,
 //  'i'|    Callback is triggered when the voltage is *inside* the min and max values
 //  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -472,8 +464,6 @@ func (device *AnalogInV2Bricklet) GetVoltageCallbackThreshold() (option Threshol
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
 //  '<'|    Callback is triggered when the analog value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the analog value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -541,7 +531,7 @@ func (device *AnalogInV2Bricklet) GetAnalogValueCallbackThreshold() (option Thre
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterVoltageReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -552,8 +542,6 @@ func (device *AnalogInV2Bricklet) GetAnalogValueCallbackThreshold() (option Thre
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *AnalogInV2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -606,10 +594,6 @@ func (device *AnalogInV2Bricklet) GetDebouncePeriod() (debounce uint32, err erro
 // 
 // Setting the length to 1 will turn the averaging off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 1-50.
-// 
-// The default value is 50.
 func (device *AnalogInV2Bricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, average);

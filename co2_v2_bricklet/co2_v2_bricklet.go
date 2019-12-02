@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -187,6 +187,10 @@ func (device *CO2V2Bricklet) GetAPIVersion() [3]uint8 {
 // SetAllValuesCallbackConfiguration.
 // 
 // The parameters are the same as GetAllValues.
+// 
+// Note
+//  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
+//  Exposing the Bricklet to higher temperatures might result in permanent damage.
 func (device *CO2V2Bricklet) RegisterAllValuesCallback(fn func(uint16, int16, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -267,13 +271,15 @@ func (device *CO2V2Bricklet) DeregisterHumidityCallback(registrationId uint64) {
 }
 
 
-// Returns all values measured by the CO2 Bricklet 2.0. The values are
-// CO2 concentration (in ppm), temperature (in 0.01 °C)
-// and humidity (in 0.01 %RH).
+// Returns all values measured by the CO2 Bricklet 2.0.
 // 
 // If you want to get the values periodically, it is recommended to use the
 // RegisterAllValuesCallback callback. You can set the callback configuration
 // with SetAllValuesCallbackConfiguration.
+// 
+// Note
+//  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
+//  Exposing the Bricklet to higher temperatures might result in permanent damage.
 func (device *CO2V2Bricklet) GetAllValues() (co2Concentration uint16, temperature int16, humidity uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -304,8 +310,6 @@ func (device *CO2V2Bricklet) GetAllValues() (co2Concentration uint16, temperatur
 // To increase the accuracy of the CO2 Bricklet 2.0 you can set the current air pressure.
 // You use the `Barometer Bricklet 2.0 <barometer_v2_bricklet>` or the
 // `Air Quality Bricklet <air_quality_bricklet>` to get the current air pressure.
-// 
-// The expected unit of the ambient air pressure value is mbar.
 // 
 // By default air pressure compensation is disabled. Once you set a value it
 // will be used for compensation. You can turn the compensation off again by
@@ -359,8 +363,8 @@ func (device *CO2V2Bricklet) GetAirPressure() (airPressure uint16, err error) {
 	return airPressure, nil
 }
 
-// Sets a temperature offset with resolution 1/100°C. A offset of 10 will decrease
-// the measured temperature by 0.1°C.
+// Sets a temperature offset. A offset of 10 will decrease
+// the measured temperature by 0.1 °C.
 // 
 // If you install this Bricklet into an enclosure and you want to measure the ambient
 // temperature, you may have to decrease the measured temperature by some value to
@@ -425,7 +429,7 @@ func (device *CO2V2Bricklet) GetTemperatureOffset() (offset uint16, err error) {
 	return offset, nil
 }
 
-// The period in ms is the period with which the RegisterAllValuesCallback
+// The period is the period with which the RegisterAllValuesCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -434,8 +438,6 @@ func (device *CO2V2Bricklet) GetTemperatureOffset() (offset uint16, err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *CO2V2Bricklet) SetAllValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -486,7 +488,7 @@ func (device *CO2V2Bricklet) GetAllValuesCallbackConfiguration() (period uint32,
 	return period, valueHasToChange, nil
 }
 
-// Returns CO2 concentration in ppm.
+// Returns CO2 concentration.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -515,7 +517,7 @@ func (device *CO2V2Bricklet) GetCO2Concentration() (co2Concentration uint16, err
 	return co2Concentration, nil
 }
 
-// The period in ms is the period with which the RegisterCO2ConcentrationCallback callback is triggered
+// The period is the period with which the RegisterCO2ConcentrationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -540,8 +542,6 @@ func (device *CO2V2Bricklet) GetCO2Concentration() (co2Concentration uint16, err
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -613,7 +613,11 @@ func (device *CO2V2Bricklet) GetCO2ConcentrationCallbackConfiguration() (period 
 	return period, valueHasToChange, option, min, max, nil
 }
 
-// Returns temperature in steps of 0.01 °C.
+// Returns temperature.
+// 
+// Note
+//  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
+//  Exposing the Bricklet to higher temperatures might result in permanent damage.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -642,7 +646,7 @@ func (device *CO2V2Bricklet) GetTemperature() (temperature int16, err error) {
 	return temperature, nil
 }
 
-// The period in ms is the period with which the RegisterTemperatureCallback callback is triggered
+// The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -667,8 +671,6 @@ func (device *CO2V2Bricklet) GetTemperature() (temperature int16, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -740,7 +742,7 @@ func (device *CO2V2Bricklet) GetTemperatureCallbackConfiguration() (period uint3
 	return period, valueHasToChange, option, min, max, nil
 }
 
-// Returns relative humidity in steps of 0.01 %RH.
+// Returns relative humidity.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the
@@ -769,7 +771,7 @@ func (device *CO2V2Bricklet) GetHumidity() (humidity uint16, err error) {
 	return humidity, nil
 }
 
-// The period in ms is the period with which the RegisterHumidityCallback callback is triggered
+// The period is the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -794,8 +796,6 @@ func (device *CO2V2Bricklet) GetHumidity() (humidity uint16, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //

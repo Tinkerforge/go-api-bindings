@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -230,8 +230,7 @@ func (device *LaserRangeFinderV2Bricklet) DeregisterVelocityCallback(registratio
 }
 
 
-// Returns the measured distance. The value has a range of 0 to 4000
-// and is given in cm.
+// Returns the measured distance.
 // 
 // The laser has to be enabled, see SetEnable.
 // 
@@ -262,7 +261,7 @@ func (device *LaserRangeFinderV2Bricklet) GetDistance() (distance int16, err err
 	return distance, nil
 }
 
-// The period in ms is the period with which the RegisterDistanceCallback callback is triggered
+// The period is the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -287,8 +286,6 @@ func (device *LaserRangeFinderV2Bricklet) GetDistance() (distance int16, err err
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -394,7 +391,7 @@ func (device *LaserRangeFinderV2Bricklet) GetVelocity() (velocity int16, err err
 	return velocity, nil
 }
 
-// The period in ms is the period with which the RegisterVelocityCallback callback is triggered
+// The period is the period with which the RegisterVelocityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -419,8 +416,6 @@ func (device *LaserRangeFinderV2Bricklet) GetVelocity() (velocity int16, err err
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -628,10 +623,6 @@ func (device *LaserRangeFinderV2Bricklet) GetConfiguration() (acquisitionCount u
 // 
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
-// 
-// The range for the averaging is 0-255.
-// 
-// The default value is 10.
 func (device *LaserRangeFinderV2Bricklet) SetMovingAverage(distanceAverageLength uint8, velocityAverageLength uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, distanceAverageLength);
@@ -681,7 +672,7 @@ func (device *LaserRangeFinderV2Bricklet) GetMovingAverage() (distanceAverageLen
 	return distanceAverageLength, velocityAverageLength, nil
 }
 
-// The offset is given in cm and added to the measured distance.
+// The offset is added to the measured distance.
 // It is saved in non-volatile memory, you only have to set it once.
 // 
 // The Bricklet comes with a per-sensor factory-calibrated offset value,
@@ -739,8 +730,6 @@ func (device *LaserRangeFinderV2Bricklet) GetOffsetCalibration() (offset int16, 
 
 // Configures the distance LED to be either turned off, turned on, blink in
 // heartbeat mode or show the distance (brighter = object is nearer).
-// 
-// The default value is 3 (show distance).
 //
 // Associated constants:
 //

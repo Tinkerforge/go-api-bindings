@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -261,7 +261,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
 
 // This callback can be configured per channel.
 // 
-// The period in ms is the period with which the RegisterValueCallback
+// The period is the period with which the RegisterValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -270,8 +270,6 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 //
 // Associated constants:
 //
@@ -338,7 +336,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(chan
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterAllValueCallback
+// The period is the period with which the RegisterAllValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -347,8 +345,6 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(chan
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -441,18 +437,14 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, rese
 // The edge type parameter configures if rising edges, falling edges or both are
 // counted. Possible edge types are:
 // 
-// * 0 = rising (default)
+// * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
-// The debounce time is given in ms.
 // 
 // Configuring an edge counter resets its value to 0.
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
-// 
-// Default values: 0 (edge type) and 100ms (debounce time)
 //
 // Associated constants:
 //

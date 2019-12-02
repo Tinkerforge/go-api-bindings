@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -151,8 +151,8 @@ func (device *LCD20x4Bricklet) DeregisterButtonReleasedCallback(registrationId u
 }
 
 
-// Writes text to a specific line (0 to 3) with a specific position
-// (0 to 19). The text can have a maximum of 20 characters.
+// Writes text to a specific line with a specific position.
+// The text can have a maximum of 20 characters.
 // 
 // For example: (0, 7, Hello) will write *Hello* in the middle of the
 // first line of the display.
@@ -286,8 +286,6 @@ func (device *LCD20x4Bricklet) IsBacklightOn() (backlight bool, err error) {
 // should be blinking (shown as a blinking block). The cursor position
 // is one character behind the the last text written with
 // WriteLine.
-// 
-// The default is (*false*, *false*).
 func (device *LCD20x4Bricklet) SetConfig(cursor bool, blinking bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, cursor);
@@ -516,8 +514,6 @@ func (device *LCD20x4Bricklet) GetDefaultText(line uint8) (text string, err erro
 // controlling program crashes.
 // 
 // A negative counter turns the default text functionality off.
-// 
-// The default is -1.
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD20x4Bricklet) SetDefaultTextCounter(counter int32) (err error) {

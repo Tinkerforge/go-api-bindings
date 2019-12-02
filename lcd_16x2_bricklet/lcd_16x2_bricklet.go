@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -108,7 +108,7 @@ func (device *LCD16x2Bricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when a button is pressed. The parameter is
-// the number of the button (0 to 2).
+// the number of the button.
 func (device *LCD16x2Bricklet) RegisterButtonPressedCallback(fn func(uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -126,7 +126,7 @@ func (device *LCD16x2Bricklet) DeregisterButtonPressedCallback(registrationId ui
 
 
 // This callback is triggered when a button is released. The parameter is
-// the number of the button (0 to 2).
+// the number of the button.
 func (device *LCD16x2Bricklet) RegisterButtonReleasedCallback(fn func(uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -143,8 +143,8 @@ func (device *LCD16x2Bricklet) DeregisterButtonReleasedCallback(registrationId u
 }
 
 
-// Writes text to a specific line (0 to 1) with a specific position
-// (0 to 15). The text can have a maximum of 16 characters.
+// Writes text to a specific line with a specific position.
+// The text can have a maximum of 16 characters.
 // 
 // For example: (0, 5, Hello) will write *Hello* in the middle of the
 // first line of the display.
@@ -278,8 +278,6 @@ func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {
 // should be blinking (shown as a blinking block). The cursor position
 // is one character behind the the last text written with
 // WriteLine.
-// 
-// The default is (false, false).
 func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, cursor);
@@ -329,7 +327,7 @@ func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err erro
 	return cursor, blinking, nil
 }
 
-// Returns *true* if the button (0 to 2) is pressed.
+// Returns *true* if the button is pressed.
 // 
 // If you want to react on button presses and releases it is recommended to use the
 // RegisterButtonPressedCallback and RegisterButtonReleasedCallback callbacks.

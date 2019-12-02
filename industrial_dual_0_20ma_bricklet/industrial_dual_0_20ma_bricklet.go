@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -172,11 +172,10 @@ func (device *IndustrialDual020mABricklet) DeregisterCurrentReachedCallback(regi
 }
 
 
-// Returns the current of the specified sensor (0 or 1). The value is in nA
-// and between 0nA and 22505322nA (22.5mA).
+// Returns the current of the specified sensor.
 // 
 // It is possible to detect if an IEC 60381-1 compatible sensor is connected
-// and if it works probably.
+// and if it works properly.
 // 
 // If the returned current is below 4mA, there is likely no sensor connected
 // or the sensor may be defect. If the returned current is over 20mA, there might
@@ -209,13 +208,11 @@ func (device *IndustrialDual020mABricklet) GetCurrent(sensor uint8) (current int
 	return current, nil
 }
 
-// Sets the period in ms with which the RegisterCurrentCallback callback is triggered
+// Sets the period with which the RegisterCurrentCallback callback is triggered
 // periodically for the given sensor. A value of 0 turns the callback off.
 // 
 // The RegisterCurrentCallback callback is only triggered if the current has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *IndustrialDual020mABricklet) SetCurrentCallbackPeriod(sensor uint8, period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, sensor);
@@ -277,8 +274,6 @@ func (device *IndustrialDual020mABricklet) GetCurrentCallbackPeriod(sensor uint8
 //  'i'|    Callback is triggered when the current is *inside* the min and max values
 //  '<'|    Callback is triggered when the current is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the current is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -348,7 +343,7 @@ func (device *IndustrialDual020mABricklet) GetCurrentCallbackThreshold(sensor ui
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterCurrentReachedCallback
 // 
@@ -357,8 +352,6 @@ func (device *IndustrialDual020mABricklet) GetCurrentCallbackThreshold(sensor ui
 // * SetCurrentCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *IndustrialDual020mABricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -415,8 +408,6 @@ func (device *IndustrialDual020mABricklet) GetDebouncePeriod() (debounce uint32,
 //  1|    60 samples per second| 14 bit resolution
 //  2|    15 samples per second| 16 bit resolution
 //  3|    4 samples per second| 18 bit resolution
-// 
-// The default value is 3 (4 samples per second with 18 bit resolution).
 //
 // Associated constants:
 //

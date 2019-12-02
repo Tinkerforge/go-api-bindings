@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -370,8 +370,6 @@ func (device *IO4V2Bricklet) SetSelectedValue(channel uint8, value bool) (err er
 // 
 // A running monoflop timer or PWM for the specific channel will be aborted if this
 // function is called.
-// 
-// The default configuration is input with pull-up.
 //
 // Associated constants:
 //
@@ -435,7 +433,7 @@ func (device *IO4V2Bricklet) GetConfiguration(channel uint8) (direction Directio
 
 // This callback can be configured per channel.
 // 
-// The period in ms is the period with which the RegisterInputValueCallback
+// The period is the period with which the RegisterInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -444,8 +442,6 @@ func (device *IO4V2Bricklet) GetConfiguration(channel uint8) (direction Directio
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IO4V2Bricklet) SetInputValueCallbackConfiguration(channel uint8, period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);
@@ -498,7 +494,7 @@ func (device *IO4V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) (
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterAllInputValueCallback
+// The period is the period with which the RegisterAllInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -507,8 +503,6 @@ func (device *IO4V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) (
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *IO4V2Bricklet) SetAllInputValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -560,7 +554,7 @@ func (device *IO4V2Bricklet) GetAllInputValueCallbackConfiguration() (period uin
 }
 
 // The first parameter is the desired state of the channel (*true* means output *high*
-// and *false* means output *low*). The second parameter indicates the time (in ms) that
+// and *false* means output *low*). The second parameter indicates the time that
 // the channel should hold the state.
 // 
 // If this function is called with the parameters (true, 1500):
@@ -634,6 +628,9 @@ func (device *IO4V2Bricklet) GetMonoflop(channel uint8) (value bool, time uint32
 // 
 // If you set the reset counter to *true*, the count is set back to 0
 // directly after it is read.
+// 
+// Note
+//  Calling this function is only allowed for channels configured as input.
 func (device *IO4V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (count uint32, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);
@@ -664,18 +661,17 @@ func (device *IO4V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (cou
 // The edge type parameter configures if rising edges, falling edges or
 // both are counted if the channel is configured for input. Possible edge types are:
 // 
-// * 0 = rising (default)
+// * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
-// The debounce time is given in ms.
 // 
 // Configuring an edge counter resets its value to 0.
 // 
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
 // 
-// Default values: 0 (edge type) and 100ms (debounce time)
+// Note
+//  Calling this function is only allowed for channels configured as input.
 //
 // Associated constants:
 //
@@ -709,6 +705,9 @@ func (device *IO4V2Bricklet) SetEdgeCountConfiguration(channel uint8, edgeType E
 
 // Returns the edge type and debounce time for the selected channel as set by
 // SetEdgeCountConfiguration.
+// 
+// Note
+//  Calling this function is only allowed for channels configured as input.
 //
 // Associated constants:
 //
@@ -740,20 +739,14 @@ func (device *IO4V2Bricklet) GetEdgeCountConfiguration(channel uint8) (edgeType 
 	return edgeType, debounce, nil
 }
 
-// Activates a PWM for the given channel with the frequency given in 1/10Hz and the duty
-// cycle given in 1/100%.
+// Activates a PWM for the given channel.
 // 
 // You need to set the channel to output before you call this function, otherwise it will
-// be ignored. To turn the PWM off again, you can set the frequency to 0 or any other
+// report an invalid parameter error. To turn the PWM off again, you can set the frequency to 0 or any other
 // function that changes a value of the channel (e.g. SetSelectedValue).
-// 
-// The maximum frequency value is 320000000 (32MHz). The maximum duty cycle value is
-// 10000 (100%).
 // 
 // A running monoflop timer for the given channel will be aborted if this function
 // is called.
-// 
-// The default values are 0, 0.
 func (device *IO4V2Bricklet) SetPWMConfiguration(channel uint8, frequency uint32, dutyCycle uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);

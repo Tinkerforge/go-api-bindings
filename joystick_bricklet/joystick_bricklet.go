@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -259,9 +259,8 @@ func (device *JoystickBricklet) DeregisterReleasedCallback(registrationId uint64
 }
 
 
-// Returns the position of the joystick. The value ranges between -100 and
-// 100 for both axis. The middle position of the joystick is x=0, y=0. The
-// returned values are averaged and calibrated (see Calibrate).
+// Returns the position of the joystick. The middle position of the joystick is x=0, y=0.
+// The returned values are averaged and calibrated (see Calibrate).
 // 
 // If you want to get the position periodically, it is recommended to use the
 // RegisterPositionCallback callback and set the period with
@@ -318,7 +317,6 @@ func (device *JoystickBricklet) IsPressed() (pressed bool, err error) {
 }
 
 // Returns the values as read by a 12-bit analog-to-digital converter.
-// The values are between 0 and 4095 for both axis.
 // 
 // Note
 //  The values returned by GetPosition are averaged over several samples
@@ -381,13 +379,11 @@ func (device *JoystickBricklet) Calibrate() (err error) {
 	return nil
 }
 
-// Sets the period in ms with which the RegisterPositionCallback callback is triggered
+// Sets the period with which the RegisterPositionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterPositionCallback callback is only triggered if the position has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *JoystickBricklet) SetPositionCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -435,13 +431,11 @@ func (device *JoystickBricklet) GetPositionCallbackPeriod() (period uint32, err 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog values have
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *JoystickBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -500,8 +494,6 @@ func (device *JoystickBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 //  'i'|    Callback is triggered when the position is *inside* the min and max values
 //  '<'|    Callback is triggered when the position is smaller than the min values (max is ignored)
 //  '>'|    Callback is triggered when the position is greater than the min values (max is ignored)
-// 
-// The default value is ('x', 0, 0, 0, 0).
 //
 // Associated constants:
 //
@@ -584,8 +576,6 @@ func (device *JoystickBricklet) GetPositionCallbackThreshold() (option Threshold
 //  'i'|    Callback is triggered when the analog values are *inside* the min and max values
 //  '<'|    Callback is triggered when the analog values are smaller than the min values (max is ignored)
 //  '>'|    Callback is triggered when the analog values are greater than the min values (max is ignored)
-// 
-// The default value is ('x', 0, 0, 0, 0).
 //
 // Associated constants:
 //
@@ -657,7 +647,7 @@ func (device *JoystickBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 	return option, minX, maxX, minY, maxY, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterPositionReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -668,8 +658,6 @@ func (device *JoystickBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *JoystickBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

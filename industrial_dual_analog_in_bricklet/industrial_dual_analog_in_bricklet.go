@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -182,7 +182,7 @@ func (device *IndustrialDualAnalogInBricklet) DeregisterVoltageReachedCallback(r
 }
 
 
-// Returns the voltage for the given channel in mV.
+// Returns the voltage for the given channel.
 // 
 // If you want to get the voltage periodically, it is recommended to use the
 // RegisterVoltageCallback callback and set the period with
@@ -211,13 +211,11 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltage(channel uint8) (voltage
 	return voltage, nil
 }
 
-// Sets the period in ms with which the RegisterVoltageCallback callback is triggered
+// Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically for the given channel. A value of 0 turns the callback off.
 // 
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since the
 // last triggering.
-// 
-// The default value is 0.
 func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackPeriod(channel uint8, period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel);
@@ -279,8 +277,6 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackPeriod(channel u
 //  'i'|    Callback is triggered when the voltage is *inside* the min and max values
 //  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -350,7 +346,7 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackThreshold(channe
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callback
+// Sets the period with which the threshold callback
 // 
 // * RegisterVoltageReachedCallback
 // 
@@ -359,8 +355,6 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackThreshold(channe
 // * SetVoltageCallbackThreshold
 // 
 // keeps being reached.
-// 
-// The default value is 100.
 func (device *IndustrialDualAnalogInBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);
@@ -411,8 +405,6 @@ func (device *IndustrialDualAnalogInBricklet) GetDebouncePeriod() (debounce uint
 // Sets the sample rate. The sample rate can be between 1 sample per second
 // and 976 samples per second. Decreasing the sample rate will also decrease the
 // noise on the data.
-// 
-// The default value is 6 (2 samples per second).
 //
 // Associated constants:
 //

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -418,7 +418,7 @@ func (device *XMC1400BreakoutBricklet) GetADCValues() (values [8]uint16, err err
 	return values, nil
 }
 
-// The period in ms is the period with which the RegisterADCValuesCallback
+// The period is the period with which the RegisterADCValuesCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -427,8 +427,6 @@ func (device *XMC1400BreakoutBricklet) GetADCValues() (values [8]uint16, err err
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *XMC1400BreakoutBricklet) SetADCValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -512,7 +510,7 @@ func (device *XMC1400BreakoutBricklet) GetCount() (count uint32, err error) {
 	return count, nil
 }
 
-// The period in ms is the period with which the RegisterCountCallback callback is triggered
+// The period is the period with which the RegisterCountCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -537,8 +535,6 @@ func (device *XMC1400BreakoutBricklet) GetCount() (count uint32, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //

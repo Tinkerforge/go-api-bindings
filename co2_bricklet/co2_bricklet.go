@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -155,9 +155,7 @@ func (device *CO2Bricklet) DeregisterCO2ConcentrationReachedCallback(registratio
 }
 
 
-// Returns the measured CO2 concentration. The value is in
-// https://en.wikipedia.org/wiki/Parts-per_notation
-// and between 0 to 10000.
+// Returns the measured CO2 concentration.
 // 
 // If you want to get the CO2 concentration periodically, it is recommended to use
 // the RegisterCO2ConcentrationCallback callback and set the period with
@@ -185,13 +183,11 @@ func (device *CO2Bricklet) GetCO2Concentration() (co2Concentration uint16, err e
 	return co2Concentration, nil
 }
 
-// Sets the period in ms with which the RegisterCO2ConcentrationCallback callback is
+// Sets the period with which the RegisterCO2ConcentrationCallback callback is
 // triggered periodically. A value of 0 turns the callback off.
 // 
 // The RegisterCO2ConcentrationCallback callback is only triggered if the CO2 concentration
 // has changed since the last triggering.
-// 
-// The default value is 0.
 func (device *CO2Bricklet) SetCO2ConcentrationCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -250,8 +246,6 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackPeriod() (period uint32, e
 //  'i'|    Callback is triggered when the CO2 concentration is *inside* the min and max values
 //  '<'|    Callback is triggered when the CO2 concentration is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the CO2 concentration is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -319,7 +313,7 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option Thresh
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterCO2ConcentrationReachedCallback,
 // 
@@ -328,8 +322,6 @@ func (device *CO2Bricklet) GetCO2ConcentrationCallbackThreshold() (option Thresh
 // * SetCO2ConcentrationCallbackThreshold,
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *CO2Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

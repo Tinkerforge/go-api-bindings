@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -153,9 +153,8 @@ func (device *OLED128x64V2Bricklet) GetAPIVersion() [3]uint8 {
 
 // Writes pixels to the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // If automatic draw is enabled (default) the pixels are directly written to
 // the screen. Only pixels that have actually changed are updated on the screen,
@@ -199,9 +198,8 @@ func (device *OLED128x64V2Bricklet) WritePixelsLowLevel(xStart uint8, yStart uin
 
 // Writes pixels to the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // If automatic draw is enabled (default) the pixels are directly written to
 // the screen. Only pixels that have actually changed are updated on the screen,
@@ -241,9 +239,8 @@ func (device *OLED128x64V2Bricklet) WritePixelsLowLevel(xStart uint8, yStart uin
 
 // Reads pixels from the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-// from the window line by line top to bottom and each line is read from left to
-// right.
+// The pixels are read from the window line by line top to bottom
+// and each line is read from left to right.
 // 
 // If automatic draw is enabled (default) the pixels that are read are always the
 // same that are shown on the display.
@@ -284,9 +281,8 @@ func (device *OLED128x64V2Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint
 
 // Reads pixels from the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-// from the window line by line top to bottom and each line is read from left to
-// right.
+// The pixels are read from the window line by line top to bottom
+// and each line is read from left to right.
 // 
 // If automatic draw is enabled (default) the pixels that are read are always the
 // same that are shown on the display.
@@ -365,8 +361,6 @@ func (device *OLED128x64V2Bricklet) ClearDisplay() (err error) {
 // call of WritePixels or WriteLine. If it is set to false, the
 // changes are written into an internal buffer and only shown on the display after
 // a call of DrawBufferedFrame.
-// 
-// The default values are contrast 143, inverting off and automatic draw on.
 func (device *OLED128x64V2Bricklet) SetDisplayConfiguration(contrast uint8, invert bool, automaticDraw bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, contrast);
@@ -418,8 +412,8 @@ func (device *OLED128x64V2Bricklet) GetDisplayConfiguration() (contrast uint8, i
 	return contrast, invert, automaticDraw, nil
 }
 
-// Writes text to a specific line (0 to 7) with a specific position
-// (0 to 21). The text can have a maximum of 22 characters.
+// Writes text to a specific line with a specific position.
+// The text can have a maximum of 22 characters.
 // 
 // For example: (1, 10, Hello) will write *Hello* in the middle of the
 // second line of the display.

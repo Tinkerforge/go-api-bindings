@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -31,6 +31,8 @@ const (
 	FunctionSetSPITFPBaudrate Function = 4
 	FunctionGetSPITFPBaudrate Function = 5
 	FunctionGetIsolatorSPITFPErrorCount Function = 6
+	FunctionSetStatisticsCallbackConfiguration Function = 7
+	FunctionGetStatisticsCallbackConfiguration Function = 8
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -43,6 +45,7 @@ const (
 	FunctionWriteUID Function = 248
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
+	FunctionCallbackStatistics Function = 9
 )
 
 type BootloaderMode = uint8
@@ -84,7 +87,7 @@ const DeviceDisplayName = "Isolator Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IsolatorBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
 	if err != nil {
 		return IsolatorBricklet{}, err
 	}
@@ -94,6 +97,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IsolatorBricklet, error)
 	dev.ResponseExpected[FunctionSetSPITFPBaudrate] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetSPITFPBaudrate] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIsolatorSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetStatisticsCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetStatisticsCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -149,6 +154,34 @@ func (device *IsolatorBricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
+// This callback is triggered periodically according to the configuration set by
+// SetStatisticsCallbackConfiguration.
+// 
+// The parameters are the same as GetStatistics.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *IsolatorBricklet) RegisterStatisticsCallback(fn func(uint32, uint32, uint16, string)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var messagesFromBrick uint32
+		var messagesFromBricklet uint32
+		var connectedBrickletDeviceIdentifier uint16
+		var connectedBrickletUID string
+		binary.Read(buf, binary.LittleEndian, &messagesFromBrick)
+		binary.Read(buf, binary.LittleEndian, &messagesFromBricklet)
+		binary.Read(buf, binary.LittleEndian, &connectedBrickletDeviceIdentifier)
+		connectedBrickletUID = ByteSliceToString(buf.Next(8))
+		fn(messagesFromBrick, messagesFromBricklet, connectedBrickletDeviceIdentifier, connectedBrickletUID)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackStatistics), wrapper)
+}
+
+// Remove a registered Statistics callback.
+func (device *IsolatorBricklet) DeregisterStatisticsCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackStatistics), registrationId)
+}
+
+
 // Returns statistics for the Isolator Bricklet.
 func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messagesFromBricklet uint32, connectedBrickletDeviceIdentifier uint16, connectedBrickletUID string, err error) {
 	var buf bytes.Buffer
@@ -197,10 +230,6 @@ func (device *IsolatorBricklet) GetStatistics() (messagesFromBrick uint32, messa
 // The maximum value of the baudrate can be set per port with the function
 // SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
 // as set by SetSPITFPBaudrate will be used statically.
-// 
-// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-// 
-// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
 func (device *IsolatorBricklet) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, enableDynamicBaudrate);
@@ -254,8 +283,6 @@ func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate
 // and the connected Bricklet. The baudrate for communication between
 // Brick and Isolator Bricklet can be set through the API of the Brick.
 // 
-// The baudrate can be in the range 400000 to 2000000.
-// 
 // If you want to increase the throughput of Bricklets you can increase
 // the baudrate. If you get a high error count because of high
 // interference (see GetSPITFPErrorCount) you can decrease the
@@ -267,8 +294,6 @@ func (device *IsolatorBricklet) GetSPITFPBaudrateConfig() (enableDynamicBaudrate
 // Regulatory testing is done with the default baudrate. If CE compatibility
 // or similar is necessary in you applications we recommend to not change
 // the baudrate.
-// 
-// The default baudrate for all ports is 1400000.
 func (device *IsolatorBricklet) SetSPITFPBaudrate(baudrate uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, baudrate);
@@ -350,6 +375,69 @@ func (device *IsolatorBricklet) GetIsolatorSPITFPErrorCount() (errorCountACKChec
 	}
 
 	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
+}
+
+// The period is the period with which the RegisterStatisticsCallback
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change within the
+// period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *IsolatorBricklet) SetStatisticsCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetStatisticsCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the callback configuration as set by
+// SetStatisticsCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.2$nbsp;(Plugin)
+func (device *IsolatorBricklet) GetStatisticsCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetStatisticsCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+	binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
+
+	}
+
+	return period, valueHasToChange, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

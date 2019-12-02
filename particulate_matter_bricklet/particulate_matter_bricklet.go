@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -211,7 +211,7 @@ func (device *ParticulateMatterBricklet) DeregisterPMCountCallback(registrationI
 }
 
 
-// Returns the particulate matter concentration in µg/m³, broken down as:
+// Returns the particulate matter concentration, broken down as:
 // 
 // * PM\ :sub:`1.0`\ ,
 // * PM\ :sub:`2.5`\  and
@@ -219,6 +219,10 @@ func (device *ParticulateMatterBricklet) DeregisterPMCountCallback(registrationI
 // 
 // If the sensor is disabled (see SetEnable) then the last known good
 // values from the sensor are returned.
+// 
+// If you want to get the values periodically, it is recommended to use the
+// RegisterPMConcentrationCallback callback. You can set the callback configuration
+// with SetPMConcentrationCallbackConfiguration.
 func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25 uint16, pm100 uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -256,6 +260,10 @@ func (device *ParticulateMatterBricklet) GetPMConcentration() (pm10 uint16, pm25
 // 
 // If the sensor is disabled (see SetEnable) then the last known good
 // value from the sensor is returned.
+// 
+// If you want to get the values periodically, it is recommended to use the
+// RegisterPMCountCallback callback. You can set the callback configuration
+// with SetPMCountCallbackConfiguration.
 func (device *ParticulateMatterBricklet) GetPMCount() (greater03um uint16, greater05um uint16, greater10um uint16, greater25um uint16, greater50um uint16, greater100um uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -372,7 +380,7 @@ func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, l
 	return sensorVersion, lastErrorCode, framingErrorCount, checksumErrorCount, nil
 }
 
-// The period in ms is the period with which the RegisterPMConcentrationCallback
+// The period is the period with which the RegisterPMConcentrationCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -381,8 +389,6 @@ func (device *ParticulateMatterBricklet) GetSensorInfo() (sensorVersion uint8, l
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *ParticulateMatterBricklet) SetPMConcentrationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -433,7 +439,7 @@ func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration
 	return period, valueHasToChange, nil
 }
 
-// The period in ms is the period with which the RegisterPMCountCallback callback
+// The period is the period with which the RegisterPMCountCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -442,8 +448,6 @@ func (device *ParticulateMatterBricklet) GetPMConcentrationCallbackConfiguration
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *ParticulateMatterBricklet) SetPMCountCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);

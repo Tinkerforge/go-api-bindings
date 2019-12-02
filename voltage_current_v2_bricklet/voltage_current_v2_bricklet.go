@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -85,10 +85,18 @@ const (
 	ConversionTime204us ConversionTime = 1
 	ConversionTime332us ConversionTime = 2
 	ConversionTime588us ConversionTime = 3
+	//Deprecated: Use 1_1ms instead.
 	ConversionTime11ms ConversionTime = 4
+	ConversionTime1_1ms ConversionTime = 4
+	//Deprecated: Use 2_116ms instead.
 	ConversionTime2116ms ConversionTime = 5
+	ConversionTime2_116ms ConversionTime = 5
+	//Deprecated: Use 4_156ms instead.
 	ConversionTime4156ms ConversionTime = 6
+	ConversionTime4_156ms ConversionTime = 6
+	//Deprecated: Use 8_244ms instead.
 	ConversionTime8244ms ConversionTime = 7
+	ConversionTime8_244ms ConversionTime = 7
 )
 
 type BootloaderMode = uint8
@@ -292,7 +300,7 @@ func (device *VoltageCurrentV2Bricklet) GetCurrent() (current int32, err error) 
 	return current, nil
 }
 
-// The period in ms is the period with which the RegisterCurrentCallback callback is triggered
+// The period is the period with which the RegisterCurrentCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -317,8 +325,6 @@ func (device *VoltageCurrentV2Bricklet) GetCurrent() (current int32, err error) 
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -420,7 +426,7 @@ func (device *VoltageCurrentV2Bricklet) GetVoltage() (voltage int32, err error) 
 	return voltage, nil
 }
 
-// The period in ms is the period with which the RegisterVoltageCallback callback is triggered
+// The period is the period with which the RegisterVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -445,8 +451,6 @@ func (device *VoltageCurrentV2Bricklet) GetVoltage() (voltage int32, err error) 
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //
@@ -548,7 +552,7 @@ func (device *VoltageCurrentV2Bricklet) GetPower() (power int32, err error) {
 	return power, nil
 }
 
-// The period in ms is the period with which the RegisterPowerCallback callback is triggered
+// The period is the period with which the RegisterPowerCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -573,8 +577,6 @@ func (device *VoltageCurrentV2Bricklet) GetPower() (power int32, err error) {
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
 // 
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
-// 
-// The default value is (0, false, 'x', 0, 0).
 //
 // Associated constants:
 //

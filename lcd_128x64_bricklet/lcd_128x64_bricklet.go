@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -426,9 +426,8 @@ func (device *LCD128x64Bricklet) DeregisterGUITabSelectedCallback(registrationId
 
 // Writes pixels to the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // If automatic draw is enabled (default) the pixels are directly written to
 // the screen. Only pixels that have actually changed are updated on the screen,
@@ -472,9 +471,8 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
 
 // Writes pixels to the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are written
-// into the window line by line top to bottom and each line is written from left to
-// right.
+// The pixels are written into the window line by line top to bottom
+// and each line is written from left to right.
 // 
 // If automatic draw is enabled (default) the pixels are directly written to
 // the screen. Only pixels that have actually changed are updated on the screen,
@@ -514,9 +512,8 @@ func (device *LCD128x64Bricklet) WritePixelsLowLevel(xStart uint8, yStart uint8,
 
 // Reads pixels from the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-// from the window line by line top to bottom and each line is read from left to
-// right.
+// The pixels are read from the window line by line top to bottom
+// and each line is read from left to right.
 // 
 // If automatic draw is enabled (default) the pixels that are read are always the
 // same that are shown on the display.
@@ -557,9 +554,8 @@ func (device *LCD128x64Bricklet) ReadPixelsLowLevel(xStart uint8, yStart uint8, 
 
 // Reads pixels from the specified window.
 // 
-// The x-axis goes from 0 to 127 and the y-axis from 0 to 63. The pixels are read
-// from the window line by line top to bottom and each line is read from left to
-// right.
+// The pixels are read from the window line by line top to bottom
+// and each line is read from left to right.
 // 
 // If automatic draw is enabled (default) the pixels that are read are always the
 // same that are shown on the display.
@@ -631,16 +627,10 @@ func (device *LCD128x64Bricklet) ClearDisplay() (err error) {
 
 // Sets the configuration of the display.
 // 
-// You can set a contrast value from 0 to 63, a backlight intensity value
-// from 0 to 100 and you can invert the color (white/black) of the display.
-// 
 // If automatic draw is set to *true*, the display is automatically updated with every
 // call of WritePixels and WriteLine. If it is set to false, the
 // changes are written into an internal buffer and only shown on the display after
 // a call of DrawBufferedFrame.
-// 
-// The default values are contrast 14, backlight intensity 100, inverting off
-// and automatic draw on.
 func (device *LCD128x64Bricklet) SetDisplayConfiguration(contrast uint8, backlight uint8, invert bool, automaticDraw bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, contrast);
@@ -694,8 +684,7 @@ func (device *LCD128x64Bricklet) GetDisplayConfiguration() (contrast uint8, back
 	return contrast, backlight, invert, automaticDraw, nil
 }
 
-// Writes text to a specific line (0 to 7) with a specific position
-// (0 to 21). The text can have a maximum of 22 characters.
+// Writes text to a specific line with a specific position.
 // 
 // For example: (1, 10, Hello) will write *Hello* in the middle of the
 // second line of the display.
@@ -779,9 +768,9 @@ func (device *LCD128x64Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) (er
 
 // Returns the last valid touch position:
 // 
-// * Pressure: Amount of pressure applied by the user (0-300)
-// * X: Touch position on x-axis (0-127)
-// * Y: Touch position on y-axis (0-63)
+// * Pressure: Amount of pressure applied by the user
+// * X: Touch position on x-axis
+// * Y: Touch position on y-axis
 // * Age: Age of touch press in ms (how long ago it was)
 func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, y uint16, age uint32, err error) {
 	var buf bytes.Buffer
@@ -809,7 +798,7 @@ func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, 
 	return pressure, x, y, age, nil
 }
 
-// The period in ms is the period with which the RegisterTouchPositionCallback callback
+// The period is the period with which the RegisterTouchPositionCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -818,8 +807,6 @@ func (device *LCD128x64Bricklet) GetTouchPosition() (pressure uint16, x uint16, 
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *LCD128x64Bricklet) SetTouchPositionCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -878,7 +865,7 @@ func (device *LCD128x64Bricklet) GetTouchPositionCallbackConfiguration() (period
 // provided. You can use this vector do determine a more exact location of the gesture (e.g.
 // the swipe from top to bottom was on the left or right part of the screen).
 // 
-// The age parameter corresponds to the age of gesture in ms (how long ago it was).
+// The age parameter corresponds to the age of gesture (how long ago it was).
 //
 // Associated constants:
 //
@@ -916,7 +903,7 @@ func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration ui
 	return gesture, duration, pressureMax, xStart, yStart, xEnd, yEnd, age, nil
 }
 
-// The period in ms is the period with which the RegisterTouchGestureCallback callback
+// The period is the period with which the RegisterTouchGestureCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -925,8 +912,6 @@ func (device *LCD128x64Bricklet) GetTouchGesture() (gesture Gesture, duration ui
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 func (device *LCD128x64Bricklet) SetTouchGestureCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -978,8 +963,6 @@ func (device *LCD128x64Bricklet) GetTouchGestureCallbackConfiguration() (period 
 }
 
 // Draws a white or black line from (x, y)-start to (x, y)-end.
-// The x values have to be within the range of 0 to 127 and the y
-// values have t be within the range of 0 to 63.
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
@@ -1015,8 +998,6 @@ func (device *LCD128x64Bricklet) DrawLine(positionXStart uint8, positionYStart u
 }
 
 // Draws a white or black box from (x, y)-start to (x, y)-end.
-// The x values have to be within the range of 0 to 127 and the y
-// values have to be within the range of 0 to 63.
 // 
 // If you set fill to true, the box will be filled with the
 // color. Otherwise only the outline will be drawn.
@@ -1055,10 +1036,7 @@ func (device *LCD128x64Bricklet) DrawBox(positionXStart uint8, positionYStart ui
 	return nil
 }
 
-// Draws a text with up to 22 characters at the pixel position (x, y).
-// 
-// The x values have to be within the range of 0 to 127 and the y
-// values have to be within the range of 0 to 63.
+// Draws a text at the pixel position (x, y).
 // 
 // You can use one of 9 different font sizes and draw the text in white or black.
 // 
@@ -1107,10 +1085,9 @@ func (device *LCD128x64Bricklet) DrawText(positionX uint8, positionY uint8, font
 	return nil
 }
 
-// Draws a clickable button at position (x, y) with the given text
-// of up to 16 characters.
+// Draws a clickable button at position (x, y) with the given text.
 // 
-// You can use up to 12 buttons (index 0-11).
+// You can use up to 12 buttons.
 // 
 // The x position + width has to be within the range of 1 to 128 and the y
 // position + height has to be within the range of 1 to 64.
@@ -1222,7 +1199,7 @@ func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {
 	return nil
 }
 
-// The period in ms is the period with which the RegisterGUIButtonPressedCallback callback
+// The period is the period with which the RegisterGUIButtonPressedCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -1231,8 +1208,6 @@ func (device *LCD128x64Bricklet) RemoveGUIButton(index uint8) (err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) SetGUIButtonPressedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
@@ -1318,7 +1293,7 @@ func (device *LCD128x64Bricklet) GetGUIButtonPressed(index uint8) (pressed bool,
 
 // Draws a slider at position (x, y) with the given length.
 // 
-// You can use up to 6 sliders (index 0-5).
+// You can use up to 6 sliders.
 // 
 // If you use the horizontal direction, the x position + length has to be
 // within the range of 1 to 128 and the y position has to be within
@@ -1442,7 +1417,7 @@ func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {
 	return nil
 }
 
-// The period in ms is the period with which the RegisterGUISliderValueCallback callback
+// The period is the period with which the RegisterGUISliderValueCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -1451,8 +1426,6 @@ func (device *LCD128x64Bricklet) RemoveGUISlider(index uint8) (err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) SetGUISliderValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
@@ -1540,8 +1513,6 @@ func (device *LCD128x64Bricklet) GetGUISliderValue(index uint8) (value uint8, er
 // Additionally, if you set `Clear GUI` to true, all of the GUI elements (buttons,
 // slider, graphs) will automatically be removed on every tab change.
 // 
-// By default click and swipe as well as automatic GUI clear is enabled.
-// 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 //
 // Associated constants:
@@ -1606,9 +1577,9 @@ func (device *LCD128x64Bricklet) GetGUITabConfiguration() (changeTabConfig Chang
 	return changeTabConfig, clearGUI, nil
 }
 
-// Adds a text-tab with the given index. The text can have a length of up to 5 characters.
+// Adds a text-tab with the given index.
 // 
-// You can use up to 10 tabs (index 0-9).
+// You can use up to 10 tabs.
 // 
 // A text-tab with the same index as a icon-tab will overwrite the icon-tab.
 // 
@@ -1673,7 +1644,7 @@ func (device *LCD128x64Bricklet) GetGUITabText(index uint8) (active bool, text s
 // Adds a icon-tab with the given index. The icon can have a width of 28 pixels
 // with a height of 6 pixels. It is drawn line-by-line from left to right.
 // 
-// You can use up to 10 tabs (index 0-9).
+// You can use up to 10 tabs.
 // 
 // A icon-tab with the same index as a text-tab will overwrite the text-tab.
 // 
@@ -1787,7 +1758,7 @@ func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {
 	return nil
 }
 
-// The period in ms is the period with which the RegisterGUITabSelectedCallback callback
+// The period is the period with which the RegisterGUITabSelectedCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
 // 
 // If the `value has to change`-parameter is set to true, the callback is only
@@ -1796,8 +1767,6 @@ func (device *LCD128x64Bricklet) SetGUITabSelected(index uint8) (err error) {
 // 
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
-// The default value is (0, false).
 // 
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *LCD128x64Bricklet) SetGUITabSelectedCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
@@ -1879,15 +1848,13 @@ func (device *LCD128x64Bricklet) GetGUITabSelected() (index int8, err error) {
 	return index, nil
 }
 
-// Sets the configuration for up to four graphs (index 0-3).
+// Sets the configuration for up to four graphs.
 // 
 // The graph type can be dot-, line- or bar-graph.
 // 
-// The x and y position are pixel positions. They have to be within
-// the range of (0, 0) to (127, 63). The maximum width is 118 and the
-// maximum height is 63.
+// The x and y position are pixel positions.
 // 
-// You can add a text for the x and y axis with at most 4 characters each.
+// You can add a text for the x and y axis.
 // The text is drawn at the inside of the graph and it can overwrite some
 // of the graph data. If you need the text outside of the graph you can
 // leave this text here empty and use DrawText to draw the caption

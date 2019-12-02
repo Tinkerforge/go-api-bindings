@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -149,7 +149,7 @@ func (device *IndustrialDualRelayBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered whenever a monoflop timer reaches 0. The
-// parameter contain the relay (0 or 1) and the current state of the relay
+// parameters contain the relay and the current state of the relay
 // (the state after the monoflop).
 func (device *IndustrialDualRelayBricklet) RegisterMonoflopDoneCallback(fn func(uint8, bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -177,8 +177,6 @@ func (device *IndustrialDualRelayBricklet) DeregisterMonoflopDoneCallback(regist
 // can use SetSelectedValue.
 // 
 // All running monoflop timers will be aborted if this function is called.
-// 
-// The default value is (*false*, *false*).
 func (device *IndustrialDualRelayBricklet) SetValue(channel0 bool, channel1 bool) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, channel0);
@@ -230,7 +228,7 @@ func (device *IndustrialDualRelayBricklet) GetValue() (channel0 bool, channel1 b
 
 // The first parameter can be 0 or 1 (relay 0 or relay 1). The second parameter
 // is the desired state of the relay (*true* means on and *false* means off).
-// The third parameter indicates the time (in ms) that the relay should hold
+// The third parameter indicates the time that the relay should hold
 // the state.
 // 
 // If this function is called with the parameters (1, true, 1500):
@@ -297,7 +295,7 @@ func (device *IndustrialDualRelayBricklet) GetMonoflop(channel uint8) (value boo
 	return value, time, timeRemaining, nil
 }
 
-// Sets the state of the selected relay (0 or 1), *true* means on and *false*
+// Sets the state of the selected relay, *true* means on and *false*
 // means off.
 // 
 // A running monoflop timer for the selected relay will be aborted if this function

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -234,8 +234,7 @@ func (device *Current12Bricklet) DeregisterOverCurrentCallback(registrationId ui
 }
 
 
-// Returns the current of the sensor. The value is in mA
-// and between -12500mA and 12500mA.
+// Returns the current of the sensor.
 // 
 // If you want to get the current periodically, it is recommended to use the
 // RegisterCurrentCallback callback and set the period with
@@ -324,7 +323,6 @@ func (device *Current12Bricklet) IsOverCurrent() (over bool, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// The value is between 0 and 4095.
 // 
 // Note
 //  The value returned by GetCurrent is averaged over several samples
@@ -358,13 +356,11 @@ func (device *Current12Bricklet) GetAnalogValue() (value uint16, err error) {
 	return value, nil
 }
 
-// Sets the period in ms with which the RegisterCurrentCallback callback is triggered
+// Sets the period with which the RegisterCurrentCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterCurrentCallback callback is only triggered if the current has changed since
 // the last triggering.
-// 
-// The default value is 0.
 func (device *Current12Bricklet) SetCurrentCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -412,13 +408,11 @@ func (device *Current12Bricklet) GetCurrentCallbackPeriod() (period uint32, err 
 	return period, nil
 }
 
-// Sets the period in ms with which the RegisterAnalogValueCallback callback is triggered
+// Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
 // 
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
-// 
-// The default value is 0.
 func (device *Current12Bricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -477,8 +471,6 @@ func (device *Current12Bricklet) GetAnalogValueCallbackPeriod() (period uint32, 
 //  'i'|    Callback is triggered when the current is *inside* the min and max values
 //  '<'|    Callback is triggered when the current is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the current is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -557,8 +549,6 @@ func (device *Current12Bricklet) GetCurrentCallbackThreshold() (option Threshold
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
 //  '<'|    Callback is triggered when the analog value is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the analog value is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -626,7 +616,7 @@ func (device *Current12Bricklet) GetAnalogValueCallbackThreshold() (option Thres
 	return option, min, max, nil
 }
 
-// Sets the period in ms with which the threshold callbacks
+// Sets the period with which the threshold callbacks
 // 
 // * RegisterCurrentReachedCallback,
 // * RegisterAnalogValueReachedCallback
@@ -637,8 +627,6 @@ func (device *Current12Bricklet) GetAnalogValueCallbackThreshold() (option Thres
 // * SetAnalogValueCallbackThreshold
 // 
 // keep being reached.
-// 
-// The default value is 100.
 func (device *Current12Bricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, debounce);

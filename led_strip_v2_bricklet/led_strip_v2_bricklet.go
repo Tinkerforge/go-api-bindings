@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -333,7 +333,13 @@ func (device *LEDStripV2Bricklet) SetLEDValuesLowLevel(index uint16, valueLength
 		return
 	}
 
-// Returns the RGB(W) values as set by SetLEDValues.
+// Returns *length* RGB(W) values starting from the
+// given *index*.
+// 
+// If the channel mapping has 3 colors, you will get the data in the sequence
+// RGBRGBRGB... if the channel mapping has 4 colors you will get the data in the
+// sequence RGBWRGBWRGBW...
+// (assuming you start at an index divisible by 3 (RGB) or 4 (RGBW)).
 func (device *LEDStripV2Bricklet) GetLEDValuesLowLevel(index uint16, length uint16) (valueLength uint16, valueChunkOffset uint16, valueChunkData [60]uint8, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, index);
@@ -361,7 +367,13 @@ func (device *LEDStripV2Bricklet) GetLEDValuesLowLevel(index uint16, length uint
 	return valueLength, valueChunkOffset, valueChunkData, nil
 }
 
-// Returns the RGB(W) values as set by SetLEDValues.
+// Returns *length* RGB(W) values starting from the
+// given *index*.
+// 
+// If the channel mapping has 3 colors, you will get the data in the sequence
+// RGBRGBRGB... if the channel mapping has 4 colors you will get the data in the
+// sequence RGBWRGBWRGBW...
+// (assuming you start at an index divisible by 3 (RGB) or 4 (RGBW)).
 	func (device *LEDStripV2Bricklet) GetLEDValues(index uint16, length uint16) (value []uint8, err error) {
 		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
 			valueLength, valueChunkOffset, valueChunkData, err := device.GetLEDValuesLowLevel(index, length)
@@ -536,6 +548,7 @@ func (device *LEDStripV2Bricklet) GetClockFrequency() (frequency uint32, err err
 // * WS2811,
 // * WS2812 / SK6812 / NeoPixel RGB,
 // * SK6812RGBW / NeoPixel RGBW (Chip Type = WS2812),
+// * WS2813 / WS2815 (Chip Type = WS2812)
 // * LPD8806 and
 // * APA102 / DotStar.
 // 

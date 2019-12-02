@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -377,15 +377,13 @@ func (device *CANBricklet) IsFrameReadCallbackEnabled() (enabled bool, err error
 // The write timeout has three different modes that define how a failed frame
 // transmission should be handled:
 // 
-// * One-Shot (< 0): Only one transmission attempt will be made. If the
+// * One-Shot (= -1): Only one transmission attempt will be made. If the
 //   transmission fails then the frame is discarded.
 // * Infinite (= 0): Infinite transmission attempts will be made. The frame will
 //   never be discarded.
 // * Milliseconds (> 0): A limited number of transmission attempts will be made.
 //   If the frame could not be transmitted successfully after the configured
 //   number of milliseconds then the frame is discarded.
-// 
-// The default is: 125 kbit/s, normal transceiver mode and infinite write timeout.
 //
 // Associated constants:
 //
@@ -515,8 +513,6 @@ func (device *CANBricklet) GetConfiguration() (baudRate BaudRate, transceiverMod
 // 
 // To accept identifier 0x123 and identifier 0x456 at the same time, just set
 // filter 2 to 0x456 and keep mask and filter 1 unchanged.
-// 
-// The default mode is accept-all.
 //
 // Associated constants:
 //

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-08-23.      *
+ * This file was automatically generated on 2019-11-25.      *
  *                                                           *
- * Go Bindings Version 2.0.4                                 *
+ * Go Bindings Version 2.0.5                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -186,15 +186,7 @@ func (device *ThermalImagingBricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
-// This callback is triggered with every new high contrast image if the transfer image
-// config is configured for high contrast callback (see SetImageTransferConfig).
-// 
-// The data is organized as a 8-bit value 80x60 pixel matrix linearized in
-// a one-dimensional array. The data is arranged line by line from top left to
-// bottom right.
-// 
-// Each 8-bit value represents one gray-scale image pixel that can directly be
-// shown to a user on a display.
+// See RegisterHighContrastImageCallback
 func (device *ThermalImagingBricklet) RegisterHighContrastImageLowLevelCallback(fn func(uint16, [62]uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -222,11 +214,18 @@ func (device *ThermalImagingBricklet) DeregisterHighContrastImageLowLevelCallbac
 // 
 // Each 8-bit value represents one gray-scale image pixel that can directly be
 // shown to a user on a display.
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for image.
 func (device *ThermalImagingBricklet) RegisterHighContrastImageCallback(fn func([]uint8)) uint64 {
 	buf := make([]uint8, 0)
 	wrapper := func(imageChunkOffset uint16, imageChunkData [62]uint8)  {
 		if int(imageChunkOffset) != len(buf) {
-			buf = make([]uint8, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(buf)
+				buf = make([]uint8, 0)
+			}
 			if imageChunkOffset != 0 {
 				return
 			}
@@ -247,15 +246,7 @@ func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(regist
 }
 
 
-// This callback is triggered with every new temperature image if the transfer image
-// config is configured for temperature callback (see SetImageTransferConfig).
-// 
-// The data is organized as a 16-bit value 80x60 pixel matrix linearized in
-// a one-dimensional array. The data is arranged line by line from top left to
-// bottom right.
-// 
-// Each 16-bit value represents one temperature measurement in either
-// Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// See RegisterTemperatureImageCallback
 func (device *ThermalImagingBricklet) RegisterTemperatureImageLowLevelCallback(fn func(uint16, [31]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		buf := bytes.NewBuffer(byteSlice[8:])
@@ -283,11 +274,18 @@ func (device *ThermalImagingBricklet) DeregisterTemperatureImageLowLevelCallback
 // 
 // Each 16-bit value represents one temperature measurement in either
 // Kelvin/10 or Kelvin/100 (depending on the resolution set with SetResolution).
+// 
+// Note
+//  If reconstructing the value fails, the callback is triggered with nil for image.
 func (device *ThermalImagingBricklet) RegisterTemperatureImageCallback(fn func([]uint16)) uint64 {
 	buf := make([]uint16, 0)
 	wrapper := func(imageChunkOffset uint16, imageChunkData [31]uint16)  {
 		if int(imageChunkOffset) != len(buf) {
-			buf = make([]uint16, 0)
+			if len(buf) != 0 {
+				buf = nil
+				fn(buf)
+				buf = make([]uint16, 0)
+			}
 			if imageChunkOffset != 0 {
 				return
 			}
@@ -676,17 +674,17 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
 // lower the value of N the higher the influence of the current video frame whereas
 // the higher the value of N the more influence the previous damped transfer function has.
 // 
-// Clip Limit Index 0 (AGC HEQ Clip Limit Low): This parameter defines an artificial population that is added to
+// Clip Limit Index 0 (AGC HEQ Clip Limit High): This parameter defines the maximum number of pixels allowed
+// to accumulate in any given histogram bin. Any additional pixels in a given bin are clipped.
+// The effect of this parameter is to limit the influence of highly-populated bins on the
+// resulting HEQ transformation function.
+// 
+// Clip Limit Index 1 (AGC HEQ Clip Limit Low): This parameter defines an artificial population that is added to
 // every non-empty histogram bin. In other words, if the Clip Limit Low is set to L, a bin
 // with an actual population of X will have an effective population of L + X. Any empty bin
 // that is nearby a populated bin will be given an artificial population of L. The effect of
 // higher values is to provide a more linear transfer function; lower values provide a more
 // non-linear (equalized) transfer function.
-// 
-// Clip Limit Index 1 (AGC HEQ Clip Limit High): This parameter defines the maximum number of pixels allowed
-// to accumulate in any given histogram bin. Any additional pixels in a given bin are clipped.
-// The effect of this parameter is to limit the influence of highly-populated bins on the
-// resulting HEQ transformation function.
 // 
 // Empty Counts: This parameter specifies the maximum number of pixels in a bin that will be
 // interpreted as an empty bin. Histogram bins with this number of pixels or less will be
