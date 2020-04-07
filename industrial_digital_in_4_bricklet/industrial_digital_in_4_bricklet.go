@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package industrial_digital_in_4_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -57,7 +58,7 @@ const DeviceDisplayName = "Industrial Digital In 4 Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialDigitalIn4Bricklet{}, err
 	}
@@ -86,7 +87,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4Bric
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -100,7 +101,7 @@ func (device *IndustrialDigitalIn4Bricklet) GetResponseExpected(functionID Funct
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *IndustrialDigitalIn4Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -132,6 +133,12 @@ func (device *IndustrialDigitalIn4Bricklet) GetAPIVersion() [3]uint8 {
 // The interrupts use the grouping as set by SetGroup.
 func (device *IndustrialDigitalIn4Bricklet) RegisterInterruptCallback(fn func(uint16, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var interruptMask uint16
 		var valueMask uint16
@@ -167,18 +174,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetValue() (valueMask uint16, err er
 	if err != nil {
 		return valueMask, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return valueMask, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &valueMask)
-
+	if header.Length != 10 {
+		return valueMask, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return valueMask, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &valueMask)
+
 
 	return valueMask, nil
 }
@@ -209,17 +220,21 @@ func (device *IndustrialDigitalIn4Bricklet) SetGroup(group [4]rune) (err error) 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -232,18 +247,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetGroup() (group [4]rune, err error
 	if err != nil {
 		return group, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return group, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		copy(group[:], ByteSliceToRuneSlice(resultBuf.Next(4)))
-
+	if header.Length != 12 {
+		return group, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return group, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	copy(group[:], ByteSliceToRuneSlice(resultBuf.Next(4)))
+
 
 	return group, nil
 }
@@ -258,18 +277,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetAvailableForGroup() (available ui
 	if err != nil {
 		return available, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return available, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &available)
-
+	if header.Length != 9 {
+		return available, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return available, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &available)
+
 
 	return available, nil
 }
@@ -287,17 +310,21 @@ func (device *IndustrialDigitalIn4Bricklet) SetDebouncePeriod(debounce uint32) (
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -310,18 +337,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetDebouncePeriod() (debounce uint32
 	if err != nil {
 		return debounce, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return debounce, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
+	if header.Length != 12 {
+		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return debounce, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 
 	return debounce, nil
 }
@@ -344,17 +375,21 @@ func (device *IndustrialDigitalIn4Bricklet) SetInterrupt(interruptMask uint16) (
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -367,18 +402,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetInterrupt() (interruptMask uint16
 	if err != nil {
 		return interruptMask, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return interruptMask, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &interruptMask)
-
+	if header.Length != 10 {
+		return interruptMask, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return interruptMask, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &interruptMask)
+
 
 	return interruptMask, nil
 }
@@ -401,18 +440,22 @@ func (device *IndustrialDigitalIn4Bricklet) GetEdgeCount(pin uint8, resetCounter
 	if err != nil {
 		return count, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return count, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &count)
-
+	if header.Length != 12 {
+		return count, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return count, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &count)
+
 
 	return count, nil
 }
@@ -451,17 +494,21 @@ func (device *IndustrialDigitalIn4Bricklet) SetEdgeCountConfig(selectionMask uin
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -484,19 +531,23 @@ func (device *IndustrialDigitalIn4Bricklet) GetEdgeCountConfig(pin uint8) (edgeT
 	if err != nil {
 		return edgeType, debounce, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return edgeType, debounce, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &edgeType)
+	if header.Length != 10 {
+		return edgeType, debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return edgeType, debounce, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &edgeType)
 	binary.Read(resultBuf, binary.LittleEndian, &debounce)
 
-	}
 
 	return edgeType, debounce, nil
 }
@@ -505,7 +556,10 @@ func (device *IndustrialDigitalIn4Bricklet) GetEdgeCountConfig(pin uint8) (edgeT
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -516,23 +570,27 @@ func (device *IndustrialDigitalIn4Bricklet) GetIdentity() (uid string, connected
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

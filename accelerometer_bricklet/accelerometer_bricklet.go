@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package accelerometer_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -96,7 +97,7 @@ const DeviceDisplayName = "Accelerometer Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return AccelerometerBricklet{}, err
 	}
@@ -127,7 +128,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AccelerometerBricklet, e
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -141,7 +142,7 @@ func (device *AccelerometerBricklet) GetResponseExpected(functionID Function) (b
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *AccelerometerBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -159,12 +160,19 @@ func (device *AccelerometerBricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically with the period that is set by
 // SetAccelerationCallbackPeriod. The parameters are the
-// X, Y and Z acceleration.
+// X, Y and Z acceleration. The range is
+// configured with SetConfiguration.
 // 
 // The RegisterAccelerationCallback callback is only triggered if the acceleration has
 // changed since the last triggering.
 func (device *AccelerometerBricklet) RegisterAccelerationCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x int16
 		var y int16
@@ -185,12 +193,19 @@ func (device *AccelerometerBricklet) DeregisterAccelerationCallback(registration
 
 // This callback is triggered when the threshold as set by
 // SetAccelerationCallbackThreshold is reached.
-// The parameters are the X, Y and Z acceleration.
+// The parameters are the X, Y and Z acceleration. The range is
+// configured with SetConfiguration.
 // 
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *AccelerometerBricklet) RegisterAccelerationReachedCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x int16
 		var y int16
@@ -210,7 +225,8 @@ func (device *AccelerometerBricklet) DeregisterAccelerationReachedCallback(regis
 
 
 // Returns the acceleration in x, y and z direction. The values
-// are given in gₙ/1000 (1gₙ = 9.80665m/s²).
+// are given in gₙ/1000 (1gₙ = 9.80665m/s²). The range is
+// configured with SetConfiguration.
 // 
 // If you want to get the acceleration periodically, it is recommended
 // to use the RegisterAccelerationCallback callback and set the period with
@@ -222,20 +238,24 @@ func (device *AccelerometerBricklet) GetAcceleration() (x int16, y int16, z int1
 	if err != nil {
 		return x, y, z, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return x, y, z, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &x)
+	if header.Length != 14 {
+		return x, y, z, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return x, y, z, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
-	}
 
 	return x, y, z, nil
 }
@@ -253,17 +273,21 @@ func (device *AccelerometerBricklet) SetAccelerationCallbackPeriod(period uint32
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -276,18 +300,22 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackPeriod() (period uin
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -325,17 +353,21 @@ func (device *AccelerometerBricklet) SetAccelerationCallbackThreshold(option Thr
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -356,16 +388,21 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 	if err != nil {
 		return option, minX, maxX, minY, maxY, minZ, maxZ, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return option, minX, maxX, minY, maxY, minZ, maxZ, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &option)
+	if header.Length != 21 {
+		return option, minX, maxX, minY, maxY, minZ, maxZ, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return option, minX, maxX, minY, maxY, minZ, maxZ, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &minX)
 	binary.Read(resultBuf, binary.LittleEndian, &maxX)
 	binary.Read(resultBuf, binary.LittleEndian, &minY)
@@ -373,7 +410,6 @@ func (device *AccelerometerBricklet) GetAccelerationCallbackThreshold() (option 
 	binary.Read(resultBuf, binary.LittleEndian, &minZ)
 	binary.Read(resultBuf, binary.LittleEndian, &maxZ)
 
-	}
 
 	return option, minX, maxX, minY, maxY, minZ, maxZ, nil
 }
@@ -395,17 +431,21 @@ func (device *AccelerometerBricklet) SetDebouncePeriod(debounce uint32) (err err
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -418,18 +458,22 @@ func (device *AccelerometerBricklet) GetDebouncePeriod() (debounce uint32, err e
 	if err != nil {
 		return debounce, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return debounce, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
+	if header.Length != 12 {
+		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return debounce, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 
 	return debounce, nil
 }
@@ -442,18 +486,22 @@ func (device *AccelerometerBricklet) GetTemperature() (temperature int16, err er
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -499,17 +547,21 @@ func (device *AccelerometerBricklet) SetConfiguration(dataRate DataRate, fullSca
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -544,20 +596,24 @@ func (device *AccelerometerBricklet) GetConfiguration() (dataRate DataRate, full
 	if err != nil {
 		return dataRate, fullScale, filterBandwidth, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return dataRate, fullScale, filterBandwidth, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &dataRate)
+	if header.Length != 11 {
+		return dataRate, fullScale, filterBandwidth, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return dataRate, fullScale, filterBandwidth, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &dataRate)
 	binary.Read(resultBuf, binary.LittleEndian, &fullScale)
 	binary.Read(resultBuf, binary.LittleEndian, &filterBandwidth)
 
-	}
 
 	return dataRate, fullScale, filterBandwidth, nil
 }
@@ -570,17 +626,21 @@ func (device *AccelerometerBricklet) LEDOn() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -593,17 +653,21 @@ func (device *AccelerometerBricklet) LEDOff() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -616,18 +680,22 @@ func (device *AccelerometerBricklet) IsLEDOn() (on bool, err error) {
 	if err != nil {
 		return on, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return on, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &on)
-
+	if header.Length != 9 {
+		return on, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return on, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &on)
+
 
 	return on, nil
 }
@@ -636,7 +704,10 @@ func (device *AccelerometerBricklet) IsLEDOn() (on bool, err error) {
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -647,23 +718,27 @@ func (device *AccelerometerBricklet) GetIdentity() (uid string, connectedUid str
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

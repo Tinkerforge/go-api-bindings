@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package remote_switch_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -60,7 +61,7 @@ const DeviceDisplayName = "Remote Switch Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RemoteSwitchBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RemoteSwitchBricklet{}, err
 	}
@@ -86,7 +87,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RemoteSwitchBricklet, er
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -100,7 +101,7 @@ func (device *RemoteSwitchBricklet) GetResponseExpected(functionID Function) (bo
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *RemoteSwitchBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -120,6 +121,12 @@ func (device *RemoteSwitchBricklet) GetAPIVersion() [3]uint8 {
 // from busy to ready, see GetSwitchingState.
 func (device *RemoteSwitchBricklet) RegisterSwitchingDoneCallback(fn func()) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 8 {
+			return
+		}
 		
 		
 		
@@ -150,24 +157,28 @@ func (device *RemoteSwitchBricklet) SwitchSocket(houseCode uint8, receiverCode u
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // Returns the current switching state. If the current state is busy, the
 // Bricklet is currently sending a code to switch a socket. It will not
-// accept any calls of SwitchSocket until the state changes to ready.
+// accept any requests to switch sockets until the state changes to ready.
 // 
 // How long the switching takes is dependent on the number of repeats, see
 // SetRepeats.
@@ -183,30 +194,32 @@ func (device *RemoteSwitchBricklet) GetSwitchingState() (state SwitchingState, e
 	if err != nil {
 		return state, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return state, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &state)
-
+	if header.Length != 9 {
+		return state, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return state, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &state)
+
 
 	return state, nil
 }
 
-// Sets the number of times the code is send when of the SwitchSocket
+// Sets the number of times the code is sent when one of the switch socket
 // functions is called. The repeats basically correspond to the amount of time
 // that a button of the remote is pressed.
 // 
 // Some dimmers are controlled by the length of a button pressed,
 // this can be simulated by increasing the repeats.
-// 
-// The default value is 5.
 func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, repeats);
@@ -215,17 +228,21 @@ func (device *RemoteSwitchBricklet) SetRepeats(repeats uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -238,26 +255,28 @@ func (device *RemoteSwitchBricklet) GetRepeats() (repeats uint8, err error) {
 	if err != nil {
 		return repeats, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return repeats, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &repeats)
-
+	if header.Length != 9 {
+		return repeats, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return repeats, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &repeats)
+
 
 	return repeats, nil
 }
 
 // To switch a type A socket you have to give the house code, receiver code and the
 // state (on or off) you want to switch to.
-// 
-// The house code and receiver code have a range of 0 to 31 (5bit).
 // 
 // A detailed description on how you can figure out the house and receiver code
 // can be found `here <remote_switch_bricklet_type_a_house_and_receiver_code>`.
@@ -278,17 +297,21 @@ func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -296,9 +319,7 @@ func (device *RemoteSwitchBricklet) SwitchSocketA(houseCode uint8, receiverCode 
 // To switch a type B socket you have to give the address, unit and the state
 // (on or off) you want to switch to.
 // 
-// The address has a range of 0 to 67108863 (26bit) and the unit has a range
-// of 0 to 15 (4bit). To switch all devices with the same address use 255 for
-// the unit.
+// To switch all devices with the same address use 255 for the unit.
 // 
 // A detailed description on how you can teach a socket the address and unit can
 // be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
@@ -319,26 +340,27 @@ func (device *RemoteSwitchBricklet) SwitchSocketB(address uint32, unit uint8, sw
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // To control a type B dimmer you have to give the address, unit and the
 // dim value you want to set the dimmer to.
-// 
-// The address has a range of 0 to 67108863 (26bit), the unit and the dim value
-// has a range of 0 to 15 (4bit).
 // 
 // A detailed description on how you can teach a dimmer the address and unit can
 // be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
@@ -354,26 +376,27 @@ func (device *RemoteSwitchBricklet) DimSocketB(address uint32, unit uint8, dimVa
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // To switch a type C socket you have to give the system code, device code and the
 // state (on or off) you want to switch to.
-// 
-// The system code has a range of 'A' to 'P' (4bit) and the device code has a
-// range of 1 to 16 (4bit).
 // 
 // A detailed description on how you can figure out the system and device code
 // can be found `here <remote_switch_bricklet_type_c_system_and_device_code>`.
@@ -394,17 +417,21 @@ func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode ui
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -413,7 +440,10 @@ func (device *RemoteSwitchBricklet) SwitchSocketC(systemCode rune, deviceCode ui
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -424,23 +454,27 @@ func (device *RemoteSwitchBricklet) GetIdentity() (uid string, connectedUid stri
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

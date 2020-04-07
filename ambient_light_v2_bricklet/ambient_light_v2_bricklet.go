@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package ambient_light_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -83,7 +84,7 @@ const DeviceDisplayName = "Ambient Light Bricklet 2.0"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return AmbientLightV2Bricklet{}, err
 	}
@@ -110,7 +111,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV2Bricklet, 
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -124,7 +125,7 @@ func (device *AmbientLightV2Bricklet) GetResponseExpected(functionID Function) (
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *AmbientLightV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -148,6 +149,12 @@ func (device *AmbientLightV2Bricklet) GetAPIVersion() [3]uint8 {
 // last triggering.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var illuminance uint32
 		binary.Read(buf, binary.LittleEndian, &illuminance)
@@ -170,6 +177,12 @@ func (device *AmbientLightV2Bricklet) DeregisterIlluminanceCallback(registration
 // with the period as set by SetDebouncePeriod.
 func (device *AmbientLightV2Bricklet) RegisterIlluminanceReachedCallback(fn func(uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var illuminance uint32
 		binary.Read(buf, binary.LittleEndian, &illuminance)
@@ -186,8 +199,6 @@ func (device *AmbientLightV2Bricklet) DeregisterIlluminanceReachedCallback(regis
 
 // Returns the illuminance of the ambient light sensor. The measurement range goes
 // up to about 100000lux, but above 64000lux the precision starts to drop.
-// The illuminance is given in lux/100, i.e. a value of 450000 means that an
-// illuminance of 4500lux is measured.
 // 
 // .. versionchanged:: 2.0.2$nbsp;(Plugin)
 //   An illuminance of 0lux indicates that the sensor is saturated and the
@@ -203,18 +214,22 @@ func (device *AmbientLightV2Bricklet) GetIlluminance() (illuminance uint32, err 
 	if err != nil {
 		return illuminance, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return illuminance, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &illuminance)
-
+	if header.Length != 12 {
+		return illuminance, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return illuminance, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &illuminance)
+
 
 	return illuminance, nil
 }
@@ -232,17 +247,21 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackPeriod(period uint32
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -255,18 +274,22 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -282,8 +305,6 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackPeriod() (period uin
 //  'i'|    Callback is triggered when the illuminance is *inside* the min and max values
 //  '<'|    Callback is triggered when the illuminance is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the illuminance is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -302,17 +323,21 @@ func (device *AmbientLightV2Bricklet) SetIlluminanceCallbackThreshold(option Thr
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -333,20 +358,24 @@ func (device *AmbientLightV2Bricklet) GetIlluminanceCallbackThreshold() (option 
 	if err != nil {
 		return option, min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return option, min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &option)
+	if header.Length != 17 {
+		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return option, min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return option, min, max, nil
 }
@@ -368,17 +397,21 @@ func (device *AmbientLightV2Bricklet) SetDebouncePeriod(debounce uint32) (err er
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -391,18 +424,22 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
 	if err != nil {
 		return debounce, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return debounce, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
+	if header.Length != 12 {
+		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return debounce, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 
 	return debounce, nil
 }
@@ -430,8 +467,6 @@ func (device *AmbientLightV2Bricklet) GetDebouncePeriod() (debounce uint32, err 
 // If the measurement is out-of-range or the sensor is saturated then you should
 // configure the next higher illuminance range. If the highest range is already
 // in use, then start to reduce the integration time.
-// 
-// The default values are 0-8000lux illuminance range and 200ms integration time.
 //
 // Associated constants:
 //
@@ -459,17 +494,21 @@ func (device *AmbientLightV2Bricklet) SetConfiguration(illuminanceRange Illumina
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -500,19 +539,23 @@ func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange Illum
 	if err != nil {
 		return illuminanceRange, integrationTime, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return illuminanceRange, integrationTime, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &illuminanceRange)
+	if header.Length != 10 {
+		return illuminanceRange, integrationTime, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return illuminanceRange, integrationTime, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &illuminanceRange)
 	binary.Read(resultBuf, binary.LittleEndian, &integrationTime)
 
-	}
 
 	return illuminanceRange, integrationTime, nil
 }
@@ -521,7 +564,10 @@ func (device *AmbientLightV2Bricklet) GetConfiguration() (illuminanceRange Illum
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -532,23 +578,27 @@ func (device *AmbientLightV2Bricklet) GetIdentity() (uid string, connectedUid st
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

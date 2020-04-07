@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package rs232_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -36,6 +37,8 @@ const (
 	FunctionGetBufferConfig Function = 9
 	FunctionGetBufferStatus Function = 10
 	FunctionGetErrorCount Function = 11
+	FunctionSetFrameReadableCallbackConfiguration Function = 14
+	FunctionGetFrameReadableCallbackConfiguration Function = 15
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -50,6 +53,7 @@ const (
 	FunctionGetIdentity Function = 255
 	FunctionCallbackReadLowLevel Function = 12
 	FunctionCallbackErrorCount Function = 13
+	FunctionCallbackFrameReadable Function = 16
 )
 
 type Parity = uint8
@@ -123,7 +127,7 @@ const DeviceDisplayName = "RS232 Bricklet 2.0"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RS232V2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 3)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 3, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RS232V2Bricklet{}, err
 	}
@@ -138,6 +142,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RS232V2Bricklet, error) 
 	dev.ResponseExpected[FunctionGetBufferConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBufferStatus] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetErrorCount] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetFrameReadableCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetFrameReadableCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -163,7 +169,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (RS232V2Bricklet, error) 
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -177,7 +183,7 @@ func (device *RS232V2Bricklet) GetResponseExpected(functionID Function) (bool, e
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *RS232V2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -196,6 +202,12 @@ func (device *RS232V2Bricklet) GetAPIVersion() [3]uint8 {
 // See RegisterReadCallback
 func (device *RS232V2Bricklet) RegisterReadLowLevelCallback(fn func(uint16, uint16, [60]rune)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 72 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var messageLength uint16
 		var messageChunkOffset uint16
@@ -253,6 +265,12 @@ func (device *RS232V2Bricklet) DeregisterReadCallback(registrationId uint64) {
 // the current overrun and parity error count.
 func (device *RS232V2Bricklet) RegisterErrorCountCallback(fn func(uint32, uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 16 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var errorCountOverrun uint32
 		var errorCountParity uint32
@@ -266,6 +284,34 @@ func (device *RS232V2Bricklet) RegisterErrorCountCallback(fn func(uint32, uint32
 // Remove a registered Error Count callback.
 func (device *RS232V2Bricklet) DeregisterErrorCountCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackErrorCount), registrationId)
+}
+
+
+// This callback is called if at least one frame of data is readable. The frame size is configured with SetFrameReadableCallbackConfiguration.
+// The frame count parameter is the number of frames that can be read.
+// This callback is triggered only once until Read is called. This means, that if you have configured a frame size of X bytes,
+// you can read exactly X bytes using the Read function, every time the callback triggers without checking the frame count parameter.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *RS232V2Bricklet) RegisterFrameReadableCallback(fn func(uint16)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 10 {
+			return
+		}
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var frameCount uint16
+		binary.Read(buf, binary.LittleEndian, &frameCount)
+		fn(frameCount)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackFrameReadable), wrapper)
+}
+
+// Remove a registered Frame Readable callback.
+func (device *RS232V2Bricklet) DeregisterFrameReadableCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackFrameReadable), registrationId)
 }
 
 
@@ -286,18 +332,22 @@ func (device *RS232V2Bricklet) WriteLowLevel(messageLength uint16, messageChunkO
 	if err != nil {
 		return messageChunkWritten, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return messageChunkWritten, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &messageChunkWritten)
-
+	if header.Length != 9 {
+		return messageChunkWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return messageChunkWritten, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &messageChunkWritten)
+
 
 	return messageChunkWritten, nil
 }
@@ -348,20 +398,24 @@ func (device *RS232V2Bricklet) ReadLowLevel(length uint16) (messageLength uint16
 	if err != nil {
 		return messageLength, messageChunkOffset, messageChunkData, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return messageLength, messageChunkOffset, messageChunkData, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &messageLength)
+	if header.Length != 72 {
+		return messageLength, messageChunkOffset, messageChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return messageLength, messageChunkOffset, messageChunkData, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &messageLength)
 	binary.Read(resultBuf, binary.LittleEndian, &messageChunkOffset)
 	copy(messageChunkData[:], ByteSliceToRuneSlice(resultBuf.Next(8 * 60/8)))
 
-	}
 
 	return messageLength, messageChunkOffset, messageChunkData, nil
 }
@@ -399,7 +453,7 @@ func (device *RS232V2Bricklet) ReadLowLevel(length uint16) (messageLength uint16
 		return ByteSliceToRuneSlice(buf), nil
 	}
 
-// Enables the RegisterReadCallback callback.
+// Enables the RegisterReadCallback callback. This will disable the RegisterFrameReadableCallback callback.
 // 
 // By default the callback is disabled.
 func (device *RS232V2Bricklet) EnableReadCallback() (err error) {
@@ -409,17 +463,21 @@ func (device *RS232V2Bricklet) EnableReadCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -434,17 +492,21 @@ func (device *RS232V2Bricklet) DisableReadCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -458,31 +520,27 @@ func (device *RS232V2Bricklet) IsReadCallbackEnabled() (enabled bool, err error)
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
 
-// Sets the configuration for the RS232 communication. Available options:
-// 
-// * Baud rate between 100 and 2000000 baud.
-// * Parity of none, odd or even.
-// * Stop bits can be 1 or 2.
-// * Word length of 5 to 8.
-// * Flow control can be off, software or hardware.
-// 
-// The default is: 115200 baud, parity none, 1 stop bit, word length 8.
+// Sets the configuration for the RS232 communication.
 //
 // Associated constants:
 //
@@ -510,17 +568,21 @@ func (device *RS232V2Bricklet) SetConfiguration(baudrate uint32, parity Parity, 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -548,28 +610,32 @@ func (device *RS232V2Bricklet) GetConfiguration() (baudrate uint32, parity Parit
 	if err != nil {
 		return baudrate, parity, stopbits, wordlength, flowcontrol, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return baudrate, parity, stopbits, wordlength, flowcontrol, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+	if header.Length != 16 {
+		return baudrate, parity, stopbits, wordlength, flowcontrol, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return baudrate, parity, stopbits, wordlength, flowcontrol, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &baudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &parity)
 	binary.Read(resultBuf, binary.LittleEndian, &stopbits)
 	binary.Read(resultBuf, binary.LittleEndian, &wordlength)
 	binary.Read(resultBuf, binary.LittleEndian, &flowcontrol)
 
-	}
 
 	return baudrate, parity, stopbits, wordlength, flowcontrol, nil
 }
 
 // Sets the send and receive buffer size in byte. In total the buffers have to be
-// 10240 byte (10kb) in size, the minimum buffer size is 1024 byte (1kb) for each.
+// 10240 byte (10KiB) in size, the minimum buffer size is 1024 byte (1KiB) for each.
 // 
 // The current buffer content is lost if this function is called.
 // 
@@ -577,8 +643,6 @@ func (device *RS232V2Bricklet) GetConfiguration() (baudrate uint32, parity Parit
 // can not be written yet. The receive buffer holds data that is
 // received through RS232 but could not yet be send to the
 // user, either by Read or through RegisterReadCallback callback.
-// 
-// The default configuration is 5120 byte (5kb) per buffer.
 func (device *RS232V2Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBufferSize uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, sendBufferSize);
@@ -588,17 +652,21 @@ func (device *RS232V2Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBuf
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -611,19 +679,23 @@ func (device *RS232V2Bricklet) GetBufferConfig() (sendBufferSize uint16, receive
 	if err != nil {
 		return sendBufferSize, receiveBufferSize, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return sendBufferSize, receiveBufferSize, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &sendBufferSize)
+	if header.Length != 12 {
+		return sendBufferSize, receiveBufferSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return sendBufferSize, receiveBufferSize, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &sendBufferSize)
 	binary.Read(resultBuf, binary.LittleEndian, &receiveBufferSize)
 
-	}
 
 	return sendBufferSize, receiveBufferSize, nil
 }
@@ -638,19 +710,23 @@ func (device *RS232V2Bricklet) GetBufferStatus() (sendBufferUsed uint16, receive
 	if err != nil {
 		return sendBufferUsed, receiveBufferUsed, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return sendBufferUsed, receiveBufferUsed, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &sendBufferUsed)
+	if header.Length != 12 {
+		return sendBufferUsed, receiveBufferUsed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return sendBufferUsed, receiveBufferUsed, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &sendBufferUsed)
 	binary.Read(resultBuf, binary.LittleEndian, &receiveBufferUsed)
 
-	}
 
 	return sendBufferUsed, receiveBufferUsed, nil
 }
@@ -663,21 +739,88 @@ func (device *RS232V2Bricklet) GetErrorCount() (errorCountOverrun uint32, errorC
 	if err != nil {
 		return errorCountOverrun, errorCountParity, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountOverrun, errorCountParity, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountOverrun)
-	binary.Read(resultBuf, binary.LittleEndian, &errorCountParity)
-
+	if header.Length != 16 {
+		return errorCountOverrun, errorCountParity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 	}
 
+
+	if header.ErrorCode != 0 {
+		return errorCountOverrun, errorCountParity, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverrun)
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountParity)
+
+
 	return errorCountOverrun, errorCountParity, nil
+}
+
+// Configures the RegisterFrameReadableCallback callback. The frame size is the number of bytes, that have to be readable to trigger the callback.
+// A frame size of 0 disables the callback. A frame size greater than 0 enables the callback and disables the RegisterReadCallback callback.
+// 
+// By default the callback is disabled.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *RS232V2Bricklet) SetFrameReadableCallbackConfiguration(frameSize uint16) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, frameSize);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetFrameReadableCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
+	return nil
+}
+
+// Returns the callback configuration as set by SetFrameReadableCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+func (device *RS232V2Bricklet) GetFrameReadableCallbackConfiguration() (frameSize uint16, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFrameReadableCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return frameSize, err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 10 {
+		return frameSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return frameSize, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &frameSize)
+
+
+	return frameSize, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -698,21 +841,25 @@ func (device *RS232V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+	if header.Length != 24 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -748,18 +895,22 @@ func (device *RS232V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -780,18 +931,22 @@ func (device *RS232V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err err
 	if err != nil {
 		return mode, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return mode, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &mode)
-
+	if header.Length != 9 {
+		return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return mode, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &mode)
+
 
 	return mode, nil
 }
@@ -810,17 +965,21 @@ func (device *RS232V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -841,18 +1000,22 @@ func (device *RS232V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -879,17 +1042,21 @@ func (device *RS232V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -909,23 +1076,27 @@ func (device *RS232V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err
 	if err != nil {
 		return config, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return config, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &config)
-
+	if header.Length != 9 {
+		return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return config, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &config)
+
 
 	return config, nil
 }
 
-// Returns the temperature in °C as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has bad
@@ -938,18 +1109,22 @@ func (device *RS232V2Bricklet) GetChipTemperature() (temperature int16, err erro
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -967,17 +1142,21 @@ func (device *RS232V2Bricklet) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -995,17 +1174,21 @@ func (device *RS232V2Bricklet) WriteUID(uid uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1019,18 +1202,22 @@ func (device *RS232V2Bricklet) ReadUID() (uid uint32, err error) {
 	if err != nil {
 		return uid, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &uid)
-
+	if header.Length != 12 {
+		return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &uid)
+
 
 	return uid, nil
 }
@@ -1039,7 +1226,10 @@ func (device *RS232V2Bricklet) ReadUID() (uid uint32, err error) {
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1050,23 +1240,27 @@ func (device *RS232V2Bricklet) GetIdentity() (uid string, connectedUid string, p
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

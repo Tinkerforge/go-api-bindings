@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package imu_brick
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -70,6 +71,8 @@ const (
 	FunctionGetProtocol1BrickletName Function = 241
 	FunctionGetChipTemperature Function = 242
 	FunctionReset Function = 243
+	FunctionWriteBrickletPlugin Function = 246
+	FunctionReadBrickletPlugin Function = 247
 	FunctionGetIdentity Function = 255
 	FunctionCallbackAcceleration Function = 31
 	FunctionCallbackMagneticField Function = 32
@@ -112,7 +115,7 @@ const DeviceDisplayName = "IMU Brick"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IMUBrick, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IMUBrick{}, err
 	}
@@ -161,6 +164,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IMUBrick, error) {
 	dev.ResponseExpected[FunctionGetProtocol1BrickletName] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionWriteBrickletPlugin] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionReadBrickletPlugin] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
 	return IMUBrick{dev}, nil
 }
@@ -175,7 +180,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IMUBrick, error) {
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -189,7 +194,7 @@ func (device *IMUBrick) GetResponseExpected(functionID Function) (bool, error) {
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *IMUBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -210,6 +215,12 @@ func (device *IMUBrick) GetAPIVersion() [3]uint8 {
 // for the x, y and z axis.
 func (device *IMUBrick) RegisterAccelerationCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x int16
 		var y int16
@@ -233,6 +244,12 @@ func (device *IMUBrick) DeregisterAccelerationCallback(registrationId uint64) {
 // field for the x, y and z axis.
 func (device *IMUBrick) RegisterMagneticFieldCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x int16
 		var y int16
@@ -256,6 +273,12 @@ func (device *IMUBrick) DeregisterMagneticFieldCallback(registrationId uint64) {
 // velocity for the x, y and z axis.
 func (device *IMUBrick) RegisterAngularVelocityCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x int16
 		var y int16
@@ -280,6 +303,12 @@ func (device *IMUBrick) DeregisterAngularVelocityCallback(registrationId uint64)
 // well as the temperature of the IMU Brick.
 func (device *IMUBrick) RegisterAllDataCallback(fn func(int16, int16, int16, int16, int16, int16, int16, int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 28 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var accX int16
 		var accY int16
@@ -318,6 +347,12 @@ func (device *IMUBrick) DeregisterAllDataCallback(registrationId uint64) {
 // GetOrientation for details.
 func (device *IMUBrick) RegisterOrientationCallback(fn func(int16, int16, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 14 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var roll int16
 		var pitch int16
@@ -342,6 +377,12 @@ func (device *IMUBrick) DeregisterOrientationCallback(registrationId uint64) {
 // for details.
 func (device *IMUBrick) RegisterQuaternionCallback(fn func(float32, float32, float32, float32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 24 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var x float32
 		var y float32
@@ -363,7 +404,7 @@ func (device *IMUBrick) DeregisterQuaternionCallback(registrationId uint64) {
 
 
 // Returns the calibrated acceleration from the accelerometer for the
-// x, y and z axis in g/1000 (1g = 9.80665m/s²).
+// x, y and z axis.
 // 
 // If you want to get the acceleration periodically, it is recommended
 // to use the RegisterAccelerationCallback callback and set the period with
@@ -375,26 +416,30 @@ func (device *IMUBrick) GetAcceleration() (x int16, y int16, z int16, err error)
 	if err != nil {
 		return x, y, z, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return x, y, z, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &x)
+	if header.Length != 14 {
+		return x, y, z, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return x, y, z, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
-	}
 
 	return x, y, z, nil
 }
 
 // Returns the calibrated magnetic field from the magnetometer for the
-// x, y and z axis in mG (Milligauss or Nanotesla).
+// x, y and z axis.
 // 
 // If you want to get the magnetic field periodically, it is recommended
 // to use the RegisterMagneticFieldCallback callback and set the period with
@@ -406,20 +451,24 @@ func (device *IMUBrick) GetMagneticField() (x int16, y int16, z int16, err error
 	if err != nil {
 		return x, y, z, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return x, y, z, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &x)
+	if header.Length != 14 {
+		return x, y, z, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return x, y, z, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
-	}
 
 	return x, y, z, nil
 }
@@ -438,28 +487,30 @@ func (device *IMUBrick) GetAngularVelocity() (x int16, y int16, z int16, err err
 	if err != nil {
 		return x, y, z, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return x, y, z, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &x)
+	if header.Length != 14 {
+		return x, y, z, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return x, y, z, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 
-	}
 
 	return x, y, z, nil
 }
 
 // Returns the data from GetAcceleration, GetMagneticField
 // and GetAngularVelocity as well as the temperature of the IMU Brick.
-// 
-// The temperature is given in °C/100.
 // 
 // If you want to get the data periodically, it is recommended
 // to use the RegisterAllDataCallback callback and set the period with
@@ -471,16 +522,21 @@ func (device *IMUBrick) GetAllData() (accX int16, accY int16, accZ int16, magX i
 	if err != nil {
 		return accX, accY, accZ, magX, magY, magZ, angX, angY, angZ, temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return accX, accY, accZ, magX, magY, magZ, angX, angY, angZ, temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &accX)
+	if header.Length != 28 {
+		return accX, accY, accZ, magX, magY, magZ, angX, angY, angZ, temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 28)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return accX, accY, accZ, magX, magY, magZ, angX, angY, angZ, temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &accX)
 	binary.Read(resultBuf, binary.LittleEndian, &accY)
 	binary.Read(resultBuf, binary.LittleEndian, &accZ)
 	binary.Read(resultBuf, binary.LittleEndian, &magX)
@@ -491,13 +547,12 @@ func (device *IMUBrick) GetAllData() (accX int16, accY int16, accZ int16, magX i
 	binary.Read(resultBuf, binary.LittleEndian, &angZ)
 	binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
-	}
 
 	return accX, accY, accZ, magX, magY, magZ, angX, angY, angZ, temperature, nil
 }
 
 // Returns the current orientation (roll, pitch, yaw) of the IMU Brick as Euler
-// angles in one-hundredth degree. Note that Euler angles always experience a
+// angles. Note that Euler angles always experience a
 // https://en.wikipedia.org/wiki/Gimbal_lock.
 // 
 // We recommend that you use quaternions instead.
@@ -515,20 +570,24 @@ func (device *IMUBrick) GetOrientation() (roll int16, pitch int16, yaw int16, er
 	if err != nil {
 		return roll, pitch, yaw, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return roll, pitch, yaw, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &roll)
+	if header.Length != 14 {
+		return roll, pitch, yaw, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return roll, pitch, yaw, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &roll)
 	binary.Read(resultBuf, binary.LittleEndian, &pitch)
 	binary.Read(resultBuf, binary.LittleEndian, &yaw)
 
-	}
 
 	return roll, pitch, yaw, nil
 }
@@ -571,27 +630,30 @@ func (device *IMUBrick) GetQuaternion() (x float32, y float32, z float32, w floa
 	if err != nil {
 		return x, y, z, w, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return x, y, z, w, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &x)
+	if header.Length != 24 {
+		return x, y, z, w, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return x, y, z, w, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &x)
 	binary.Read(resultBuf, binary.LittleEndian, &y)
 	binary.Read(resultBuf, binary.LittleEndian, &z)
 	binary.Read(resultBuf, binary.LittleEndian, &w)
 
-	}
 
 	return x, y, z, w, nil
 }
 
-// Returns the temperature of the IMU Brick. The temperature is given in
-// °C/100.
+// Returns the temperature of the IMU Brick.
 func (device *IMUBrick) GetIMUTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
 	
@@ -599,18 +661,22 @@ func (device *IMUBrick) GetIMUTemperature() (temperature int16, err error) {
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -623,17 +689,21 @@ func (device *IMUBrick) LedsOn() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -646,17 +716,21 @@ func (device *IMUBrick) LedsOff() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -670,18 +744,22 @@ func (device *IMUBrick) AreLedsOn() (leds bool, err error) {
 	if err != nil {
 		return leds, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return leds, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &leds)
-
+	if header.Length != 9 {
+		return leds, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return leds, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &leds)
+
 
 	return leds, nil
 }
@@ -695,17 +773,21 @@ func (device *IMUBrick) SetAccelerationRange(range_ uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -718,18 +800,22 @@ func (device *IMUBrick) GetAccelerationRange() (range_ uint8, err error) {
 	if err != nil {
 		return range_, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return range_, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &range_)
-
+	if header.Length != 9 {
+		return range_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return range_, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &range_)
+
 
 	return range_, nil
 }
@@ -743,17 +829,21 @@ func (device *IMUBrick) SetMagnetometerRange(range_ uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -766,23 +856,27 @@ func (device *IMUBrick) GetMagnetometerRange() (range_ uint8, err error) {
 	if err != nil {
 		return range_, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return range_, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &range_)
-
+	if header.Length != 9 {
+		return range_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return range_, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &range_)
+
 
 	return range_, nil
 }
 
-// Sets the convergence speed of the IMU Brick in °/s. The convergence speed
+// Sets the convergence speed of the IMU Brick. The convergence speed
 // determines how the different sensor measurements are fused.
 // 
 // If the orientation of the IMU Brick is off by 10° and the convergence speed is
@@ -807,8 +901,6 @@ func (device *IMUBrick) GetMagnetometerRange() (range_ uint8, err error) {
 // 
 // You might want to play around with the convergence speed in the Brick Viewer to
 // get a feeling for a good value for your application.
-// 
-// The default value is 30.
 func (device *IMUBrick) SetConvergenceSpeed(speed uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, speed);
@@ -817,17 +909,21 @@ func (device *IMUBrick) SetConvergenceSpeed(speed uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -840,18 +936,22 @@ func (device *IMUBrick) GetConvergenceSpeed() (speed uint16, err error) {
 	if err != nil {
 		return speed, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return speed, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &speed)
-
+	if header.Length != 10 {
+		return speed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return speed, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &speed)
+
 
 	return speed, nil
 }
@@ -906,17 +1006,21 @@ func (device *IMUBrick) SetCalibration(typ CalibrationType, data [10]int16) (err
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -939,18 +1043,22 @@ func (device *IMUBrick) GetCalibration(typ CalibrationType) (data [10]int16, err
 	if err != nil {
 		return data, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return data, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &data)
-
+	if header.Length != 28 {
+		return data, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 28)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return data, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &data)
+
 
 	return data, nil
 }
@@ -965,17 +1073,21 @@ func (device *IMUBrick) SetAccelerationPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -988,18 +1100,22 @@ func (device *IMUBrick) GetAccelerationPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1014,17 +1130,21 @@ func (device *IMUBrick) SetMagneticFieldPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1037,18 +1157,22 @@ func (device *IMUBrick) GetMagneticFieldPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1063,17 +1187,21 @@ func (device *IMUBrick) SetAngularVelocityPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1086,18 +1214,22 @@ func (device *IMUBrick) GetAngularVelocityPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1112,17 +1244,21 @@ func (device *IMUBrick) SetAllDataPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1135,18 +1271,22 @@ func (device *IMUBrick) GetAllDataPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1161,17 +1301,21 @@ func (device *IMUBrick) SetOrientationPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1184,18 +1328,22 @@ func (device *IMUBrick) GetOrientationPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1210,17 +1358,21 @@ func (device *IMUBrick) SetQuaternionPeriod(period uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1233,18 +1385,22 @@ func (device *IMUBrick) GetQuaternionPeriod() (period uint32, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -1261,17 +1417,21 @@ func (device *IMUBrick) OrientationCalculationOn() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1296,17 +1456,21 @@ func (device *IMUBrick) OrientationCalculationOff() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1322,18 +1486,22 @@ func (device *IMUBrick) IsOrientationCalculationOn() (orientationCalculationOn b
 	if err != nil {
 		return orientationCalculationOn, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return orientationCalculationOn, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &orientationCalculationOn)
-
+	if header.Length != 9 {
+		return orientationCalculationOn, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return orientationCalculationOn, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &orientationCalculationOn)
+
 
 	return orientationCalculationOn, nil
 }
@@ -1342,8 +1510,8 @@ func (device *IMUBrick) IsOrientationCalculationOn() (orientationCalculationOn b
 // enabled, the Brick will try to adapt the baudrate for the communication
 // between Bricks and Bricklets according to the amount of data that is transferred.
 // 
-// The baudrate will be increased exponentially if lots of data is send/received and
-// decreased linearly if little data is send/received.
+// The baudrate will be increased exponentially if lots of data is sent/received and
+// decreased linearly if little data is sent/received.
 // 
 // This lowers the baudrate in applications where little data is transferred (e.g.
 // a weather station) and increases the robustness. If there is lots of data to transfer
@@ -1357,10 +1525,6 @@ func (device *IMUBrick) IsOrientationCalculationOn() (orientationCalculationOn b
 // SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
 // as set by SetSPITFPBaudrate will be used statically.
 // 
-// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-// 
-// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-// 
 // .. versionadded:: 2.3.5$nbsp;(Firmware)
 func (device *IMUBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -1371,17 +1535,21 @@ func (device *IMUBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mini
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1396,19 +1564,23 @@ func (device *IMUBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, m
 	if err != nil {
 		return enableDynamicBaudrate, minimumDynamicBaudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+	if header.Length != 13 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
-	}
 
 	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
@@ -1440,24 +1612,27 @@ func (device *IMUBrick) GetSendTimeoutCount(communicationMethod CommunicationMet
 	if err != nil {
 		return timeoutCount, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return timeoutCount, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
-
+	if header.Length != 12 {
+		return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return timeoutCount, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+
 
 	return timeoutCount, nil
 }
 
-// Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-// baudrate can be in the range 400000 to 2000000.
+// Sets the baudrate for a specific Bricklet port.
 // 
 // If you want to increase the throughput of Bricklets you can increase
 // the baudrate. If you get a high error count because of high
@@ -1471,8 +1646,6 @@ func (device *IMUBrick) GetSendTimeoutCount(communicationMethod CommunicationMet
 // or similar is necessary in you applications we recommend to not change
 // the baudrate.
 // 
-// The default baudrate for all ports is 1400000.
-// 
 // .. versionadded:: 2.3.3$nbsp;(Firmware)
 func (device *IMUBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -1483,17 +1656,21 @@ func (device *IMUBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1509,18 +1686,22 @@ func (device *IMUBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, e
 	if err != nil {
 		return baudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return baudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
-
+	if header.Length != 12 {
+		return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return baudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+
 
 	return baudrate, nil
 }
@@ -1546,21 +1727,25 @@ func (device *IMUBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChe
 	if err != nil {
 		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+	if header.Length != 24 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -1580,17 +1765,21 @@ func (device *IMUBrick) EnableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1610,17 +1799,21 @@ func (device *IMUBrick) DisableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1635,18 +1828,22 @@ func (device *IMUBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
@@ -1664,25 +1861,29 @@ func (device *IMUBrick) GetProtocol1BrickletName(port rune) (protocolVersion uin
 	if err != nil {
 		return protocolVersion, firmwareVersion, name, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+	if header.Length != 52 {
+		return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	name = ByteSliceToString(resultBuf.Next(40))
 
-	}
 
 	return protocolVersion, firmwareVersion, name, nil
 }
 
-// Returns the temperature in °C/10 as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has an
@@ -1695,18 +1896,22 @@ func (device *IMUBrick) GetChipTemperature() (temperature int16, err error) {
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -1724,26 +1929,98 @@ func (device *IMUBrick) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
 
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
 	return nil
+}
+
+// Writes 32 bytes of firmware to the bricklet attached at the given port.
+// The bytes are written to the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IMUBrick) WriteBrickletPlugin(port rune, offset uint8, chunk [32]uint8) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, chunk);
+
+	resultBytes, err := device.device.Set(uint8(FunctionWriteBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
+	return nil
+}
+
+// Reads 32 bytes of firmware from the bricklet attached at the given port.
+// The bytes are read starting at the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *IMUBrick) ReadBrickletPlugin(port rune, offset uint8) (chunk [32]uint8, err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+
+	resultBytes, err := device.device.Get(uint8(FunctionReadBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return chunk, err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 40 {
+		return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return chunk, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &chunk)
+
+
+	return chunk, nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be '0'-'8' (stack position).
+// The position is the position in the stack from '0' (bottom) to '8' (top).
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1754,23 +2031,27 @@ func (device *IMUBrick) GetIdentity() (uid string, connectedUid string, position
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

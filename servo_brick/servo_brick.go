@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package servo_brick
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -68,6 +69,8 @@ const (
 	FunctionGetProtocol1BrickletName Function = 241
 	FunctionGetChipTemperature Function = 242
 	FunctionReset Function = 243
+	FunctionWriteBrickletPlugin Function = 246
+	FunctionReadBrickletPlugin Function = 247
 	FunctionGetIdentity Function = 255
 	FunctionCallbackUnderVoltage Function = 26
 	FunctionCallbackPositionReached Function = 27
@@ -96,7 +99,7 @@ const DeviceDisplayName = "Servo Brick"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,4 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return ServoBrick{}, err
 	}
@@ -143,6 +146,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 	dev.ResponseExpected[FunctionGetProtocol1BrickletName] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionWriteBrickletPlugin] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionReadBrickletPlugin] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
 	return ServoBrick{dev}, nil
 }
@@ -157,7 +162,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ServoBrick, error) {
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -171,7 +176,7 @@ func (device *ServoBrick) GetResponseExpected(functionID Function) (bool, error)
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *ServoBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -188,10 +193,15 @@ func (device *ServoBrick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when the input voltage drops below the value set by
-// SetMinimumVoltage. The parameter is the current voltage given
-// in mV.
+// SetMinimumVoltage. The parameter is the current voltage.
 func (device *ServoBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 10 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var voltage uint16
 		binary.Read(buf, binary.LittleEndian, &voltage)
@@ -220,6 +230,12 @@ func (device *ServoBrick) DeregisterUnderVoltageCallback(registrationId uint64) 
 //  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterPositionReachedCallback(fn func(uint8, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 11 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var servoNum uint8
 		var position int16
@@ -248,6 +264,12 @@ func (device *ServoBrick) DeregisterPositionReachedCallback(registrationId uint6
 //  control value and the callback will be triggered too early.
 func (device *ServoBrick) RegisterVelocityReachedCallback(fn func(uint8, int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 11 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var servoNum uint8
 		var velocity int16
@@ -274,17 +296,21 @@ func (device *ServoBrick) Enable(servoNum uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -299,17 +325,21 @@ func (device *ServoBrick) Disable(servoNum uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -323,23 +353,27 @@ func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
 
-// Sets the position in °/100 for the specified servo.
+// Sets the position for the specified servo.
 // 
 // The default range of the position is -9000 to 9000, but it can be specified
 // according to your servo with SetDegree.
@@ -356,17 +390,21 @@ func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -380,18 +418,22 @@ func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error
 	if err != nil {
 		return position, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return position, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &position)
-
+	if header.Length != 10 {
+		return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return position, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &position)
+
 
 	return position, nil
 }
@@ -407,29 +449,31 @@ func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, er
 	if err != nil {
 		return position, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return position, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &position)
-
+	if header.Length != 10 {
+		return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return position, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &position)
+
 
 	return position, nil
 }
 
-// Sets the maximum velocity of the specified servo in °/100s. The velocity
+// Sets the maximum velocity of the specified servo. The velocity
 // is accelerated according to the value set by SetAcceleration.
 // 
 // The minimum velocity is 0 (no movement) and the maximum velocity is 65535.
 // With a value of 65535 the position will be set immediately (no velocity).
-// 
-// The default value is 65535.
 func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -439,17 +483,21 @@ func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err erro
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -463,18 +511,22 @@ func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err erro
 	if err != nil {
 		return velocity, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return velocity, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &velocity)
-
+	if header.Length != 10 {
+		return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return velocity, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &velocity)
+
 
 	return velocity, nil
 }
@@ -490,28 +542,30 @@ func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, e
 	if err != nil {
 		return velocity, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return velocity, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &velocity)
-
+	if header.Length != 10 {
+		return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return velocity, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &velocity)
+
 
 	return velocity, nil
 }
 
-// Sets the acceleration of the specified servo in °/100s².
+// Sets the acceleration of the specified servo.
 // 
 // The minimum acceleration is 1 and the maximum acceleration is 65535.
 // With a value of 65535 the velocity will be set immediately (no acceleration).
-// 
-// The default value is 65535.
 func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -521,17 +575,21 @@ func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -546,32 +604,32 @@ func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, 
 	if err != nil {
 		return acceleration, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return acceleration, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &acceleration)
-
+	if header.Length != 10 {
+		return acceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return acceleration, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &acceleration)
+
 
 	return acceleration, nil
 }
 
-// Sets the output voltages with which the servos are driven in mV.
-// The minimum output voltage is 2000mV and the maximum output voltage is
-// 9000mV.
+// Sets the output voltages with which the servos are driven.
 // 
 // Note
 //  We recommend that you set this value to the maximum voltage that is
 //  specified for your servo, most servos achieve their maximum force only
 //  with high voltages.
-// 
-// The default value is 5000.
 func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, voltage);
@@ -580,17 +638,21 @@ func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -603,23 +665,27 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Sets the minimum and maximum pulse width of the specified servo in µs.
+// Sets the minimum and maximum pulse width of the specified servo.
 // 
 // Usually, servos are controlled with a
 // https://en.wikipedia.org/wiki/Pulse-width_modulation, whereby the
@@ -631,11 +697,7 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
 // maximum pulse width, you should set the values accordingly. If your servo
 // comes without any datasheet you have to find the values via trial and error.
 // 
-// Both values have a range from 1 to 65535 (unsigned 16-bit integer). The
-// minimum must be smaller than the maximum.
-// 
-// The default values are 1000µs (1ms) and 2000µs (2ms) for minimum and
-// maximum pulse width.
+// The minimum must be smaller than the maximum.
 func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -646,17 +708,21 @@ func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -671,19 +737,23 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
 	if err != nil {
 		return min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &min)
+	if header.Length != 12 {
+		return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return min, max, nil
 }
@@ -714,10 +784,7 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
 //   control it with a RC brushless motor controller. In this case you can set the
 //   minimum to 0 and the maximum to 10000. SetPosition now controls the rpm.
 // 
-// Both values have a possible range from -32767 to 32767
-// (signed 16-bit integer). The minimum must be smaller than the maximum.
-// 
-// The default values are -9000 and 9000 for the minimum and maximum degree.
+// The minimum must be smaller than the maximum.
 func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -728,17 +795,21 @@ func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -753,24 +824,28 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
 	if err != nil {
 		return min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &min)
+	if header.Length != 12 {
+		return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return min, max, nil
 }
 
-// Sets the period of the specified servo in µs.
+// Sets the period of the specified servo.
 // 
 // Usually, servos are controlled with a
 // https://en.wikipedia.org/wiki/Pulse-width_modulation. Different
@@ -779,12 +854,8 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
 // 
 // If your servo comes with a datasheet that specifies a period, you should
 // set it accordingly. If you don't have a datasheet and you have no idea
-// what the correct period is, the default value (19.5ms) will most likely
+// what the correct period is, the default value will most likely
 // work fine.
-// 
-// The minimum possible period is 1µs and the maximum is 65535µs.
-// 
-// The default value is 19.5ms (19500µs).
 func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -794,17 +865,21 @@ func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -818,23 +893,27 @@ func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 10 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
 
-// Returns the current consumption of the specified servo in mA.
+// Returns the current consumption of the specified servo.
 func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, servoNum);
@@ -843,23 +922,27 @@ func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err e
 	if err != nil {
 		return current, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return current, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &current)
-
+	if header.Length != 10 {
+		return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return current, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &current)
+
 
 	return current, nil
 }
 
-// Returns the current consumption of all servos together in mA.
+// Returns the current consumption of all servos together.
 func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -867,23 +950,27 @@ func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
 	if err != nil {
 		return current, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return current, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &current)
-
+	if header.Length != 10 {
+		return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return current, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &current)
+
 
 	return current, nil
 }
 
-// Returns the stack input voltage in mV. The stack input voltage is the
+// Returns the stack input voltage. The stack input voltage is the
 // voltage that is supplied via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
 func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
@@ -893,23 +980,27 @@ func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Returns the external input voltage in mV. The external input voltage is
+// Returns the external input voltage. The external input voltage is
 // given via the black power input connector on the Servo Brick.
 // 
 // If there is an external input voltage and a stack input voltage, the motors
@@ -928,29 +1019,31 @@ func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) 
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
+// Sets the minimum voltage, below which the RegisterUnderVoltageCallback callback
 // is triggered. The minimum possible value that works with the Servo Brick is 5V.
 // You can use this function to detect the discharge of a battery that is used
 // to drive the stepper motor. If you have a fixed power supply, you likely do
 // not need this functionality.
-// 
-// The default value is 5V (5000mV).
 func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, voltage);
@@ -959,17 +1052,21 @@ func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -982,18 +1079,22 @@ func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
@@ -1010,24 +1111,26 @@ func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // Disables the RegisterPositionReachedCallback callback.
-// 
-// Default is disabled.
 // 
 // .. versionadded:: 2.0.1$nbsp;(Firmware)
 func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
@@ -1037,17 +1140,21 @@ func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1062,18 +1169,22 @@ func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err 
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
@@ -1090,17 +1201,21 @@ func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1117,17 +1232,21 @@ func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1142,18 +1261,22 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
@@ -1162,8 +1285,8 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
 // enabled, the Brick will try to adapt the baudrate for the communication
 // between Bricks and Bricklets according to the amount of data that is transferred.
 // 
-// The baudrate will be increased exponentially if lots of data is send/received and
-// decreased linearly if little data is send/received.
+// The baudrate will be increased exponentially if lots of data is sent/received and
+// decreased linearly if little data is sent/received.
 // 
 // This lowers the baudrate in applications where little data is transferred (e.g.
 // a weather station) and increases the robustness. If there is lots of data to transfer
@@ -1177,10 +1300,6 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
 // SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
 // as set by SetSPITFPBaudrate will be used statically.
 // 
-// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-// 
-// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-// 
 // .. versionadded:: 2.3.4$nbsp;(Firmware)
 func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -1191,17 +1310,21 @@ func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1216,19 +1339,23 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 	if err != nil {
 		return enableDynamicBaudrate, minimumDynamicBaudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+	if header.Length != 13 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
-	}
 
 	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
@@ -1260,24 +1387,27 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
 	if err != nil {
 		return timeoutCount, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return timeoutCount, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
-
+	if header.Length != 12 {
+		return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return timeoutCount, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+
 
 	return timeoutCount, nil
 }
 
-// Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-// baudrate can be in the range 400000 to 2000000.
+// Sets the baudrate for a specific Bricklet port.
 // 
 // If you want to increase the throughput of Bricklets you can increase
 // the baudrate. If you get a high error count because of high
@@ -1291,8 +1421,6 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
 // or similar is necessary in you applications we recommend to not change
 // the baudrate.
 // 
-// The default baudrate for all ports is 1400000.
-// 
 // .. versionadded:: 2.3.2$nbsp;(Firmware)
 func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -1303,17 +1431,21 @@ func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1329,18 +1461,22 @@ func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
 	if err != nil {
 		return baudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return baudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
-
+	if header.Length != 12 {
+		return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return baudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+
 
 	return baudrate, nil
 }
@@ -1366,21 +1502,25 @@ func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
 	if err != nil {
 		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+	if header.Length != 24 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -1400,17 +1540,21 @@ func (device *ServoBrick) EnableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1430,17 +1574,21 @@ func (device *ServoBrick) DisableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1455,18 +1603,22 @@ func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
@@ -1484,25 +1636,29 @@ func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion u
 	if err != nil {
 		return protocolVersion, firmwareVersion, name, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+	if header.Length != 52 {
+		return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	name = ByteSliceToString(resultBuf.Next(40))
 
-	}
 
 	return protocolVersion, firmwareVersion, name, nil
 }
 
-// Returns the temperature in °C/10 as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has an
@@ -1515,18 +1671,22 @@ func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -1544,26 +1704,98 @@ func (device *ServoBrick) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
 
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
 	return nil
+}
+
+// Writes 32 bytes of firmware to the bricklet attached at the given port.
+// The bytes are written to the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ServoBrick) WriteBrickletPlugin(port rune, offset uint8, chunk [32]uint8) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, chunk);
+
+	resultBytes, err := device.device.Set(uint8(FunctionWriteBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
+	return nil
+}
+
+// Reads 32 bytes of firmware from the bricklet attached at the given port.
+// The bytes are read starting at the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *ServoBrick) ReadBrickletPlugin(port rune, offset uint8) (chunk [32]uint8, err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+
+	resultBytes, err := device.device.Get(uint8(FunctionReadBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return chunk, err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 40 {
+		return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return chunk, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &chunk)
+
+
+	return chunk, nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be '0'-'8' (stack position).
+// The position is the position in the stack from '0' (bottom) to '8' (top).
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1574,23 +1806,27 @@ func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, positi
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

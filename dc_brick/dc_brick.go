@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package dc_brick
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -57,6 +58,8 @@ const (
 	FunctionGetProtocol1BrickletName Function = 241
 	FunctionGetChipTemperature Function = 242
 	FunctionReset Function = 243
+	FunctionWriteBrickletPlugin Function = 246
+	FunctionReadBrickletPlugin Function = 247
 	FunctionGetIdentity Function = 255
 	FunctionCallbackUnderVoltage Function = 21
 	FunctionCallbackEmergencyShutdown Function = 22
@@ -93,7 +96,7 @@ const DeviceDisplayName = "DC Brick"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DCBrick, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,3 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,3 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return DCBrick{}, err
 	}
@@ -129,6 +132,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DCBrick, error) {
 	dev.ResponseExpected[FunctionGetProtocol1BrickletName] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionWriteBrickletPlugin] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionReadBrickletPlugin] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
 	return DCBrick{dev}, nil
 }
@@ -143,7 +148,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (DCBrick, error) {
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -157,7 +162,7 @@ func (device *DCBrick) GetResponseExpected(functionID Function) (bool, error) {
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *DCBrick) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -174,10 +179,15 @@ func (device *DCBrick) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is triggered when the input voltage drops below the value set by
-// SetMinimumVoltage. The parameter is the current voltage given
-// in mV.
+// SetMinimumVoltage. The parameter is the current voltage.
 func (device *DCBrick) RegisterUnderVoltageCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 10 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var voltage uint16
 		binary.Read(buf, binary.LittleEndian, &voltage)
@@ -208,6 +218,12 @@ func (device *DCBrick) DeregisterUnderVoltageCallback(registrationId uint64) {
 //  overcurrent/overtemperature signal from the driver chip.
 func (device *DCBrick) RegisterEmergencyShutdownCallback(fn func()) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 8 {
+			return
+		}
 		
 		
 		
@@ -234,6 +250,12 @@ func (device *DCBrick) DeregisterEmergencyShutdownCallback(registrationId uint64
 //  control value and the callback will be triggered too early.
 func (device *DCBrick) RegisterVelocityReachedCallback(fn func(int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 10 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var velocity int16
 		binary.Read(buf, binary.LittleEndian, &velocity)
@@ -256,6 +278,12 @@ func (device *DCBrick) DeregisterVelocityReachedCallback(registrationId uint64) 
 // if there is a change in the velocity.
 func (device *DCBrick) RegisterCurrentVelocityCallback(fn func(int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 10 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var velocity int16
 		binary.Read(buf, binary.LittleEndian, &velocity)
@@ -279,8 +307,6 @@ func (device *DCBrick) DeregisterCurrentVelocityCallback(registrationId uint64) 
 // controlled, e.g. a velocity of 3277 sets a PWM with a 10% duty cycle.
 // You can not only control the duty cycle of the PWM but also the frequency,
 // see SetPWMFrequency.
-// 
-// The default velocity is 0.
 func (device *DCBrick) SetVelocity(velocity int16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, velocity);
@@ -289,17 +315,21 @@ func (device *DCBrick) SetVelocity(velocity int16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -312,18 +342,22 @@ func (device *DCBrick) GetVelocity() (velocity int16, err error) {
 	if err != nil {
 		return velocity, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return velocity, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &velocity)
-
+	if header.Length != 10 {
+		return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return velocity, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &velocity)
+
 
 	return velocity, nil
 }
@@ -338,18 +372,22 @@ func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {
 	if err != nil {
 		return velocity, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return velocity, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &velocity)
-
+	if header.Length != 10 {
+		return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return velocity, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &velocity)
+
 
 	return velocity, nil
 }
@@ -364,8 +402,6 @@ func (device *DCBrick) GetCurrentVelocity() (velocity int16, err error) {
 // 
 // If acceleration is set to 0, there is no speed ramping, i.e. a new velocity
 // is immediately given to the motor.
-// 
-// The default acceleration is 10000.
 func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, acceleration);
@@ -374,17 +410,21 @@ func (device *DCBrick) SetAcceleration(acceleration uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -397,32 +437,34 @@ func (device *DCBrick) GetAcceleration() (acceleration uint16, err error) {
 	if err != nil {
 		return acceleration, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return acceleration, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &acceleration)
-
+	if header.Length != 10 {
+		return acceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return acceleration, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &acceleration)
+
 
 	return acceleration, nil
 }
 
-// Sets the frequency (in Hz) of the PWM with which the motor is driven.
-// The possible range of the frequency is 1-20000Hz. Often a high frequency
+// Sets the frequency of the PWM with which the motor is driven.
+// Often a high frequency
 // is less noisy and the motor runs smoother. However, with a low frequency
 // there are less switches and therefore fewer switching losses. Also with
 // most motors lower frequencies enable higher torque.
 // 
 // If you have no idea what all this means, just ignore this function and use
 // the default frequency, it will very likely work fine.
-// 
-// The default frequency is 15 kHz.
 func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, frequency);
@@ -431,22 +473,26 @@ func (device *DCBrick) SetPWMFrequency(frequency uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
-// Returns the PWM frequency (in Hz) as set by SetPWMFrequency.
+// Returns the PWM frequency as set by SetPWMFrequency.
 func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -454,18 +500,22 @@ func (device *DCBrick) GetPWMFrequency() (frequency uint16, err error) {
 	if err != nil {
 		return frequency, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return frequency, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &frequency)
-
+	if header.Length != 10 {
+		return frequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return frequency, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &frequency)
+
 
 	return frequency, nil
 }
@@ -485,22 +535,26 @@ func (device *DCBrick) FullBrake() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
-// Returns the stack input voltage in mV. The stack input voltage is the
+// Returns the stack input voltage. The stack input voltage is the
 // voltage that is supplied via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
 func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {
@@ -510,23 +564,27 @@ func (device *DCBrick) GetStackInputVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Returns the external input voltage in mV. The external input voltage is
+// Returns the external input voltage. The external input voltage is
 // given via the black power input connector on the DC Brick.
 // 
 // If there is an external input voltage and a stack input voltage, the motor
@@ -545,23 +603,27 @@ func (device *DCBrick) GetExternalInputVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Returns the current consumption of the motor in mA.
+// Returns the current consumption of the motor.
 func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -569,18 +631,22 @@ func (device *DCBrick) GetCurrentConsumption() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
@@ -594,23 +660,35 @@ func (device *DCBrick) Enable() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // Disables the driver chip. The configurations are kept (velocity,
 // acceleration, etc) but the motor is not driven until it is enabled again.
+// 
+// Warning
+//  Disabling the driver chip while the motor is still turning can damage the
+//  driver chip. The motor should be stopped calling SetVelocity with 0
+//  before disabling the motor power. The SetVelocity function will **not**
+//  wait until the motor is actually stopped. You have to explicitly wait for the
+//  appropriate time after calling the SetVelocity function before calling
+//  the Disable function.
 func (device *DCBrick) Disable() (err error) {
 	var buf bytes.Buffer
 	
@@ -618,17 +696,21 @@ func (device *DCBrick) Disable() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -641,29 +723,31 @@ func (device *DCBrick) IsEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
 
-// Sets the minimum voltage in mV, below which the RegisterUnderVoltageCallback callback
+// Sets the minimum voltage, below which the RegisterUnderVoltageCallback callback
 // is triggered. The minimum possible value that works with the DC Brick is 6V.
 // You can use this function to detect the discharge of a battery that is used
 // to drive the motor. If you have a fixed power supply, you likely do not need
 // this functionality.
-// 
-// The default value is 6V.
 func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, voltage);
@@ -672,17 +756,21 @@ func (device *DCBrick) SetMinimumVoltage(voltage uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -695,18 +783,22 @@ func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 10 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
@@ -726,8 +818,6 @@ func (device *DCBrick) GetMinimumVoltage() (voltage uint16, err error) {
 // In Drive/Coast mode, the motor is always either driving or freewheeling.
 // Advantages are: Less current consumption and less demands on the motor and
 // driver chip.
-// 
-// The default value is 0 = Drive/Brake.
 //
 // Associated constants:
 //
@@ -741,17 +831,21 @@ func (device *DCBrick) SetDriveMode(mode DriveMode) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -769,26 +863,28 @@ func (device *DCBrick) GetDriveMode() (mode DriveMode, err error) {
 	if err != nil {
 		return mode, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return mode, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &mode)
-
+	if header.Length != 9 {
+		return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return mode, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &mode)
+
 
 	return mode, nil
 }
 
-// Sets a period in ms with which the RegisterCurrentVelocityCallback callback is triggered.
+// Sets a period with which the RegisterCurrentVelocityCallback callback is triggered.
 // A period of 0 turns the callback off.
-// 
-// The default value is 0.
 func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, period);
@@ -797,17 +893,21 @@ func (device *DCBrick) SetCurrentVelocityPeriod(period uint16) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -820,18 +920,22 @@ func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 10 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -840,8 +944,8 @@ func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
 // enabled, the Brick will try to adapt the baudrate for the communication
 // between Bricks and Bricklets according to the amount of data that is transferred.
 // 
-// The baudrate will be increased exponentially if lots of data is send/received and
-// decreased linearly if little data is send/received.
+// The baudrate will be increased exponentially if lots of data is sent/received and
+// decreased linearly if little data is sent/received.
 // 
 // This lowers the baudrate in applications where little data is transferred (e.g.
 // a weather station) and increases the robustness. If there is lots of data to transfer
@@ -855,10 +959,6 @@ func (device *DCBrick) GetCurrentVelocityPeriod() (period uint16, err error) {
 // SetSPITFPBaudrate. If the dynamic baudrate is disabled, the baudrate
 // as set by SetSPITFPBaudrate will be used statically.
 // 
-// The minimum dynamic baudrate has a value range of 400000 to 2000000 baud.
-// 
-// By default dynamic baudrate is enabled and the minimum dynamic baudrate is 400000.
-// 
 // .. versionadded:: 2.3.5$nbsp;(Firmware)
 func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minimumDynamicBaudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -869,17 +969,21 @@ func (device *DCBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, minim
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -894,19 +998,23 @@ func (device *DCBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool, mi
 	if err != nil {
 		return enableDynamicBaudrate, minimumDynamicBaudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+	if header.Length != 13 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
 	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
 
-	}
 
 	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
@@ -938,24 +1046,27 @@ func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMeth
 	if err != nil {
 		return timeoutCount, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return timeoutCount, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
-
+	if header.Length != 12 {
+		return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return timeoutCount, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+
 
 	return timeoutCount, nil
 }
 
-// Sets the baudrate for a specific Bricklet port ('a' - 'd'). The
-// baudrate can be in the range 400000 to 2000000.
+// Sets the baudrate for a specific Bricklet port.
 // 
 // If you want to increase the throughput of Bricklets you can increase
 // the baudrate. If you get a high error count because of high
@@ -969,8 +1080,6 @@ func (device *DCBrick) GetSendTimeoutCount(communicationMethod CommunicationMeth
 // or similar is necessary in you applications we recommend to not change
 // the baudrate.
 // 
-// The default baudrate for all ports is 1400000.
-// 
 // .. versionadded:: 2.3.3$nbsp;(Firmware)
 func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (err error) {
 	var buf bytes.Buffer
@@ -981,17 +1090,21 @@ func (device *DCBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) (er
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1007,18 +1120,22 @@ func (device *DCBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32, er
 	if err != nil {
 		return baudrate, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return baudrate, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
-
+	if header.Length != 12 {
+		return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return baudrate, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+
 
 	return baudrate, nil
 }
@@ -1044,21 +1161,25 @@ func (device *DCBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKChec
 	if err != nil {
 		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+	if header.Length != 24 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -1078,17 +1199,21 @@ func (device *DCBrick) EnableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1108,17 +1233,21 @@ func (device *DCBrick) DisableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1133,18 +1262,22 @@ func (device *DCBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return enabled, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
+	if header.Length != 9 {
+		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return enabled, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 
 	return enabled, nil
 }
@@ -1162,25 +1295,29 @@ func (device *DCBrick) GetProtocol1BrickletName(port rune) (protocolVersion uint
 	if err != nil {
 		return protocolVersion, firmwareVersion, name, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+	if header.Length != 52 {
+		return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	name = ByteSliceToString(resultBuf.Next(40))
 
-	}
 
 	return protocolVersion, firmwareVersion, name, nil
 }
 
-// Returns the temperature in °C/10 as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has an
@@ -1193,18 +1330,22 @@ func (device *DCBrick) GetChipTemperature() (temperature int16, err error) {
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -1222,26 +1363,98 @@ func (device *DCBrick) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
 
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
 	return nil
+}
+
+// Writes 32 bytes of firmware to the bricklet attached at the given port.
+// The bytes are written to the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *DCBrick) WriteBrickletPlugin(port rune, offset uint8, chunk [32]uint8) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, chunk);
+
+	resultBytes, err := device.device.Set(uint8(FunctionWriteBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
+	return nil
+}
+
+// Reads 32 bytes of firmware from the bricklet attached at the given port.
+// The bytes are read starting at the position offset * 32.
+// 
+// This function is used by Brick Viewer during flashing. It should not be
+// necessary to call it in a normal user program.
+func (device *DCBrick) ReadBrickletPlugin(port rune, offset uint8) (chunk [32]uint8, err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, port);
+	binary.Write(&buf, binary.LittleEndian, offset);
+
+	resultBytes, err := device.device.Get(uint8(FunctionReadBrickletPlugin), buf.Bytes())
+	if err != nil {
+		return chunk, err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 40 {
+		return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return chunk, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &chunk)
+
+
+	return chunk, nil
 }
 
 // Returns the UID, the UID where the Brick is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be '0'-'8' (stack position).
+// The position is the position in the stack from '0' (bottom) to '8' (top).
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1252,23 +1465,27 @@ func (device *DCBrick) GetIdentity() (uid string, connectedUid string, position 
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

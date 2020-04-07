@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package voltage_current_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -78,6 +79,19 @@ const (
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
+type ConversionTime = uint8
+
+const (
+	ConversionTime140us ConversionTime = 0
+	ConversionTime204us ConversionTime = 1
+	ConversionTime332us ConversionTime = 2
+	ConversionTime588us ConversionTime = 3
+	ConversionTime1_1ms ConversionTime = 4
+	ConversionTime2_116ms ConversionTime = 5
+	ConversionTime4_156ms ConversionTime = 6
+	ConversionTime8_244ms ConversionTime = 7
+)
+
 type VoltageCurrentBricklet struct {
 	device Device
 }
@@ -87,7 +101,7 @@ const DeviceDisplayName = "Voltage/Current Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (VoltageCurrentBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return VoltageCurrentBricklet{}, err
 	}
@@ -126,7 +140,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (VoltageCurrentBricklet, 
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -140,7 +154,7 @@ func (device *VoltageCurrentBricklet) GetResponseExpected(functionID Function) (
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *VoltageCurrentBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -164,6 +178,12 @@ func (device *VoltageCurrentBricklet) GetAPIVersion() [3]uint8 {
 // the last triggering.
 func (device *VoltageCurrentBricklet) RegisterCurrentCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var current int32
 		binary.Read(buf, binary.LittleEndian, &current)
@@ -186,6 +206,12 @@ func (device *VoltageCurrentBricklet) DeregisterCurrentCallback(registrationId u
 // the last triggering.
 func (device *VoltageCurrentBricklet) RegisterVoltageCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var voltage int32
 		binary.Read(buf, binary.LittleEndian, &voltage)
@@ -208,6 +234,12 @@ func (device *VoltageCurrentBricklet) DeregisterVoltageCallback(registrationId u
 // last triggering.
 func (device *VoltageCurrentBricklet) RegisterPowerCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var power int32
 		binary.Read(buf, binary.LittleEndian, &power)
@@ -230,6 +262,12 @@ func (device *VoltageCurrentBricklet) DeregisterPowerCallback(registrationId uin
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterCurrentReachedCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var current int32
 		binary.Read(buf, binary.LittleEndian, &current)
@@ -252,6 +290,12 @@ func (device *VoltageCurrentBricklet) DeregisterCurrentReachedCallback(registrat
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterVoltageReachedCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var voltage int32
 		binary.Read(buf, binary.LittleEndian, &voltage)
@@ -274,6 +318,12 @@ func (device *VoltageCurrentBricklet) DeregisterVoltageReachedCallback(registrat
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageCurrentBricklet) RegisterPowerReachedCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var power int32
 		binary.Read(buf, binary.LittleEndian, &power)
@@ -288,8 +338,7 @@ func (device *VoltageCurrentBricklet) DeregisterPowerReachedCallback(registratio
 }
 
 
-// Returns the current. The value is in mA
-// and between -20000mA and 20000mA.
+// Returns the current.
 // 
 // If you want to get the current periodically, it is recommended to use the
 // RegisterCurrentCallback callback and set the period with
@@ -301,24 +350,27 @@ func (device *VoltageCurrentBricklet) GetCurrent() (current int32, err error) {
 	if err != nil {
 		return current, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return current, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &current)
-
+	if header.Length != 12 {
+		return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return current, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &current)
+
 
 	return current, nil
 }
 
-// Returns the voltage. The value is in mV
-// and between 0mV and 36000mV.
+// Returns the voltage.
 // 
 // If you want to get the voltage periodically, it is recommended to use the
 // RegisterVoltageCallback callback and set the period with
@@ -330,24 +382,27 @@ func (device *VoltageCurrentBricklet) GetVoltage() (voltage int32, err error) {
 	if err != nil {
 		return voltage, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return voltage, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
+	if header.Length != 12 {
+		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return voltage, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 
 	return voltage, nil
 }
 
-// Returns the power. The value is in mW
-// and between 0mV and 720000mW.
+// Returns the power.
 // 
 // If you want to get the power periodically, it is recommended to use the
 // RegisterPowerCallback callback and set the period with
@@ -359,18 +414,22 @@ func (device *VoltageCurrentBricklet) GetPower() (power int32, err error) {
 	if err != nil {
 		return power, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return power, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &power)
-
+	if header.Length != 12 {
+		return power, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return power, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &power)
+
 
 	return power, nil
 }
@@ -378,35 +437,6 @@ func (device *VoltageCurrentBricklet) GetPower() (power int32, err error) {
 // Sets the configuration of the Voltage/Current Bricklet. It is
 // possible to configure number of averages as well as
 // voltage and current conversion time.
-// 
-// Averaging:
-// 
-//  Value| Number of Averages
-//  --- | --- 
-//  0|    1
-//  1|    4
-//  2|    16
-//  3|    64
-//  4|    128
-//  5|    256
-//  6|    512
-//  >=7|  1024
-// 
-// Voltage/Current conversion:
-// 
-//  Value| Conversion time
-//  --- | --- 
-//  0|    140µs
-//  1|    204µs
-//  2|    332µs
-//  3|    588µs
-//  4|    1.1ms
-//  5|    2.116ms
-//  6|    4.156ms
-//  >=7|  8.244ms
-// 
-// The default values are 3, 4 and 4 (64, 1.1ms, 1.1ms) for averaging, voltage
-// conversion and current conversion.
 //
 // Associated constants:
 //
@@ -418,7 +448,15 @@ func (device *VoltageCurrentBricklet) GetPower() (power int32, err error) {
 //	* Averaging256
 //	* Averaging512
 //	* Averaging1024
-func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, voltageConversionTime uint8, currentConversionTime uint8) (err error) {
+//	* ConversionTime140us
+//	* ConversionTime204us
+//	* ConversionTime332us
+//	* ConversionTime588us
+//	* ConversionTime11ms
+//	* ConversionTime2116ms
+//	* ConversionTime4156ms
+//	* ConversionTime8244ms
+func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, voltageConversionTime ConversionTime, currentConversionTime ConversionTime) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, averaging);
 	binary.Write(&buf, binary.LittleEndian, voltageConversionTime);
@@ -428,17 +466,21 @@ func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, volt
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -455,27 +497,39 @@ func (device *VoltageCurrentBricklet) SetConfiguration(averaging Averaging, volt
 //	* Averaging256
 //	* Averaging512
 //	* Averaging1024
-func (device *VoltageCurrentBricklet) GetConfiguration() (averaging Averaging, voltageConversionTime uint8, currentConversionTime uint8, err error) {
+//	* ConversionTime140us
+//	* ConversionTime204us
+//	* ConversionTime332us
+//	* ConversionTime588us
+//	* ConversionTime11ms
+//	* ConversionTime2116ms
+//	* ConversionTime4156ms
+//	* ConversionTime8244ms
+func (device *VoltageCurrentBricklet) GetConfiguration() (averaging Averaging, voltageConversionTime ConversionTime, currentConversionTime ConversionTime, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
 		return averaging, voltageConversionTime, currentConversionTime, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return averaging, voltageConversionTime, currentConversionTime, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &averaging)
+	if header.Length != 11 {
+		return averaging, voltageConversionTime, currentConversionTime, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return averaging, voltageConversionTime, currentConversionTime, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &averaging)
 	binary.Read(resultBuf, binary.LittleEndian, &voltageConversionTime)
 	binary.Read(resultBuf, binary.LittleEndian, &currentConversionTime)
 
-	}
 
 	return averaging, voltageConversionTime, currentConversionTime, nil
 }
@@ -496,17 +550,21 @@ func (device *VoltageCurrentBricklet) SetCalibration(gainMultiplier uint16, gain
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -519,19 +577,23 @@ func (device *VoltageCurrentBricklet) GetCalibration() (gainMultiplier uint16, g
 	if err != nil {
 		return gainMultiplier, gainDivisor, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return gainMultiplier, gainDivisor, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &gainMultiplier)
+	if header.Length != 12 {
+		return gainMultiplier, gainDivisor, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return gainMultiplier, gainDivisor, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &gainMultiplier)
 	binary.Read(resultBuf, binary.LittleEndian, &gainDivisor)
 
-	}
 
 	return gainMultiplier, gainDivisor, nil
 }
@@ -549,17 +611,21 @@ func (device *VoltageCurrentBricklet) SetCurrentCallbackPeriod(period uint32) (e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -572,18 +638,22 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackPeriod() (period uint32,
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -601,17 +671,21 @@ func (device *VoltageCurrentBricklet) SetVoltageCallbackPeriod(period uint32) (e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -624,18 +698,22 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackPeriod() (period uint32,
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -653,17 +731,21 @@ func (device *VoltageCurrentBricklet) SetPowerCallbackPeriod(period uint32) (err
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -676,18 +758,22 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackPeriod() (period uint32, e
 	if err != nil {
 		return period, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return period, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-
+	if header.Length != 12 {
+		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return period, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &period)
+
 
 	return period, nil
 }
@@ -703,8 +789,6 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackPeriod() (period uint32, e
 //  'i'|    Callback is triggered when the current is *inside* the min and max values
 //  '<'|    Callback is triggered when the current is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the current is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -723,17 +807,21 @@ func (device *VoltageCurrentBricklet) SetCurrentCallbackThreshold(option Thresho
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -754,20 +842,24 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackThreshold() (option Thre
 	if err != nil {
 		return option, min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return option, min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &option)
+	if header.Length != 17 {
+		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return option, min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return option, min, max, nil
 }
@@ -783,8 +875,6 @@ func (device *VoltageCurrentBricklet) GetCurrentCallbackThreshold() (option Thre
 //  'i'|    Callback is triggered when the voltage is *inside* the min and max values
 //  '<'|    Callback is triggered when the voltage is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the voltage is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -803,17 +893,21 @@ func (device *VoltageCurrentBricklet) SetVoltageCallbackThreshold(option Thresho
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -834,20 +928,24 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackThreshold() (option Thre
 	if err != nil {
 		return option, min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return option, min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &option)
+	if header.Length != 17 {
+		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return option, min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return option, min, max, nil
 }
@@ -863,8 +961,6 @@ func (device *VoltageCurrentBricklet) GetVoltageCallbackThreshold() (option Thre
 //  'i'|    Callback is triggered when the power is *inside* the min and max values
 //  '<'|    Callback is triggered when the power is smaller than the min value (max is ignored)
 //  '>'|    Callback is triggered when the power is greater than the min value (max is ignored)
-// 
-// The default value is ('x', 0, 0).
 //
 // Associated constants:
 //
@@ -883,17 +979,21 @@ func (device *VoltageCurrentBricklet) SetPowerCallbackThreshold(option Threshold
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -914,20 +1014,24 @@ func (device *VoltageCurrentBricklet) GetPowerCallbackThreshold() (option Thresh
 	if err != nil {
 		return option, min, max, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return option, min, max, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &option)
+	if header.Length != 17 {
+		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return option, min, max, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &option)
 	binary.Read(resultBuf, binary.LittleEndian, &min)
 	binary.Read(resultBuf, binary.LittleEndian, &max)
 
-	}
 
 	return option, min, max, nil
 }
@@ -953,17 +1057,21 @@ func (device *VoltageCurrentBricklet) SetDebouncePeriod(debounce uint32) (err er
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -976,18 +1084,22 @@ func (device *VoltageCurrentBricklet) GetDebouncePeriod() (debounce uint32, err 
 	if err != nil {
 		return debounce, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return debounce, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
+	if header.Length != 12 {
+		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return debounce, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 
 	return debounce, nil
 }
@@ -996,7 +1108,10 @@ func (device *VoltageCurrentBricklet) GetDebouncePeriod() (debounce uint32, err 
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1007,23 +1122,27 @@ func (device *VoltageCurrentBricklet) GetIdentity() (uid string, connectedUid st
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package thermal_imaging_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -36,6 +37,8 @@ const (
 	FunctionGetHighContrastConfig Function = 9
 	FunctionSetImageTransferConfig Function = 10
 	FunctionGetImageTransferConfig Function = 11
+	FunctionSetFluxLinearParameters Function = 14
+	FunctionGetFluxLinearParameters Function = 15
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -116,7 +119,7 @@ const DeviceDisplayName = "Thermal Imaging Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 4, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return ThermalImagingBricklet{}, err
 	}
@@ -131,6 +134,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, 
 	dev.ResponseExpected[FunctionGetHighContrastConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetImageTransferConfig] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetImageTransferConfig] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetFluxLinearParameters] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetFluxLinearParameters] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -156,7 +161,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (ThermalImagingBricklet, 
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -170,7 +175,7 @@ func (device *ThermalImagingBricklet) GetResponseExpected(functionID Function) (
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *ThermalImagingBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -189,6 +194,12 @@ func (device *ThermalImagingBricklet) GetAPIVersion() [3]uint8 {
 // See RegisterHighContrastImageCallback
 func (device *ThermalImagingBricklet) RegisterHighContrastImageLowLevelCallback(fn func(uint16, [62]uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 72 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var imageChunkOffset uint16
 		var imageChunkData [62]uint8
@@ -249,6 +260,12 @@ func (device *ThermalImagingBricklet) DeregisterHighContrastImageCallback(regist
 // See RegisterTemperatureImageCallback
 func (device *ThermalImagingBricklet) RegisterTemperatureImageLowLevelCallback(fn func(uint16, [31]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 72 {
+			return
+		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var imageChunkOffset uint16
 		var imageChunkData [31]uint16
@@ -327,19 +344,23 @@ func (device *ThermalImagingBricklet) GetHighContrastImageLowLevel() (imageChunk
 	if err != nil {
 		return imageChunkOffset, imageChunkData, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
+	if header.Length != 72 {
+		return imageChunkOffset, imageChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
 	copy(imageChunkData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 62/8)))
 
-	}
 
 	return imageChunkOffset, imageChunkData, nil
 }
@@ -405,19 +426,23 @@ func (device *ThermalImagingBricklet) GetTemperatureImageLowLevel() (imageChunkO
 	if err != nil {
 		return imageChunkOffset, imageChunkData, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
+	if header.Length != 72 {
+		return imageChunkOffset, imageChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return imageChunkOffset, imageChunkData, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &imageChunkOffset)
 	copy(imageChunkData[:], ByteSliceToUint16Slice(resultBuf.Next(16 * 31/8)))
 
-	}
 
 	return imageChunkOffset, imageChunkData, nil
 }
@@ -508,22 +533,26 @@ func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]ui
 	if err != nil {
 		return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &spotmeterStatistics)
+	if header.Length != 27 {
+		return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 27)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &spotmeterStatistics)
 	binary.Read(resultBuf, binary.LittleEndian, &temperatures)
 	binary.Read(resultBuf, binary.LittleEndian, &resolution)
 	binary.Read(resultBuf, binary.LittleEndian, &ffcStatus)
 	binary.Read(resultBuf, binary.LittleEndian, &temperatureWarning)
 
-	}
 
 	return spotmeterStatistics, temperatures, resolution, ffcStatus, temperatureWarning, nil
 }
@@ -535,8 +564,6 @@ func (device *ThermalImagingBricklet) GetStatistics() (spotmeterStatistics [4]ui
 // 
 // The accuracy is specified for -10°C to 450°C in the
 // first range and -10°C and 140°C in the second range.
-// 
-// The default value is 0 to 655 Kelvin.
 //
 // Associated constants:
 //
@@ -550,17 +577,21 @@ func (device *ThermalImagingBricklet) SetResolution(resolution Resolution) (err 
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -578,18 +609,22 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
 	if err != nil {
 		return resolution, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return resolution, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &resolution)
-
+	if header.Length != 9 {
+		return resolution, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return resolution, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &resolution)
+
 
 	return resolution, nil
 }
@@ -602,8 +637,6 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
 // * Index 3: Row end (has to be smaller then 60).
 // 
 // The spotmeter statistics can be read out with GetStatistics.
-// 
-// The default region of interest is (39, 29, 40, 30).
 func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, regionOfInterest);
@@ -612,17 +645,21 @@ func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uin
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -635,18 +672,22 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
 	if err != nil {
 		return regionOfInterest, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return regionOfInterest, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
-
+	if header.Length != 12 {
+		return regionOfInterest, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return regionOfInterest, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
+
 
 	return regionOfInterest, nil
 }
@@ -689,13 +730,6 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
 // Empty Counts: This parameter specifies the maximum number of pixels in a bin that will be
 // interpreted as an empty bin. Histogram bins with this number of pixels or less will be
 // processed as an empty bin.
-// 
-// The default values are
-// 
-// * Region Of Interest = (0, 0, 79, 59),
-// * Dampening Factor = 64,
-// * Clip Limit = (4800, 512) and
-// * Empty Counts = 2.
 func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]uint8, dampeningFactor uint16, clipLimit [2]uint16, emptyCounts uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, regionOfInterest);
@@ -707,17 +741,21 @@ func (device *ThermalImagingBricklet) SetHighContrastConfig(regionOfInterest [4]
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -730,21 +768,25 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
 	if err != nil {
 		return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
+	if header.Length != 20 {
+		return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 20)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &regionOfInterest)
 	binary.Read(resultBuf, binary.LittleEndian, &dampeningFactor)
 	binary.Read(resultBuf, binary.LittleEndian, &clipLimit)
 	binary.Read(resultBuf, binary.LittleEndian, &emptyCounts)
 
-	}
 
 	return regionOfInterest, dampeningFactor, clipLimit, emptyCounts, nil
 }
@@ -759,8 +801,6 @@ func (device *ThermalImagingBricklet) GetHighContrastConfig() (regionOfInterest 
 // * Manual Temperature Image: GetTemperatureImage.
 // * Callback High Contrast Image: RegisterHighContrastImageCallback callback.
 // * Callback Temperature Image: RegisterTemperatureImageCallback callback.
-// 
-// The default is Manual High Contrast Image (0).
 //
 // Associated constants:
 //
@@ -776,17 +816,21 @@ func (device *ThermalImagingBricklet) SetImageTransferConfig(config ImageTransfe
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -806,20 +850,100 @@ func (device *ThermalImagingBricklet) GetImageTransferConfig() (config ImageTran
 	if err != nil {
 		return config, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return config, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &config)
-
+	if header.Length != 9 {
+		return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
 
+
+	if header.ErrorCode != 0 {
+		return config, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &config)
+
+
 	return config, nil
+}
+
+// Sets the flux linear parameters that can be used for radiometry calibration.
+// 
+// See FLIR document 102-PS245-100-01 for more details.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Plugin)
+func (device *ThermalImagingBricklet) SetFluxLinearParameters(sceneEmissivity uint16, temperatureBackground uint16, tauWindow uint16, temperaturWindow uint16, tauAtmosphere uint16, temperatureAtmosphere uint16, reflectionWindow uint16, temperatureReflection uint16) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, sceneEmissivity);
+	binary.Write(&buf, binary.LittleEndian, temperatureBackground);
+	binary.Write(&buf, binary.LittleEndian, tauWindow);
+	binary.Write(&buf, binary.LittleEndian, temperaturWindow);
+	binary.Write(&buf, binary.LittleEndian, tauAtmosphere);
+	binary.Write(&buf, binary.LittleEndian, temperatureAtmosphere);
+	binary.Write(&buf, binary.LittleEndian, reflectionWindow);
+	binary.Write(&buf, binary.LittleEndian, temperatureReflection);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetFluxLinearParameters), buf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
+
+	return nil
+}
+
+// Returns the flux linear parameters, as set by SetFluxLinearParameters.
+// 
+// .. versionadded:: 2.0.5$nbsp;(Plugin)
+func (device *ThermalImagingBricklet) GetFluxLinearParameters() (sceneEmissivity uint16, temperatureBackground uint16, tauWindow uint16, temperaturWindow uint16, tauAtmosphere uint16, temperatureAtmosphere uint16, reflectionWindow uint16, temperatureReflection uint16, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetFluxLinearParameters), buf.Bytes())
+	if err != nil {
+		return sceneEmissivity, temperatureBackground, tauWindow, temperaturWindow, tauAtmosphere, temperatureAtmosphere, reflectionWindow, temperatureReflection, err
+	}
+
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
+
+	if header.Length != 24 {
+		return sceneEmissivity, temperatureBackground, tauWindow, temperaturWindow, tauAtmosphere, temperatureAtmosphere, reflectionWindow, temperatureReflection, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return sceneEmissivity, temperatureBackground, tauWindow, temperaturWindow, tauAtmosphere, temperatureAtmosphere, reflectionWindow, temperatureReflection, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &sceneEmissivity)
+	binary.Read(resultBuf, binary.LittleEndian, &temperatureBackground)
+	binary.Read(resultBuf, binary.LittleEndian, &tauWindow)
+	binary.Read(resultBuf, binary.LittleEndian, &temperaturWindow)
+	binary.Read(resultBuf, binary.LittleEndian, &tauAtmosphere)
+	binary.Read(resultBuf, binary.LittleEndian, &temperatureAtmosphere)
+	binary.Read(resultBuf, binary.LittleEndian, &reflectionWindow)
+	binary.Read(resultBuf, binary.LittleEndian, &temperatureReflection)
+
+
+	return sceneEmissivity, temperatureBackground, tauWindow, temperaturWindow, tauAtmosphere, temperatureAtmosphere, reflectionWindow, temperatureReflection, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -840,21 +964,25 @@ func (device *ThermalImagingBricklet) GetSPITFPErrorCount() (errorCountAckChecks
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+	if header.Length != 24 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -890,18 +1018,22 @@ func (device *ThermalImagingBricklet) SetBootloaderMode(mode BootloaderMode) (st
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -922,18 +1054,22 @@ func (device *ThermalImagingBricklet) GetBootloaderMode() (mode BootloaderMode, 
 	if err != nil {
 		return mode, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return mode, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &mode)
-
+	if header.Length != 9 {
+		return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return mode, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &mode)
+
 
 	return mode, nil
 }
@@ -952,17 +1088,21 @@ func (device *ThermalImagingBricklet) SetWriteFirmwarePointer(pointer uint32) (e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -983,18 +1123,22 @@ func (device *ThermalImagingBricklet) WriteFirmware(data [64]uint8) (status uint
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -1021,17 +1165,21 @@ func (device *ThermalImagingBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1051,23 +1199,27 @@ func (device *ThermalImagingBricklet) GetStatusLEDConfig() (config StatusLEDConf
 	if err != nil {
 		return config, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return config, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &config)
-
+	if header.Length != 9 {
+		return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return config, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &config)
+
 
 	return config, nil
 }
 
-// Returns the temperature in °C as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has bad
@@ -1080,18 +1232,22 @@ func (device *ThermalImagingBricklet) GetChipTemperature() (temperature int16, e
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -1109,17 +1265,21 @@ func (device *ThermalImagingBricklet) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1137,17 +1297,21 @@ func (device *ThermalImagingBricklet) WriteUID(uid uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -1161,18 +1325,22 @@ func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
 	if err != nil {
 		return uid, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &uid)
-
+	if header.Length != 12 {
+		return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &uid)
+
 
 	return uid, nil
 }
@@ -1181,7 +1349,10 @@ func (device *ThermalImagingBricklet) ReadUID() (uid uint32, err error) {
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -1192,23 +1363,27 @@ func (device *ThermalImagingBricklet) GetIdentity() (uid string, connectedUid st
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

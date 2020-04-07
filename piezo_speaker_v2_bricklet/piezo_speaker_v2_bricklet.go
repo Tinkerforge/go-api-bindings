@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2019-11-25.      *
+ * This file was automatically generated on 2020-04-07.      *
  *                                                           *
- * Go Bindings Version 2.0.5                                 *
+ * Go Bindings Version 2.0.6                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -18,6 +18,7 @@ package piezo_speaker_v2_bricklet
 import (
 	"encoding/binary"
 	"bytes"
+	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
@@ -100,7 +101,7 @@ const DeviceDisplayName = "Piezo Speaker Bricklet 2.0"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0)
+	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return PiezoSpeakerV2Bricklet{}, err
 	}
@@ -135,7 +136,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerV2Bricklet, 
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts
 // and other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
@@ -149,7 +150,7 @@ func (device *PiezoSpeakerV2Bricklet) GetResponseExpected(functionID Function) (
 //
 // Enabling the response expected flag for a setter function allows to detect timeouts and
 // other error conditions calls of this setter as well. The device will then send a response
-// for this purpose. If this flag is disabled for a setter function then no response is send
+// for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
 func (device *PiezoSpeakerV2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
@@ -168,6 +169,12 @@ func (device *PiezoSpeakerV2Bricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered if a beep set by SetBeep is finished
 func (device *PiezoSpeakerV2Bricklet) RegisterBeepFinishedCallback(fn func()) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 8 {
+			return
+		}
 		
 		
 		
@@ -185,6 +192,12 @@ func (device *PiezoSpeakerV2Bricklet) DeregisterBeepFinishedCallback(registratio
 // This callback is triggered if a alarm set by SetAlarm is finished
 func (device *PiezoSpeakerV2Bricklet) RegisterAlarmFinishedCallback(fn func()) uint64 {
 	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 8 {
+			return
+		}
 		
 		
 		
@@ -218,17 +231,21 @@ func (device *PiezoSpeakerV2Bricklet) SetBeep(frequency uint16, volume uint8, du
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -250,21 +267,25 @@ func (device *PiezoSpeakerV2Bricklet) GetBeep() (frequency uint16, volume uint8,
 	if err != nil {
 		return frequency, volume, duration, durationRemaining, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return frequency, volume, duration, durationRemaining, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &frequency)
+	if header.Length != 19 {
+		return frequency, volume, duration, durationRemaining, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return frequency, volume, duration, durationRemaining, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &frequency)
 	binary.Read(resultBuf, binary.LittleEndian, &volume)
 	binary.Read(resultBuf, binary.LittleEndian, &duration)
 	binary.Read(resultBuf, binary.LittleEndian, &durationRemaining)
 
-	}
 
 	return frequency, volume, duration, durationRemaining, nil
 }
@@ -273,11 +294,11 @@ func (device *PiezoSpeakerV2Bricklet) GetBeep() (frequency uint16, volume uint8,
 // 
 // The following parameters can be set:
 // 
-// * Start Frequency: Start frequency of the alarm in Hz.
-// * End Frequency: End frequency of the alarm in Hz.
-// * Step Size: Size of one step of the sweep between the start/end frequencies in Hz.
-// * Step Delay: Delay between two steps (duration of time that one tone is used in a sweep) in ms.
-// * Duration: Duration of the alarm in ms.
+// * Start Frequency: Start frequency of the alarm.
+// * End Frequency: End frequency of the alarm.
+// * Step Size: Size of one step of the sweep between the start/end frequencies.
+// * Step Delay: Delay between two steps (duration of time that one tone is used in a sweep).
+// * Duration: Duration of the alarm.
 // 
 // A duration of 0 stops the current alarm if any is ongoing.
 // A duration of 4294967295 results in an infinite alarm.
@@ -303,14 +324,12 @@ func (device *PiezoSpeakerV2Bricklet) GetBeep() (frequency uint16, volume uint8,
 // * Volume = 0
 // * Duration = 10000
 // 
-// The ranges are:
+// The following conditions must be met:
 // 
-// * Start Frequency: 50Hz - 14999Hz (has to be smaller than end frequency)
-// * End Frequency: 51Hz - 15000Hz (has to be bigger than start frequency)
-// * Step Size: 1Hz - 65535Hz (has to be small enough to fit into the frequency range)
-// * Step Delay: 1ms - 65535ms (has to be small enough to fit into the duration)
-// * Volume: 0 - 10
-// * Duration: 0ms - 4294967295ms
+// * Start Frequency: has to be smaller than end frequency
+// * End Frequency: has to be bigger than start frequency
+// * Step Size: has to be small enough to fit into the frequency range
+// * Step Delay: has to be small enough to fit into the duration
 //
 // Associated constants:
 //
@@ -329,49 +348,58 @@ func (device *PiezoSpeakerV2Bricklet) SetAlarm(startFrequency uint16, endFrequen
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
 // Returns the last alarm settings as set by SetAlarm. If an alarm is currently
-// running it also returns the remaining duration of the alarm in ms as well as the
-// current frequency of the alarm in Hz.
+// running it also returns the remaining duration of the alarm as well as the
+// current frequency of the alarm.
 // 
-// If the volume is updated during a beep (with UpdateVolume)
+// If the volume is updated during an alarm (with UpdateVolume)
 // this function returns the updated value.
 //
 // Associated constants:
 //
 //	* AlarmDurationOff
 //	* AlarmDurationInfinite
-func (device *PiezoSpeakerV2Bricklet) GetAlarm() (startFrequency uint16, endFrequency uint16, stepSize uint16, stepDelay uint16, volume uint8, duration AlarmDuration, durationRemaining uint32, currentFrequency uint16, err error) {
+func (device *PiezoSpeakerV2Bricklet) GetAlarm() (startFrequency uint16, endFrequency uint16, stepSize uint16, stepDelay uint16, volume uint8, duration AlarmDuration, durationRemaining AlarmDuration, currentFrequency uint16, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
 	if err != nil {
 		return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &startFrequency)
+	if header.Length != 27 {
+		return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 27)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &startFrequency)
 	binary.Read(resultBuf, binary.LittleEndian, &endFrequency)
 	binary.Read(resultBuf, binary.LittleEndian, &stepSize)
 	binary.Read(resultBuf, binary.LittleEndian, &stepDelay)
@@ -380,12 +408,11 @@ func (device *PiezoSpeakerV2Bricklet) GetAlarm() (startFrequency uint16, endFreq
 	binary.Read(resultBuf, binary.LittleEndian, &durationRemaining)
 	binary.Read(resultBuf, binary.LittleEndian, &currentFrequency)
 
-	}
 
 	return startFrequency, endFrequency, stepSize, stepDelay, volume, duration, durationRemaining, currentFrequency, nil
 }
 
-// Updates the volume of an ongoing beep or alarm. The range of the volume is 0 to 10.
+// Updates the volume of an ongoing beep or alarm.
 func (device *PiezoSpeakerV2Bricklet) UpdateVolume(volume uint8) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, volume);
@@ -394,22 +421,26 @@ func (device *PiezoSpeakerV2Bricklet) UpdateVolume(volume uint8) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
 
-// Updates the frequency of an ongoing beep. The range of the frequency is 50Hz to 15000Hz.
+// Updates the frequency of an ongoing beep.
 func (device *PiezoSpeakerV2Bricklet) UpdateFrequency(frequency uint16) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, frequency);
@@ -418,17 +449,21 @@ func (device *PiezoSpeakerV2Bricklet) UpdateFrequency(frequency uint16) (err err
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -451,21 +486,25 @@ func (device *PiezoSpeakerV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
+	if header.Length != 24 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &errorCountAckChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
 	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
 
-	}
 
 	return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -501,18 +540,22 @@ func (device *PiezoSpeakerV2Bricklet) SetBootloaderMode(mode BootloaderMode) (st
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -533,18 +576,22 @@ func (device *PiezoSpeakerV2Bricklet) GetBootloaderMode() (mode BootloaderMode, 
 	if err != nil {
 		return mode, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return mode, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &mode)
-
+	if header.Length != 9 {
+		return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return mode, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &mode)
+
 
 	return mode, nil
 }
@@ -563,17 +610,21 @@ func (device *PiezoSpeakerV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -594,18 +645,22 @@ func (device *PiezoSpeakerV2Bricklet) WriteFirmware(data [64]uint8) (status uint
 	if err != nil {
 		return status, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return status, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-
+	if header.Length != 9 {
+		return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return status, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+
 
 	return status, nil
 }
@@ -632,17 +687,21 @@ func (device *PiezoSpeakerV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -662,23 +721,27 @@ func (device *PiezoSpeakerV2Bricklet) GetStatusLEDConfig() (config StatusLEDConf
 	if err != nil {
 		return config, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return config, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &config)
-
+	if header.Length != 9 {
+		return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return config, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &config)
+
 
 	return config, nil
 }
 
-// Returns the temperature in °C as measured inside the microcontroller. The
+// Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
 // 
 // The temperature is only proportional to the real temperature and it has bad
@@ -691,18 +754,22 @@ func (device *PiezoSpeakerV2Bricklet) GetChipTemperature() (temperature int16, e
 	if err != nil {
 		return temperature, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return temperature, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
+	if header.Length != 10 {
+		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return temperature, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 
 	return temperature, nil
 }
@@ -720,17 +787,21 @@ func (device *PiezoSpeakerV2Bricklet) Reset() (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -748,17 +819,21 @@ func (device *PiezoSpeakerV2Bricklet) WriteUID(uid uint32) (err error) {
 	if err != nil {
 		return err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		bytes.NewBuffer(resultBytes[8:])
-		
+	if header.Length != 8 {
+		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return DeviceError(header.ErrorCode)
+	}
+
+	bytes.NewBuffer(resultBytes[8:])
+	
 
 	return nil
 }
@@ -772,18 +847,22 @@ func (device *PiezoSpeakerV2Bricklet) ReadUID() (uid uint32, err error) {
 	if err != nil {
 		return uid, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &uid)
-
+	if header.Length != 12 {
+		return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	binary.Read(resultBuf, binary.LittleEndian, &uid)
+
 
 	return uid, nil
 }
@@ -792,7 +871,10 @@ func (device *PiezoSpeakerV2Bricklet) ReadUID() (uid uint32, err error) {
 // the position, the hardware and firmware version as well as the
 // device identifier.
 // 
-// The position can be 'a', 'b', 'c' or 'd'.
+// The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
+// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
+// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
@@ -803,23 +885,27 @@ func (device *PiezoSpeakerV2Bricklet) GetIdentity() (uid string, connectedUid st
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-		if header.ErrorCode != 0 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-		}
+	var header PacketHeader
+	header.FillFromBytes(resultBytes)
 
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		uid = ByteSliceToString(resultBuf.Next(8))
+	if header.Length != 33 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+	}
+
+
+	if header.ErrorCode != 0 {
+		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+	}
+
+	resultBuf := bytes.NewBuffer(resultBytes[8:])
+	uid = ByteSliceToString(resultBuf.Next(8))
 	connectedUid = ByteSliceToString(resultBuf.Next(8))
 	position = rune(resultBuf.Next(1)[0])
 	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
 	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
 
-	}
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }
