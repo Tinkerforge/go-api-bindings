@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -252,21 +252,22 @@ func (device *RealTimeClockBricklet) SetDateTime(year uint16, month uint8, day u
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -290,29 +291,30 @@ func (device *RealTimeClockBricklet) GetDateTime() (year uint16, month uint8, da
 	if err != nil {
 		return year, month, day, hour, minute, second, centisecond, weekday, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return year, month, day, hour, minute, second, centisecond, weekday, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return year, month, day, hour, minute, second, centisecond, weekday, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return year, month, day, hour, minute, second, centisecond, weekday, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &year)
+		binary.Read(resultBuf, binary.LittleEndian, &month)
+		binary.Read(resultBuf, binary.LittleEndian, &day)
+		binary.Read(resultBuf, binary.LittleEndian, &hour)
+		binary.Read(resultBuf, binary.LittleEndian, &minute)
+		binary.Read(resultBuf, binary.LittleEndian, &second)
+		binary.Read(resultBuf, binary.LittleEndian, &centisecond)
+		binary.Read(resultBuf, binary.LittleEndian, &weekday)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return year, month, day, hour, minute, second, centisecond, weekday, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &year)
-	binary.Read(resultBuf, binary.LittleEndian, &month)
-	binary.Read(resultBuf, binary.LittleEndian, &day)
-	binary.Read(resultBuf, binary.LittleEndian, &hour)
-	binary.Read(resultBuf, binary.LittleEndian, &minute)
-	binary.Read(resultBuf, binary.LittleEndian, &second)
-	binary.Read(resultBuf, binary.LittleEndian, &centisecond)
-	binary.Read(resultBuf, binary.LittleEndian, &weekday)
-
 
 	return year, month, day, hour, minute, second, centisecond, weekday, nil
 }
@@ -327,22 +329,23 @@ func (device *RealTimeClockBricklet) GetTimestamp() (timestamp int64, err error)
 	if err != nil {
 		return timestamp, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 16 {
-		return timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		if header.Length != 16 {
+			return timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		if header.ErrorCode != 0 {
+			return timestamp, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timestamp)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return timestamp, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
-
 
 	return timestamp, nil
 }
@@ -380,21 +383,22 @@ func (device *RealTimeClockBricklet) SetOffset(offset int8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -407,22 +411,23 @@ func (device *RealTimeClockBricklet) GetOffset() (offset int8, err error) {
 	if err != nil {
 		return offset, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return offset, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return offset, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return offset, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &offset)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return offset, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &offset)
-
 
 	return offset, nil
 }
@@ -442,21 +447,22 @@ func (device *RealTimeClockBricklet) SetDateTimeCallbackPeriod(period uint32) (e
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -471,22 +477,23 @@ func (device *RealTimeClockBricklet) GetDateTimeCallbackPeriod() (period uint32,
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -536,21 +543,22 @@ func (device *RealTimeClockBricklet) SetAlarm(month AlarmMatch, day AlarmMatch, 
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -570,28 +578,29 @@ func (device *RealTimeClockBricklet) GetAlarm() (month AlarmMatch, day AlarmMatc
 	if err != nil {
 		return month, day, hour, minute, second, weekday, interval, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 18 {
-		return month, day, hour, minute, second, weekday, interval, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
+		if header.Length != 18 {
+			return month, day, hour, minute, second, weekday, interval, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
+		}
+
+		if header.ErrorCode != 0 {
+			return month, day, hour, minute, second, weekday, interval, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &month)
+		binary.Read(resultBuf, binary.LittleEndian, &day)
+		binary.Read(resultBuf, binary.LittleEndian, &hour)
+		binary.Read(resultBuf, binary.LittleEndian, &minute)
+		binary.Read(resultBuf, binary.LittleEndian, &second)
+		binary.Read(resultBuf, binary.LittleEndian, &weekday)
+		binary.Read(resultBuf, binary.LittleEndian, &interval)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return month, day, hour, minute, second, weekday, interval, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &month)
-	binary.Read(resultBuf, binary.LittleEndian, &day)
-	binary.Read(resultBuf, binary.LittleEndian, &hour)
-	binary.Read(resultBuf, binary.LittleEndian, &minute)
-	binary.Read(resultBuf, binary.LittleEndian, &second)
-	binary.Read(resultBuf, binary.LittleEndian, &weekday)
-	binary.Read(resultBuf, binary.LittleEndian, &interval)
-
 
 	return month, day, hour, minute, second, weekday, interval, nil
 }
@@ -614,27 +623,28 @@ func (device *RealTimeClockBricklet) GetIdentity() (uid string, connectedUid str
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

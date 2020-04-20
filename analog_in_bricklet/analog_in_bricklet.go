@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -268,22 +268,23 @@ func (device *AnalogInBricklet) GetVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return voltage, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
 
 	return voltage, nil
 }
@@ -306,22 +307,23 @@ func (device *AnalogInBricklet) GetAnalogValue() (value uint16, err error) {
 	if err != nil {
 		return value, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return value, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return value, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return value, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &value)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return value, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &value)
-
 
 	return value, nil
 }
@@ -339,21 +341,22 @@ func (device *AnalogInBricklet) SetVoltageCallbackPeriod(period uint32) (err err
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -366,22 +369,23 @@ func (device *AnalogInBricklet) GetVoltageCallbackPeriod() (period uint32, err e
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -399,21 +403,22 @@ func (device *AnalogInBricklet) SetAnalogValueCallbackPeriod(period uint32) (err
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -426,22 +431,23 @@ func (device *AnalogInBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -475,21 +481,22 @@ func (device *AnalogInBricklet) SetVoltageCallbackThreshold(option ThresholdOpti
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -510,24 +517,25 @@ func (device *AnalogInBricklet) GetVoltageCallbackThreshold() (option ThresholdO
 	if err != nil {
 		return option, min, max, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return option, min, max, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
-
 
 	return option, min, max, nil
 }
@@ -561,21 +569,22 @@ func (device *AnalogInBricklet) SetAnalogValueCallbackThreshold(option Threshold
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -596,24 +605,25 @@ func (device *AnalogInBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 	if err != nil {
 		return option, min, max, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return option, min, max, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
-
 
 	return option, min, max, nil
 }
@@ -637,21 +647,22 @@ func (device *AnalogInBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -664,22 +675,23 @@ func (device *AnalogInBricklet) GetDebouncePeriod() (debounce uint32, err error)
 	if err != nil {
 		return debounce, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return debounce, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
 
 	return debounce, nil
 }
@@ -711,21 +723,22 @@ func (device *AnalogInBricklet) SetRange(range_ Range) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -749,22 +762,23 @@ func (device *AnalogInBricklet) GetRange() (range_ Range, err error) {
 	if err != nil {
 		return range_, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return range_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return range_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return range_, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &range_)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return range_, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &range_)
-
 
 	return range_, nil
 }
@@ -784,21 +798,22 @@ func (device *AnalogInBricklet) SetAveraging(average uint8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -813,22 +828,23 @@ func (device *AnalogInBricklet) GetAveraging() (average uint8, err error) {
 	if err != nil {
 		return average, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return average, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return average, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return average, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &average)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return average, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &average)
-
 
 	return average, nil
 }
@@ -851,27 +867,28 @@ func (device *AnalogInBricklet) GetIdentity() (uid string, connectedUid string, 
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

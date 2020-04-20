@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -179,21 +179,22 @@ func (device *LCD16x2Bricklet) WriteLine(line uint8, position uint8, text string
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -206,21 +207,22 @@ func (device *LCD16x2Bricklet) ClearDisplay() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -233,21 +235,22 @@ func (device *LCD16x2Bricklet) BacklightOn() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -260,21 +263,22 @@ func (device *LCD16x2Bricklet) BacklightOff() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -287,22 +291,23 @@ func (device *LCD16x2Bricklet) IsBacklightOn() (backlight bool, err error) {
 	if err != nil {
 		return backlight, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return backlight, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return backlight, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return backlight, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &backlight)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return backlight, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &backlight)
-
 
 	return backlight, nil
 }
@@ -320,21 +325,22 @@ func (device *LCD16x2Bricklet) SetConfig(cursor bool, blinking bool) (err error)
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -347,23 +353,24 @@ func (device *LCD16x2Bricklet) GetConfig() (cursor bool, blinking bool, err erro
 	if err != nil {
 		return cursor, blinking, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return cursor, blinking, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return cursor, blinking, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return cursor, blinking, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &cursor)
+		binary.Read(resultBuf, binary.LittleEndian, &blinking)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return cursor, blinking, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &cursor)
-	binary.Read(resultBuf, binary.LittleEndian, &blinking)
-
 
 	return cursor, blinking, nil
 }
@@ -380,22 +387,23 @@ func (device *LCD16x2Bricklet) IsButtonPressed(button uint8) (pressed bool, err 
 	if err != nil {
 		return pressed, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return pressed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return pressed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return pressed, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &pressed)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return pressed, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &pressed)
-
 
 	return pressed, nil
 }
@@ -434,21 +442,22 @@ func (device *LCD16x2Bricklet) SetCustomCharacter(index uint8, character [8]uint
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -465,22 +474,23 @@ func (device *LCD16x2Bricklet) GetCustomCharacter(index uint8) (character [8]uin
 	if err != nil {
 		return character, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 16 {
-		return character, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		if header.Length != 16 {
+			return character, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		if header.ErrorCode != 0 {
+			return character, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &character)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return character, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &character)
-
 
 	return character, nil
 }
@@ -503,27 +513,28 @@ func (device *LCD16x2Bricklet) GetIdentity() (uid string, connectedUid string, p
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

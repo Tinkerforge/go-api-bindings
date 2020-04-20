@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -702,22 +702,23 @@ func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return voltage, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
 
 	return voltage, nil
 }
@@ -732,22 +733,23 @@ func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
 	if err != nil {
 		return current, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return current, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &current)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return current, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &current)
-
 
 	return current, nil
 }
@@ -785,21 +787,22 @@ func (device *MasterBrick) SetExtensionType(extension uint8, exttype ExtensionTy
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -821,22 +824,23 @@ func (device *MasterBrick) GetExtensionType(extension uint8) (exttype ExtensionT
 	if err != nil {
 		return exttype, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return exttype, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return exttype, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return exttype, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &exttype)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return exttype, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &exttype)
-
 
 	return exttype, nil
 }
@@ -850,22 +854,23 @@ func (device *MasterBrick) IsChibiPresent() (present bool, err error) {
 	if err != nil {
 		return present, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return present, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &present)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return present, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &present)
-
 
 	return present, nil
 }
@@ -883,21 +888,22 @@ func (device *MasterBrick) SetChibiAddress(address uint8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -910,22 +916,23 @@ func (device *MasterBrick) GetChibiAddress() (address uint8, err error) {
 	if err != nil {
 		return address, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return address, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &address)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return address, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &address)
-
 
 	return address, nil
 }
@@ -944,21 +951,22 @@ func (device *MasterBrick) SetChibiMasterAddress(address uint8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -971,22 +979,23 @@ func (device *MasterBrick) GetChibiMasterAddress() (address uint8, err error) {
 	if err != nil {
 		return address, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return address, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &address)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return address, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &address)
-
 
 	return address, nil
 }
@@ -1015,21 +1024,22 @@ func (device *MasterBrick) SetChibiSlaveAddress(num uint8, address uint8) (err e
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1044,22 +1054,23 @@ func (device *MasterBrick) GetChibiSlaveAddress(num uint8) (address uint8, err e
 	if err != nil {
 		return address, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return address, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &address)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return address, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &address)
-
 
 	return address, nil
 }
@@ -1073,22 +1084,23 @@ func (device *MasterBrick) GetChibiSignalStrength() (signalStrength uint8, err e
 	if err != nil {
 		return signalStrength, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return signalStrength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return signalStrength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return signalStrength, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &signalStrength)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return signalStrength, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &signalStrength)
-
 
 	return signalStrength, nil
 }
@@ -1104,25 +1116,26 @@ func (device *MasterBrick) GetChibiErrorLog() (underrun uint16, crcError uint16,
 	if err != nil {
 		return underrun, crcError, noAck, overflow, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 16 {
-		return underrun, crcError, noAck, overflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		if header.Length != 16 {
+			return underrun, crcError, noAck, overflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		if header.ErrorCode != 0 {
+			return underrun, crcError, noAck, overflow, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &underrun)
+		binary.Read(resultBuf, binary.LittleEndian, &crcError)
+		binary.Read(resultBuf, binary.LittleEndian, &noAck)
+		binary.Read(resultBuf, binary.LittleEndian, &overflow)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return underrun, crcError, noAck, overflow, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &underrun)
-	binary.Read(resultBuf, binary.LittleEndian, &crcError)
-	binary.Read(resultBuf, binary.LittleEndian, &noAck)
-	binary.Read(resultBuf, binary.LittleEndian, &overflow)
-
 
 	return underrun, crcError, noAck, overflow, nil
 }
@@ -1154,21 +1167,22 @@ func (device *MasterBrick) SetChibiFrequency(frequency ChibiFrequency) (err erro
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1188,22 +1202,23 @@ func (device *MasterBrick) GetChibiFrequency() (frequency ChibiFrequency, err er
 	if err != nil {
 		return frequency, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return frequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return frequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return frequency, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &frequency)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return frequency, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &frequency)
-
 
 	return frequency, nil
 }
@@ -1229,21 +1244,22 @@ func (device *MasterBrick) SetChibiChannel(channel uint8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1256,22 +1272,23 @@ func (device *MasterBrick) GetChibiChannel() (channel uint8, err error) {
 	if err != nil {
 		return channel, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return channel, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return channel, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return channel, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &channel)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return channel, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &channel)
-
 
 	return channel, nil
 }
@@ -1285,22 +1302,23 @@ func (device *MasterBrick) IsRS485Present() (present bool, err error) {
 	if err != nil {
 		return present, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return present, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &present)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return present, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &present)
-
 
 	return present, nil
 }
@@ -1321,21 +1339,22 @@ func (device *MasterBrick) SetRS485Address(address uint8) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1348,22 +1367,23 @@ func (device *MasterBrick) GetRS485Address() (address uint8, err error) {
 	if err != nil {
 		return address, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return address, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &address)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return address, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &address)
-
 
 	return address, nil
 }
@@ -1392,21 +1412,22 @@ func (device *MasterBrick) SetRS485SlaveAddress(num uint8, address uint8) (err e
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1421,22 +1442,23 @@ func (device *MasterBrick) GetRS485SlaveAddress(num uint8) (address uint8, err e
 	if err != nil {
 		return address, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return address, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return address, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &address)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return address, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &address)
-
 
 	return address, nil
 }
@@ -1452,22 +1474,23 @@ func (device *MasterBrick) GetRS485ErrorLog() (crcError uint16, err error) {
 	if err != nil {
 		return crcError, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return crcError, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return crcError, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return crcError, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &crcError)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return crcError, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &crcError)
-
 
 	return crcError, nil
 }
@@ -1499,21 +1522,22 @@ func (device *MasterBrick) SetRS485Configuration(speed uint32, parity RS485Parit
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1532,24 +1556,25 @@ func (device *MasterBrick) GetRS485Configuration() (speed uint32, parity RS485Pa
 	if err != nil {
 		return speed, parity, stopbits, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 14 {
-		return speed, parity, stopbits, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+		if header.Length != 14 {
+			return speed, parity, stopbits, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+		}
+
+		if header.ErrorCode != 0 {
+			return speed, parity, stopbits, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &speed)
+		binary.Read(resultBuf, binary.LittleEndian, &parity)
+		binary.Read(resultBuf, binary.LittleEndian, &stopbits)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return speed, parity, stopbits, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &speed)
-	binary.Read(resultBuf, binary.LittleEndian, &parity)
-	binary.Read(resultBuf, binary.LittleEndian, &stopbits)
-
 
 	return speed, parity, stopbits, nil
 }
@@ -1563,22 +1588,23 @@ func (device *MasterBrick) IsWifiPresent() (present bool, err error) {
 	if err != nil {
 		return present, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return present, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &present)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return present, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &present)
-
 
 	return present, nil
 }
@@ -1631,21 +1657,22 @@ func (device *MasterBrick) SetWifiConfiguration(ssid string, connection WifiConn
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1667,27 +1694,28 @@ func (device *MasterBrick) GetWifiConfiguration() (ssid string, connection WifiC
 	if err != nil {
 		return ssid, connection, ip, subnetMask, gateway, port, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 55 {
-		return ssid, connection, ip, subnetMask, gateway, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 55)
+		if header.Length != 55 {
+			return ssid, connection, ip, subnetMask, gateway, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 55)
+		}
+
+		if header.ErrorCode != 0 {
+			return ssid, connection, ip, subnetMask, gateway, port, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		ssid = ByteSliceToString(resultBuf.Next(32))
+		binary.Read(resultBuf, binary.LittleEndian, &connection)
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &port)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return ssid, connection, ip, subnetMask, gateway, port, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	ssid = ByteSliceToString(resultBuf.Next(32))
-	binary.Read(resultBuf, binary.LittleEndian, &connection)
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &port)
-
 
 	return ssid, connection, ip, subnetMask, gateway, port, nil
 }
@@ -1763,21 +1791,22 @@ func (device *MasterBrick) SetWifiEncryption(encryption WifiEncryption, key stri
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1809,28 +1838,29 @@ func (device *MasterBrick) GetWifiEncryption() (encryption WifiEncryption, key s
 	if err != nil {
 		return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 67 {
-		return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 67)
+		if header.Length != 67 {
+			return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 67)
+		}
+
+		if header.ErrorCode != 0 {
+			return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &encryption)
+		key = ByteSliceToString(resultBuf.Next(50))
+		binary.Read(resultBuf, binary.LittleEndian, &keyIndex)
+		binary.Read(resultBuf, binary.LittleEndian, &eapOptions)
+		binary.Read(resultBuf, binary.LittleEndian, &caCertificateLength)
+		binary.Read(resultBuf, binary.LittleEndian, &clientCertificateLength)
+		binary.Read(resultBuf, binary.LittleEndian, &privateKeyLength)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &encryption)
-	key = ByteSliceToString(resultBuf.Next(50))
-	binary.Read(resultBuf, binary.LittleEndian, &keyIndex)
-	binary.Read(resultBuf, binary.LittleEndian, &eapOptions)
-	binary.Read(resultBuf, binary.LittleEndian, &caCertificateLength)
-	binary.Read(resultBuf, binary.LittleEndian, &clientCertificateLength)
-	binary.Read(resultBuf, binary.LittleEndian, &privateKeyLength)
-
 
 	return encryption, key, keyIndex, eapOptions, caCertificateLength, clientCertificateLength, privateKeyLength, nil
 }
@@ -1863,31 +1893,32 @@ func (device *MasterBrick) GetWifiStatus() (macAddress [6]uint8, bssid [6]uint8,
 	if err != nil {
 		return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 44 {
-		return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 44)
+		if header.Length != 44 {
+			return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 44)
+		}
+
+		if header.ErrorCode != 0 {
+			return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+		binary.Read(resultBuf, binary.LittleEndian, &bssid)
+		binary.Read(resultBuf, binary.LittleEndian, &channel)
+		binary.Read(resultBuf, binary.LittleEndian, &rssi)
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &rxCount)
+		binary.Read(resultBuf, binary.LittleEndian, &txCount)
+		binary.Read(resultBuf, binary.LittleEndian, &state)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-	binary.Read(resultBuf, binary.LittleEndian, &bssid)
-	binary.Read(resultBuf, binary.LittleEndian, &channel)
-	binary.Read(resultBuf, binary.LittleEndian, &rssi)
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &rxCount)
-	binary.Read(resultBuf, binary.LittleEndian, &txCount)
-	binary.Read(resultBuf, binary.LittleEndian, &state)
-
 
 	return macAddress, bssid, channel, rssi, ip, subnetMask, gateway, rxCount, txCount, state, nil
 }
@@ -1905,21 +1936,22 @@ func (device *MasterBrick) RefreshWifiStatus() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1952,21 +1984,22 @@ func (device *MasterBrick) SetWifiCertificate(index uint16, data [32]uint8, data
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -1980,23 +2013,24 @@ func (device *MasterBrick) GetWifiCertificate(index uint16) (data [32]uint8, dat
 	if err != nil {
 		return data, dataLength, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 41 {
-		return data, dataLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 41)
+		if header.Length != 41 {
+			return data, dataLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 41)
+		}
+
+		if header.ErrorCode != 0 {
+			return data, dataLength, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &data)
+		binary.Read(resultBuf, binary.LittleEndian, &dataLength)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return data, dataLength, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &data)
-	binary.Read(resultBuf, binary.LittleEndian, &dataLength)
-
 
 	return data, dataLength, nil
 }
@@ -2020,21 +2054,22 @@ func (device *MasterBrick) SetWifiPowerMode(mode WifiPowerMode) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2052,22 +2087,23 @@ func (device *MasterBrick) GetWifiPowerMode() (mode WifiPowerMode, err error) {
 	if err != nil {
 		return mode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return mode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &mode)
-
 
 	return mode, nil
 }
@@ -2093,24 +2129,25 @@ func (device *MasterBrick) GetWifiBufferInfo() (overflow uint32, lowWatermark ui
 	if err != nil {
 		return overflow, lowWatermark, used, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 16 {
-		return overflow, lowWatermark, used, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		if header.Length != 16 {
+			return overflow, lowWatermark, used, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		if header.ErrorCode != 0 {
+			return overflow, lowWatermark, used, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &overflow)
+		binary.Read(resultBuf, binary.LittleEndian, &lowWatermark)
+		binary.Read(resultBuf, binary.LittleEndian, &used)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return overflow, lowWatermark, used, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &overflow)
-	binary.Read(resultBuf, binary.LittleEndian, &lowWatermark)
-	binary.Read(resultBuf, binary.LittleEndian, &used)
-
 
 	return overflow, lowWatermark, used, nil
 }
@@ -2136,21 +2173,22 @@ func (device *MasterBrick) SetWifiRegulatoryDomain(domain WifiDomain) (err error
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2169,22 +2207,23 @@ func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err err
 	if err != nil {
 		return domain, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return domain, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return domain, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return domain, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &domain)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return domain, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &domain)
-
 
 	return domain, nil
 }
@@ -2197,22 +2236,23 @@ func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {
 	if err != nil {
 		return voltage, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltage)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return voltage, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &voltage)
-
 
 	return voltage, nil
 }
@@ -2236,21 +2276,22 @@ func (device *MasterBrick) SetLongWifiKey(key string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2268,22 +2309,23 @@ func (device *MasterBrick) GetLongWifiKey() (key string, err error) {
 	if err != nil {
 		return key, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return key, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return key, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return key, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		key = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return key, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	key = ByteSliceToString(resultBuf.Next(64))
-
 
 	return key, nil
 }
@@ -2304,21 +2346,22 @@ func (device *MasterBrick) SetWifiHostname(hostname string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2335,22 +2378,23 @@ func (device *MasterBrick) GetWifiHostname() (hostname string, err error) {
 	if err != nil {
 		return hostname, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 24 {
-		return hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+		if header.Length != 24 {
+			return hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+		}
+
+		if header.ErrorCode != 0 {
+			return hostname, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		hostname = ByteSliceToString(resultBuf.Next(16))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return hostname, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	hostname = ByteSliceToString(resultBuf.Next(16))
-
 
 	return hostname, nil
 }
@@ -2370,21 +2414,22 @@ func (device *MasterBrick) SetStackCurrentCallbackPeriod(period uint32) (err err
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2399,22 +2444,23 @@ func (device *MasterBrick) GetStackCurrentCallbackPeriod() (period uint32, err e
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -2434,21 +2480,22 @@ func (device *MasterBrick) SetStackVoltageCallbackPeriod(period uint32) (err err
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2463,22 +2510,23 @@ func (device *MasterBrick) GetStackVoltageCallbackPeriod() (period uint32, err e
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -2498,21 +2546,22 @@ func (device *MasterBrick) SetUSBVoltageCallbackPeriod(period uint32) (err error
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2527,22 +2576,23 @@ func (device *MasterBrick) GetUSBVoltageCallbackPeriod() (period uint32, err err
 	if err != nil {
 		return period, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return period, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &period)
-
 
 	return period, nil
 }
@@ -2578,21 +2628,22 @@ func (device *MasterBrick) SetStackCurrentCallbackThreshold(option ThresholdOpti
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2615,24 +2666,25 @@ func (device *MasterBrick) GetStackCurrentCallbackThreshold() (option ThresholdO
 	if err != nil {
 		return option, min, max, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return option, min, max, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
-
 
 	return option, min, max, nil
 }
@@ -2668,21 +2720,22 @@ func (device *MasterBrick) SetStackVoltageCallbackThreshold(option ThresholdOpti
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2705,24 +2758,25 @@ func (device *MasterBrick) GetStackVoltageCallbackThreshold() (option ThresholdO
 	if err != nil {
 		return option, min, max, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return option, min, max, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
-
 
 	return option, min, max, nil
 }
@@ -2758,21 +2812,22 @@ func (device *MasterBrick) SetUSBVoltageCallbackThreshold(option ThresholdOption
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2795,24 +2850,25 @@ func (device *MasterBrick) GetUSBVoltageCallbackThreshold() (option ThresholdOpt
 	if err != nil {
 		return option, min, max, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return option, min, max, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &option)
-	binary.Read(resultBuf, binary.LittleEndian, &min)
-	binary.Read(resultBuf, binary.LittleEndian, &max)
-
 
 	return option, min, max, nil
 }
@@ -2840,21 +2896,22 @@ func (device *MasterBrick) SetDebouncePeriod(debounce uint32) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2869,22 +2926,23 @@ func (device *MasterBrick) GetDebouncePeriod() (debounce uint32, err error) {
 	if err != nil {
 		return debounce, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return debounce, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &debounce)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return debounce, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &debounce)
-
 
 	return debounce, nil
 }
@@ -2900,22 +2958,23 @@ func (device *MasterBrick) IsEthernetPresent() (present bool, err error) {
 	if err != nil {
 		return present, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return present, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &present)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return present, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &present)
-
 
 	return present, nil
 }
@@ -2959,21 +3018,22 @@ func (device *MasterBrick) SetEthernetConfiguration(connection EthernetConnectio
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2993,26 +3053,27 @@ func (device *MasterBrick) GetEthernetConfiguration() (connection EthernetConnec
 	if err != nil {
 		return connection, ip, subnetMask, gateway, port, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 23 {
-		return connection, ip, subnetMask, gateway, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		if header.Length != 23 {
+			return connection, ip, subnetMask, gateway, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		}
+
+		if header.ErrorCode != 0 {
+			return connection, ip, subnetMask, gateway, port, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &connection)
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &port)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return connection, ip, subnetMask, gateway, port, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &connection)
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &port)
-
 
 	return connection, ip, subnetMask, gateway, port, nil
 }
@@ -3035,28 +3096,29 @@ func (device *MasterBrick) GetEthernetStatus() (macAddress [6]uint8, ip [4]uint8
 	if err != nil {
 		return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 66 {
-		return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 66)
+		if header.Length != 66 {
+			return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 66)
+		}
+
+		if header.ErrorCode != 0 {
+			return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &rxCount)
+		binary.Read(resultBuf, binary.LittleEndian, &txCount)
+		hostname = ByteSliceToString(resultBuf.Next(32))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &rxCount)
-	binary.Read(resultBuf, binary.LittleEndian, &txCount)
-	hostname = ByteSliceToString(resultBuf.Next(32))
-
 
 	return macAddress, ip, subnetMask, gateway, rxCount, txCount, hostname, nil
 }
@@ -3079,21 +3141,22 @@ func (device *MasterBrick) SetEthernetHostname(hostname string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3113,21 +3176,22 @@ func (device *MasterBrick) SetEthernetMACAddress(macAddress [6]uint8) (err error
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3155,21 +3219,22 @@ func (device *MasterBrick) SetEthernetWebsocketConfiguration(sockets uint8, port
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3184,23 +3249,24 @@ func (device *MasterBrick) GetEthernetWebsocketConfiguration() (sockets uint8, p
 	if err != nil {
 		return sockets, port, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return sockets, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return sockets, port, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return sockets, port, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &sockets)
+		binary.Read(resultBuf, binary.LittleEndian, &port)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return sockets, port, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &sockets)
-	binary.Read(resultBuf, binary.LittleEndian, &port)
-
 
 	return sockets, port, nil
 }
@@ -3229,21 +3295,22 @@ func (device *MasterBrick) SetEthernetAuthenticationSecret(secret string) (err e
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3259,22 +3326,23 @@ func (device *MasterBrick) GetEthernetAuthenticationSecret() (secret string, err
 	if err != nil {
 		return secret, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return secret, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		secret = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return secret, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	secret = ByteSliceToString(resultBuf.Next(64))
-
 
 	return secret, nil
 }
@@ -3303,21 +3371,22 @@ func (device *MasterBrick) SetWifiAuthenticationSecret(secret string) (err error
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3333,22 +3402,23 @@ func (device *MasterBrick) GetWifiAuthenticationSecret() (secret string, err err
 	if err != nil {
 		return secret, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return secret, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		secret = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return secret, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	secret = ByteSliceToString(resultBuf.Next(64))
-
 
 	return secret, nil
 }
@@ -3374,22 +3444,23 @@ func (device *MasterBrick) GetConnectionType() (connectionType ConnectionType, e
 	if err != nil {
 		return connectionType, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return connectionType, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return connectionType, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return connectionType, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &connectionType)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return connectionType, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &connectionType)
-
 
 	return connectionType, nil
 }
@@ -3405,22 +3476,23 @@ func (device *MasterBrick) IsWifi2Present() (present bool, err error) {
 	if err != nil {
 		return present, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return present, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return present, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &present)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return present, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &present)
-
 
 	return present, nil
 }
@@ -3444,22 +3516,23 @@ func (device *MasterBrick) StartWifi2Bootloader() (result int8, err error) {
 	if err != nil {
 		return result, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return result, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &result)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return result, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &result)
-
 
 	return result, nil
 }
@@ -3484,22 +3557,23 @@ func (device *MasterBrick) WriteWifi2SerialPort(data [60]uint8, length uint8) (r
 	if err != nil {
 		return result, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return result, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &result)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return result, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &result)
-
 
 	return result, nil
 }
@@ -3523,23 +3597,24 @@ func (device *MasterBrick) ReadWifi2SerialPort(length uint8) (data [60]uint8, re
 	if err != nil {
 		return data, result, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 69 {
-		return data, result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 69)
+		if header.Length != 69 {
+			return data, result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 69)
+		}
+
+		if header.ErrorCode != 0 {
+			return data, result, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &data)
+		binary.Read(resultBuf, binary.LittleEndian, &result)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return data, result, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &data)
-	binary.Read(resultBuf, binary.LittleEndian, &result)
-
 
 	return data, result, nil
 }
@@ -3568,21 +3643,22 @@ func (device *MasterBrick) SetWifi2AuthenticationSecret(secret string) (err erro
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3598,22 +3674,23 @@ func (device *MasterBrick) GetWifi2AuthenticationSecret() (secret string, err er
 	if err != nil {
 		return secret, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return secret, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return secret, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		secret = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return secret, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	secret = ByteSliceToString(resultBuf.Next(64))
-
 
 	return secret, nil
 }
@@ -3668,21 +3745,22 @@ func (device *MasterBrick) SetWifi2Configuration(port uint16, websocketPort uint
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3703,27 +3781,28 @@ func (device *MasterBrick) GetWifi2Configuration() (port uint16, websocketPort u
 	if err != nil {
 		return port, websocketPort, websitePort, phyMode, sleepMode, website, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return port, websocketPort, websitePort, phyMode, sleepMode, website, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return port, websocketPort, websitePort, phyMode, sleepMode, website, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return port, websocketPort, websitePort, phyMode, sleepMode, website, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &port)
+		binary.Read(resultBuf, binary.LittleEndian, &websocketPort)
+		binary.Read(resultBuf, binary.LittleEndian, &websitePort)
+		binary.Read(resultBuf, binary.LittleEndian, &phyMode)
+		binary.Read(resultBuf, binary.LittleEndian, &sleepMode)
+		binary.Read(resultBuf, binary.LittleEndian, &website)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return port, websocketPort, websitePort, phyMode, sleepMode, website, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &port)
-	binary.Read(resultBuf, binary.LittleEndian, &websocketPort)
-	binary.Read(resultBuf, binary.LittleEndian, &websitePort)
-	binary.Read(resultBuf, binary.LittleEndian, &phyMode)
-	binary.Read(resultBuf, binary.LittleEndian, &sleepMode)
-	binary.Read(resultBuf, binary.LittleEndian, &website)
-
 
 	return port, websocketPort, websitePort, phyMode, sleepMode, website, nil
 }
@@ -3748,38 +3827,39 @@ func (device *MasterBrick) GetWifi2Status() (clientEnabled bool, clientStatus Wi
 	if err != nil {
 		return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 65 {
-		return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 65)
+		if header.Length != 65 {
+			return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 65)
+		}
+
+		if header.ErrorCode != 0 {
+			return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &clientEnabled)
+		binary.Read(resultBuf, binary.LittleEndian, &clientStatus)
+		binary.Read(resultBuf, binary.LittleEndian, &clientIP)
+		binary.Read(resultBuf, binary.LittleEndian, &clientSubnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &clientGateway)
+		binary.Read(resultBuf, binary.LittleEndian, &clientMACAddress)
+		binary.Read(resultBuf, binary.LittleEndian, &clientRXCount)
+		binary.Read(resultBuf, binary.LittleEndian, &clientTXCount)
+		binary.Read(resultBuf, binary.LittleEndian, &clientRSSI)
+		binary.Read(resultBuf, binary.LittleEndian, &apEnabled)
+		binary.Read(resultBuf, binary.LittleEndian, &apIP)
+		binary.Read(resultBuf, binary.LittleEndian, &apSubnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &apGateway)
+		binary.Read(resultBuf, binary.LittleEndian, &apMACAddress)
+		binary.Read(resultBuf, binary.LittleEndian, &apRXCount)
+		binary.Read(resultBuf, binary.LittleEndian, &apTXCount)
+		binary.Read(resultBuf, binary.LittleEndian, &apConnectedCount)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &clientEnabled)
-	binary.Read(resultBuf, binary.LittleEndian, &clientStatus)
-	binary.Read(resultBuf, binary.LittleEndian, &clientIP)
-	binary.Read(resultBuf, binary.LittleEndian, &clientSubnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &clientGateway)
-	binary.Read(resultBuf, binary.LittleEndian, &clientMACAddress)
-	binary.Read(resultBuf, binary.LittleEndian, &clientRXCount)
-	binary.Read(resultBuf, binary.LittleEndian, &clientTXCount)
-	binary.Read(resultBuf, binary.LittleEndian, &clientRSSI)
-	binary.Read(resultBuf, binary.LittleEndian, &apEnabled)
-	binary.Read(resultBuf, binary.LittleEndian, &apIP)
-	binary.Read(resultBuf, binary.LittleEndian, &apSubnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &apGateway)
-	binary.Read(resultBuf, binary.LittleEndian, &apMACAddress)
-	binary.Read(resultBuf, binary.LittleEndian, &apRXCount)
-	binary.Read(resultBuf, binary.LittleEndian, &apTXCount)
-	binary.Read(resultBuf, binary.LittleEndian, &apConnectedCount)
-
 
 	return clientEnabled, clientStatus, clientIP, clientSubnetMask, clientGateway, clientMACAddress, clientRXCount, clientTXCount, clientRSSI, apEnabled, apIP, apSubnetMask, apGateway, apMACAddress, apRXCount, apTXCount, apConnectedCount, nil
 }
@@ -3829,21 +3909,22 @@ func (device *MasterBrick) SetWifi2ClientConfiguration(enable bool, ssid string,
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3858,28 +3939,29 @@ func (device *MasterBrick) GetWifi2ClientConfiguration() (enable bool, ssid stri
 	if err != nil {
 		return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 65 {
-		return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 65)
+		if header.Length != 65 {
+			return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 65)
+		}
+
+		if header.ErrorCode != 0 {
+			return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enable)
+		ssid = ByteSliceToString(resultBuf.Next(32))
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+		binary.Read(resultBuf, binary.LittleEndian, &bssid)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enable)
-	ssid = ByteSliceToString(resultBuf.Next(32))
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-	binary.Read(resultBuf, binary.LittleEndian, &bssid)
-
 
 	return enable, ssid, ip, subnetMask, gateway, macAddress, bssid, nil
 }
@@ -3905,21 +3987,22 @@ func (device *MasterBrick) SetWifi2ClientHostname(hostname string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -3934,22 +4017,23 @@ func (device *MasterBrick) GetWifi2ClientHostname() (hostname string, err error)
 	if err != nil {
 		return hostname, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 40 {
-		return hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		if header.Length != 40 {
+			return hostname, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		}
+
+		if header.ErrorCode != 0 {
+			return hostname, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		hostname = ByteSliceToString(resultBuf.Next(32))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return hostname, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	hostname = ByteSliceToString(resultBuf.Next(32))
-
 
 	return hostname, nil
 }
@@ -3973,21 +4057,22 @@ func (device *MasterBrick) SetWifi2ClientPassword(password string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4006,22 +4091,23 @@ func (device *MasterBrick) GetWifi2ClientPassword() (password string, err error)
 	if err != nil {
 		return password, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return password, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		password = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return password, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	password = ByteSliceToString(resultBuf.Next(64))
-
 
 	return password, nil
 }
@@ -4084,21 +4170,22 @@ func (device *MasterBrick) SetWifi2APConfiguration(enable bool, ssid string, ip 
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4121,30 +4208,31 @@ func (device *MasterBrick) GetWifi2APConfiguration() (enable bool, ssid string, 
 	if err != nil {
 		return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 62 {
-		return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 62)
+		if header.Length != 62 {
+			return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 62)
+		}
+
+		if header.ErrorCode != 0 {
+			return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enable)
+		ssid = ByteSliceToString(resultBuf.Next(32))
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &encryption)
+		binary.Read(resultBuf, binary.LittleEndian, &hidden)
+		binary.Read(resultBuf, binary.LittleEndian, &channel)
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enable)
-	ssid = ByteSliceToString(resultBuf.Next(32))
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &encryption)
-	binary.Read(resultBuf, binary.LittleEndian, &hidden)
-	binary.Read(resultBuf, binary.LittleEndian, &channel)
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-
 
 	return enable, ssid, ip, subnetMask, gateway, encryption, hidden, channel, macAddress, nil
 }
@@ -4169,21 +4257,22 @@ func (device *MasterBrick) SetWifi2APPassword(password string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4202,22 +4291,23 @@ func (device *MasterBrick) GetWifi2APPassword() (password string, err error) {
 	if err != nil {
 		return password, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return password, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		password = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return password, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	password = ByteSliceToString(resultBuf.Next(64))
-
 
 	return password, nil
 }
@@ -4237,22 +4327,23 @@ func (device *MasterBrick) SaveWifi2Configuration() (result uint8, err error) {
 	if err != nil {
 		return result, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return result, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return result, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &result)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return result, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &result)
-
 
 	return result, nil
 }
@@ -4267,22 +4358,23 @@ func (device *MasterBrick) GetWifi2FirmwareVersion() (firmwareVersion [3]uint8, 
 	if err != nil {
 		return firmwareVersion, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return firmwareVersion, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return firmwareVersion, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return firmwareVersion, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return firmwareVersion, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-
 
 	return firmwareVersion, nil
 }
@@ -4297,21 +4389,22 @@ func (device *MasterBrick) EnableWifi2StatusLED() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4326,21 +4419,22 @@ func (device *MasterBrick) DisableWifi2StatusLED() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4355,22 +4449,23 @@ func (device *MasterBrick) IsWifi2StatusLEDEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enabled, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
 
 	return enabled, nil
 }
@@ -4426,21 +4521,22 @@ func (device *MasterBrick) SetWifi2MeshConfiguration(enable bool, rootIP [4]uint
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4457,30 +4553,31 @@ func (device *MasterBrick) GetWifi2MeshConfiguration() (enable bool, rootIP [4]u
 	if err != nil {
 		return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 55 {
-		return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 55)
+		if header.Length != 55 {
+			return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 55)
+		}
+
+		if header.ErrorCode != 0 {
+			return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enable)
+		binary.Read(resultBuf, binary.LittleEndian, &rootIP)
+		binary.Read(resultBuf, binary.LittleEndian, &rootSubnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &rootGateway)
+		binary.Read(resultBuf, binary.LittleEndian, &routerBSSID)
+		binary.Read(resultBuf, binary.LittleEndian, &groupID)
+		groupSSIDPrefix = ByteSliceToString(resultBuf.Next(16))
+		binary.Read(resultBuf, binary.LittleEndian, &gatewayIP)
+		binary.Read(resultBuf, binary.LittleEndian, &gatewayPort)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enable)
-	binary.Read(resultBuf, binary.LittleEndian, &rootIP)
-	binary.Read(resultBuf, binary.LittleEndian, &rootSubnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &rootGateway)
-	binary.Read(resultBuf, binary.LittleEndian, &routerBSSID)
-	binary.Read(resultBuf, binary.LittleEndian, &groupID)
-	groupSSIDPrefix = ByteSliceToString(resultBuf.Next(16))
-	binary.Read(resultBuf, binary.LittleEndian, &gatewayIP)
-	binary.Read(resultBuf, binary.LittleEndian, &gatewayPort)
-
 
 	return enable, rootIP, rootSubnetMask, rootGateway, routerBSSID, groupID, groupSSIDPrefix, gatewayIP, gatewayPort, nil
 }
@@ -4511,21 +4608,22 @@ func (device *MasterBrick) SetWifi2MeshRouterSSID(ssid string) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4542,22 +4640,23 @@ func (device *MasterBrick) GetWifi2MeshRouterSSID() (ssid string, err error) {
 	if err != nil {
 		return ssid, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 40 {
-		return ssid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		if header.Length != 40 {
+			return ssid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		}
+
+		if header.ErrorCode != 0 {
+			return ssid, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		ssid = ByteSliceToString(resultBuf.Next(32))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return ssid, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	ssid = ByteSliceToString(resultBuf.Next(32))
-
 
 	return ssid, nil
 }
@@ -4584,21 +4683,22 @@ func (device *MasterBrick) SetWifi2MeshRouterPassword(password string) (err erro
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4615,22 +4715,23 @@ func (device *MasterBrick) GetWifi2MeshRouterPassword() (password string, err er
 	if err != nil {
 		return password, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return password, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return password, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		password = ByteSliceToString(resultBuf.Next(64))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return password, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	password = ByteSliceToString(resultBuf.Next(64))
-
 
 	return password, nil
 }
@@ -4658,27 +4759,28 @@ func (device *MasterBrick) GetWifi2MeshCommonStatus() (status Wifi2MeshStatus, r
 	if err != nil {
 		return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 21 {
-		return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		if header.Length != 21 {
+			return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		}
+
+		if header.ErrorCode != 0 {
+			return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &status)
+		binary.Read(resultBuf, binary.LittleEndian, &rootNode)
+		binary.Read(resultBuf, binary.LittleEndian, &rootCandidate)
+		binary.Read(resultBuf, binary.LittleEndian, &connectedNodes)
+		binary.Read(resultBuf, binary.LittleEndian, &rxCount)
+		binary.Read(resultBuf, binary.LittleEndian, &txCount)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &status)
-	binary.Read(resultBuf, binary.LittleEndian, &rootNode)
-	binary.Read(resultBuf, binary.LittleEndian, &rootCandidate)
-	binary.Read(resultBuf, binary.LittleEndian, &connectedNodes)
-	binary.Read(resultBuf, binary.LittleEndian, &rxCount)
-	binary.Read(resultBuf, binary.LittleEndian, &txCount)
-
 
 	return status, rootNode, rootCandidate, connectedNodes, rxCount, txCount, nil
 }
@@ -4695,26 +4797,27 @@ func (device *MasterBrick) GetWifi2MeshClientStatus() (hostname string, ip [4]ui
 	if err != nil {
 		return hostname, ip, subnetMask, gateway, macAddress, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 58 {
-		return hostname, ip, subnetMask, gateway, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		if header.Length != 58 {
+			return hostname, ip, subnetMask, gateway, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		}
+
+		if header.ErrorCode != 0 {
+			return hostname, ip, subnetMask, gateway, macAddress, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		hostname = ByteSliceToString(resultBuf.Next(32))
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return hostname, ip, subnetMask, gateway, macAddress, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	hostname = ByteSliceToString(resultBuf.Next(32))
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-
 
 	return hostname, ip, subnetMask, gateway, macAddress, nil
 }
@@ -4731,26 +4834,27 @@ func (device *MasterBrick) GetWifi2MeshAPStatus() (ssid string, ip [4]uint8, sub
 	if err != nil {
 		return ssid, ip, subnetMask, gateway, macAddress, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 58 {
-		return ssid, ip, subnetMask, gateway, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		if header.Length != 58 {
+			return ssid, ip, subnetMask, gateway, macAddress, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		}
+
+		if header.ErrorCode != 0 {
+			return ssid, ip, subnetMask, gateway, macAddress, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		ssid = ByteSliceToString(resultBuf.Next(32))
+		binary.Read(resultBuf, binary.LittleEndian, &ip)
+		binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
+		binary.Read(resultBuf, binary.LittleEndian, &gateway)
+		binary.Read(resultBuf, binary.LittleEndian, &macAddress)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return ssid, ip, subnetMask, gateway, macAddress, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	ssid = ByteSliceToString(resultBuf.Next(32))
-	binary.Read(resultBuf, binary.LittleEndian, &ip)
-	binary.Read(resultBuf, binary.LittleEndian, &subnetMask)
-	binary.Read(resultBuf, binary.LittleEndian, &gateway)
-	binary.Read(resultBuf, binary.LittleEndian, &macAddress)
-
 
 	return ssid, ip, subnetMask, gateway, macAddress, nil
 }
@@ -4777,23 +4881,24 @@ func (device *MasterBrick) SetBrickletXMCFlashConfig(config uint32, parameter1 u
 	if err != nil {
 		return returnValue, returnData, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return returnValue, returnData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return returnValue, returnData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return returnValue, returnData, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &returnValue)
+		binary.Read(resultBuf, binary.LittleEndian, &returnData)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return returnValue, returnData, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &returnValue)
-	binary.Read(resultBuf, binary.LittleEndian, &returnData)
-
 
 	return returnValue, returnData, nil
 }
@@ -4817,22 +4922,23 @@ func (device *MasterBrick) SetBrickletXMCFlashData(data [64]uint8) (returnData u
 	if err != nil {
 		return returnData, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return returnData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return returnData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return returnData, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &returnData)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return returnData, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &returnData)
-
 
 	return returnData, nil
 }
@@ -4853,21 +4959,22 @@ func (device *MasterBrick) SetBrickletsEnabled(brickletsEnabled bool) (err error
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4882,22 +4989,23 @@ func (device *MasterBrick) GetBrickletsEnabled() (brickletsEnabled bool, err err
 	if err != nil {
 		return brickletsEnabled, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return brickletsEnabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return brickletsEnabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return brickletsEnabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &brickletsEnabled)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return brickletsEnabled, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &brickletsEnabled)
-
 
 	return brickletsEnabled, nil
 }
@@ -4931,21 +5039,22 @@ func (device *MasterBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, m
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -4960,23 +5069,24 @@ func (device *MasterBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool
 	if err != nil {
 		return enableDynamicBaudrate, minimumDynamicBaudrate, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
+		binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enableDynamicBaudrate)
-	binary.Read(resultBuf, binary.LittleEndian, &minimumDynamicBaudrate)
-
 
 	return enableDynamicBaudrate, minimumDynamicBaudrate, nil
 }
@@ -5008,22 +5118,23 @@ func (device *MasterBrick) GetSendTimeoutCount(communicationMethod Communication
 	if err != nil {
 		return timeoutCount, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return timeoutCount, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return timeoutCount, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &timeoutCount)
-
 
 	return timeoutCount, nil
 }
@@ -5052,21 +5163,22 @@ func (device *MasterBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32)
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -5082,22 +5194,23 @@ func (device *MasterBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32
 	if err != nil {
 		return baudrate, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return baudrate, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &baudrate)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return baudrate, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &baudrate)
-
 
 	return baudrate, nil
 }
@@ -5123,25 +5236,26 @@ func (device *MasterBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACK
 	if err != nil {
 		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 24 {
-		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+		if header.Length != 24 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
+		binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCountACKChecksum)
-	binary.Read(resultBuf, binary.LittleEndian, &errorCountMessageChecksum)
-	binary.Read(resultBuf, binary.LittleEndian, &errorCountFrame)
-	binary.Read(resultBuf, binary.LittleEndian, &errorCountOverflow)
-
 
 	return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, nil
 }
@@ -5161,21 +5275,22 @@ func (device *MasterBrick) EnableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -5195,21 +5310,22 @@ func (device *MasterBrick) DisableStatusLED() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -5224,22 +5340,23 @@ func (device *MasterBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 	if err != nil {
 		return enabled, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enabled, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
 
 	return enabled, nil
 }
@@ -5257,24 +5374,25 @@ func (device *MasterBrick) GetProtocol1BrickletName(port rune) (protocolVersion 
 	if err != nil {
 		return protocolVersion, firmwareVersion, name, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 52 {
-		return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
+		if header.Length != 52 {
+			return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
+		}
+
+		if header.ErrorCode != 0 {
+			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		name = ByteSliceToString(resultBuf.Next(40))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &protocolVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	name = ByteSliceToString(resultBuf.Next(40))
-
 
 	return protocolVersion, firmwareVersion, name, nil
 }
@@ -5292,22 +5410,23 @@ func (device *MasterBrick) GetChipTemperature() (temperature int16, err error) {
 	if err != nil {
 		return temperature, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return temperature, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &temperature)
-
 
 	return temperature, nil
 }
@@ -5325,21 +5444,22 @@ func (device *MasterBrick) Reset() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -5359,21 +5479,22 @@ func (device *MasterBrick) WriteBrickletPlugin(port rune, offset uint8, chunk [3
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -5392,22 +5513,23 @@ func (device *MasterBrick) ReadBrickletPlugin(port rune, offset uint8) (chunk [3
 	if err != nil {
 		return chunk, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 40 {
-		return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		if header.Length != 40 {
+			return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
+		}
+
+		if header.ErrorCode != 0 {
+			return chunk, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &chunk)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return chunk, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &chunk)
-
 
 	return chunk, nil
 }
@@ -5427,27 +5549,28 @@ func (device *MasterBrick) GetIdentity() (uid string, connectedUid string, posit
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

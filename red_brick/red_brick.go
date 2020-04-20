@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -598,23 +598,24 @@ func (device *REDBrick) CreateSession(lifetime uint32) (errorCode ErrorCode, ses
 	if err != nil {
 		return errorCode, sessionId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, sessionId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, sessionId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, sessionId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &sessionId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, sessionId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &sessionId)
-
 
 	return errorCode, sessionId, nil
 }
@@ -661,22 +662,23 @@ func (device *REDBrick) ExpireSession(sessionId uint16) (errorCode ErrorCode, er
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -690,21 +692,22 @@ func (device *REDBrick) ExpireSessionUnchecked(sessionId uint16) (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -752,22 +755,23 @@ func (device *REDBrick) KeepSessionAlive(sessionId uint16, lifetime uint32) (err
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -816,22 +820,23 @@ func (device *REDBrick) ReleaseObject(objectId uint16, sessionId uint16) (errorC
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -846,21 +851,22 @@ func (device *REDBrick) ReleaseObjectUnchecked(objectId uint16, sessionId uint16
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -915,23 +921,24 @@ func (device *REDBrick) AllocateString(lengthToReserve uint32, buffer string, se
 	if err != nil {
 		return errorCode, stringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, stringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, stringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, stringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &stringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, stringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &stringId)
-
 
 	return errorCode, stringId, nil
 }
@@ -980,22 +987,23 @@ func (device *REDBrick) TruncateString(stringId uint16, length uint32) (errorCod
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -1042,23 +1050,24 @@ func (device *REDBrick) GetStringLength(stringId uint16) (errorCode ErrorCode, l
 	if err != nil {
 		return errorCode, length, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 13 {
-		return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		if header.Length != 13 {
+			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, length, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &length)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, length, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &length)
-
 
 	return errorCode, length, nil
 }
@@ -1111,22 +1120,23 @@ func (device *REDBrick) SetStringChunk(stringId uint16, offset uint32, buffer st
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -1175,23 +1185,24 @@ func (device *REDBrick) GetStringChunk(stringId uint16, offset uint32) (errorCod
 	if err != nil {
 		return errorCode, buffer, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return errorCode, buffer, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return errorCode, buffer, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, buffer, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		buffer = ByteSliceToString(resultBuf.Next(63))
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, buffer, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	buffer = ByteSliceToString(resultBuf.Next(63))
-
 
 	return errorCode, buffer, nil
 }
@@ -1246,23 +1257,24 @@ func (device *REDBrick) AllocateList(lengthToReserve uint16, sessionId uint16) (
 	if err != nil {
 		return errorCode, listId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, listId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, listId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, listId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &listId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, listId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &listId)
-
 
 	return errorCode, listId, nil
 }
@@ -1309,23 +1321,24 @@ func (device *REDBrick) GetListLength(listId uint16) (errorCode ErrorCode, lengt
 	if err != nil {
 		return errorCode, length, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, length, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &length)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, length, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &length)
-
 
 	return errorCode, length, nil
 }
@@ -1390,24 +1403,25 @@ func (device *REDBrick) GetListItem(listId uint16, index uint16, sessionId uint1
 	if err != nil {
 		return errorCode, itemObjectId, type_, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return errorCode, itemObjectId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return errorCode, itemObjectId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, itemObjectId, type_, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &itemObjectId)
+		binary.Read(resultBuf, binary.LittleEndian, &type_)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, itemObjectId, type_, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &itemObjectId)
-	binary.Read(resultBuf, binary.LittleEndian, &type_)
-
 
 	return errorCode, itemObjectId, type_, nil
 }
@@ -1458,22 +1472,23 @@ func (device *REDBrick) AppendToList(listId uint16, itemObjectId uint16) (errorC
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -1524,22 +1539,23 @@ func (device *REDBrick) RemoveFromList(listId uint16, index uint16) (errorCode E
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -1653,23 +1669,24 @@ func (device *REDBrick) OpenFile(nameStringId uint16, flags FileFlag, permission
 	if err != nil {
 		return errorCode, fileId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &fileId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, fileId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &fileId)
-
 
 	return errorCode, fileId, nil
 }
@@ -1731,23 +1748,24 @@ func (device *REDBrick) CreatePipe(flags PipeFlag, length uint64, sessionId uint
 	if err != nil {
 		return errorCode, fileId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &fileId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, fileId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &fileId)
-
 
 	return errorCode, fileId, nil
 }
@@ -1848,32 +1866,33 @@ func (device *REDBrick) GetFileInfo(fileId uint16, sessionId uint16) (errorCode 
 	if err != nil {
 		return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 58 {
-		return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		if header.Length != 58 {
+			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &type_)
+		binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &flags)
+		binary.Read(resultBuf, binary.LittleEndian, &permissions)
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
+		binary.Read(resultBuf, binary.LittleEndian, &gid)
+		binary.Read(resultBuf, binary.LittleEndian, &length)
+		binary.Read(resultBuf, binary.LittleEndian, &accessTimestamp)
+		binary.Read(resultBuf, binary.LittleEndian, &modificationTimestamp)
+		binary.Read(resultBuf, binary.LittleEndian, &statusChangeTimestamp)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &type_)
-	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &flags)
-	binary.Read(resultBuf, binary.LittleEndian, &permissions)
-	binary.Read(resultBuf, binary.LittleEndian, &uid)
-	binary.Read(resultBuf, binary.LittleEndian, &gid)
-	binary.Read(resultBuf, binary.LittleEndian, &length)
-	binary.Read(resultBuf, binary.LittleEndian, &accessTimestamp)
-	binary.Read(resultBuf, binary.LittleEndian, &modificationTimestamp)
-	binary.Read(resultBuf, binary.LittleEndian, &statusChangeTimestamp)
-
 
 	return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, nil
 }
@@ -1932,24 +1951,25 @@ func (device *REDBrick) ReadFile(fileId uint16, lengthToRead uint8) (errorCode E
 	if err != nil {
 		return errorCode, buffer, lengthRead, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 72 {
-		return errorCode, buffer, lengthRead, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		if header.Length != 72 {
+			return errorCode, buffer, lengthRead, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, buffer, lengthRead, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &buffer)
+		binary.Read(resultBuf, binary.LittleEndian, &lengthRead)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, buffer, lengthRead, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &buffer)
-	binary.Read(resultBuf, binary.LittleEndian, &lengthRead)
-
 
 	return errorCode, buffer, lengthRead, nil
 }
@@ -1975,21 +1995,22 @@ func (device *REDBrick) ReadFileAsync(fileId uint16, lengthToRead uint64) (err e
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2040,22 +2061,23 @@ func (device *REDBrick) AbortAsyncFileRead(fileId uint16) (errorCode ErrorCode, 
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -2110,23 +2132,24 @@ func (device *REDBrick) WriteFile(fileId uint16, buffer [61]uint8, lengthToWrite
 	if err != nil {
 		return errorCode, lengthWritten, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 10 {
-		return errorCode, lengthWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 10 {
+			return errorCode, lengthWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, lengthWritten, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &lengthWritten)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, lengthWritten, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &lengthWritten)
-
 
 	return errorCode, lengthWritten, nil
 }
@@ -2149,21 +2172,22 @@ func (device *REDBrick) WriteFileUnchecked(fileId uint16, buffer [61]uint8, leng
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2186,21 +2210,22 @@ func (device *REDBrick) WriteFileAsync(fileId uint16, buffer [61]uint8, lengthTo
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -2263,23 +2288,24 @@ func (device *REDBrick) SetFilePosition(fileId uint16, offset int64, origin File
 	if err != nil {
 		return errorCode, position, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, position, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &position)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, position, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &position)
-
 
 	return errorCode, position, nil
 }
@@ -2330,23 +2356,24 @@ func (device *REDBrick) GetFilePosition(fileId uint16) (errorCode ErrorCode, pos
 	if err != nil {
 		return errorCode, position, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, position, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &position)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, position, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &position)
-
 
 	return errorCode, position, nil
 }
@@ -2396,22 +2423,23 @@ func (device *REDBrick) SetFileEvents(fileId uint16, events FileEvent) (errorCod
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -2460,23 +2488,24 @@ func (device *REDBrick) GetFileEvents(fileId uint16) (errorCode ErrorCode, event
 	if err != nil {
 		return errorCode, events, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, events, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, events, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, events, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &events)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, events, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &events)
-
 
 	return errorCode, events, nil
 }
@@ -2533,23 +2562,24 @@ func (device *REDBrick) OpenDirectory(nameStringId uint16, sessionId uint16) (er
 	if err != nil {
 		return errorCode, directoryId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, directoryId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, directoryId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, directoryId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &directoryId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, directoryId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &directoryId)
-
 
 	return errorCode, directoryId, nil
 }
@@ -2598,23 +2628,24 @@ func (device *REDBrick) GetDirectoryName(directoryId uint16, sessionId uint16) (
 	if err != nil {
 		return errorCode, nameStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, nameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, nameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, nameStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, nameStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
-
 
 	return errorCode, nameStringId, nil
 }
@@ -2684,24 +2715,25 @@ func (device *REDBrick) GetNextDirectoryEntry(directoryId uint16, sessionId uint
 	if err != nil {
 		return errorCode, nameStringId, type_, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 12 {
-		return errorCode, nameStringId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		if header.Length != 12 {
+			return errorCode, nameStringId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, nameStringId, type_, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &type_)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, nameStringId, type_, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &nameStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &type_)
-
 
 	return errorCode, nameStringId, type_, nil
 }
@@ -2748,22 +2780,23 @@ func (device *REDBrick) RewindDirectory(directoryId uint16) (errorCode ErrorCode
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -2828,22 +2861,23 @@ func (device *REDBrick) CreateDirectory(nameStringId uint16, flags DirectoryFlag
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -2890,23 +2924,24 @@ func (device *REDBrick) GetProcesses(sessionId uint16) (errorCode ErrorCode, pro
 	if err != nil {
 		return errorCode, processesListId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, processesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, processesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, processesListId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &processesListId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, processesListId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &processesListId)
-
 
 	return errorCode, processesListId, nil
 }
@@ -2962,23 +2997,24 @@ func (device *REDBrick) SpawnProcess(executableStringId uint16, argumentsListId 
 	if err != nil {
 		return errorCode, processId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, processId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, processId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, processId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &processId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, processId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &processId)
-
 
 	return errorCode, processId, nil
 }
@@ -3047,22 +3083,23 @@ func (device *REDBrick) KillProcess(processId uint16, signal ProcessSignal) (err
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -3112,26 +3149,27 @@ func (device *REDBrick) GetProcessCommand(processId uint16, sessionId uint16) (e
 	if err != nil {
 		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
+		binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
+		binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
-	binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
-	binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
-
 
 	return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
 }
@@ -3182,25 +3220,26 @@ func (device *REDBrick) GetProcessIdentity(processId uint16) (errorCode ErrorCod
 	if err != nil {
 		return errorCode, pid, uid, gid, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 21 {
-		return errorCode, pid, uid, gid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		if header.Length != 21 {
+			return errorCode, pid, uid, gid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, pid, uid, gid, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &pid)
+		binary.Read(resultBuf, binary.LittleEndian, &uid)
+		binary.Read(resultBuf, binary.LittleEndian, &gid)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, pid, uid, gid, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &pid)
-	binary.Read(resultBuf, binary.LittleEndian, &uid)
-	binary.Read(resultBuf, binary.LittleEndian, &gid)
-
 
 	return errorCode, pid, uid, gid, nil
 }
@@ -3249,25 +3288,26 @@ func (device *REDBrick) GetProcessStdio(processId uint16, sessionId uint16) (err
 	if err != nil {
 		return errorCode, stdinFileId, stdoutFileId, stderrFileId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 15 {
-		return errorCode, stdinFileId, stdoutFileId, stderrFileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
+		if header.Length != 15 {
+			return errorCode, stdinFileId, stdoutFileId, stderrFileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, stdinFileId, stdoutFileId, stderrFileId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &stdinFileId)
+		binary.Read(resultBuf, binary.LittleEndian, &stdoutFileId)
+		binary.Read(resultBuf, binary.LittleEndian, &stderrFileId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, stdinFileId, stdoutFileId, stderrFileId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &stdinFileId)
-	binary.Read(resultBuf, binary.LittleEndian, &stdoutFileId)
-	binary.Read(resultBuf, binary.LittleEndian, &stderrFileId)
-
 
 	return errorCode, stdinFileId, stdoutFileId, stderrFileId, nil
 }
@@ -3350,25 +3390,26 @@ func (device *REDBrick) GetProcessState(processId uint16) (errorCode ErrorCode, 
 	if err != nil {
 		return errorCode, state, timestamp, exitCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 19 {
-		return errorCode, state, timestamp, exitCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
+		if header.Length != 19 {
+			return errorCode, state, timestamp, exitCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, state, timestamp, exitCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &state)
+		binary.Read(resultBuf, binary.LittleEndian, &timestamp)
+		binary.Read(resultBuf, binary.LittleEndian, &exitCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, state, timestamp, exitCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &state)
-	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
-	binary.Read(resultBuf, binary.LittleEndian, &exitCode)
-
 
 	return errorCode, state, timestamp, exitCode, nil
 }
@@ -3415,23 +3456,24 @@ func (device *REDBrick) GetPrograms(sessionId uint16) (errorCode ErrorCode, prog
 	if err != nil {
 		return errorCode, programsListId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, programsListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, programsListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, programsListId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &programsListId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, programsListId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &programsListId)
-
 
 	return errorCode, programsListId, nil
 }
@@ -3479,23 +3521,24 @@ func (device *REDBrick) DefineProgram(identifierStringId uint16, sessionId uint1
 	if err != nil {
 		return errorCode, programId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, programId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, programId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, programId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &programId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, programId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &programId)
-
 
 	return errorCode, programId, nil
 }
@@ -3543,22 +3586,23 @@ func (device *REDBrick) PurgeProgram(programId uint16, cookie uint32) (errorCode
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -3606,23 +3650,24 @@ func (device *REDBrick) GetProgramIdentifier(programId uint16, sessionId uint16)
 	if err != nil {
 		return errorCode, identifierStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, identifierStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, identifierStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, identifierStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &identifierStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, identifierStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &identifierStringId)
-
 
 	return errorCode, identifierStringId, nil
 }
@@ -3670,23 +3715,24 @@ func (device *REDBrick) GetProgramRootDirectory(programId uint16, sessionId uint
 	if err != nil {
 		return errorCode, rootDirectoryStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, rootDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, rootDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, rootDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &rootDirectoryStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, rootDirectoryStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &rootDirectoryStringId)
-
 
 	return errorCode, rootDirectoryStringId, nil
 }
@@ -3737,22 +3783,23 @@ func (device *REDBrick) SetProgramCommand(programId uint16, executableStringId u
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -3800,26 +3847,27 @@ func (device *REDBrick) GetProgramCommand(programId uint16, sessionId uint16) (e
 	if err != nil {
 		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
+		binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
+		binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &executableStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &argumentsListId)
-	binary.Read(resultBuf, binary.LittleEndian, &environmentListId)
-	binary.Read(resultBuf, binary.LittleEndian, &workingDirectoryStringId)
-
 
 	return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, nil
 }
@@ -3878,22 +3926,23 @@ func (device *REDBrick) SetProgramStdioRedirection(programId uint16, stdinRedire
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -3947,28 +3996,29 @@ func (device *REDBrick) GetProgramStdioRedirection(programId uint16, sessionId u
 	if err != nil {
 		return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 18 {
-		return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
+		if header.Length != 18 {
+			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &stdinRedirection)
+		binary.Read(resultBuf, binary.LittleEndian, &stdinFileNameStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &stdoutRedirection)
+		binary.Read(resultBuf, binary.LittleEndian, &stdoutFileNameStringId)
+		binary.Read(resultBuf, binary.LittleEndian, &stderrRedirection)
+		binary.Read(resultBuf, binary.LittleEndian, &stderrFileNameStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &stdinRedirection)
-	binary.Read(resultBuf, binary.LittleEndian, &stdinFileNameStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &stdoutRedirection)
-	binary.Read(resultBuf, binary.LittleEndian, &stdoutFileNameStringId)
-	binary.Read(resultBuf, binary.LittleEndian, &stderrRedirection)
-	binary.Read(resultBuf, binary.LittleEndian, &stderrFileNameStringId)
-
 
 	return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, nil
 }
@@ -4023,22 +4073,23 @@ func (device *REDBrick) SetProgramSchedule(programId uint16, startMode ProgramSt
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -4090,26 +4141,27 @@ func (device *REDBrick) GetProgramSchedule(programId uint16, sessionId uint16) (
 	if err != nil {
 		return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 17 {
-		return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		if header.Length != 17 {
+			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &startMode)
+		binary.Read(resultBuf, binary.LittleEndian, &continueAfterError)
+		binary.Read(resultBuf, binary.LittleEndian, &startInterval)
+		binary.Read(resultBuf, binary.LittleEndian, &startFieldsStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &startMode)
-	binary.Read(resultBuf, binary.LittleEndian, &continueAfterError)
-	binary.Read(resultBuf, binary.LittleEndian, &startInterval)
-	binary.Read(resultBuf, binary.LittleEndian, &startFieldsStringId)
-
 
 	return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, nil
 }
@@ -4159,25 +4211,26 @@ func (device *REDBrick) GetProgramSchedulerState(programId uint16, sessionId uin
 	if err != nil {
 		return errorCode, state, timestamp, messageStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 20 {
-		return errorCode, state, timestamp, messageStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 20)
+		if header.Length != 20 {
+			return errorCode, state, timestamp, messageStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 20)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, state, timestamp, messageStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &state)
+		binary.Read(resultBuf, binary.LittleEndian, &timestamp)
+		binary.Read(resultBuf, binary.LittleEndian, &messageStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, state, timestamp, messageStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &state)
-	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
-	binary.Read(resultBuf, binary.LittleEndian, &messageStringId)
-
 
 	return errorCode, state, timestamp, messageStringId, nil
 }
@@ -4224,22 +4277,23 @@ func (device *REDBrick) ContinueProgramSchedule(programId uint16) (errorCode Err
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -4286,22 +4340,23 @@ func (device *REDBrick) StartProgram(programId uint16) (errorCode ErrorCode, err
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -4349,24 +4404,25 @@ func (device *REDBrick) GetLastSpawnedProgramProcess(programId uint16, sessionId
 	if err != nil {
 		return errorCode, processId, timestamp, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 19 {
-		return errorCode, processId, timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
+		if header.Length != 19 {
+			return errorCode, processId, timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, processId, timestamp, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &processId)
+		binary.Read(resultBuf, binary.LittleEndian, &timestamp)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, processId, timestamp, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &processId)
-	binary.Read(resultBuf, binary.LittleEndian, &timestamp)
-
 
 	return errorCode, processId, timestamp, nil
 }
@@ -4414,23 +4470,24 @@ func (device *REDBrick) GetCustomProgramOptionNames(programId uint16, sessionId 
 	if err != nil {
 		return errorCode, namesListId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, namesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, namesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, namesListId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &namesListId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, namesListId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &namesListId)
-
 
 	return errorCode, namesListId, nil
 }
@@ -4479,22 +4536,23 @@ func (device *REDBrick) SetCustomProgramOptionValue(programId uint16, nameString
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -4543,23 +4601,24 @@ func (device *REDBrick) GetCustomProgramOptionValue(programId uint16, nameString
 	if err != nil {
 		return errorCode, valueStringId, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 11 {
-		return errorCode, valueStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		if header.Length != 11 {
+			return errorCode, valueStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, valueStringId, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+		binary.Read(resultBuf, binary.LittleEndian, &valueStringId)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, valueStringId, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-	binary.Read(resultBuf, binary.LittleEndian, &valueStringId)
-
 
 	return errorCode, valueStringId, nil
 }
@@ -4607,22 +4666,23 @@ func (device *REDBrick) RemoveCustomProgramOption(programId uint16, nameStringId
 	if err != nil {
 		return errorCode, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &errorCode)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return errorCode, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &errorCode)
-
 
 	return errorCode, nil
 }
@@ -4642,27 +4702,28 @@ func (device *REDBrick) GetIdentity() (uid string, connectedUid string, position
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }

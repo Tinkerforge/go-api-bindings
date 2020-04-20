@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-07.      *
+ * This file was automatically generated on 2020-04-20.      *
  *                                                           *
- * Go Bindings Version 2.0.6                                 *
+ * Go Bindings Version 2.0.7                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -265,22 +265,23 @@ func (device *CANBricklet) WriteFrame(frameType FrameType, identifier uint32, da
 	if err != nil {
 		return success, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return success, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return success, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return success, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &success)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return success, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &success)
-
 
 	return success, nil
 }
@@ -316,26 +317,27 @@ func (device *CANBricklet) ReadFrame() (success bool, frameType FrameType, ident
 	if err != nil {
 		return success, frameType, identifier, data, length, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 23 {
-		return success, frameType, identifier, data, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		if header.Length != 23 {
+			return success, frameType, identifier, data, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		}
+
+		if header.ErrorCode != 0 {
+			return success, frameType, identifier, data, length, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &success)
+		binary.Read(resultBuf, binary.LittleEndian, &frameType)
+		binary.Read(resultBuf, binary.LittleEndian, &identifier)
+		binary.Read(resultBuf, binary.LittleEndian, &data)
+		binary.Read(resultBuf, binary.LittleEndian, &length)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return success, frameType, identifier, data, length, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &success)
-	binary.Read(resultBuf, binary.LittleEndian, &frameType)
-	binary.Read(resultBuf, binary.LittleEndian, &identifier)
-	binary.Read(resultBuf, binary.LittleEndian, &data)
-	binary.Read(resultBuf, binary.LittleEndian, &length)
-
 
 	return success, frameType, identifier, data, length, nil
 }
@@ -350,21 +352,22 @@ func (device *CANBricklet) EnableFrameReadCallback() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -379,21 +382,22 @@ func (device *CANBricklet) DisableFrameReadCallback() (err error) {
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -406,22 +410,23 @@ func (device *CANBricklet) IsFrameReadCallbackEnabled() (enabled bool, err error
 	if err != nil {
 		return enabled, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enabled, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
 
 	return enabled, nil
 }
@@ -474,21 +479,22 @@ func (device *CANBricklet) SetConfiguration(baudRate BaudRate, transceiverMode T
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -515,24 +521,25 @@ func (device *CANBricklet) GetConfiguration() (baudRate BaudRate, transceiverMod
 	if err != nil {
 		return baudRate, transceiverMode, writeTimeout, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 14 {
-		return baudRate, transceiverMode, writeTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+		if header.Length != 14 {
+			return baudRate, transceiverMode, writeTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
+		}
+
+		if header.ErrorCode != 0 {
+			return baudRate, transceiverMode, writeTimeout, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &baudRate)
+		binary.Read(resultBuf, binary.LittleEndian, &transceiverMode)
+		binary.Read(resultBuf, binary.LittleEndian, &writeTimeout)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return baudRate, transceiverMode, writeTimeout, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &baudRate)
-	binary.Read(resultBuf, binary.LittleEndian, &transceiverMode)
-	binary.Read(resultBuf, binary.LittleEndian, &writeTimeout)
-
 
 	return baudRate, transceiverMode, writeTimeout, nil
 }
@@ -606,21 +613,22 @@ func (device *CANBricklet) SetReadFilter(mode FilterMode, mask uint32, filter1 u
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -641,25 +649,26 @@ func (device *CANBricklet) GetReadFilter() (mode FilterMode, mask uint32, filter
 	if err != nil {
 		return mode, mask, filter1, filter2, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 21 {
-		return mode, mask, filter1, filter2, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		if header.Length != 21 {
+			return mode, mask, filter1, filter2, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
+		}
+
+		if header.ErrorCode != 0 {
+			return mode, mask, filter1, filter2, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
+		binary.Read(resultBuf, binary.LittleEndian, &mask)
+		binary.Read(resultBuf, binary.LittleEndian, &filter1)
+		binary.Read(resultBuf, binary.LittleEndian, &filter2)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return mode, mask, filter1, filter2, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &mode)
-	binary.Read(resultBuf, binary.LittleEndian, &mask)
-	binary.Read(resultBuf, binary.LittleEndian, &filter1)
-	binary.Read(resultBuf, binary.LittleEndian, &filter2)
-
 
 	return mode, mask, filter1, filter2, nil
 }
@@ -704,27 +713,28 @@ func (device *CANBricklet) GetErrorLog() (writeErrorLevel uint8, readErrorLevel 
 	if err != nil {
 		return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 23 {
-		return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		if header.Length != 23 {
+			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
+		}
+
+		if header.ErrorCode != 0 {
+			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &writeErrorLevel)
+		binary.Read(resultBuf, binary.LittleEndian, &readErrorLevel)
+		binary.Read(resultBuf, binary.LittleEndian, &transceiverDisabled)
+		binary.Read(resultBuf, binary.LittleEndian, &writeTimeoutCount)
+		binary.Read(resultBuf, binary.LittleEndian, &readRegisterOverflowCount)
+		binary.Read(resultBuf, binary.LittleEndian, &readBufferOverflowCount)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &writeErrorLevel)
-	binary.Read(resultBuf, binary.LittleEndian, &readErrorLevel)
-	binary.Read(resultBuf, binary.LittleEndian, &transceiverDisabled)
-	binary.Read(resultBuf, binary.LittleEndian, &writeTimeoutCount)
-	binary.Read(resultBuf, binary.LittleEndian, &readRegisterOverflowCount)
-	binary.Read(resultBuf, binary.LittleEndian, &readBufferOverflowCount)
-
 
 	return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, nil
 }
@@ -742,21 +752,22 @@ func (device *CANBricklet) SetFrameReadableCallbackConfiguration(enabled bool) (
 	if err != nil {
 		return err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 8 {
-		return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
 	}
-
-
-	if header.ErrorCode != 0 {
-		return DeviceError(header.ErrorCode)
-	}
-
-	bytes.NewBuffer(resultBytes[8:])
-	
 
 	return nil
 }
@@ -771,22 +782,23 @@ func (device *CANBricklet) GetFrameReadableCallbackConfiguration() (enabled bool
 	if err != nil {
 		return enabled, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 9 {
-		return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return enabled, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	binary.Read(resultBuf, binary.LittleEndian, &enabled)
-
 
 	return enabled, nil
 }
@@ -809,27 +821,28 @@ func (device *CANBricklet) GetIdentity() (uid string, connectedUid string, posit
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
 	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
 
-	var header PacketHeader
-	header.FillFromBytes(resultBytes)
+		header.FillFromBytes(resultBytes)
 
-	if header.Length != 33 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
+		}
+
+		if header.ErrorCode != 0 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		uid = ByteSliceToString(resultBuf.Next(8))
+		connectedUid = ByteSliceToString(resultBuf.Next(8))
+		position = rune(resultBuf.Next(1)[0])
+		binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
+		binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
+
 	}
-
-
-	if header.ErrorCode != 0 {
-		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
-	}
-
-	resultBuf := bytes.NewBuffer(resultBytes[8:])
-	uid = ByteSliceToString(resultBuf.Next(8))
-	connectedUid = ByteSliceToString(resultBuf.Next(8))
-	position = rune(resultBuf.Next(1)[0])
-	binary.Read(resultBuf, binary.LittleEndian, &hardwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &firmwareVersion)
-	binary.Read(resultBuf, binary.LittleEndian, &deviceIdentifier)
-
 
 	return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, nil
 }
