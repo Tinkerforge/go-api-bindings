@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-20.      *
+ * This file was automatically generated on 2020-05-19.      *
  *                                                           *
- * Go Bindings Version 2.0.7                                 *
+ * Go Bindings Version 2.0.8                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -43,6 +43,8 @@ const (
 	FunctionGetReferenceAirPressure Function = 19
 	FunctionSetAveraging Function = 20
 	FunctionGetAveraging Function = 21
+	FunctionSetI2CMode Function = 22
+	FunctionGetI2CMode Function = 23
 	FunctionGetIdentity Function = 255
 	FunctionCallbackAirPressure Function = 15
 	FunctionCallbackAltitude Function = 16
@@ -60,6 +62,13 @@ const (
 	ThresholdOptionGreater ThresholdOption = '>'
 )
 
+type I2CMode = uint8
+
+const (
+	I2CModeFast I2CMode = 0
+	I2CModeSlow I2CMode = 1
+)
+
 type BarometerBricklet struct {
 	device Device
 }
@@ -69,7 +78,7 @@ const DeviceDisplayName = "Barometer Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (BarometerBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,2 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return BarometerBricklet{}, err
 	}
@@ -90,6 +99,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (BarometerBricklet, error
 	dev.ResponseExpected[FunctionGetReferenceAirPressure] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetAveraging] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetAveraging] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetI2CMode] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetI2CMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
 	return BarometerBricklet{dev}, nil
 }
@@ -856,6 +867,88 @@ func (device *BarometerBricklet) GetAveraging() (movingAveragePressure uint8, av
 	}
 
 	return movingAveragePressure, averagePressure, averageTemperature, nil
+}
+
+// Sets the I2C mode. Possible modes are:
+// 
+// * 0: Fast (400kHz)
+// * 1: Slow (100kHz)
+// 
+// If you have problems with obvious outliers in the
+// Barometer Bricklet measurements, they may be caused by EMI issues.
+// In this case it may be helpful to lower the I2C speed.
+// 
+// It is however not recommended to lower the I2C speed in applications where
+// a high throughput needs to be achieved.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* I2CModeFast
+//	* I2CModeSlow
+func (device *BarometerBricklet) SetI2CMode(mode I2CMode) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetI2CMode), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the I2C mode as set by SetI2CMode.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* I2CModeFast
+//	* I2CModeSlow
+func (device *BarometerBricklet) GetI2CMode() (mode I2CMode, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetI2CMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
+
+	}
+
+	return mode, nil
 }
 
 // Returns the UID, the UID where the Bricklet is connected to,

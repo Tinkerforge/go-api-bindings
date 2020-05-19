@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-20.      *
+ * This file was automatically generated on 2020-05-19.      *
  *                                                           *
- * Go Bindings Version 2.0.7                                 *
+ * Go Bindings Version 2.0.8                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -695,6 +695,9 @@ func (device *MasterBrick) DeregisterUSBVoltageReachedCallback(registrationId ui
 // Returns the stack voltage. The stack voltage is the
 // voltage that is supplied via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
+// 
+// Note
+//  It is not possible to measure voltages supplied per PoE or USB with this function.
 func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
 	
@@ -726,6 +729,9 @@ func (device *MasterBrick) GetStackVoltage() (voltage uint16, err error) {
 // Returns the stack current. The stack current is the
 // current that is drawn via the stack, i.e. it is given by a
 // Step-Down or Step-Up Power Supply.
+// 
+// Note
+//  It is not possible to measure the current drawn via PoE or USB with this function.
 func (device *MasterBrick) GetStackCurrent() (current uint16, err error) {
 	var buf bytes.Buffer
 	

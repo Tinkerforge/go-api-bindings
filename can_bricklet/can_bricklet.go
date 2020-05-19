@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-20.      *
+ * This file was automatically generated on 2020-05-19.      *
  *                                                           *
- * Go Bindings Version 2.0.7                                 *
+ * Go Bindings Version 2.0.8                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -679,7 +679,7 @@ func (device *CANBricklet) GetReadFilter() (mode FilterMode, mask uint32, filter
 // acknowledgement, form, bit and stuffing errors during CAN bus write and read
 // operations.
 // 
-// When the write error level extends 255 then the CAN transceiver gets disabled
+// When the write error level exceeds 255 then the CAN transceiver gets disabled
 // and no frames can be transmitted or received anymore. The CAN transceiver will
 // automatically be activated again after the CAN bus is idle for a while.
 // 

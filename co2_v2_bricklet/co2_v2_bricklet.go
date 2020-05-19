@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-20.      *
+ * This file was automatically generated on 2020-05-19.      *
  *                                                           *
- * Go Bindings Version 2.0.7                                 *
+ * Go Bindings Version 2.0.8                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -335,7 +335,7 @@ func (device *CO2V2Bricklet) GetAllValues() (co2Concentration uint16, temperatur
 	return co2Concentration, temperature, humidity, nil
 }
 
-// The CO2 concentration (among other things) depends on the ambient air pressure.
+// The CO2 concentration depends (among other things) on the ambient air pressure.
 // 
 // To increase the accuracy of the CO2 Bricklet 2.0 you can set the current air pressure.
 // You use the `Barometer Bricklet 2.0 <barometer_v2_bricklet>` or the

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-04-20.      *
+ * This file was automatically generated on 2020-05-19.      *
  *                                                           *
- * Go Bindings Version 2.0.7                                 *
+ * Go Bindings Version 2.0.8                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -38,6 +38,9 @@ const (
 	FunctionGetChannelLEDConfig Function = 11
 	FunctionSetChannelLEDStatusConfig Function = 12
 	FunctionGetChannelLEDStatusConfig Function = 13
+	FunctionGetAllVoltages Function = 14
+	FunctionSetAllVoltagesCallbackConfiguration Function = 15
+	FunctionGetAllVoltagesCallbackConfiguration Function = 16
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -51,6 +54,7 @@ const (
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
 	FunctionCallbackVoltage Function = 4
+	FunctionCallbackAllVoltages Function = 17
 )
 
 type ThresholdOption = rune
@@ -131,7 +135,7 @@ const DeviceDisplayName = "Industrial Dual Analog In Bricklet 2.0"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDualAnalogInV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialDualAnalogInV2Bricklet{}, err
 	}
@@ -147,6 +151,9 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDualAnalogInV2
 	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetChannelLEDStatusConfig] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetChannelLEDStatusConfig] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetAllVoltages] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetAllVoltagesCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetAllVoltagesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -227,6 +234,34 @@ func (device *IndustrialDualAnalogInV2Bricklet) RegisterVoltageCallback(fn func(
 // Remove a registered Voltage callback.
 func (device *IndustrialDualAnalogInV2Bricklet) DeregisterVoltageCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackVoltage), registrationId)
+}
+
+
+// This callback is triggered periodically according to the configuration set by
+// SetAllVoltagesCallbackConfiguration.
+// 
+// The parameters are the same as GetAllVoltages.
+// 
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+func (device *IndustrialDualAnalogInV2Bricklet) RegisterAllVoltagesCallback(fn func([2]int32)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 16 {
+			return
+		}
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var voltages [2]int32
+		binary.Read(buf, binary.LittleEndian, &voltages)
+		fn(voltages)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackAllVoltages), wrapper)
+}
+
+// Remove a registered All Voltages callback.
+func (device *IndustrialDualAnalogInV2Bricklet) DeregisterAllVoltagesCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackAllVoltages), registrationId)
 }
 
 
@@ -722,6 +757,114 @@ func (device *IndustrialDualAnalogInV2Bricklet) GetChannelLEDStatusConfig(channe
 	}
 
 	return min, max, config, nil
+}
+
+// Returns the voltages for all channels.
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterAllVoltagesCallback callback. You can set the callback configuration
+// with SetAllVoltagesCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+func (device *IndustrialDualAnalogInV2Bricklet) GetAllVoltages() (voltages [2]int32, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllVoltages), buf.Bytes())
+	if err != nil {
+		return voltages, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 16 {
+			return voltages, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		if header.ErrorCode != 0 {
+			return voltages, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &voltages)
+
+	}
+
+	return voltages, nil
+}
+
+// The period is the period with which the RegisterAllVoltagesCallback
+// callback is triggered periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after at least one of the values has changed. If the values didn't
+// change within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+func (device *IndustrialDualAnalogInV2Bricklet) SetAllVoltagesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetAllVoltagesCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the callback configuration as set by
+// SetAllVoltagesCallbackConfiguration.
+// 
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+func (device *IndustrialDualAnalogInV2Bricklet) GetAllVoltagesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetAllVoltagesCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return period, valueHasToChange, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 13 {
+			return period, valueHasToChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+		binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
+
+	}
+
+	return period, valueHasToChange, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
