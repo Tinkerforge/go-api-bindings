@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-05-19.      *
+ * This file was automatically generated on 2020-11-02.      *
  *                                                           *
- * Go Bindings Version 2.0.8                                 *
+ * Go Bindings Version 2.0.9                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -152,6 +152,8 @@ var deviceNames = map[uint16]string{
     2147: "CO2 Bricklet 2.0",
     2152: "Energy Monitor Bricklet",
     2153: "Compass Bricklet",
+    2161: "IMU Bricklet 3.0",
+    2162: "Industrial Dual AC Relay Bricklet",
 }
 
 func getDeviceDisplayName(deviceIdentifier uint16) string {

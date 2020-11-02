@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-05-19.      *
+ * This file was automatically generated on 2020-11-02.      *
  *                                                           *
- * Go Bindings Version 2.0.8                                 *
+ * Go Bindings Version 2.0.9                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -1452,7 +1452,7 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
 // function corresponds to the maximum baudrate (see SetSPITFPBaudrateConfig).
 // 
 // Regulatory testing is done with the default baudrate. If CE compatibility
-// or similar is necessary in you applications we recommend to not change
+// or similar is necessary in your applications we recommend to not change
 // the baudrate.
 // 
 // .. versionadded:: 2.3.2$nbsp;(Firmware)

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-05-19.      *
+ * This file was automatically generated on 2020-11-02.      *
  *                                                           *
- * Go Bindings Version 2.0.8                                 *
+ * Go Bindings Version 2.0.9                                 *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -427,7 +427,7 @@ func (device *IndustrialDual020mAV2Bricklet) SetSampleRate(rate SampleRate) (err
 	return nil
 }
 
-// Returns the gain as set by SetSampleRate.
+// Returns the sample rate as set by SetSampleRate.
 //
 // Associated constants:
 //
@@ -1127,8 +1127,7 @@ func (device *IndustrialDual020mAV2Bricklet) ReadUID() (uid uint32, err error) {
 // device identifier.
 // 
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
-// The Raspberry Pi HAT (Zero) Brick is always at position 'i' and the Bricklet
-// connected to an `Isolator Bricklet <isolator_bricklet>` is always as
+// A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
