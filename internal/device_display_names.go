@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-11-02.      *
+ * This file was automatically generated on 2021-01-15.      *
  *                                                           *
- * Go Bindings Version 2.0.9                                 *
+ * Go Bindings Version 2.0.10                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -152,6 +152,8 @@ var deviceNames = map[uint16]string{
     2147: "CO2 Bricklet 2.0",
     2152: "Energy Monitor Bricklet",
     2153: "Compass Bricklet",
+    2156: "Performance DC Bricklet",
+    2157: "Servo Bricklet 2.0",
     2161: "IMU Bricklet 3.0",
     2162: "Industrial Dual AC Relay Bricklet",
 }
