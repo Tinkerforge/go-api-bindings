@@ -9,11 +9,11 @@
  *************************************************************/
 
 
-// 4 galvanically isolated digital inputs.
+// Reads temperatures from Pt100 und Pt1000 sensors.
 // 
 // 
-// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialDigitalIn4V2_Bricklet_Go.html.
-package industrial_digital_in_4_v2_bricklet
+// See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialPTC_Bricklet_Go.html.
+package industrial_ptc_bricklet
 
 import (
 	"encoding/binary"
@@ -26,16 +26,21 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetValue Function = 1
-	FunctionSetValueCallbackConfiguration Function = 2
-	FunctionGetValueCallbackConfiguration Function = 3
-	FunctionSetAllValueCallbackConfiguration Function = 4
-	FunctionGetAllValueCallbackConfiguration Function = 5
-	FunctionGetEdgeCount Function = 6
-	FunctionSetEdgeCountConfiguration Function = 7
-	FunctionGetEdgeCountConfiguration Function = 8
-	FunctionSetChannelLEDConfig Function = 9
-	FunctionGetChannelLEDConfig Function = 10
+	FunctionGetTemperature Function = 1
+	FunctionSetTemperatureCallbackConfiguration Function = 2
+	FunctionGetTemperatureCallbackConfiguration Function = 3
+	FunctionGetResistance Function = 5
+	FunctionSetResistanceCallbackConfiguration Function = 6
+	FunctionGetResistanceCallbackConfiguration Function = 7
+	FunctionSetNoiseRejectionFilter Function = 9
+	FunctionGetNoiseRejectionFilter Function = 10
+	FunctionIsSensorConnected Function = 11
+	FunctionSetWireMode Function = 12
+	FunctionGetWireMode Function = 13
+	FunctionSetMovingAverageConfiguration Function = 14
+	FunctionGetMovingAverageConfiguration Function = 15
+	FunctionSetSensorConnectedCallbackConfiguration Function = 16
+	FunctionGetSensorConnectedCallbackConfiguration Function = 17
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -48,34 +53,34 @@ const (
 	FunctionWriteUID Function = 248
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
-	FunctionCallbackValue Function = 11
-	FunctionCallbackAllValue Function = 12
+	FunctionCallbackTemperature Function = 4
+	FunctionCallbackResistance Function = 8
+	FunctionCallbackSensorConnected Function = 18
 )
 
-type Channel = uint8
+type ThresholdOption = rune
 
 const (
-	Channel0 Channel = 0
-	Channel1 Channel = 1
-	Channel2 Channel = 2
-	Channel3 Channel = 3
+	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOutside ThresholdOption = 'o'
+	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionSmaller ThresholdOption = '<'
+	ThresholdOptionGreater ThresholdOption = '>'
 )
 
-type EdgeType = uint8
+type FilterOption = uint8
 
 const (
-	EdgeTypeRising EdgeType = 0
-	EdgeTypeFalling EdgeType = 1
-	EdgeTypeBoth EdgeType = 2
+	FilterOption50Hz FilterOption = 0
+	FilterOption60Hz FilterOption = 1
 )
 
-type ChannelLEDConfig = uint8
+type WireMode = uint8
 
 const (
-	ChannelLEDConfigOff ChannelLEDConfig = 0
-	ChannelLEDConfigOn ChannelLEDConfig = 1
-	ChannelLEDConfigShowHeartbeat ChannelLEDConfig = 2
-	ChannelLEDConfigShowChannelStatus ChannelLEDConfig = 3
+	WireMode2 WireMode = 2
+	WireMode3 WireMode = 3
+	WireMode4 WireMode = 4
 )
 
 type BootloaderMode = uint8
@@ -108,29 +113,34 @@ const (
 	StatusLEDConfigShowStatus StatusLEDConfig = 3
 )
 
-type IndustrialDigitalIn4V2Bricklet struct {
+type IndustrialPTCBricklet struct {
 	device Device
 }
-const DeviceIdentifier = 2100
-const DeviceDisplayName = "Industrial Digital In 4 Bricklet 2.0"
+const DeviceIdentifier = 2164
+const DeviceDisplayName = "Industrial PTC Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
-func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4V2Bricklet, error) {
+func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialPTCBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
 	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
-		return IndustrialDigitalIn4V2Bricklet{}, err
+		return IndustrialPTCBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetValueCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllValueCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetEdgeCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetEdgeCountConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetEdgeCountConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetChannelLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetResistance] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetResistanceCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetResistanceCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetNoiseRejectionFilter] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetNoiseRejectionFilter] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionIsSensorConnected] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetWireMode] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetWireMode] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetMovingAverageConfiguration] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetMovingAverageConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetSensorConnectedCallbackConfiguration] = ResponseExpectedFlagTrue;
+	dev.ResponseExpected[FunctionGetSensorConnectedCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -143,7 +153,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4V2Br
 	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
-	return IndustrialDigitalIn4V2Bricklet{dev}, nil
+	return IndustrialPTCBricklet{dev}, nil
 }
 
 // Returns the response expected flag for the function specified by the function ID parameter.
@@ -160,7 +170,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDigitalIn4V2Br
 // and errors are silently ignored, because they cannot be detected.
 //
 // See SetResponseExpected for the list of function ID constants available for this function.
-func (device *IndustrialDigitalIn4V2Bricklet) GetResponseExpected(functionID Function) (bool, error) {
+func (device *IndustrialPTCBricklet) GetResponseExpected(functionID Function) (bool, error) {
 	return device.device.GetResponseExpected(uint8(functionID))
 }
 
@@ -172,287 +182,110 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetResponseExpected(functionID Fun
 // other error conditions calls of this setter as well. The device will then send a response
 // for this purpose. If this flag is disabled for a setter function then no response is sent
 // and errors are silently ignored, because they cannot be detected.
-func (device *IndustrialDigitalIn4V2Bricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
+func (device *IndustrialPTCBricklet) SetResponseExpected(functionID Function, responseExpected bool) error {
 	return device.device.SetResponseExpected(uint8(functionID), responseExpected)
 }
 
 // Changes the response expected flag for all setter and callback configuration functions of this device at once.
-func (device *IndustrialDigitalIn4V2Bricklet) SetResponseExpectedAll(responseExpected bool) {
+func (device *IndustrialPTCBricklet) SetResponseExpectedAll(responseExpected bool) {
 	device.device.SetResponseExpectedAll(responseExpected)
 }
 
 // Returns the version of the API definition (major, minor, revision) implemented by this API bindings. This is neither the release version of this API bindings nor does it tell you anything about the represented Brick or Bricklet.
-func (device *IndustrialDigitalIn4V2Bricklet) GetAPIVersion() [3]uint8 {
+func (device *IndustrialPTCBricklet) GetAPIVersion() [3]uint8 {
 	return device.device.GetAPIVersion()
 }
 
 // This callback is triggered periodically according to the configuration set by
-// SetValueCallbackConfiguration.
+// SetTemperatureCallbackConfiguration.
 // 
-// The parameters are the channel, a value-changed indicator and the actual
-// value for the channel. The `changed` parameter is true if the value has changed
-// since the last callback.
-func (device *IndustrialDigitalIn4V2Bricklet) RegisterValueCallback(fn func(Channel, bool, bool)) uint64 {
+// The parameter is the same as GetTemperature.
+func (device *IndustrialPTCBricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		var header PacketHeader
 
 		header.FillFromBytes(byteSlice)
-		if header.Length != 11 {
+		if header.Length != 12 {
 			return
 		}
 		buf := bytes.NewBuffer(byteSlice[8:])
-		var channel Channel
-		var changed bool
-		var value bool
-		binary.Read(buf, binary.LittleEndian, &channel)
-		binary.Read(buf, binary.LittleEndian, &changed)
-		binary.Read(buf, binary.LittleEndian, &value)
-		fn(channel, changed, value)
+		var temperature int32
+		binary.Read(buf, binary.LittleEndian, &temperature)
+		fn(temperature)
 	}
-	return device.device.RegisterCallback(uint8(FunctionCallbackValue), wrapper)
+	return device.device.RegisterCallback(uint8(FunctionCallbackTemperature), wrapper)
 }
 
-// Remove a registered Value callback.
-func (device *IndustrialDigitalIn4V2Bricklet) DeregisterValueCallback(registrationId uint64) {
-	device.device.DeregisterCallback(uint8(FunctionCallbackValue), registrationId)
+// Remove a registered Temperature callback.
+func (device *IndustrialPTCBricklet) DeregisterTemperatureCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
 
 
 // This callback is triggered periodically according to the configuration set by
-// SetAllValueCallbackConfiguration.
+// SetResistanceCallbackConfiguration.
 // 
-// The parameters are the same as GetValue. Additional the
-// `changed` parameter is true if the value has changed since
-// the last callback.
-func (device *IndustrialDigitalIn4V2Bricklet) RegisterAllValueCallback(fn func([4]bool, [4]bool)) uint64 {
+// The parameter is the same as GetResistance.
+func (device *IndustrialPTCBricklet) RegisterResistanceCallback(fn func(int32)) uint64 {
 	wrapper := func(byteSlice []byte) {
 		var header PacketHeader
 
 		header.FillFromBytes(byteSlice)
-		if header.Length != 10 {
+		if header.Length != 12 {
 			return
 		}
 		buf := bytes.NewBuffer(byteSlice[8:])
-		var changed [4]bool
-		var value [4]bool
-		binary.Read(buf, binary.LittleEndian, &changed)
-		binary.Read(buf, binary.LittleEndian, &value)
-		fn(changed, value)
+		var resistance int32
+		binary.Read(buf, binary.LittleEndian, &resistance)
+		fn(resistance)
 	}
-	return device.device.RegisterCallback(uint8(FunctionCallbackAllValue), wrapper)
+	return device.device.RegisterCallback(uint8(FunctionCallbackResistance), wrapper)
 }
 
-// Remove a registered All Value callback.
-func (device *IndustrialDigitalIn4V2Bricklet) DeregisterAllValueCallback(registrationId uint64) {
-	device.device.DeregisterCallback(uint8(FunctionCallbackAllValue), registrationId)
+// Remove a registered Resistance callback.
+func (device *IndustrialPTCBricklet) DeregisterResistanceCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackResistance), registrationId)
 }
 
 
-// Returns the input value as bools, *true* refers to high and *false* refers to low.
-func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err error) {
-	var buf bytes.Buffer
-	
-	resultBytes, err := device.device.Get(uint8(FunctionGetValue), buf.Bytes())
-	if err != nil {
-		return value, err
-	}
-	if len(resultBytes) > 0 {
+// This callback is triggered periodically according to the configuration set by
+// SetSensorConnectedCallbackConfiguration.
+// 
+// The parameter is the same as IsSensorConnected.
+func (device *IndustrialPTCBricklet) RegisterSensorConnectedCallback(fn func(bool)) uint64 {
+	wrapper := func(byteSlice []byte) {
 		var header PacketHeader
 
-		header.FillFromBytes(resultBytes)
-
+		header.FillFromBytes(byteSlice)
 		if header.Length != 9 {
-			return value, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+			return
 		}
-
-		if header.ErrorCode != 0 {
-			return value, DeviceError(header.ErrorCode)
-		}
-
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &value)
-
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var connected bool
+		binary.Read(buf, binary.LittleEndian, &connected)
+		fn(connected)
 	}
-
-	return value, nil
+	return device.device.RegisterCallback(uint8(FunctionCallbackSensorConnected), wrapper)
 }
 
-// This callback can be configured per channel.
-// 
-// The period is the period with which the RegisterValueCallback
-// callback is triggered periodically. A value of 0 turns the callback off.
-// 
-// If the `value has to change`-parameter is set to true, the callback is only
-// triggered after the value has changed. If the value didn't change within the
-// period, the callback is triggered immediately on change.
-// 
-// If it is set to false, the callback is continuously triggered with the period,
-// independent of the value.
-//
-// Associated constants:
-//
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) SetValueCallbackConfiguration(channel Channel, period uint32, valueHasToChange bool) (err error) {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-
-	resultBytes, err := device.device.Set(uint8(FunctionSetValueCallbackConfiguration), buf.Bytes())
-	if err != nil {
-		return err
-	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
-
-		header.FillFromBytes(resultBytes)
-
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
-
-		bytes.NewBuffer(resultBytes[8:])
-		
-	}
-
-	return nil
+// Remove a registered Sensor Connected callback.
+func (device *IndustrialPTCBricklet) DeregisterSensorConnectedCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackSensorConnected), registrationId)
 }
 
-// Returns the callback configuration for the given channel as set by
-// SetValueCallbackConfiguration.
-//
-// Associated constants:
-//
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) GetValueCallbackConfiguration(channel Channel) (period uint32, valueHasToChange bool, err error) {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
 
-	resultBytes, err := device.device.Get(uint8(FunctionGetValueCallbackConfiguration), buf.Bytes())
-	if err != nil {
-		return period, valueHasToChange, err
-	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
-
-		header.FillFromBytes(resultBytes)
-
-		if header.Length != 13 {
-			return period, valueHasToChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
-		if header.ErrorCode != 0 {
-			return period, valueHasToChange, DeviceError(header.ErrorCode)
-		}
-
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-		binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
-
-	}
-
-	return period, valueHasToChange, nil
-}
-
-// The period is the period with which the RegisterAllValueCallback
-// callback is triggered periodically. A value of 0 turns the callback off.
+// Returns the temperature of the connected sensor.
 // 
-// If the `value has to change`-parameter is set to true, the callback is only
-// triggered after the value has changed. If the value didn't change within the
-// period, the callback is triggered immediately on change.
 // 
-// If it is set to false, the callback is continuously triggered with the period,
-// independent of the value.
-func (device *IndustrialDigitalIn4V2Bricklet) SetAllValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-
-	resultBytes, err := device.device.Set(uint8(FunctionSetAllValueCallbackConfiguration), buf.Bytes())
-	if err != nil {
-		return err
-	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
-
-		header.FillFromBytes(resultBytes)
-
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
-		if header.ErrorCode != 0 {
-			return DeviceError(header.ErrorCode)
-		}
-
-		bytes.NewBuffer(resultBytes[8:])
-		
-	}
-
-	return nil
-}
-
-// Returns the callback configuration as set by
-// SetAllValueCallbackConfiguration.
-func (device *IndustrialDigitalIn4V2Bricklet) GetAllValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
+// If you want to get the value periodically, it is recommended to use the
+// RegisterTemperatureCallback callback. You can set the callback configuration
+// with SetTemperatureCallbackConfiguration.
+func (device *IndustrialPTCBricklet) GetTemperature() (temperature int32, err error) {
 	var buf bytes.Buffer
 	
-	resultBytes, err := device.device.Get(uint8(FunctionGetAllValueCallbackConfiguration), buf.Bytes())
+	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
-		return period, valueHasToChange, err
-	}
-	if len(resultBytes) > 0 {
-		var header PacketHeader
-
-		header.FillFromBytes(resultBytes)
-
-		if header.Length != 13 {
-			return period, valueHasToChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
-		if header.ErrorCode != 0 {
-			return period, valueHasToChange, DeviceError(header.ErrorCode)
-		}
-
-		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &period)
-		binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
-
-	}
-
-	return period, valueHasToChange, nil
-}
-
-// Returns the current value of the edge counter for the selected channel. You can
-// configure the edges that are counted with SetEdgeCountConfiguration.
-// 
-// If you set the reset counter to *true*, the count is set back to 0
-// directly after it is read.
-//
-// Associated constants:
-//
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, resetCounter bool) (count uint32, err error) {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, resetCounter);
-
-	resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCount), buf.Bytes())
-	if err != nil {
-		return count, err
+		return temperature, err
 	}
 	if len(resultBytes) > 0 {
 		var header PacketHeader
@@ -460,51 +293,63 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCount(channel Channel, rese
 		header.FillFromBytes(resultBytes)
 
 		if header.Length != 12 {
-			return count, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		if header.ErrorCode != 0 {
-			return count, DeviceError(header.ErrorCode)
+			return temperature, DeviceError(header.ErrorCode)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &count)
+		binary.Read(resultBuf, binary.LittleEndian, &temperature)
 
 	}
 
-	return count, nil
+	return temperature, nil
 }
 
-// Configures the edge counter for a specific channel.
+// The period is the period with which the RegisterTemperatureCallback callback is triggered
+// periodically. A value of 0 turns the callback off.
 // 
-// The edge type parameter configures if rising edges, falling edges or both are
-// counted. Possible edge types are:
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
 // 
-// * 0 = rising
-// * 1 = falling
-// * 2 = both
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
 // 
-// Configuring an edge counter resets its value to 0.
+// It is furthermore possible to constrain the callback with thresholds.
 // 
-// If you don't know what any of this means, just leave it at default. The
-// default configuration is very likely OK for you.
+// The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
 //
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-//	* EdgeTypeRising
-//	* EdgeTypeFalling
-//	* EdgeTypeBoth
-func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel Channel, edgeType EdgeType, debounce uint8) (err error) {
+//	* ThresholdOptionOff
+//	* ThresholdOptionOutside
+//	* ThresholdOptionInside
+//	* ThresholdOptionSmaller
+//	* ThresholdOptionGreater
+func (device *IndustrialPTCBricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, edgeType);
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, option);
+	binary.Write(&buf, binary.LittleEndian, min);
+	binary.Write(&buf, binary.LittleEndian, max);
 
-	resultBytes, err := device.device.Set(uint8(FunctionSetEdgeCountConfiguration), buf.Bytes())
+	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return err
 	}
@@ -528,70 +373,128 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetEdgeCountConfiguration(channel 
 	return nil
 }
 
-// Returns the edge type and debounce time for the selected channel as set by
-// SetEdgeCountConfiguration.
+// Returns the callback configuration as set by SetTemperatureCallbackConfiguration.
 //
 // Associated constants:
 //
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-//	* EdgeTypeRising
-//	* EdgeTypeFalling
-//	* EdgeTypeBoth
-func (device *IndustrialDigitalIn4V2Bricklet) GetEdgeCountConfiguration(channel Channel) (edgeType EdgeType, debounce uint8, err error) {
+//	* ThresholdOptionOff
+//	* ThresholdOptionOutside
+//	* ThresholdOptionInside
+//	* ThresholdOptionSmaller
+//	* ThresholdOptionGreater
+func (device *IndustrialPTCBricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-
-	resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCountConfiguration), buf.Bytes())
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
-		return edgeType, debounce, err
+		return period, valueHasToChange, option, min, max, err
 	}
 	if len(resultBytes) > 0 {
 		var header PacketHeader
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return edgeType, debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
+		if header.Length != 22 {
+			return period, valueHasToChange, option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 22)
 		}
 
 		if header.ErrorCode != 0 {
-			return edgeType, debounce, DeviceError(header.ErrorCode)
+			return period, valueHasToChange, option, min, max, DeviceError(header.ErrorCode)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &edgeType)
-		binary.Read(resultBuf, binary.LittleEndian, &debounce)
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+		binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
 
 	}
 
-	return edgeType, debounce, nil
+	return period, valueHasToChange, option, min, max, nil
 }
 
-// Each channel has a corresponding LED. You can turn the LED off, on or show a
-// heartbeat. You can also set the LED to Channel Status. In this mode the
-// LED is on if the channel is high and off otherwise.
+// Returns the value as measured by the MAX31865 precision delta-sigma ADC.
 // 
-// By default all channel LEDs are configured as Channel Status.
+// The value can be converted with the following formulas:
+// 
+// * Pt100:  resistance = (value * 390) / 32768
+// * Pt1000: resistance = (value * 3900) / 32768
+// 
+// 
+// If you want to get the value periodically, it is recommended to use the
+// RegisterResistanceCallback callback. You can set the callback configuration
+// with SetResistanceCallbackConfiguration.
+func (device *IndustrialPTCBricklet) GetResistance() (resistance int32, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetResistance), buf.Bytes())
+	if err != nil {
+		return resistance, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 12 {
+			return resistance, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return resistance, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &resistance)
+
+	}
+
+	return resistance, nil
+}
+
+// The period is the period with which the RegisterResistanceCallback callback is triggered
+// periodically. A value of 0 turns the callback off.
+// 
+// If the `value has to change`-parameter is set to true, the callback is only
+// triggered after the value has changed. If the value didn't change
+// within the period, the callback is triggered immediately on change.
+// 
+// If it is set to false, the callback is continuously triggered with the period,
+// independent of the value.
+// 
+// It is furthermore possible to constrain the callback with thresholds.
+// 
+// The `option`-parameter together with min/max sets a threshold for the RegisterResistanceCallback callback.
+// 
+// The following options are possible:
+// 
+//  Option| Description
+//  --- | --- 
+//  'x'|    Threshold is turned off
+//  'o'|    Threshold is triggered when the value is *outside* the min and max values
+//  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
+//  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
+//  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
+// 
+// If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
 //
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-//	* ChannelLEDConfigOff
-//	* ChannelLEDConfigOn
-//	* ChannelLEDConfigShowHeartbeat
-//	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channel, config ChannelLEDConfig) (err error) {
+//	* ThresholdOptionOff
+//	* ThresholdOptionOutside
+//	* ThresholdOptionInside
+//	* ThresholdOptionSmaller
+//	* ThresholdOptionGreater
+func (device *IndustrialPTCBricklet) SetResistanceCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, option);
+	binary.Write(&buf, binary.LittleEndian, min);
+	binary.Write(&buf, binary.LittleEndian, max);
 
-	resultBytes, err := device.device.Set(uint8(FunctionSetChannelLEDConfig), buf.Bytes())
+	resultBytes, err := device.device.Set(uint8(FunctionSetResistanceCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return err
 	}
@@ -615,25 +518,97 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetChannelLEDConfig(channel Channe
 	return nil
 }
 
-// Returns the channel LED configuration as set by SetChannelLEDConfig
+// Returns the callback configuration as set by SetResistanceCallbackConfiguration.
 //
 // Associated constants:
 //
-//	* Channel0
-//	* Channel1
-//	* Channel2
-//	* Channel3
-//	* ChannelLEDConfigOff
-//	* ChannelLEDConfigOn
-//	* ChannelLEDConfigShowHeartbeat
-//	* ChannelLEDConfigShowChannelStatus
-func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channel) (config ChannelLEDConfig, err error) {
+//	* ThresholdOptionOff
+//	* ThresholdOptionOutside
+//	* ThresholdOptionInside
+//	* ThresholdOptionSmaller
+//	* ThresholdOptionGreater
+func (device *IndustrialPTCBricklet) GetResistanceCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int32, max int32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-
-	resultBytes, err := device.device.Get(uint8(FunctionGetChannelLEDConfig), buf.Bytes())
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetResistanceCallbackConfiguration), buf.Bytes())
 	if err != nil {
-		return config, err
+		return period, valueHasToChange, option, min, max, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 22 {
+			return period, valueHasToChange, option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 22)
+		}
+
+		if header.ErrorCode != 0 {
+			return period, valueHasToChange, option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &period)
+		binary.Read(resultBuf, binary.LittleEndian, &valueHasToChange)
+		binary.Read(resultBuf, binary.LittleEndian, &option)
+		binary.Read(resultBuf, binary.LittleEndian, &min)
+		binary.Read(resultBuf, binary.LittleEndian, &max)
+
+	}
+
+	return period, valueHasToChange, option, min, max, nil
+}
+
+// Sets the noise rejection filter to either 50Hz (0) or 60Hz (1).
+// Noise from 50Hz or 60Hz power sources (including
+// harmonics of the AC power's fundamental frequency) is
+// attenuated by 82dB.
+//
+// Associated constants:
+//
+//	* FilterOption50Hz
+//	* FilterOption60Hz
+func (device *IndustrialPTCBricklet) SetNoiseRejectionFilter(filter FilterOption) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, filter);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetNoiseRejectionFilter), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the noise rejection filter option as set by
+// SetNoiseRejectionFilter
+//
+// Associated constants:
+//
+//	* FilterOption50Hz
+//	* FilterOption60Hz
+func (device *IndustrialPTCBricklet) GetNoiseRejectionFilter() (filter FilterOption, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetNoiseRejectionFilter), buf.Bytes())
+	if err != nil {
+		return filter, err
 	}
 	if len(resultBytes) > 0 {
 		var header PacketHeader
@@ -641,19 +616,257 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channe
 		header.FillFromBytes(resultBytes)
 
 		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+			return filter, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		if header.ErrorCode != 0 {
-			return config, DeviceError(header.ErrorCode)
+			return filter, DeviceError(header.ErrorCode)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &config)
+		binary.Read(resultBuf, binary.LittleEndian, &filter)
 
 	}
 
-	return config, nil
+	return filter, nil
+}
+
+// Returns *true* if the sensor is connected correctly.
+// 
+// If this function
+// returns *false*, there is either no Pt100 or Pt1000 sensor connected,
+// the sensor is connected incorrectly or the sensor itself is faulty.
+// 
+// If you want to get the status automatically, it is recommended to use the
+// RegisterSensorConnectedCallback callback. You can set the callback configuration
+// with SetSensorConnectedCallbackConfiguration.
+func (device *IndustrialPTCBricklet) IsSensorConnected() (connected bool, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionIsSensorConnected), buf.Bytes())
+	if err != nil {
+		return connected, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return connected, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return connected, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &connected)
+
+	}
+
+	return connected, nil
+}
+
+// Sets the wire mode of the sensor. Possible values are 2, 3 and 4 which
+// correspond to 2-, 3- and 4-wire sensors. The value has to match the jumper
+// configuration on the Bricklet.
+//
+// Associated constants:
+//
+//	* WireMode2
+//	* WireMode3
+//	* WireMode4
+func (device *IndustrialPTCBricklet) SetWireMode(mode WireMode) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, mode);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetWireMode), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the wire mode as set by SetWireMode
+//
+// Associated constants:
+//
+//	* WireMode2
+//	* WireMode3
+//	* WireMode4
+func (device *IndustrialPTCBricklet) GetWireMode() (mode WireMode, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetWireMode), buf.Bytes())
+	if err != nil {
+		return mode, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return mode, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &mode)
+
+	}
+
+	return mode, nil
+}
+
+// Sets the length of a https://en.wikipedia.org/wiki/Moving_average
+// for the resistance and temperature.
+// 
+// Setting the length to 1 will turn the averaging off. With less
+// averaging, there is more noise on the data.
+// 
+// New data is gathered every 20ms. With a moving average of length 1000 the resulting
+// averaging window has a length of 20s. If you want to do long term measurements the longest
+// moving average will give the cleanest results.
+// 
+// The default values match the non-changeable averaging settings of the old PTC Bricklet 1.0
+func (device *IndustrialPTCBricklet) SetMovingAverageConfiguration(movingAverageLengthResistance uint16, movingAverageLengthTemperature uint16) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, movingAverageLengthResistance);
+	binary.Write(&buf, binary.LittleEndian, movingAverageLengthTemperature);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetMovingAverageConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the moving average configuration as set by SetMovingAverageConfiguration.
+func (device *IndustrialPTCBricklet) GetMovingAverageConfiguration() (movingAverageLengthResistance uint16, movingAverageLengthTemperature uint16, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverageConfiguration), buf.Bytes())
+	if err != nil {
+		return movingAverageLengthResistance, movingAverageLengthTemperature, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 12 {
+			return movingAverageLengthResistance, movingAverageLengthTemperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
+		}
+
+		if header.ErrorCode != 0 {
+			return movingAverageLengthResistance, movingAverageLengthTemperature, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &movingAverageLengthResistance)
+		binary.Read(resultBuf, binary.LittleEndian, &movingAverageLengthTemperature)
+
+	}
+
+	return movingAverageLengthResistance, movingAverageLengthTemperature, nil
+}
+
+// If you enable this callback, the RegisterSensorConnectedCallback callback is triggered
+// every time a Pt sensor is connected/disconnected.
+func (device *IndustrialPTCBricklet) SetSensorConnectedCallbackConfiguration(enabled bool) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enabled);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetSensorConnectedCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the configuration as set by SetSensorConnectedCallbackConfiguration.
+func (device *IndustrialPTCBricklet) GetSensorConnectedCallbackConfiguration() (enabled bool, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetSensorConnectedCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
+	}
+
+	return enabled, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
@@ -667,7 +880,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChannelLEDConfig(channel Channe
 // 
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
-func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
+func (device *IndustrialPTCBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
@@ -721,7 +934,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetSPITFPErrorCount() (errorCountA
 //	* BootloaderStatusEntryFunctionNotPresent
 //	* BootloaderStatusDeviceIdentifierIncorrect
 //	* BootloaderStatusCRCMismatch
-func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
+func (device *IndustrialPTCBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, mode);
 
@@ -759,7 +972,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetBootloaderMode(mode BootloaderM
 //	* BootloaderModeBootloaderWaitForReboot
 //	* BootloaderModeFirmwareWaitForReboot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
-func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
+func (device *IndustrialPTCBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
@@ -793,7 +1006,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetBootloaderMode() (mode Bootload
 // 
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
-func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
+func (device *IndustrialPTCBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, pointer);
 
@@ -829,7 +1042,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetWriteFirmwarePointer(pointer ui
 // 
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
-func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
+func (device *IndustrialPTCBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, data);
 
@@ -872,7 +1085,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteFirmware(data [64]uint8) (sta
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
+func (device *IndustrialPTCBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, config);
 
@@ -908,7 +1121,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) SetStatusLEDConfig(config StatusLE
 //	* StatusLEDConfigOn
 //	* StatusLEDConfigShowHeartbeat
 //	* StatusLEDConfigShowStatus
-func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
+func (device *IndustrialPTCBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
@@ -942,7 +1155,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetStatusLEDConfig() (config Statu
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
-func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature int16, err error) {
+func (device *IndustrialPTCBricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
@@ -976,7 +1189,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetChipTemperature() (temperature 
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
-func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {
+func (device *IndustrialPTCBricklet) Reset() (err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
@@ -1008,7 +1221,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) Reset() (err error) {
 // integer first.
 // 
 // We recommend that you use Brick Viewer to change the UID.
-func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {
+func (device *IndustrialPTCBricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, uid);
 
@@ -1038,7 +1251,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) WriteUID(uid uint32) (err error) {
 
 // Returns the current UID as an integer. Encode as
 // Base58 to get the usual string version.
-func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) {
+func (device *IndustrialPTCBricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
@@ -1076,7 +1289,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) ReadUID() (uid uint32, err error) 
 // 
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
-func (device *IndustrialDigitalIn4V2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
+func (device *IndustrialPTCBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
 	
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())

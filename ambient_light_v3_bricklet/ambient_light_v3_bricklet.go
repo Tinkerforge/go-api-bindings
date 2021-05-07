@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-01-15.      *
+ * This file was automatically generated on 2021-05-06.      *
  *                                                           *
- * Go Bindings Version 2.0.10                                *
+ * Go Bindings Version 2.0.11                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -215,8 +215,11 @@ func (device *AmbientLightV3Bricklet) DeregisterIlluminanceCallback(registration
 // The illuminance is given in lux/100, i.e. a value of 450000 means that an
 // illuminance of 4500lux is measured.
 // 
-// An illuminance of 0lux indicates that the sensor is saturated and the
-// configuration should be modified, see SetConfiguration.
+// An illuminance of 0lux indicates an error condition where the sensor cannot
+// perform a reasonable measurement. This can happen with very dim or very bright
+// light conditions. In bright light conditions this might indicate that the sensor
+// is saturated and the configuration should be modified (SetConfiguration)
+// to better match the conditions.
 // 
 // 
 // If you want to get the value periodically, it is recommended to use the

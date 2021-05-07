@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-01-15.      *
+ * This file was automatically generated on 2021-05-06.      *
  *                                                           *
- * Go Bindings Version 2.0.10                                *
+ * Go Bindings Version 2.0.11                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -207,9 +207,6 @@ func (device *MotionDetectorV2Bricklet) DeregisterDetectionCycleEndedCallback(re
 
 // Returns 1 if a motion was detected. It returns 1 approx. for 1.8 seconds
 // until the sensor checks for a new movement.
-// 
-// There is also a blue LED on the Bricklet that is on as long as the Bricklet is
-// in the motion detected state.
 //
 // Associated constants:
 //

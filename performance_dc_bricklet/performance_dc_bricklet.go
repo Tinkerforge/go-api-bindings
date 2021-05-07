@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-01-15.      *
+ * This file was automatically generated on 2021-05-06.      *
  *                                                           *
- * Go Bindings Version 2.0.10                                *
+ * Go Bindings Version 2.0.11                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -75,6 +75,7 @@ const (
 	FunctionCallbackEmergencyShutdown Function = 35
 	FunctionCallbackVelocityReached Function = 36
 	FunctionCallbackCurrentVelocity Function = 37
+	FunctionCallbackGPIOState Function = 38
 )
 
 type DriveMode = uint8
@@ -174,7 +175,7 @@ const DeviceDisplayName = "Performance DC Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (PerformanceDCBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return PerformanceDCBricklet{}, err
 	}
@@ -354,6 +355,31 @@ func (device *PerformanceDCBricklet) RegisterCurrentVelocityCallback(fn func(int
 // Remove a registered Current Velocity callback.
 func (device *PerformanceDCBricklet) DeregisterCurrentVelocityCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackCurrentVelocity), registrationId)
+}
+
+
+// This callback is triggered by GPIO changes if it is activated through SetGPIOAction.
+// 
+// .. versionadded:: 2.0.1$nbsp;(Plugin)
+func (device *PerformanceDCBricklet) RegisterGPIOStateCallback(fn func([2]bool)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 9 {
+			return
+		}
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var gpioState [2]bool
+		binary.Read(buf, binary.LittleEndian, &gpioState)
+		fn(gpioState)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackGPIOState), wrapper)
+}
+
+// Remove a registered GPIO State callback.
+func (device *PerformanceDCBricklet) DeregisterGPIOStateCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackGPIOState), registrationId)
 }
 
 

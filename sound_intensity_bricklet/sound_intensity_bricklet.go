@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-01-15.      *
+ * This file was automatically generated on 2021-05-06.      *
  *                                                           *
- * Go Bindings Version 2.0.10                                *
+ * Go Bindings Version 2.0.11                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
