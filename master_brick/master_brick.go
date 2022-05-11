@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -577,7 +577,7 @@ func (device *MasterBrick) DeregisterStackVoltageCallback(registrationId uint64)
 // The RegisterUSBVoltageCallback callback is only triggered if the USB voltage has changed
 // since the last triggering.
 // 
-// Does not work with hardware version 2.1.
+// Does not work with hardware version 2.1 or newer.
 // 
 // .. versionadded:: 2.0.5$nbsp;(Firmware)
 func (device *MasterBrick) RegisterUSBVoltageCallback(fn func(uint16)) uint64 {
@@ -2234,7 +2234,7 @@ func (device *MasterBrick) GetWifiRegulatoryDomain() (domain WifiDomain, err err
 	return domain, nil
 }
 
-// Returns the USB voltage. Does not work with hardware version 2.1.
+// Returns the USB voltage. Does not work with hardware version 2.1 or newer.
 func (device *MasterBrick) GetUSBVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
 	

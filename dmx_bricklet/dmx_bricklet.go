@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -870,7 +870,7 @@ func (device *DMXBricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error
 // the RegisterFrameCallback callback and RegisterFrameErrorCountCallback callback are disabled.
 // 
 // If you want to use the RegisterFrameCallback callback you can enable it and disable
-// the cb:`Frame Available` callback at the same time. It becomes redundant in
+// the RegisterFrameAvailableCallback callback at the same time. It becomes redundant in
 // this case.
 func (device *DMXBricklet) SetFrameCallbackConfig(frameStartedCallbackEnabled bool, frameAvailableCallbackEnabled bool, frameCallbackEnabled bool, frameErrorCountCallbackEnabled bool) (err error) {
 	var buf bytes.Buffer

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -51,6 +51,7 @@ const (
 	FunctionGetDetectionLEDConfig Function = 26
 	FunctionSetMaximumTimeout Function = 27
 	FunctionGetMaximumTimeout Function = 28
+	FunctionSimpleGetTagIDLowLevel Function = 29
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -75,6 +76,7 @@ const (
 	ModeCardemu Mode = 1
 	ModeP2P Mode = 2
 	ModeReader Mode = 3
+	ModeSimple Mode = 4
 )
 
 type TagType = uint8
@@ -225,7 +227,7 @@ const DeviceDisplayName = "NFC Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (NFCBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 8, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,2 }, uid, &internalIPCon, 9, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return NFCBricklet{}, err
 	}
@@ -254,6 +256,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (NFCBricklet, error) {
 	dev.ResponseExpected[FunctionGetDetectionLEDConfig] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetMaximumTimeout] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetMaximumTimeout] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSimpleGetTagIDLowLevel] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -393,6 +396,7 @@ func (device *NFCBricklet) DeregisterP2PStateChangedCallback(registrationId uint
 // * Card Emulation (Cardemu): Emulates a tag for other readers
 // * Peer to Peer (P2P): Exchange data with other readers
 // * Reader: Reads and writes tags
+// * Simple: Automatically reads tag IDs
 // 
 // If you change a mode, the Bricklet will reconfigure the hardware for this mode.
 // Therefore, you can only use functions corresponding to the current mode. For
@@ -404,6 +408,7 @@ func (device *NFCBricklet) DeregisterP2PStateChangedCallback(registrationId uint
 //	* ModeCardemu
 //	* ModeP2P
 //	* ModeReader
+//	* ModeSimple
 func (device *NFCBricklet) SetMode(mode Mode) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, mode);
@@ -440,6 +445,7 @@ func (device *NFCBricklet) SetMode(mode Mode) (err error) {
 //	* ModeCardemu
 //	* ModeP2P
 //	* ModeReader
+//	* ModeSimple
 func (device *NFCBricklet) GetMode() (mode Mode, err error) {
 	var buf bytes.Buffer
 	
@@ -1779,6 +1785,77 @@ func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
 
 	return timeout, nil
 }
+
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* TagTypeMifareClassic
+//	* TagTypeType1
+//	* TagTypeType2
+//	* TagTypeType3
+//	* TagTypeType4
+func (device *NFCBricklet) SimpleGetTagIDLowLevel(index uint8) (tagType TagType, tagIDLength uint8, tagIDData [10]uint8, lastSeen uint32, err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, index);
+
+	resultBytes, err := device.device.Get(uint8(FunctionSimpleGetTagIDLowLevel), buf.Bytes())
+	if err != nil {
+		return tagType, tagIDLength, tagIDData, lastSeen, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 24 {
+			return tagType, tagIDLength, tagIDData, lastSeen, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
+		}
+
+		if header.ErrorCode != 0 {
+			return tagType, tagIDLength, tagIDData, lastSeen, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &tagType)
+		binary.Read(resultBuf, binary.LittleEndian, &tagIDLength)
+		copy(tagIDData[:], ByteSliceToUint8Slice(resultBuf.Next(8 * 10/8)))
+		binary.Read(resultBuf, binary.LittleEndian, &lastSeen)
+
+	}
+
+	return tagType, tagIDLength, tagIDData, lastSeen, nil
+}
+
+// .. versionadded:: 2.0.6$nbsp;(Plugin)
+	func (device *NFCBricklet) SimpleGetTagID(index uint8) (tagID []uint8, tagType TagType, lastSeen uint32, err error) {
+		buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+			tagType, tagIDLength, tagIDData, lastSeen, err := device.SimpleGetTagIDLowLevel(index)
+
+			if err != nil {
+				return LowLevelResult{}, err
+			}
+
+			var lowLevelResults bytes.Buffer
+			binary.Write(&lowLevelResults, binary.LittleEndian, tagType);
+	binary.Write(&lowLevelResults, binary.LittleEndian, lastSeen);
+
+			return LowLevelResult{
+				uint64(tagIDLength),
+				uint64(tagIDLength),
+				Uint8SliceToByteSlice(tagIDData[:]),
+				lowLevelResults.Bytes()}, nil
+		},
+			8,
+			8)
+		if err != nil {
+			return ByteSliceToUint8Slice(buf), tagType, lastSeen, err
+		}
+		resultBuf := bytes.NewBuffer(result)
+		binary.Read(resultBuf, binary.LittleEndian, &tagType)
+	binary.Read(resultBuf, binary.LittleEndian, &lastSeen)
+		return ByteSliceToUint8Slice(buf), tagType, lastSeen, nil
+	}
 
 // Returns the error count for the communication between Brick and Bricklet.
 // 

@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -458,6 +458,8 @@ func (device *OLED128x64V2Bricklet) GetDisplayConfiguration() (contrast uint8, i
 // 
 // Automatic draw can be configured with the SetDisplayConfiguration
 // function.
+// 
+// The font conforms to code page 437.
 func (device *OLED128x64V2Bricklet) WriteLine(line uint8, position uint8, text string) (err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, line);

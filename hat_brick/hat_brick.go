@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -33,6 +33,8 @@ const (
 	FunctionGetVoltages Function = 5
 	FunctionSetVoltagesCallbackConfiguration Function = 6
 	FunctionGetVoltagesCallbackConfiguration Function = 7
+	FunctionSetRTCDriver Function = 9
+	FunctionGetRTCDriver Function = 10
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -46,6 +48,13 @@ const (
 	FunctionReadUID Function = 249
 	FunctionGetIdentity Function = 255
 	FunctionCallbackVoltages Function = 8
+)
+
+type RTCDriver = uint8
+
+const (
+	RTCDriverPCF8523 RTCDriver = 0
+	RTCDriverDS1338 RTCDriver = 1
 )
 
 type BootloaderMode = uint8
@@ -87,7 +96,7 @@ const DeviceDisplayName = "HAT Brick"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (HATBrick, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,2 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return HATBrick{}, err
 	}
@@ -98,6 +107,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (HATBrick, error) {
 	dev.ResponseExpected[FunctionGetVoltages] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetVoltagesCallbackConfiguration] = ResponseExpectedFlagTrue;
 	dev.ResponseExpected[FunctionGetVoltagesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetRTCDriver] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetRTCDriver] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -442,6 +453,84 @@ func (device *HATBrick) GetVoltagesCallbackConfiguration() (period uint32, value
 	}
 
 	return period, valueHasToChange, nil
+}
+
+// Configures the RTC driver that is given to the Raspberry Pi to be used.
+// Currently there are two different RTCs used:
+// 
+// * Hardware version <= 1.5: PCF8523
+// * Hardware version 1.6: DS1338
+// 
+// The correct driver will be set during factory flashing by Tinkerforge.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Firmware)
+//
+// Associated constants:
+//
+//	* RTCDriverPCF8523
+//	* RTCDriverDS1338
+func (device *HATBrick) SetRTCDriver(rtcDriver RTCDriver) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, rtcDriver);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetRTCDriver), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the RTC driver as set by SetRTCDriver.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Firmware)
+//
+// Associated constants:
+//
+//	* RTCDriverPCF8523
+//	* RTCDriverDS1338
+func (device *HATBrick) GetRTCDriver() (rtcDriver RTCDriver, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetRTCDriver), buf.Bytes())
+	if err != nil {
+		return rtcDriver, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return rtcDriver, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return rtcDriver, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &rtcDriver)
+
+	}
+
+	return rtcDriver, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

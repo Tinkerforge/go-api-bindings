@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-05-06.      *
+ * This file was automatically generated on 2022-05-11.      *
  *                                                           *
- * Go Bindings Version 2.0.11                                *
+ * Go Bindings Version 2.0.12                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -40,6 +40,8 @@ const (
 	FunctionGetUpdateMode Function = 13
 	FunctionSetDisplayType Function = 14
 	FunctionGetDisplayType Function = 15
+	FunctionSetDisplayDriver Function = 16
+	FunctionGetDisplayDriver Function = 17
 	FunctionGetSPITFPErrorCount Function = 234
 	FunctionSetBootloaderMode Function = 235
 	FunctionGetBootloaderMode Function = 236
@@ -109,6 +111,13 @@ const (
 	DisplayTypeBlackWhiteGray DisplayType = 1
 )
 
+type DisplayDriver = uint8
+
+const (
+	DisplayDriverSSD1675A DisplayDriver = 0
+	DisplayDriverSSD1680 DisplayDriver = 1
+)
+
 type BootloaderMode = uint8
 
 const (
@@ -148,7 +157,7 @@ const DeviceDisplayName = "E-Paper 296x128 Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (EPaper296x128Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 4, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 4, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return EPaper296x128Bricklet{}, err
 	}
@@ -166,6 +175,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (EPaper296x128Bricklet, e
 	dev.ResponseExpected[FunctionGetUpdateMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetDisplayType] = ResponseExpectedFlagFalse;
 	dev.ResponseExpected[FunctionGetDisplayType] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetDisplayDriver] = ResponseExpectedFlagFalse;
+	dev.ResponseExpected[FunctionGetDisplayDriver] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
@@ -691,6 +702,8 @@ func (device *EPaper296x128Bricklet) FillDisplay(color Color) (err error) {
 // 
 // This function writes the pixels into the black/white/red|gray pixel buffer, to draw the buffer
 // to the display use Draw.
+// 
+// The font conforms to code page 437.
 //
 // Associated constants:
 //
@@ -1008,6 +1021,81 @@ func (device *EPaper296x128Bricklet) GetDisplayType() (displayType DisplayType, 
 	}
 
 	return displayType, nil
+}
+
+// Sets the type of display driver. The Bricklet can currently support
+// SSD1675A and SSD1680. This will be factory set
+// during the flashing and testing phase. The value is saved in
+// non-volatile memory and will stay after a power cycle.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* DisplayDriverSSD1675A
+//	* DisplayDriverSSD1680
+func (device *EPaper296x128Bricklet) SetDisplayDriver(displayDriver DisplayDriver) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, displayDriver);
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetDisplayDriver), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+		
+	}
+
+	return nil
+}
+
+// Returns the e-paper display driver.
+// 
+// .. versionadded:: 2.0.3$nbsp;(Plugin)
+//
+// Associated constants:
+//
+//	* DisplayDriverSSD1675A
+//	* DisplayDriverSSD1680
+func (device *EPaper296x128Bricklet) GetDisplayDriver() (displayDriver DisplayDriver, err error) {
+	var buf bytes.Buffer
+	
+	resultBytes, err := device.device.Get(uint8(FunctionGetDisplayDriver), buf.Bytes())
+	if err != nil {
+		return displayDriver, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.Length != 9 {
+			return displayDriver, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		if header.ErrorCode != 0 {
+			return displayDriver, DeviceError(header.ErrorCode)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &displayDriver)
+
+	}
+
+	return displayDriver, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
