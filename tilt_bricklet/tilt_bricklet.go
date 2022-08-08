@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Detects inclination of Bricklet (tilt switch open/closed).
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Tilt_Bricklet_Go.html.
 package tilt_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,40 +25,41 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetTiltState Function = 1
-	FunctionEnableTiltStateCallback Function = 2
-	FunctionDisableTiltStateCallback Function = 3
+	FunctionGetTiltState               Function = 1
+	FunctionEnableTiltStateCallback    Function = 2
+	FunctionDisableTiltStateCallback   Function = 3
 	FunctionIsTiltStateCallbackEnabled Function = 4
-	FunctionGetIdentity Function = 255
-	FunctionCallbackTiltState Function = 5
+	FunctionGetIdentity                Function = 255
+	FunctionCallbackTiltState          Function = 5
 )
 
 type TiltState = uint8
 
 const (
-	TiltStateClosed TiltState = 0
-	TiltStateOpen TiltState = 1
+	TiltStateClosed          TiltState = 0
+	TiltStateOpen            TiltState = 1
 	TiltStateClosedVibrating TiltState = 2
 )
 
 type TiltBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 239
 const DeviceDisplayName = "Tilt Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (TiltBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return TiltBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetTiltState] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionEnableTiltStateCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionDisableTiltStateCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionIsTiltStateCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetTiltState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionEnableTiltStateCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionDisableTiltStateCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionIsTiltStateCallbackEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return TiltBricklet{dev}, nil
 }
 
@@ -105,7 +105,7 @@ func (device *TiltBricklet) GetAPIVersion() [3]uint8 {
 
 // This callback provides the current tilt state. It is called every time the
 // state changes.
-// 
+//
 // See GetTiltState for a description of the states.
 func (device *TiltBricklet) RegisterTiltStateCallback(fn func(TiltState)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -128,13 +128,12 @@ func (device *TiltBricklet) DeregisterTiltStateCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackTiltState), registrationId)
 }
 
-
 // Returns the current tilt state. The state can either be
-// 
+//
 // * 0 = Closed: The ball in the tilt switch closes the circuit.
 // * 1 = Open: The ball in the tilt switch does not close the circuit.
 // * 2 = Closed Vibrating: The tilt switch is in motion (rapid change between open and close).
-// 
+//
 // .. image:: /Images/Bricklets/bricklet_tilt_mechanics.jpg
 //    :scale: 100 %
 //    :alt: Tilt states
@@ -148,7 +147,7 @@ func (device *TiltBricklet) DeregisterTiltStateCallback(registrationId uint64) {
 //	* TiltStateClosedVibrating
 func (device *TiltBricklet) GetTiltState() (state TiltState, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTiltState), buf.Bytes())
 	if err != nil {
 		return state, err
@@ -177,7 +176,7 @@ func (device *TiltBricklet) GetTiltState() (state TiltState, err error) {
 // Enables the RegisterTiltStateCallback callback.
 func (device *TiltBricklet) EnableTiltStateCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionEnableTiltStateCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -196,7 +195,7 @@ func (device *TiltBricklet) EnableTiltStateCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -205,7 +204,7 @@ func (device *TiltBricklet) EnableTiltStateCallback() (err error) {
 // Disables the RegisterTiltStateCallback callback.
 func (device *TiltBricklet) DisableTiltStateCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionDisableTiltStateCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -224,7 +223,7 @@ func (device *TiltBricklet) DisableTiltStateCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -233,7 +232,7 @@ func (device *TiltBricklet) DisableTiltStateCallback() (err error) {
 // Returns *true* if the RegisterTiltStateCallback callback is enabled.
 func (device *TiltBricklet) IsTiltStateCallbackEnabled() (enabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionIsTiltStateCallbackEnabled), buf.Bytes())
 	if err != nil {
 		return enabled, err
@@ -262,16 +261,16 @@ func (device *TiltBricklet) IsTiltStateCallbackEnabled() (enabled bool, err erro
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *TiltBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

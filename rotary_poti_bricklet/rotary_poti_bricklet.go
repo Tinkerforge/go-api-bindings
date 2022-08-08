@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // 300° rotary potentiometer.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RotaryPoti_Bricklet_Go.html.
 package rotary_poti_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,31 +25,31 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetPosition Function = 1
-	FunctionGetAnalogValue Function = 2
-	FunctionSetPositionCallbackPeriod Function = 3
-	FunctionGetPositionCallbackPeriod Function = 4
-	FunctionSetAnalogValueCallbackPeriod Function = 5
-	FunctionGetAnalogValueCallbackPeriod Function = 6
-	FunctionSetPositionCallbackThreshold Function = 7
-	FunctionGetPositionCallbackThreshold Function = 8
+	FunctionGetPosition                     Function = 1
+	FunctionGetAnalogValue                  Function = 2
+	FunctionSetPositionCallbackPeriod       Function = 3
+	FunctionGetPositionCallbackPeriod       Function = 4
+	FunctionSetAnalogValueCallbackPeriod    Function = 5
+	FunctionGetAnalogValueCallbackPeriod    Function = 6
+	FunctionSetPositionCallbackThreshold    Function = 7
+	FunctionGetPositionCallbackThreshold    Function = 8
 	FunctionSetAnalogValueCallbackThreshold Function = 9
 	FunctionGetAnalogValueCallbackThreshold Function = 10
-	FunctionSetDebouncePeriod Function = 11
-	FunctionGetDebouncePeriod Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackPosition Function = 13
-	FunctionCallbackAnalogValue Function = 14
-	FunctionCallbackPositionReached Function = 15
-	FunctionCallbackAnalogValueReached Function = 16
+	FunctionSetDebouncePeriod               Function = 11
+	FunctionGetDebouncePeriod               Function = 12
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackPosition                Function = 13
+	FunctionCallbackAnalogValue             Function = 14
+	FunctionCallbackPositionReached         Function = 15
+	FunctionCallbackAnalogValueReached      Function = 16
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -58,29 +57,30 @@ const (
 type RotaryPotiBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 215
 const DeviceDisplayName = "Rotary Poti Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RotaryPotiBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RotaryPotiBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPositionCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetPositionCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPositionCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetPositionCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPositionCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetPositionCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPositionCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetPositionCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RotaryPotiBricklet{dev}, nil
 }
 
@@ -127,7 +127,7 @@ func (device *RotaryPotiBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetPositionCallbackPeriod. The parameter is the position of
 // the rotary potentiometer.
-// 
+//
 // The RegisterPositionCallback callback is only triggered if the position has changed since
 // the last triggering.
 func (device *RotaryPotiBricklet) RegisterPositionCallback(fn func(int16)) uint64 {
@@ -151,11 +151,10 @@ func (device *RotaryPotiBricklet) DeregisterPositionCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackPosition), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAnalogValueCallbackPeriod. The parameter is the
 // analog value of the rotary potentiometer.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the position has changed
 // since the last triggering.
 func (device *RotaryPotiBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
@@ -179,11 +178,10 @@ func (device *RotaryPotiBricklet) DeregisterAnalogValueCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetPositionCallbackThreshold is reached.
 // The parameter is the position of the rotary potentiometer.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *RotaryPotiBricklet) RegisterPositionReachedCallback(fn func(int16)) uint64 {
@@ -207,11 +205,10 @@ func (device *RotaryPotiBricklet) DeregisterPositionReachedCallback(registration
 	device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetAnalogValueCallbackThreshold is reached.
 // The parameter is the analog value of the rotary potentiometer.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *RotaryPotiBricklet) RegisterAnalogValueReachedCallback(fn func(uint16)) uint64 {
@@ -235,16 +232,15 @@ func (device *RotaryPotiBricklet) DeregisterAnalogValueReachedCallback(registrat
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
-
 // Returns the position of the rotary potentiometer. The value is
 // between -150° (turned left) and 150° (turned right).
-// 
+//
 // If you want to get the position periodically, it is recommended to use the
 // RegisterPositionCallback callback and set the period with
 // SetPositionCallbackPeriod.
 func (device *RotaryPotiBricklet) GetPosition() (position int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
 	if err != nil {
 		return position, err
@@ -271,19 +267,19 @@ func (device *RotaryPotiBricklet) GetPosition() (position int16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// 
+//
 // Note
 //  The value returned by GetPosition is averaged over several samples
 //  to yield less noise, while GetAnalogValue gives back raw
 //  unfiltered analog values. The only reason to use GetAnalogValue is,
 //  if you need the full resolution of the analog-to-digital converter.
-// 
+//
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *RotaryPotiBricklet) GetAnalogValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -311,12 +307,12 @@ func (device *RotaryPotiBricklet) GetAnalogValue() (value uint16, err error) {
 
 // Sets the period with which the RegisterPositionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterPositionCallback callback is only triggered if the position has changed since
 // the last triggering.
 func (device *RotaryPotiBricklet) SetPositionCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -336,7 +332,7 @@ func (device *RotaryPotiBricklet) SetPositionCallbackPeriod(period uint32) (err 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -345,7 +341,7 @@ func (device *RotaryPotiBricklet) SetPositionCallbackPeriod(period uint32) (err 
 // Returns the period as set by SetPositionCallbackPeriod.
 func (device *RotaryPotiBricklet) GetPositionCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -373,12 +369,12 @@ func (device *RotaryPotiBricklet) GetPositionCallbackPeriod() (period uint32, er
 
 // Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *RotaryPotiBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -398,7 +394,7 @@ func (device *RotaryPotiBricklet) SetAnalogValueCallbackPeriod(period uint32) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -407,7 +403,7 @@ func (device *RotaryPotiBricklet) SetAnalogValueCallbackPeriod(period uint32) (e
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *RotaryPotiBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -434,11 +430,11 @@ func (device *RotaryPotiBricklet) GetAnalogValueCallbackPeriod() (period uint32,
 }
 
 // Sets the thresholds for the RegisterPositionReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the position is *outside* the min and max values
 //  'i'|    Callback is triggered when the position is *inside* the min and max values
@@ -454,9 +450,9 @@ func (device *RotaryPotiBricklet) GetAnalogValueCallbackPeriod() (period uint32,
 //	* ThresholdOptionGreater
 func (device *RotaryPotiBricklet) SetPositionCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPositionCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -476,7 +472,7 @@ func (device *RotaryPotiBricklet) SetPositionCallbackThreshold(option ThresholdO
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -493,7 +489,7 @@ func (device *RotaryPotiBricklet) SetPositionCallbackThreshold(option ThresholdO
 //	* ThresholdOptionGreater
 func (device *RotaryPotiBricklet) GetPositionCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetPositionCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -522,11 +518,11 @@ func (device *RotaryPotiBricklet) GetPositionCallbackThreshold() (option Thresho
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the analog value is *outside* the min and max values
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
@@ -542,9 +538,9 @@ func (device *RotaryPotiBricklet) GetPositionCallbackThreshold() (option Thresho
 //	* ThresholdOptionGreater
 func (device *RotaryPotiBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -564,7 +560,7 @@ func (device *RotaryPotiBricklet) SetAnalogValueCallbackThreshold(option Thresho
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -581,7 +577,7 @@ func (device *RotaryPotiBricklet) SetAnalogValueCallbackThreshold(option Thresho
 //	* ThresholdOptionGreater
 func (device *RotaryPotiBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -610,19 +606,19 @@ func (device *RotaryPotiBricklet) GetAnalogValueCallbackThreshold() (option Thre
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterPositionReachedCallback,
 // * RegisterAnalogValueReachedCallback
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetPositionCallbackThreshold,
 // * SetAnalogValueCallbackThreshold
-// 
+//
 // keep being reached.
 func (device *RotaryPotiBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -642,7 +638,7 @@ func (device *RotaryPotiBricklet) SetDebouncePeriod(debounce uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -651,7 +647,7 @@ func (device *RotaryPotiBricklet) SetDebouncePeriod(debounce uint32) (err error)
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *RotaryPotiBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -680,16 +676,16 @@ func (device *RotaryPotiBricklet) GetDebouncePeriod() (debounce uint32, err erro
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RotaryPotiBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Breakout for Infineon XMC1400 microcontroller.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/XMC1400Breakout_Bricklet_Go.html.
 package xmc1400_breakout_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,39 +25,39 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetGPIOConfig Function = 1
-	FunctionGetGPIOInput Function = 2
-	FunctionSetADCChannelConfig Function = 3
-	FunctionGetADCChannelConfig Function = 4
-	FunctionGetADCChannelValue Function = 5
-	FunctionGetADCValues Function = 6
+	FunctionSetGPIOConfig                     Function = 1
+	FunctionGetGPIOInput                      Function = 2
+	FunctionSetADCChannelConfig               Function = 3
+	FunctionGetADCChannelConfig               Function = 4
+	FunctionGetADCChannelValue                Function = 5
+	FunctionGetADCValues                      Function = 6
 	FunctionSetADCValuesCallbackConfiguration Function = 7
 	FunctionGetADCValuesCallbackConfiguration Function = 8
-	FunctionGetCount Function = 10
-	FunctionSetCountCallbackConfiguration Function = 11
-	FunctionGetCountCallbackConfiguration Function = 12
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackADCValues Function = 9
-	FunctionCallbackCount Function = 13
+	FunctionGetCount                          Function = 10
+	FunctionSetCountCallbackConfiguration     Function = 11
+	FunctionGetCountCallbackConfiguration     Function = 12
+	FunctionGetSPITFPErrorCount               Function = 234
+	FunctionSetBootloaderMode                 Function = 235
+	FunctionGetBootloaderMode                 Function = 236
+	FunctionSetWriteFirmwarePointer           Function = 237
+	FunctionWriteFirmware                     Function = 238
+	FunctionSetStatusLEDConfig                Function = 239
+	FunctionGetStatusLEDConfig                Function = 240
+	FunctionGetChipTemperature                Function = 242
+	FunctionReset                             Function = 243
+	FunctionWriteUID                          Function = 248
+	FunctionReadUID                           Function = 249
+	FunctionGetIdentity                       Function = 255
+	FunctionCallbackADCValues                 Function = 9
+	FunctionCallbackCount                     Function = 13
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -66,91 +65,92 @@ const (
 type GPIOMode = uint8
 
 const (
-	GPIOModeInputTristate GPIOMode = 0
-	GPIOModeInputPullDown GPIOMode = 1
-	GPIOModeInputPullUp GPIOMode = 2
-	GPIOModeInputSampling GPIOMode = 3
+	GPIOModeInputTristate         GPIOMode = 0
+	GPIOModeInputPullDown         GPIOMode = 1
+	GPIOModeInputPullUp           GPIOMode = 2
+	GPIOModeInputSampling         GPIOMode = 3
 	GPIOModeInputInvertedTristate GPIOMode = 4
 	GPIOModeInputInvertedPullDown GPIOMode = 5
-	GPIOModeInputInvertedPullUp GPIOMode = 6
+	GPIOModeInputInvertedPullUp   GPIOMode = 6
 	GPIOModeInputInvertedSampling GPIOMode = 7
-	GPIOModeOutputPushPull GPIOMode = 8
-	GPIOModeOutputOpenDrain GPIOMode = 9
+	GPIOModeOutputPushPull        GPIOMode = 8
+	GPIOModeOutputOpenDrain       GPIOMode = 9
 )
 
 type GPIOInputHysteresis = uint8
 
 const (
 	GPIOInputHysteresisStandard GPIOInputHysteresis = 0
-	GPIOInputHysteresisLarge GPIOInputHysteresis = 4
+	GPIOInputHysteresisLarge    GPIOInputHysteresis = 4
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type XMC1400BreakoutBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 279
 const DeviceDisplayName = "XMC1400 Breakout Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (XMC1400BreakoutBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return XMC1400BreakoutBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetGPIOConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetGPIOInput] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetADCChannelConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetADCChannelConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetADCChannelValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetADCValues] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetADCValuesCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetADCValuesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCountCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetCountCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetGPIOConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetGPIOInput] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetADCChannelConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetADCChannelConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetADCChannelValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetADCValues] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetADCValuesCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetADCValuesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCountCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetCountCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return XMC1400BreakoutBricklet{dev}, nil
 }
 
@@ -196,7 +196,7 @@ func (device *XMC1400BreakoutBricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetADCValuesCallbackConfiguration.
-// 
+//
 // The parameters are the same as GetADCValues.
 func (device *XMC1400BreakoutBricklet) RegisterADCValuesCallback(fn func([8]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -219,10 +219,9 @@ func (device *XMC1400BreakoutBricklet) DeregisterADCValuesCallback(registrationI
 	device.device.DeregisterCallback(uint8(FunctionCallbackADCValues), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetCountCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetCount.
 func (device *XMC1400BreakoutBricklet) RegisterCountCallback(fn func(uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -245,7 +244,6 @@ func (device *XMC1400BreakoutBricklet) DeregisterCountCallback(registrationId ui
 	device.device.DeregisterCallback(uint8(FunctionCallbackCount), registrationId)
 }
 
-
 // Example for a setter function. The values are the values that can be given to
 // the XMC_GPIO_Init function. See communication.c in the firmware.
 //
@@ -265,11 +263,11 @@ func (device *XMC1400BreakoutBricklet) DeregisterCountCallback(registrationId ui
 //	* GPIOInputHysteresisLarge
 func (device *XMC1400BreakoutBricklet) SetGPIOConfig(port uint8, pin uint8, mode GPIOMode, inputHysteresis GPIOInputHysteresis, outputLevel bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, port);
-	binary.Write(&buf, binary.LittleEndian, pin);
-	binary.Write(&buf, binary.LittleEndian, mode);
-	binary.Write(&buf, binary.LittleEndian, inputHysteresis);
-	binary.Write(&buf, binary.LittleEndian, outputLevel);
+	binary.Write(&buf, binary.LittleEndian, port)
+	binary.Write(&buf, binary.LittleEndian, pin)
+	binary.Write(&buf, binary.LittleEndian, mode)
+	binary.Write(&buf, binary.LittleEndian, inputHysteresis)
+	binary.Write(&buf, binary.LittleEndian, outputLevel)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetGPIOConfig), buf.Bytes())
 	if err != nil {
@@ -289,7 +287,7 @@ func (device *XMC1400BreakoutBricklet) SetGPIOConfig(port uint8, pin uint8, mode
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -299,8 +297,8 @@ func (device *XMC1400BreakoutBricklet) SetGPIOConfig(port uint8, pin uint8, mode
 // XMC_GPIO_GetInput call for the given port/pin.
 func (device *XMC1400BreakoutBricklet) GetGPIOInput(port uint8, pin uint8) (value bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, port);
-	binary.Write(&buf, binary.LittleEndian, pin);
+	binary.Write(&buf, binary.LittleEndian, port)
+	binary.Write(&buf, binary.LittleEndian, pin)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetGPIOInput), buf.Bytes())
 	if err != nil {
@@ -328,9 +326,9 @@ func (device *XMC1400BreakoutBricklet) GetGPIOInput(port uint8, pin uint8) (valu
 }
 
 // Enables a ADC channel for the ADC driver example (adc.c/adc.h).
-// 
+//
 // There are 8 ADC channels and they correspond to the following pins:
-// 
+//
 // * Channel 0: P2_6
 // * Channel 1: P2_8
 // * Channel 2: P2_9
@@ -341,8 +339,8 @@ func (device *XMC1400BreakoutBricklet) GetGPIOInput(port uint8, pin uint8) (valu
 // * Channel 7: P2_2
 func (device *XMC1400BreakoutBricklet) SetADCChannelConfig(channel uint8, enable bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, enable);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, enable)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetADCChannelConfig), buf.Bytes())
 	if err != nil {
@@ -362,7 +360,7 @@ func (device *XMC1400BreakoutBricklet) SetADCChannelConfig(channel uint8, enable
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -371,7 +369,7 @@ func (device *XMC1400BreakoutBricklet) SetADCChannelConfig(channel uint8, enable
 // Returns the config for the given channel as set by SetADCChannelConfig.
 func (device *XMC1400BreakoutBricklet) GetADCChannelConfig(channel uint8) (enable bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetADCChannelConfig), buf.Bytes())
 	if err != nil {
@@ -401,7 +399,7 @@ func (device *XMC1400BreakoutBricklet) GetADCChannelConfig(channel uint8) (enabl
 // Returns the 12-bit value of the given ADC channel of the ADC driver example.
 func (device *XMC1400BreakoutBricklet) GetADCChannelValue(channel uint8) (value uint16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetADCChannelValue), buf.Bytes())
 	if err != nil {
@@ -429,13 +427,13 @@ func (device *XMC1400BreakoutBricklet) GetADCChannelValue(channel uint8) (value 
 }
 
 // Returns the values for all 8 ADC channels of the adc driver example.
-// 
+//
 // This example function also has a corresponding callback.
-// 
+//
 // See SetADCValuesCallbackConfiguration and RegisterADCValuesCallback callback.
 func (device *XMC1400BreakoutBricklet) GetADCValues() (values [8]uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetADCValues), buf.Bytes())
 	if err != nil {
 		return values, err
@@ -463,17 +461,17 @@ func (device *XMC1400BreakoutBricklet) GetADCValues() (values [8]uint16, err err
 
 // The period is the period with which the RegisterADCValuesCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *XMC1400BreakoutBricklet) SetADCValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetADCValuesCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -493,7 +491,7 @@ func (device *XMC1400BreakoutBricklet) SetADCValuesCallbackConfiguration(period 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -503,7 +501,7 @@ func (device *XMC1400BreakoutBricklet) SetADCValuesCallbackConfiguration(period 
 // SetADCValuesCallbackConfiguration.
 func (device *XMC1400BreakoutBricklet) GetADCValuesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetADCValuesCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -531,18 +529,18 @@ func (device *XMC1400BreakoutBricklet) GetADCValuesCallbackConfiguration() (peri
 }
 
 // Returns the value of the example count (see example.c).
-// 
+//
 // This example function uses the add_callback_value_function-helper in the
 // generator. The getter as well as the callback and callback configuration
 // functions are auto-generated for the API as well as the firmware.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterCountCallback callback. You can set the callback configuration
 // with SetCountCallbackConfiguration.
 func (device *XMC1400BreakoutBricklet) GetCount() (count uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCount), buf.Bytes())
 	if err != nil {
 		return count, err
@@ -570,28 +568,28 @@ func (device *XMC1400BreakoutBricklet) GetCount() (count uint32, err error) {
 
 // The period is the period with which the RegisterCountCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterCountCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -603,11 +601,11 @@ func (device *XMC1400BreakoutBricklet) GetCount() (count uint32, err error) {
 //	* ThresholdOptionGreater
 func (device *XMC1400BreakoutBricklet) SetCountCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCountCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -627,7 +625,7 @@ func (device *XMC1400BreakoutBricklet) SetCountCallbackConfiguration(period uint
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -644,7 +642,7 @@ func (device *XMC1400BreakoutBricklet) SetCountCallbackConfiguration(period uint
 //	* ThresholdOptionGreater
 func (device *XMC1400BreakoutBricklet) GetCountCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCountCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -675,19 +673,19 @@ func (device *XMC1400BreakoutBricklet) GetCountCallbackConfiguration() (period u
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *XMC1400BreakoutBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -718,11 +716,11 @@ func (device *XMC1400BreakoutBricklet) GetSPITFPErrorCount() (errorCountAckCheck
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -741,7 +739,7 @@ func (device *XMC1400BreakoutBricklet) GetSPITFPErrorCount() (errorCountAckCheck
 //	* BootloaderStatusCRCMismatch
 func (device *XMC1400BreakoutBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -779,7 +777,7 @@ func (device *XMC1400BreakoutBricklet) SetBootloaderMode(mode BootloaderMode) (s
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *XMC1400BreakoutBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -808,12 +806,12 @@ func (device *XMC1400BreakoutBricklet) GetBootloaderMode() (mode BootloaderMode,
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *XMC1400BreakoutBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -833,7 +831,7 @@ func (device *XMC1400BreakoutBricklet) SetWriteFirmwarePointer(pointer uint32) (
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -842,14 +840,14 @@ func (device *XMC1400BreakoutBricklet) SetWriteFirmwarePointer(pointer uint32) (
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *XMC1400BreakoutBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -879,9 +877,9 @@ func (device *XMC1400BreakoutBricklet) WriteFirmware(data [64]uint8) (status uin
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -892,7 +890,7 @@ func (device *XMC1400BreakoutBricklet) WriteFirmware(data [64]uint8) (status uin
 //	* StatusLEDConfigShowStatus
 func (device *XMC1400BreakoutBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -912,7 +910,7 @@ func (device *XMC1400BreakoutBricklet) SetStatusLEDConfig(config StatusLEDConfig
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -928,7 +926,7 @@ func (device *XMC1400BreakoutBricklet) SetStatusLEDConfig(config StatusLEDConfig
 //	* StatusLEDConfigShowStatus
 func (device *XMC1400BreakoutBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -956,13 +954,13 @@ func (device *XMC1400BreakoutBricklet) GetStatusLEDConfig() (config StatusLEDCon
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *XMC1400BreakoutBricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -990,13 +988,13 @@ func (device *XMC1400BreakoutBricklet) GetChipTemperature() (temperature int16, 
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *XMC1400BreakoutBricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1015,7 +1013,7 @@ func (device *XMC1400BreakoutBricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1024,11 +1022,11 @@ func (device *XMC1400BreakoutBricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *XMC1400BreakoutBricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1048,7 +1046,7 @@ func (device *XMC1400BreakoutBricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1058,7 +1056,7 @@ func (device *XMC1400BreakoutBricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *XMC1400BreakoutBricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1087,16 +1085,16 @@ func (device *XMC1400BreakoutBricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *XMC1400BreakoutBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Generates configurable DC voltage and current, 0V to 10V and 4mA to 20mA‍.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialAnalogOutV2_Bricklet_Go.html.
 package industrial_analog_out_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,36 +25,36 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetEnabled Function = 1
-	FunctionGetEnabled Function = 2
-	FunctionSetVoltage Function = 3
-	FunctionGetVoltage Function = 4
-	FunctionSetCurrent Function = 5
-	FunctionGetCurrent Function = 6
-	FunctionSetConfiguration Function = 7
-	FunctionGetConfiguration Function = 8
-	FunctionSetOutLEDConfig Function = 9
-	FunctionGetOutLEDConfig Function = 10
-	FunctionSetOutLEDStatusConfig Function = 11
-	FunctionGetOutLEDStatusConfig Function = 12
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
+	FunctionSetEnabled              Function = 1
+	FunctionGetEnabled              Function = 2
+	FunctionSetVoltage              Function = 3
+	FunctionGetVoltage              Function = 4
+	FunctionSetCurrent              Function = 5
+	FunctionGetCurrent              Function = 6
+	FunctionSetConfiguration        Function = 7
+	FunctionGetConfiguration        Function = 8
+	FunctionSetOutLEDConfig         Function = 9
+	FunctionGetOutLEDConfig         Function = 10
+	FunctionSetOutLEDStatusConfig   Function = 11
+	FunctionGetOutLEDStatusConfig   Function = 12
+	FunctionGetSPITFPErrorCount     Function = 234
+	FunctionSetBootloaderMode       Function = 235
+	FunctionGetBootloaderMode       Function = 236
 	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
+	FunctionWriteFirmware           Function = 238
+	FunctionSetStatusLEDConfig      Function = 239
+	FunctionGetStatusLEDConfig      Function = 240
+	FunctionGetChipTemperature      Function = 242
+	FunctionReset                   Function = 243
+	FunctionWriteUID                Function = 248
+	FunctionReadUID                 Function = 249
+	FunctionGetIdentity             Function = 255
 )
 
 type VoltageRange = uint8
 
 const (
-	VoltageRange0To5V VoltageRange = 0
+	VoltageRange0To5V  VoltageRange = 0
 	VoltageRange0To10V VoltageRange = 1
 )
 
@@ -70,8 +69,8 @@ const (
 type OutLEDConfig = uint8
 
 const (
-	OutLEDConfigOff OutLEDConfig = 0
-	OutLEDConfigOn OutLEDConfig = 1
+	OutLEDConfigOff           OutLEDConfig = 0
+	OutLEDConfigOn            OutLEDConfig = 1
 	OutLEDConfigShowHeartbeat OutLEDConfig = 2
 	OutLEDConfigShowOutStatus OutLEDConfig = 3
 )
@@ -86,70 +85,71 @@ const (
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type IndustrialAnalogOutV2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2116
 const DeviceDisplayName = "Industrial Analog Out Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialAnalogOutV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialAnalogOutV2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetEnabled] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetVoltage] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCurrent] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetOutLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetOutLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetOutLEDStatusConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetOutLEDStatusConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetEnabled] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetVoltage] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCurrent] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCurrent] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetOutLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetOutLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetOutLEDStatusConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetOutLEDStatusConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IndustrialAnalogOutV2Bricklet{dev}, nil
 }
 
@@ -196,7 +196,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetAPIVersion() [3]uint8 {
 // Enables/disables the output of voltage and current.
 func (device *IndustrialAnalogOutV2Bricklet) SetEnabled(enabled bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, enabled);
+	binary.Write(&buf, binary.LittleEndian, enabled)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetEnabled), buf.Bytes())
 	if err != nil {
@@ -216,7 +216,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetEnabled(enabled bool) (err error
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -225,7 +225,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetEnabled(enabled bool) (err error
 // Returns *true* if output of voltage and current is enabled, *false* otherwise.
 func (device *IndustrialAnalogOutV2Bricklet) GetEnabled() (enabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetEnabled), buf.Bytes())
 	if err != nil {
 		return enabled, err
@@ -252,12 +252,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetEnabled() (enabled bool, err err
 }
 
 // Sets the output voltage.
-// 
+//
 // The output voltage and output current are linked. Changing the output voltage
 // also changes the output current.
 func (device *IndustrialAnalogOutV2Bricklet) SetVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, voltage);
+	binary.Write(&buf, binary.LittleEndian, voltage)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetVoltage), buf.Bytes())
 	if err != nil {
@@ -277,7 +277,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetVoltage(voltage uint16) (err err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -286,7 +286,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetVoltage(voltage uint16) (err err
 // Returns the voltage as set by SetVoltage.
 func (device *IndustrialAnalogOutV2Bricklet) GetVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
 	if err != nil {
 		return voltage, err
@@ -313,12 +313,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetVoltage() (voltage uint16, err e
 }
 
 // Sets the output current.
-// 
+//
 // The output current and output voltage are linked. Changing the output current
 // also changes the output voltage.
 func (device *IndustrialAnalogOutV2Bricklet) SetCurrent(current uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, current);
+	binary.Write(&buf, binary.LittleEndian, current)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCurrent), buf.Bytes())
 	if err != nil {
@@ -338,7 +338,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetCurrent(current uint16) (err err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -347,7 +347,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetCurrent(current uint16) (err err
 // Returns the current as set by SetCurrent.
 func (device *IndustrialAnalogOutV2Bricklet) GetCurrent() (current uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCurrent), buf.Bytes())
 	if err != nil {
 		return current, err
@@ -374,18 +374,18 @@ func (device *IndustrialAnalogOutV2Bricklet) GetCurrent() (current uint16, err e
 }
 
 // Configures the voltage and current range.
-// 
+//
 // Possible voltage ranges are:
-// 
+//
 // * 0V to 5V
 // * 0V to 10V
-// 
+//
 // Possible current ranges are:
-// 
+//
 // * 4mA to 20mA
 // * 0mA to 20mA
 // * 0mA to 24mA
-// 
+//
 // The resolution will always be 12 bit. This means, that the
 // precision is higher with a smaller range.
 //
@@ -398,8 +398,8 @@ func (device *IndustrialAnalogOutV2Bricklet) GetCurrent() (current uint16, err e
 //	* CurrentRange0To24mA
 func (device *IndustrialAnalogOutV2Bricklet) SetConfiguration(voltageRange VoltageRange, currentRange CurrentRange) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, voltageRange);
-	binary.Write(&buf, binary.LittleEndian, currentRange);
+	binary.Write(&buf, binary.LittleEndian, voltageRange)
+	binary.Write(&buf, binary.LittleEndian, currentRange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
 	if err != nil {
@@ -419,7 +419,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetConfiguration(voltageRange Volta
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -436,7 +436,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetConfiguration(voltageRange Volta
 //	* CurrentRange0To24mA
 func (device *IndustrialAnalogOutV2Bricklet) GetConfiguration() (voltageRange VoltageRange, currentRange CurrentRange, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
 		return voltageRange, currentRange, err
@@ -467,7 +467,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetConfiguration() (voltageRange Vo
 // heartbeat. You can also set the LED to Out Status. In this mode the
 // LED can either be turned on with a pre-defined threshold or the intensity
 // of the LED can change with the output value (voltage or current).
-// 
+//
 // You can configure the channel status behavior with SetOutLEDStatusConfig.
 //
 // Associated constants:
@@ -478,7 +478,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetConfiguration() (voltageRange Vo
 //	* OutLEDConfigShowOutStatus
 func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDConfig(config OutLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetOutLEDConfig), buf.Bytes())
 	if err != nil {
@@ -498,7 +498,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDConfig(config OutLEDConfig
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -514,7 +514,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDConfig(config OutLEDConfig
 //	* OutLEDConfigShowOutStatus
 func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOutLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -542,9 +542,9 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDCon
 
 // Sets the Out LED status config. This config is used if the Out LED is
 // configured as Out Status, see SetOutLEDConfig.
-// 
+//
 // For each channel you can choose between threshold and intensity mode.
-// 
+//
 // In threshold mode you can define a positive or a negative threshold.
 // For a positive threshold set the min parameter to the threshold value in mV or
 // µA above which the LED should turn on and set the max parameter to 0. Example:
@@ -555,7 +555,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDCon
 // If you set a negative threshold of 5V, the LED will turn on as soon as the
 // output value goes below 5V and the LED will turn off when the output value
 // exceeds 5V.
-// 
+//
 // In intensity mode you can define a range mV or µA that is used to scale the brightness
 // of the LED. Example with min=2V, max=8V: The LED is off at 2V and below, on at
 // 8V and above and the brightness is linearly scaled between the values 2V and 8V.
@@ -568,9 +568,9 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDCon
 //	* OutLEDStatusConfigIntensity
 func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDStatusConfig(min uint16, max uint16, config OutLEDStatusConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetOutLEDStatusConfig), buf.Bytes())
 	if err != nil {
@@ -590,7 +590,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDStatusConfig(min uint16, m
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -604,7 +604,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDStatusConfig(min uint16, m
 //	* OutLEDStatusConfigIntensity
 func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDStatusConfig() (min uint16, max uint16, config OutLEDStatusConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOutLEDStatusConfig), buf.Bytes())
 	if err != nil {
 		return min, max, config, err
@@ -633,19 +633,19 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDStatusConfig() (min uint16
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IndustrialAnalogOutV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -676,11 +676,11 @@ func (device *IndustrialAnalogOutV2Bricklet) GetSPITFPErrorCount() (errorCountAc
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -699,7 +699,7 @@ func (device *IndustrialAnalogOutV2Bricklet) GetSPITFPErrorCount() (errorCountAc
 //	* BootloaderStatusCRCMismatch
 func (device *IndustrialAnalogOutV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -737,7 +737,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetBootloaderMode(mode BootloaderMo
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IndustrialAnalogOutV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -766,12 +766,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetBootloaderMode() (mode Bootloade
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialAnalogOutV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -791,7 +791,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetWriteFirmwarePointer(pointer uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -800,14 +800,14 @@ func (device *IndustrialAnalogOutV2Bricklet) SetWriteFirmwarePointer(pointer uin
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialAnalogOutV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -837,9 +837,9 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteFirmware(data [64]uint8) (stat
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -850,7 +850,7 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteFirmware(data [64]uint8) (stat
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialAnalogOutV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -870,7 +870,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetStatusLEDConfig(config StatusLED
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -886,7 +886,7 @@ func (device *IndustrialAnalogOutV2Bricklet) SetStatusLEDConfig(config StatusLED
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialAnalogOutV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -914,13 +914,13 @@ func (device *IndustrialAnalogOutV2Bricklet) GetStatusLEDConfig() (config Status
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IndustrialAnalogOutV2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -948,13 +948,13 @@ func (device *IndustrialAnalogOutV2Bricklet) GetChipTemperature() (temperature i
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IndustrialAnalogOutV2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -973,7 +973,7 @@ func (device *IndustrialAnalogOutV2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -982,11 +982,11 @@ func (device *IndustrialAnalogOutV2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IndustrialAnalogOutV2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1006,7 +1006,7 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1016,7 +1016,7 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *IndustrialAnalogOutV2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1045,16 +1045,16 @@ func (device *IndustrialAnalogOutV2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialAnalogOutV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

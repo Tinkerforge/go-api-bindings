@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Generates configurable DC voltage between 0V and 12V‍.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AnalogOutV2_Bricklet_Go.html.
 package analog_out_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -28,27 +27,28 @@ type Function = uint8
 const (
 	FunctionSetOutputVoltage Function = 1
 	FunctionGetOutputVoltage Function = 2
-	FunctionGetInputVoltage Function = 3
-	FunctionGetIdentity Function = 255
+	FunctionGetInputVoltage  Function = 3
+	FunctionGetIdentity      Function = 255
 )
 
 type AnalogOutV2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 256
 const DeviceDisplayName = "Analog Out Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AnalogOutV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return AnalogOutV2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetOutputVoltage] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetOutputVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetInputVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetOutputVoltage] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetOutputVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetInputVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return AnalogOutV2Bricklet{dev}, nil
 }
 
@@ -95,7 +95,7 @@ func (device *AnalogOutV2Bricklet) GetAPIVersion() [3]uint8 {
 // Sets the voltage.
 func (device *AnalogOutV2Bricklet) SetOutputVoltage(voltage uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, voltage);
+	binary.Write(&buf, binary.LittleEndian, voltage)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetOutputVoltage), buf.Bytes())
 	if err != nil {
@@ -115,7 +115,7 @@ func (device *AnalogOutV2Bricklet) SetOutputVoltage(voltage uint16) (err error) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -124,7 +124,7 @@ func (device *AnalogOutV2Bricklet) SetOutputVoltage(voltage uint16) (err error) 
 // Returns the voltage as set by SetOutputVoltage.
 func (device *AnalogOutV2Bricklet) GetOutputVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOutputVoltage), buf.Bytes())
 	if err != nil {
 		return voltage, err
@@ -153,7 +153,7 @@ func (device *AnalogOutV2Bricklet) GetOutputVoltage() (voltage uint16, err error
 // Returns the input voltage.
 func (device *AnalogOutV2Bricklet) GetInputVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetInputVoltage), buf.Bytes())
 	if err != nil {
 		return voltage, err
@@ -182,16 +182,16 @@ func (device *AnalogOutV2Bricklet) GetInputVoltage() (voltage uint16, err error)
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *AnalogOutV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

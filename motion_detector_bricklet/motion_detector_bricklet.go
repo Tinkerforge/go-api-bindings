@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Passive infrared (PIR) motion sensor with 7m range.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/MotionDetector_Bricklet_Go.html.
 package motion_detector_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,11 +25,11 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetMotionDetected Function = 1
-	FunctionSetStatusLEDConfig Function = 4
-	FunctionGetStatusLEDConfig Function = 5
-	FunctionGetIdentity Function = 255
-	FunctionCallbackMotionDetected Function = 2
+	FunctionGetMotionDetected           Function = 1
+	FunctionSetStatusLEDConfig          Function = 4
+	FunctionGetStatusLEDConfig          Function = 5
+	FunctionGetIdentity                 Function = 255
+	FunctionCallbackMotionDetected      Function = 2
 	FunctionCallbackDetectionCycleEnded Function = 3
 )
 
@@ -38,34 +37,35 @@ type Motion = uint8
 
 const (
 	MotionNotDetected Motion = 0
-	MotionDetected Motion = 1
+	MotionDetected    Motion = 1
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff        StatusLEDConfig = 0
+	StatusLEDConfigOn         StatusLEDConfig = 1
 	StatusLEDConfigShowStatus StatusLEDConfig = 2
 )
 
 type MotionDetectorBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 233
 const DeviceDisplayName = "Motion Detector Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (MotionDetectorBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return MotionDetectorBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetMotionDetected] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetMotionDetected] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return MotionDetectorBricklet{dev}, nil
 }
 
@@ -118,9 +118,7 @@ func (device *MotionDetectorBricklet) RegisterMotionDetectedCallback(fn func()) 
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackMotionDetected), wrapper)
@@ -130,7 +128,6 @@ func (device *MotionDetectorBricklet) RegisterMotionDetectedCallback(fn func()) 
 func (device *MotionDetectorBricklet) DeregisterMotionDetectedCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackMotionDetected), registrationId)
 }
-
 
 // This callback is called when the detection cycle ended. When this
 // callback is called, a new motion can be detected again after approximately 2
@@ -143,9 +140,7 @@ func (device *MotionDetectorBricklet) RegisterDetectionCycleEndedCallback(fn fun
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackDetectionCycleEnded), wrapper)
@@ -156,12 +151,11 @@ func (device *MotionDetectorBricklet) DeregisterDetectionCycleEndedCallback(regi
 	device.device.DeregisterCallback(uint8(FunctionCallbackDetectionCycleEnded), registrationId)
 }
 
-
 // Returns 1 if a motion was detected. How long this returns 1 after a motion
 // was detected can be adjusted with one of the small potentiometers on the
 // Motion Detector Bricklet, see `here
 // <motion_detector_bricklet_sensitivity_delay_block_time>`.
-// 
+//
 // There is also a blue LED on the Bricklet that is on as long as the Bricklet is
 // in the motion detected state.
 //
@@ -171,7 +165,7 @@ func (device *MotionDetectorBricklet) DeregisterDetectionCycleEndedCallback(regi
 //	* MotionDetected
 func (device *MotionDetectorBricklet) GetMotionDetected() (motion Motion, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMotionDetected), buf.Bytes())
 	if err != nil {
 		return motion, err
@@ -198,12 +192,12 @@ func (device *MotionDetectorBricklet) GetMotionDetected() (motion Motion, err er
 }
 
 // Sets the status led configuration.
-// 
+//
 // By default the status LED turns on if a motion is detected and off is no motion
 // is detected.
-// 
+//
 // You can also turn the LED permanently on/off.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -213,7 +207,7 @@ func (device *MotionDetectorBricklet) GetMotionDetected() (motion Motion, err er
 //	* StatusLEDConfigShowStatus
 func (device *MotionDetectorBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -233,14 +227,14 @@ func (device *MotionDetectorBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the configuration as set by SetStatusLEDConfig.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -250,7 +244,7 @@ func (device *MotionDetectorBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigShowStatus
 func (device *MotionDetectorBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -279,16 +273,16 @@ func (device *MotionDetectorBricklet) GetStatusLEDConfig() (config StatusLEDConf
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *MotionDetectorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

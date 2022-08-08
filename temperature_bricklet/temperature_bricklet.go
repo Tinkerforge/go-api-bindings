@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures ambient temperature with 0.5°C accuracy.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Temperature_Bricklet_Go.html.
 package temperature_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,26 +25,26 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetTemperature Function = 1
-	FunctionSetTemperatureCallbackPeriod Function = 2
-	FunctionGetTemperatureCallbackPeriod Function = 3
+	FunctionGetTemperature                  Function = 1
+	FunctionSetTemperatureCallbackPeriod    Function = 2
+	FunctionGetTemperatureCallbackPeriod    Function = 3
 	FunctionSetTemperatureCallbackThreshold Function = 4
 	FunctionGetTemperatureCallbackThreshold Function = 5
-	FunctionSetDebouncePeriod Function = 6
-	FunctionGetDebouncePeriod Function = 7
-	FunctionSetI2CMode Function = 10
-	FunctionGetI2CMode Function = 11
-	FunctionGetIdentity Function = 255
-	FunctionCallbackTemperature Function = 8
-	FunctionCallbackTemperatureReached Function = 9
+	FunctionSetDebouncePeriod               Function = 6
+	FunctionGetDebouncePeriod               Function = 7
+	FunctionSetI2CMode                      Function = 10
+	FunctionGetI2CMode                      Function = 11
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackTemperature             Function = 8
+	FunctionCallbackTemperatureReached      Function = 9
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -60,26 +59,27 @@ const (
 type TemperatureBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 216
 const DeviceDisplayName = "Temperature Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (TemperatureBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return TemperatureBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetI2CMode] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetI2CMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetI2CMode] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetI2CMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return TemperatureBricklet{dev}, nil
 }
 
@@ -126,7 +126,7 @@ func (device *TemperatureBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetTemperatureCallbackPeriod. The parameter is the
 // temperature of the sensor.
-// 
+//
 // The RegisterTemperatureCallback callback is only triggered if the temperature has changed
 // since the last triggering.
 func (device *TemperatureBricklet) RegisterTemperatureCallback(fn func(int16)) uint64 {
@@ -150,11 +150,10 @@ func (device *TemperatureBricklet) DeregisterTemperatureCallback(registrationId 
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetTemperatureCallbackThreshold is reached.
 // The parameter is the temperature of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *TemperatureBricklet) RegisterTemperatureReachedCallback(fn func(int16)) uint64 {
@@ -178,15 +177,14 @@ func (device *TemperatureBricklet) DeregisterTemperatureReachedCallback(registra
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureReached), registrationId)
 }
 
-
 // Returns the temperature of the sensor.
-// 
+//
 // If you want to get the temperature periodically, it is recommended
 // to use the RegisterTemperatureCallback callback and set the period with
 // SetTemperatureCallbackPeriod.
 func (device *TemperatureBricklet) GetTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -214,12 +212,12 @@ func (device *TemperatureBricklet) GetTemperature() (temperature int16, err erro
 
 // Sets the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterTemperatureCallback callback is only triggered if the temperature has changed
 // since the last triggering.
 func (device *TemperatureBricklet) SetTemperatureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -239,7 +237,7 @@ func (device *TemperatureBricklet) SetTemperatureCallbackPeriod(period uint32) (
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -248,7 +246,7 @@ func (device *TemperatureBricklet) SetTemperatureCallbackPeriod(period uint32) (
 // Returns the period as set by SetTemperatureCallbackPeriod.
 func (device *TemperatureBricklet) GetTemperatureCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -275,11 +273,11 @@ func (device *TemperatureBricklet) GetTemperatureCallbackPeriod() (period uint32
 }
 
 // Sets the thresholds for the RegisterTemperatureReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the temperature is *outside* the min and max values
 //  'i'|    Callback is triggered when the temperature is *inside* the min and max values
@@ -295,9 +293,9 @@ func (device *TemperatureBricklet) GetTemperatureCallbackPeriod() (period uint32
 //	* ThresholdOptionGreater
 func (device *TemperatureBricklet) SetTemperatureCallbackThreshold(option ThresholdOption, min int16, max int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -317,7 +315,7 @@ func (device *TemperatureBricklet) SetTemperatureCallbackThreshold(option Thresh
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -334,7 +332,7 @@ func (device *TemperatureBricklet) SetTemperatureCallbackThreshold(option Thresh
 //	* ThresholdOptionGreater
 func (device *TemperatureBricklet) GetTemperatureCallbackThreshold() (option ThresholdOption, min int16, max int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -363,17 +361,17 @@ func (device *TemperatureBricklet) GetTemperatureCallbackThreshold() (option Thr
 }
 
 // Sets the period with which the threshold callback
-// 
+//
 // * RegisterTemperatureReachedCallback
-// 
+//
 // is triggered, if the threshold
-// 
+//
 // * SetTemperatureCallbackThreshold
-// 
+//
 // keeps being reached.
 func (device *TemperatureBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -393,7 +391,7 @@ func (device *TemperatureBricklet) SetDebouncePeriod(debounce uint32) (err error
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -402,7 +400,7 @@ func (device *TemperatureBricklet) SetDebouncePeriod(debounce uint32) (err error
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *TemperatureBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -429,17 +427,17 @@ func (device *TemperatureBricklet) GetDebouncePeriod() (debounce uint32, err err
 }
 
 // Sets the I2C mode. Possible modes are:
-// 
+//
 // * 0: Fast (400kHz)
 // * 1: Slow (100kHz)
-// 
+//
 // If you have problems with obvious outliers in the
 // Temperature Bricklet measurements, they may be caused by EMI issues.
 // In this case it may be helpful to lower the I2C speed.
-// 
+//
 // It is however not recommended to lower the I2C speed in applications where
 // a high throughput needs to be achieved.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -448,7 +446,7 @@ func (device *TemperatureBricklet) GetDebouncePeriod() (debounce uint32, err err
 //	* I2CModeSlow
 func (device *TemperatureBricklet) SetI2CMode(mode I2CMode) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetI2CMode), buf.Bytes())
 	if err != nil {
@@ -468,14 +466,14 @@ func (device *TemperatureBricklet) SetI2CMode(mode I2CMode) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the I2C mode as set by SetI2CMode.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -484,7 +482,7 @@ func (device *TemperatureBricklet) SetI2CMode(mode I2CMode) (err error) {
 //	* I2CModeSlow
 func (device *TemperatureBricklet) GetI2CMode() (mode I2CMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetI2CMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -513,16 +511,16 @@ func (device *TemperatureBricklet) GetI2CMode() (mode I2CMode, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *TemperatureBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // 4 channel counter up to 4MHz.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialCounter_Bricklet_Go.html.
 package industrial_counter_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,38 +25,38 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetCounter Function = 1
-	FunctionGetAllCounter Function = 2
-	FunctionSetCounter Function = 3
-	FunctionSetAllCounter Function = 4
-	FunctionGetSignalData Function = 5
-	FunctionGetAllSignalData Function = 6
-	FunctionSetCounterActive Function = 7
-	FunctionSetAllCounterActive Function = 8
-	FunctionGetCounterActive Function = 9
-	FunctionGetAllCounterActive Function = 10
-	FunctionSetCounterConfiguration Function = 11
-	FunctionGetCounterConfiguration Function = 12
-	FunctionSetAllCounterCallbackConfiguration Function = 13
-	FunctionGetAllCounterCallbackConfiguration Function = 14
+	FunctionGetCounter                            Function = 1
+	FunctionGetAllCounter                         Function = 2
+	FunctionSetCounter                            Function = 3
+	FunctionSetAllCounter                         Function = 4
+	FunctionGetSignalData                         Function = 5
+	FunctionGetAllSignalData                      Function = 6
+	FunctionSetCounterActive                      Function = 7
+	FunctionSetAllCounterActive                   Function = 8
+	FunctionGetCounterActive                      Function = 9
+	FunctionGetAllCounterActive                   Function = 10
+	FunctionSetCounterConfiguration               Function = 11
+	FunctionGetCounterConfiguration               Function = 12
+	FunctionSetAllCounterCallbackConfiguration    Function = 13
+	FunctionGetAllCounterCallbackConfiguration    Function = 14
 	FunctionSetAllSignalDataCallbackConfiguration Function = 15
 	FunctionGetAllSignalDataCallbackConfiguration Function = 16
-	FunctionSetChannelLEDConfig Function = 17
-	FunctionGetChannelLEDConfig Function = 18
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackAllCounter Function = 19
-	FunctionCallbackAllSignalData Function = 20
+	FunctionSetChannelLEDConfig                   Function = 17
+	FunctionGetChannelLEDConfig                   Function = 18
+	FunctionGetSPITFPErrorCount                   Function = 234
+	FunctionSetBootloaderMode                     Function = 235
+	FunctionGetBootloaderMode                     Function = 236
+	FunctionSetWriteFirmwarePointer               Function = 237
+	FunctionWriteFirmware                         Function = 238
+	FunctionSetStatusLEDConfig                    Function = 239
+	FunctionGetStatusLEDConfig                    Function = 240
+	FunctionGetChipTemperature                    Function = 242
+	FunctionReset                                 Function = 243
+	FunctionWriteUID                              Function = 248
+	FunctionReadUID                               Function = 249
+	FunctionGetIdentity                           Function = 255
+	FunctionCallbackAllCounter                    Function = 19
+	FunctionCallbackAllSignalData                 Function = 20
 )
 
 type Channel = uint8
@@ -72,37 +71,37 @@ const (
 type CountEdge = uint8
 
 const (
-	CountEdgeRising CountEdge = 0
+	CountEdgeRising  CountEdge = 0
 	CountEdgeFalling CountEdge = 1
-	CountEdgeBoth CountEdge = 2
+	CountEdgeBoth    CountEdge = 2
 )
 
 type CountDirection = uint8
 
 const (
-	CountDirectionUp CountDirection = 0
-	CountDirectionDown CountDirection = 1
-	CountDirectionExternalUp CountDirection = 2
+	CountDirectionUp           CountDirection = 0
+	CountDirectionDown         CountDirection = 1
+	CountDirectionExternalUp   CountDirection = 2
 	CountDirectionExternalDown CountDirection = 3
 )
 
 type DutyCyclePrescaler = uint8
 
 const (
-	DutyCyclePrescaler1 DutyCyclePrescaler = 0
-	DutyCyclePrescaler2 DutyCyclePrescaler = 1
-	DutyCyclePrescaler4 DutyCyclePrescaler = 2
-	DutyCyclePrescaler8 DutyCyclePrescaler = 3
-	DutyCyclePrescaler16 DutyCyclePrescaler = 4
-	DutyCyclePrescaler32 DutyCyclePrescaler = 5
-	DutyCyclePrescaler64 DutyCyclePrescaler = 6
-	DutyCyclePrescaler128 DutyCyclePrescaler = 7
-	DutyCyclePrescaler256 DutyCyclePrescaler = 8
-	DutyCyclePrescaler512 DutyCyclePrescaler = 9
-	DutyCyclePrescaler1024 DutyCyclePrescaler = 10
-	DutyCyclePrescaler2048 DutyCyclePrescaler = 11
-	DutyCyclePrescaler4096 DutyCyclePrescaler = 12
-	DutyCyclePrescaler8192 DutyCyclePrescaler = 13
+	DutyCyclePrescaler1     DutyCyclePrescaler = 0
+	DutyCyclePrescaler2     DutyCyclePrescaler = 1
+	DutyCyclePrescaler4     DutyCyclePrescaler = 2
+	DutyCyclePrescaler8     DutyCyclePrescaler = 3
+	DutyCyclePrescaler16    DutyCyclePrescaler = 4
+	DutyCyclePrescaler32    DutyCyclePrescaler = 5
+	DutyCyclePrescaler64    DutyCyclePrescaler = 6
+	DutyCyclePrescaler128   DutyCyclePrescaler = 7
+	DutyCyclePrescaler256   DutyCyclePrescaler = 8
+	DutyCyclePrescaler512   DutyCyclePrescaler = 9
+	DutyCyclePrescaler1024  DutyCyclePrescaler = 10
+	DutyCyclePrescaler2048  DutyCyclePrescaler = 11
+	DutyCyclePrescaler4096  DutyCyclePrescaler = 12
+	DutyCyclePrescaler8192  DutyCyclePrescaler = 13
 	DutyCyclePrescaler16384 DutyCyclePrescaler = 14
 	DutyCyclePrescaler32768 DutyCyclePrescaler = 15
 )
@@ -110,13 +109,13 @@ const (
 type FrequencyIntegrationTime = uint8
 
 const (
-	FrequencyIntegrationTime128MS FrequencyIntegrationTime = 0
-	FrequencyIntegrationTime256MS FrequencyIntegrationTime = 1
-	FrequencyIntegrationTime512MS FrequencyIntegrationTime = 2
-	FrequencyIntegrationTime1024MS FrequencyIntegrationTime = 3
-	FrequencyIntegrationTime2048MS FrequencyIntegrationTime = 4
-	FrequencyIntegrationTime4096MS FrequencyIntegrationTime = 5
-	FrequencyIntegrationTime8192MS FrequencyIntegrationTime = 6
+	FrequencyIntegrationTime128MS   FrequencyIntegrationTime = 0
+	FrequencyIntegrationTime256MS   FrequencyIntegrationTime = 1
+	FrequencyIntegrationTime512MS   FrequencyIntegrationTime = 2
+	FrequencyIntegrationTime1024MS  FrequencyIntegrationTime = 3
+	FrequencyIntegrationTime2048MS  FrequencyIntegrationTime = 4
+	FrequencyIntegrationTime4096MS  FrequencyIntegrationTime = 5
+	FrequencyIntegrationTime8192MS  FrequencyIntegrationTime = 6
 	FrequencyIntegrationTime16384MS FrequencyIntegrationTime = 7
 	FrequencyIntegrationTime32768MS FrequencyIntegrationTime = 8
 )
@@ -124,85 +123,86 @@ const (
 type ChannelLEDConfig = uint8
 
 const (
-	ChannelLEDConfigOff ChannelLEDConfig = 0
-	ChannelLEDConfigOn ChannelLEDConfig = 1
-	ChannelLEDConfigShowHeartbeat ChannelLEDConfig = 2
+	ChannelLEDConfigOff               ChannelLEDConfig = 0
+	ChannelLEDConfigOn                ChannelLEDConfig = 1
+	ChannelLEDConfigShowHeartbeat     ChannelLEDConfig = 2
 	ChannelLEDConfigShowChannelStatus ChannelLEDConfig = 3
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type IndustrialCounterBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 293
 const DeviceDisplayName = "Industrial Counter Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialCounterBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialCounterBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetCounter] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAllCounter] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCounter] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetAllCounter] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSignalData] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAllSignalData] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCounterActive] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetAllCounterActive] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCounterActive] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAllCounterActive] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCounterConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCounterConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllCounterCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllCounterCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllSignalDataCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllSignalDataCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetChannelLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetCounter] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAllCounter] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCounter] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetAllCounter] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSignalData] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAllSignalData] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCounterActive] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetAllCounterActive] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCounterActive] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAllCounterActive] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCounterConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCounterConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAllCounterCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAllCounterCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAllSignalDataCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAllSignalDataCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetChannelLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IndustrialCounterBricklet{dev}, nil
 }
 
@@ -248,7 +248,7 @@ func (device *IndustrialCounterBricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetAllCounterCallbackConfiguration.
-// 
+//
 // The parameters are the same as GetAllCounter.
 func (device *IndustrialCounterBricklet) RegisterAllCounterCallback(fn func([4]int64)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -271,10 +271,9 @@ func (device *IndustrialCounterBricklet) DeregisterAllCounterCallback(registrati
 	device.device.DeregisterCallback(uint8(FunctionCallbackAllCounter), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetAllSignalDataCallbackConfiguration.
-// 
+//
 // The parameters are the same as GetAllSignalData.
 func (device *IndustrialCounterBricklet) RegisterAllSignalDataCallback(fn func([4]uint16, [4]uint64, [4]uint32, [4]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -303,7 +302,6 @@ func (device *IndustrialCounterBricklet) DeregisterAllSignalDataCallback(registr
 	device.device.DeregisterCallback(uint8(FunctionCallbackAllSignalData), registrationId)
 }
 
-
 // Returns the current counter value for the given channel.
 //
 // Associated constants:
@@ -314,7 +312,7 @@ func (device *IndustrialCounterBricklet) DeregisterAllSignalDataCallback(registr
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetCounter(channel Channel) (counter int64, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetCounter), buf.Bytes())
 	if err != nil {
@@ -344,7 +342,7 @@ func (device *IndustrialCounterBricklet) GetCounter(channel Channel) (counter in
 // Returns the current counter values for all four channels.
 func (device *IndustrialCounterBricklet) GetAllCounter() (counter [4]int64, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounter), buf.Bytes())
 	if err != nil {
 		return counter, err
@@ -371,7 +369,7 @@ func (device *IndustrialCounterBricklet) GetAllCounter() (counter [4]int64, err 
 }
 
 // Sets the counter value for the given channel.
-// 
+//
 // The default value for the counters on startup is 0.
 //
 // Associated constants:
@@ -382,8 +380,8 @@ func (device *IndustrialCounterBricklet) GetAllCounter() (counter [4]int64, err 
 //	* Channel3
 func (device *IndustrialCounterBricklet) SetCounter(channel Channel, counter int64) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, counter);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, counter)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCounter), buf.Bytes())
 	if err != nil {
@@ -403,18 +401,18 @@ func (device *IndustrialCounterBricklet) SetCounter(channel Channel, counter int
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Sets the counter values for all four channels.
-// 
+//
 // The default value for the counters on startup is 0.
 func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, counter);
+	binary.Write(&buf, binary.LittleEndian, counter)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounter), buf.Bytes())
 	if err != nil {
@@ -434,7 +432,7 @@ func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -451,7 +449,7 @@ func (device *IndustrialCounterBricklet) SetAllCounter(counter [4]int64) (err er
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetSignalData(channel Channel) (dutyCycle uint16, period uint64, frequency uint32, value bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetSignalData), buf.Bytes())
 	if err != nil {
@@ -485,7 +483,7 @@ func (device *IndustrialCounterBricklet) GetSignalData(channel Channel) (dutyCyc
 // channels.
 func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16, period [4]uint64, frequency [4]uint32, value [4]bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalData), buf.Bytes())
 	if err != nil {
 		return dutyCycle, period, frequency, value, err
@@ -515,9 +513,9 @@ func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16
 }
 
 // Activates/deactivates the counter of the given channel.
-// 
+//
 // true = activate, false = deactivate.
-// 
+//
 // By default all channels are activated.
 //
 // Associated constants:
@@ -528,8 +526,8 @@ func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16
 //	* Channel3
 func (device *IndustrialCounterBricklet) SetCounterActive(channel Channel, active bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, active);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, active)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCounterActive), buf.Bytes())
 	if err != nil {
@@ -549,20 +547,20 @@ func (device *IndustrialCounterBricklet) SetCounterActive(channel Channel, activ
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Activates/deactivates the counter of all four channels.
-// 
+//
 // true = activate, false = deactivate.
-// 
+//
 // By default all channels are activated.
 func (device *IndustrialCounterBricklet) SetAllCounterActive(active [4]bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, active);
+	binary.Write(&buf, binary.LittleEndian, active)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterActive), buf.Bytes())
 	if err != nil {
@@ -582,14 +580,14 @@ func (device *IndustrialCounterBricklet) SetAllCounterActive(active [4]bool) (er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the activation state of the given channel.
-// 
+//
 // true = activated, false = deactivated.
 //
 // Associated constants:
@@ -600,7 +598,7 @@ func (device *IndustrialCounterBricklet) SetAllCounterActive(active [4]bool) (er
 //	* Channel3
 func (device *IndustrialCounterBricklet) GetCounterActive(channel Channel) (active bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetCounterActive), buf.Bytes())
 	if err != nil {
@@ -628,11 +626,11 @@ func (device *IndustrialCounterBricklet) GetCounterActive(channel Channel) (acti
 }
 
 // Returns the activation state of all four channels.
-// 
+//
 // true = activated, false = deactivated.
 func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterActive), buf.Bytes())
 	if err != nil {
 		return active, err
@@ -659,7 +657,7 @@ func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, 
 }
 
 // Sets the counter configuration for the given channel.
-// 
+//
 // * Count Edge: Counter can count on rising, falling or both edges.
 // * Count Direction: Counter can count up or down. You can also use
 //   another channel as direction input, see
@@ -713,11 +711,11 @@ func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, 
 //	* FrequencyIntegrationTime32768MS
 func (device *IndustrialCounterBricklet) SetCounterConfiguration(channel Channel, countEdge CountEdge, countDirection CountDirection, dutyCyclePrescaler DutyCyclePrescaler, frequencyIntegrationTime FrequencyIntegrationTime) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, countEdge);
-	binary.Write(&buf, binary.LittleEndian, countDirection);
-	binary.Write(&buf, binary.LittleEndian, dutyCyclePrescaler);
-	binary.Write(&buf, binary.LittleEndian, frequencyIntegrationTime);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, countEdge)
+	binary.Write(&buf, binary.LittleEndian, countDirection)
+	binary.Write(&buf, binary.LittleEndian, dutyCyclePrescaler)
+	binary.Write(&buf, binary.LittleEndian, frequencyIntegrationTime)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCounterConfiguration), buf.Bytes())
 	if err != nil {
@@ -737,7 +735,7 @@ func (device *IndustrialCounterBricklet) SetCounterConfiguration(channel Channel
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -785,7 +783,7 @@ func (device *IndustrialCounterBricklet) SetCounterConfiguration(channel Channel
 //	* FrequencyIntegrationTime32768MS
 func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel) (countEdge CountEdge, countDirection CountDirection, dutyCyclePrescaler DutyCyclePrescaler, frequencyIntegrationTime FrequencyIntegrationTime, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetCounterConfiguration), buf.Bytes())
 	if err != nil {
@@ -817,17 +815,17 @@ func (device *IndustrialCounterBricklet) GetCounterConfiguration(channel Channel
 
 // The period is the period with which the RegisterAllCounterCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IndustrialCounterBricklet) SetAllCounterCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllCounterCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -847,7 +845,7 @@ func (device *IndustrialCounterBricklet) SetAllCounterCallbackConfiguration(peri
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -857,7 +855,7 @@ func (device *IndustrialCounterBricklet) SetAllCounterCallbackConfiguration(peri
 // SetAllCounterCallbackConfiguration.
 func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllCounterCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -886,17 +884,17 @@ func (device *IndustrialCounterBricklet) GetAllCounterCallbackConfiguration() (p
 
 // The period is the period with which the RegisterAllSignalDataCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IndustrialCounterBricklet) SetAllSignalDataCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllSignalDataCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -916,7 +914,7 @@ func (device *IndustrialCounterBricklet) SetAllSignalDataCallbackConfiguration(p
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -926,7 +924,7 @@ func (device *IndustrialCounterBricklet) SetAllSignalDataCallbackConfiguration(p
 // SetAllSignalDataCallbackConfiguration.
 func (device *IndustrialCounterBricklet) GetAllSignalDataCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllSignalDataCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -969,8 +967,8 @@ func (device *IndustrialCounterBricklet) GetAllSignalDataCallbackConfiguration()
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialCounterBricklet) SetChannelLEDConfig(channel Channel, config ChannelLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetChannelLEDConfig), buf.Bytes())
 	if err != nil {
@@ -990,7 +988,7 @@ func (device *IndustrialCounterBricklet) SetChannelLEDConfig(channel Channel, co
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1010,7 +1008,7 @@ func (device *IndustrialCounterBricklet) SetChannelLEDConfig(channel Channel, co
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialCounterBricklet) GetChannelLEDConfig(channel Channel) (config ChannelLEDConfig, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetChannelLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1038,19 +1036,19 @@ func (device *IndustrialCounterBricklet) GetChannelLEDConfig(channel Channel) (c
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IndustrialCounterBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -1081,11 +1079,11 @@ func (device *IndustrialCounterBricklet) GetSPITFPErrorCount() (errorCountAckChe
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -1104,7 +1102,7 @@ func (device *IndustrialCounterBricklet) GetSPITFPErrorCount() (errorCountAckChe
 //	* BootloaderStatusCRCMismatch
 func (device *IndustrialCounterBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -1142,7 +1140,7 @@ func (device *IndustrialCounterBricklet) SetBootloaderMode(mode BootloaderMode) 
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IndustrialCounterBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1171,12 +1169,12 @@ func (device *IndustrialCounterBricklet) GetBootloaderMode() (mode BootloaderMod
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialCounterBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -1196,7 +1194,7 @@ func (device *IndustrialCounterBricklet) SetWriteFirmwarePointer(pointer uint32)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1205,14 +1203,14 @@ func (device *IndustrialCounterBricklet) SetWriteFirmwarePointer(pointer uint32)
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialCounterBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -1242,9 +1240,9 @@ func (device *IndustrialCounterBricklet) WriteFirmware(data [64]uint8) (status u
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -1255,7 +1253,7 @@ func (device *IndustrialCounterBricklet) WriteFirmware(data [64]uint8) (status u
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialCounterBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1275,7 +1273,7 @@ func (device *IndustrialCounterBricklet) SetStatusLEDConfig(config StatusLEDConf
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1291,7 +1289,7 @@ func (device *IndustrialCounterBricklet) SetStatusLEDConfig(config StatusLEDConf
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialCounterBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1319,13 +1317,13 @@ func (device *IndustrialCounterBricklet) GetStatusLEDConfig() (config StatusLEDC
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IndustrialCounterBricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1353,13 +1351,13 @@ func (device *IndustrialCounterBricklet) GetChipTemperature() (temperature int16
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IndustrialCounterBricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1378,7 +1376,7 @@ func (device *IndustrialCounterBricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1387,11 +1385,11 @@ func (device *IndustrialCounterBricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IndustrialCounterBricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1411,7 +1409,7 @@ func (device *IndustrialCounterBricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1421,7 +1419,7 @@ func (device *IndustrialCounterBricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *IndustrialCounterBricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1450,16 +1448,16 @@ func (device *IndustrialCounterBricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialCounterBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

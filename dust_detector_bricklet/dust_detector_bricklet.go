@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures dust density.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/DustDetector_Bricklet_Go.html.
 package dust_detector_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,26 +25,26 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetDustDensity Function = 1
-	FunctionSetDustDensityCallbackPeriod Function = 2
-	FunctionGetDustDensityCallbackPeriod Function = 3
+	FunctionGetDustDensity                  Function = 1
+	FunctionSetDustDensityCallbackPeriod    Function = 2
+	FunctionGetDustDensityCallbackPeriod    Function = 3
 	FunctionSetDustDensityCallbackThreshold Function = 4
 	FunctionGetDustDensityCallbackThreshold Function = 5
-	FunctionSetDebouncePeriod Function = 6
-	FunctionGetDebouncePeriod Function = 7
-	FunctionSetMovingAverage Function = 10
-	FunctionGetMovingAverage Function = 11
-	FunctionGetIdentity Function = 255
-	FunctionCallbackDustDensity Function = 8
-	FunctionCallbackDustDensityReached Function = 9
+	FunctionSetDebouncePeriod               Function = 6
+	FunctionGetDebouncePeriod               Function = 7
+	FunctionSetMovingAverage                Function = 10
+	FunctionGetMovingAverage                Function = 11
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackDustDensity             Function = 8
+	FunctionCallbackDustDensityReached      Function = 9
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -53,26 +52,27 @@ const (
 type DustDetectorBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 260
 const DeviceDisplayName = "Dust Detector Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DustDetectorBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return DustDetectorBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetDustDensity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDustDensityCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDustDensityCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDustDensityCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDustDensityCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMovingAverage] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMovingAverage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetDustDensity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDustDensityCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDustDensityCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDustDensityCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDustDensityCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMovingAverage] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMovingAverage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return DustDetectorBricklet{dev}, nil
 }
 
@@ -119,7 +119,7 @@ func (device *DustDetectorBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetDustDensityCallbackPeriod. The parameter is the
 // dust density of the sensor.
-// 
+//
 // Der RegisterDustDensityCallback callback is only triggered if the dust density value has
 // changed since the last triggering.
 func (device *DustDetectorBricklet) RegisterDustDensityCallback(fn func(uint16)) uint64 {
@@ -143,11 +143,10 @@ func (device *DustDetectorBricklet) DeregisterDustDensityCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackDustDensity), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetDustDensityCallbackThreshold is reached.
 // The parameter is the dust density of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *DustDetectorBricklet) RegisterDustDensityReachedCallback(fn func(uint16)) uint64 {
@@ -171,15 +170,14 @@ func (device *DustDetectorBricklet) DeregisterDustDensityReachedCallback(registr
 	device.device.DeregisterCallback(uint8(FunctionCallbackDustDensityReached), registrationId)
 }
 
-
 // Returns the dust density.
-// 
+//
 // If you want to get the dust density periodically, it is recommended
 // to use the RegisterDustDensityCallback callback and set the period with
 // SetDustDensityCallbackPeriod.
 func (device *DustDetectorBricklet) GetDustDensity() (dustDensity uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDustDensity), buf.Bytes())
 	if err != nil {
 		return dustDensity, err
@@ -207,12 +205,12 @@ func (device *DustDetectorBricklet) GetDustDensity() (dustDensity uint16, err er
 
 // Sets the period with which the RegisterDustDensityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterDustDensityCallback callback is only triggered if the dust density has
 // changed since the last triggering.
 func (device *DustDetectorBricklet) SetDustDensityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDustDensityCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -232,7 +230,7 @@ func (device *DustDetectorBricklet) SetDustDensityCallbackPeriod(period uint32) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -241,7 +239,7 @@ func (device *DustDetectorBricklet) SetDustDensityCallbackPeriod(period uint32) 
 // Returns the period as set by SetDustDensityCallbackPeriod.
 func (device *DustDetectorBricklet) GetDustDensityCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDustDensityCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -268,11 +266,11 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackPeriod() (period uint3
 }
 
 // Sets the thresholds for the RegisterDustDensityReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the dust density value is *outside* the min and max values
 //  'i'|    Callback is triggered when the dust density value is *inside* the min and max values
@@ -288,9 +286,9 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackPeriod() (period uint3
 //	* ThresholdOptionGreater
 func (device *DustDetectorBricklet) SetDustDensityCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDustDensityCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -310,7 +308,7 @@ func (device *DustDetectorBricklet) SetDustDensityCallbackThreshold(option Thres
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -327,7 +325,7 @@ func (device *DustDetectorBricklet) SetDustDensityCallbackThreshold(option Thres
 //	* ThresholdOptionGreater
 func (device *DustDetectorBricklet) GetDustDensityCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDustDensityCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -356,17 +354,17 @@ func (device *DustDetectorBricklet) GetDustDensityCallbackThreshold() (option Th
 }
 
 // Sets the period with which the threshold callback
-// 
+//
 // * RegisterDustDensityReachedCallback
-// 
+//
 // is triggered, if the threshold
-// 
+//
 // * SetDustDensityCallbackThreshold
-// 
+//
 // keeps being reached.
 func (device *DustDetectorBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -386,7 +384,7 @@ func (device *DustDetectorBricklet) SetDebouncePeriod(debounce uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -395,7 +393,7 @@ func (device *DustDetectorBricklet) SetDebouncePeriod(debounce uint32) (err erro
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *DustDetectorBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -423,12 +421,12 @@ func (device *DustDetectorBricklet) GetDebouncePeriod() (debounce uint32, err er
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
 // for the dust density.
-// 
+//
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
 func (device *DustDetectorBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, average);
+	binary.Write(&buf, binary.LittleEndian, average)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMovingAverage), buf.Bytes())
 	if err != nil {
@@ -448,7 +446,7 @@ func (device *DustDetectorBricklet) SetMovingAverage(average uint8) (err error) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -457,7 +455,7 @@ func (device *DustDetectorBricklet) SetMovingAverage(average uint8) (err error) 
 // Returns the length moving average as set by SetMovingAverage.
 func (device *DustDetectorBricklet) GetMovingAverage() (average uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverage), buf.Bytes())
 	if err != nil {
 		return average, err
@@ -486,16 +484,16 @@ func (device *DustDetectorBricklet) GetMovingAverage() (average uint8, err error
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *DustDetectorBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

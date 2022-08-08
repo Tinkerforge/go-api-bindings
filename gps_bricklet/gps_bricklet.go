@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Determine position, velocity and altitude using GPS‍.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/GPS_Bricklet_Go.html.
 package gps_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,28 +25,28 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetCoordinates Function = 1
-	FunctionGetStatus Function = 2
-	FunctionGetAltitude Function = 3
-	FunctionGetMotion Function = 4
-	FunctionGetDateTime Function = 5
-	FunctionRestart Function = 6
+	FunctionGetCoordinates               Function = 1
+	FunctionGetStatus                    Function = 2
+	FunctionGetAltitude                  Function = 3
+	FunctionGetMotion                    Function = 4
+	FunctionGetDateTime                  Function = 5
+	FunctionRestart                      Function = 6
 	FunctionSetCoordinatesCallbackPeriod Function = 7
 	FunctionGetCoordinatesCallbackPeriod Function = 8
-	FunctionSetStatusCallbackPeriod Function = 9
-	FunctionGetStatusCallbackPeriod Function = 10
-	FunctionSetAltitudeCallbackPeriod Function = 11
-	FunctionGetAltitudeCallbackPeriod Function = 12
-	FunctionSetMotionCallbackPeriod Function = 13
-	FunctionGetMotionCallbackPeriod Function = 14
-	FunctionSetDateTimeCallbackPeriod Function = 15
-	FunctionGetDateTimeCallbackPeriod Function = 16
-	FunctionGetIdentity Function = 255
-	FunctionCallbackCoordinates Function = 17
-	FunctionCallbackStatus Function = 18
-	FunctionCallbackAltitude Function = 19
-	FunctionCallbackMotion Function = 20
-	FunctionCallbackDateTime Function = 21
+	FunctionSetStatusCallbackPeriod      Function = 9
+	FunctionGetStatusCallbackPeriod      Function = 10
+	FunctionSetAltitudeCallbackPeriod    Function = 11
+	FunctionGetAltitudeCallbackPeriod    Function = 12
+	FunctionSetMotionCallbackPeriod      Function = 13
+	FunctionGetMotionCallbackPeriod      Function = 14
+	FunctionSetDateTimeCallbackPeriod    Function = 15
+	FunctionGetDateTimeCallbackPeriod    Function = 16
+	FunctionGetIdentity                  Function = 255
+	FunctionCallbackCoordinates          Function = 17
+	FunctionCallbackStatus               Function = 18
+	FunctionCallbackAltitude             Function = 19
+	FunctionCallbackMotion               Function = 20
+	FunctionCallbackDateTime             Function = 21
 )
 
 type Fix = uint8
@@ -61,42 +60,43 @@ const (
 type RestartType = uint8
 
 const (
-	RestartTypeHotStart RestartType = 0
-	RestartTypeWarmStart RestartType = 1
-	RestartTypeColdStart RestartType = 2
+	RestartTypeHotStart     RestartType = 0
+	RestartTypeWarmStart    RestartType = 1
+	RestartTypeColdStart    RestartType = 2
 	RestartTypeFactoryReset RestartType = 3
 )
 
 type GPSBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 222
 const DeviceDisplayName = "GPS Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (GPSBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return GPSBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetCoordinates] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetStatus] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAltitude] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetMotion] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetDateTime] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionRestart] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetCoordinatesCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetCoordinatesCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetStatusCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAltitudeCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAltitudeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMotionCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetMotionCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDateTimeCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDateTimeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetCoordinates] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetStatus] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAltitude] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetMotion] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetDateTime] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionRestart] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetCoordinatesCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetCoordinatesCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetStatusCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAltitudeCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAltitudeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMotionCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetMotionCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDateTimeCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDateTimeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return GPSBricklet{dev}, nil
 }
 
@@ -143,7 +143,7 @@ func (device *GPSBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetCoordinatesCallbackPeriod. The parameters are the same
 // as for GetCoordinates.
-// 
+//
 // The RegisterCoordinatesCallback callback is only triggered if the coordinates changed
 // since the last triggering and if there is currently a fix as indicated by
 // GetStatus.
@@ -182,11 +182,10 @@ func (device *GPSBricklet) DeregisterCoordinatesCallback(registrationId uint64) 
 	device.device.DeregisterCallback(uint8(FunctionCallbackCoordinates), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetStatusCallbackPeriod. The parameters are the same
 // as for GetStatus.
-// 
+//
 // The RegisterStatusCallback callback is only triggered if the status changed since the
 // last triggering.
 func (device *GPSBricklet) RegisterStatusCallback(fn func(Fix, uint8, uint8)) uint64 {
@@ -214,11 +213,10 @@ func (device *GPSBricklet) DeregisterStatusCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackStatus), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAltitudeCallbackPeriod. The parameters are the same
 // as for GetAltitude.
-// 
+//
 // The RegisterAltitudeCallback callback is only triggered if the altitude changed since
 // the last triggering and if there is currently a fix as indicated by
 // GetStatus.
@@ -245,11 +243,10 @@ func (device *GPSBricklet) DeregisterAltitudeCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackAltitude), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetMotionCallbackPeriod. The parameters are the same
 // as for GetMotion.
-// 
+//
 // The RegisterMotionCallback callback is only triggered if the motion changed since the
 // last triggering and if there is currently a fix as indicated by
 // GetStatus.
@@ -276,11 +273,10 @@ func (device *GPSBricklet) DeregisterMotionCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackMotion), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetDateTimeCallbackPeriod. The parameters are the same
 // as for GetDateTime.
-// 
+//
 // The RegisterDateTimeCallback callback is only triggered if the date or time changed
 // since the last triggering.
 func (device *GPSBricklet) RegisterDateTimeCallback(fn func(uint32, uint32)) uint64 {
@@ -306,20 +302,19 @@ func (device *GPSBricklet) DeregisterDateTimeCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationId)
 }
 
-
 // Returns the GPS coordinates. Latitude and longitude are given in the
 // https://en.wikipedia.org/wiki/Dilution_of_precision_(GPS)
 // for more information.
-// 
+//
 // EPE is the Estimated Position Error. This is not the
 // absolute maximum error, it is the error with a specific confidence. See
 // https://www.nps.gov/gis/gps/WhatisEPE.html for more information.
-// 
+//
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSBricklet) GetCoordinates() (latitude uint32, ns rune, longitude uint32, ew rune, pdop uint16, hdop uint16, vdop uint16, epe uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCoordinates), buf.Bytes())
 	if err != nil {
 		return latitude, ns, longitude, ew, pdop, hdop, vdop, epe, err
@@ -354,15 +349,15 @@ func (device *GPSBricklet) GetCoordinates() (latitude uint32, ns rune, longitude
 
 // Returns the current fix status, the number of satellites that are in view and
 // the number of satellites that are currently used.
-// 
+//
 // Possible fix status values can be:
-// 
+//
 //  Value| Description
-//  --- | --- 
+//  --- | ---
 //  1| No Fix| GetCoordinates| GetAltitude and GetMotion return invalid data
 //  2| 2D Fix| only GetCoordinates and GetMotion return valid data
 //  3| 3D Fix| GetCoordinates| GetAltitude and GetMotion return valid data
-// 
+//
 // There is also a `blue LED <gps_bricklet_fix_led>` on the Bricklet that
 // indicates the fix status.
 //
@@ -373,7 +368,7 @@ func (device *GPSBricklet) GetCoordinates() (latitude uint32, ns rune, longitude
 //	* Fix3DFix
 func (device *GPSBricklet) GetStatus() (fix Fix, satellitesView uint8, satellitesUsed uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatus), buf.Bytes())
 	if err != nil {
 		return fix, satellitesView, satellitesUsed, err
@@ -402,12 +397,12 @@ func (device *GPSBricklet) GetStatus() (fix Fix, satellitesView uint8, satellite
 }
 
 // Returns the current altitude and corresponding geoidal separation.
-// 
+//
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSBricklet) GetAltitude() (altitude int32, geoidalSeparation int32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAltitude), buf.Bytes())
 	if err != nil {
 		return altitude, geoidalSeparation, err
@@ -436,15 +431,15 @@ func (device *GPSBricklet) GetAltitude() (altitude int32, geoidalSeparation int3
 
 // Returns the current course and speed. A course of 0° means the Bricklet is
 // traveling north bound and 90° means it is traveling east bound.
-// 
+//
 // Please note that this only returns useful values if an actual movement
 // is present.
-// 
+//
 // This data is only valid if there is currently a fix as indicated by
 // GetStatus.
 func (device *GPSBricklet) GetMotion() (course uint32, speed uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMotion), buf.Bytes())
 	if err != nil {
 		return course, speed, err
@@ -477,7 +472,7 @@ func (device *GPSBricklet) GetMotion() (course uint32, speed uint32, err error) 
 // 14.07.13 as date and 195923568 means 19:59:23.568 as time.
 func (device *GPSBricklet) GetDateTime() (date uint32, time uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
 	if err != nil {
 		return date, time, err
@@ -505,9 +500,9 @@ func (device *GPSBricklet) GetDateTime() (date uint32, time uint32, err error) {
 }
 
 // Restarts the GPS Bricklet, the following restart types are available:
-// 
+//
 //  Value| Description
-//  --- | --- 
+//  --- | ---
 //  0| Hot start (use all available data in the NV store)
 //  1| Warm start (don't use ephemeris at restart)
 //  2| Cold start (don't use time| position| almanacs and ephemeris at restart)
@@ -521,7 +516,7 @@ func (device *GPSBricklet) GetDateTime() (date uint32, time uint32, err error) {
 //	* RestartTypeFactoryReset
 func (device *GPSBricklet) Restart(restartType RestartType) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, restartType);
+	binary.Write(&buf, binary.LittleEndian, restartType)
 
 	resultBytes, err := device.device.Set(uint8(FunctionRestart), buf.Bytes())
 	if err != nil {
@@ -541,7 +536,7 @@ func (device *GPSBricklet) Restart(restartType RestartType) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -549,12 +544,12 @@ func (device *GPSBricklet) Restart(restartType RestartType) (err error) {
 
 // Sets the period with which the RegisterCoordinatesCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterCoordinatesCallback callback is only triggered if the coordinates changed
 // since the last triggering.
 func (device *GPSBricklet) SetCoordinatesCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCoordinatesCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -574,7 +569,7 @@ func (device *GPSBricklet) SetCoordinatesCallbackPeriod(period uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -583,7 +578,7 @@ func (device *GPSBricklet) SetCoordinatesCallbackPeriod(period uint32) (err erro
 // Returns the period as set by SetCoordinatesCallbackPeriod.
 func (device *GPSBricklet) GetCoordinatesCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCoordinatesCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -611,12 +606,12 @@ func (device *GPSBricklet) GetCoordinatesCallbackPeriod() (period uint32, err er
 
 // Sets the period with which the RegisterStatusCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterStatusCallback callback is only triggered if the status changed since the
 // last triggering.
 func (device *GPSBricklet) SetStatusCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -636,7 +631,7 @@ func (device *GPSBricklet) SetStatusCallbackPeriod(period uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -645,7 +640,7 @@ func (device *GPSBricklet) SetStatusCallbackPeriod(period uint32) (err error) {
 // Returns the period as set by SetStatusCallbackPeriod.
 func (device *GPSBricklet) GetStatusCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -673,12 +668,12 @@ func (device *GPSBricklet) GetStatusCallbackPeriod() (period uint32, err error) 
 
 // Sets the period with which the RegisterAltitudeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAltitudeCallback callback is only triggered if the altitude changed since
 // the last triggering.
 func (device *GPSBricklet) SetAltitudeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAltitudeCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -698,7 +693,7 @@ func (device *GPSBricklet) SetAltitudeCallbackPeriod(period uint32) (err error) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -707,7 +702,7 @@ func (device *GPSBricklet) SetAltitudeCallbackPeriod(period uint32) (err error) 
 // Returns the period as set by SetAltitudeCallbackPeriod.
 func (device *GPSBricklet) GetAltitudeCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAltitudeCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -735,12 +730,12 @@ func (device *GPSBricklet) GetAltitudeCallbackPeriod() (period uint32, err error
 
 // Sets the period with which the RegisterMotionCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterMotionCallback callback is only triggered if the motion changed since the
 // last triggering.
 func (device *GPSBricklet) SetMotionCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMotionCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -760,7 +755,7 @@ func (device *GPSBricklet) SetMotionCallbackPeriod(period uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -769,7 +764,7 @@ func (device *GPSBricklet) SetMotionCallbackPeriod(period uint32) (err error) {
 // Returns the period as set by SetMotionCallbackPeriod.
 func (device *GPSBricklet) GetMotionCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMotionCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -797,12 +792,12 @@ func (device *GPSBricklet) GetMotionCallbackPeriod() (period uint32, err error) 
 
 // Sets the period with which the RegisterDateTimeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterDateTimeCallback callback is only triggered if the date or time changed
 // since the last triggering.
 func (device *GPSBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -822,7 +817,7 @@ func (device *GPSBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -831,7 +826,7 @@ func (device *GPSBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) 
 // Returns the period as set by SetDateTimeCallbackPeriod.
 func (device *GPSBricklet) GetDateTimeCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -860,16 +855,16 @@ func (device *GPSBricklet) GetDateTimeCallbackPeriod() (period uint32, err error
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *GPSBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

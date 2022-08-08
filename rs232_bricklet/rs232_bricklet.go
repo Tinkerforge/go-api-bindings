@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Communicates with RS232 devices.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RS232_Bricklet_Go.html.
 package rs232_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,37 +25,37 @@ import (
 type Function = uint8
 
 const (
-	FunctionWrite Function = 1
-	FunctionRead Function = 2
-	FunctionEnableReadCallback Function = 3
-	FunctionDisableReadCallback Function = 4
-	FunctionIsReadCallbackEnabled Function = 5
-	FunctionSetConfiguration Function = 6
-	FunctionGetConfiguration Function = 7
-	FunctionSetBreakCondition Function = 10
+	FunctionWrite                                 Function = 1
+	FunctionRead                                  Function = 2
+	FunctionEnableReadCallback                    Function = 3
+	FunctionDisableReadCallback                   Function = 4
+	FunctionIsReadCallbackEnabled                 Function = 5
+	FunctionSetConfiguration                      Function = 6
+	FunctionGetConfiguration                      Function = 7
+	FunctionSetBreakCondition                     Function = 10
 	FunctionSetFrameReadableCallbackConfiguration Function = 11
 	FunctionGetFrameReadableCallbackConfiguration Function = 12
-	FunctionReadFrame Function = 14
-	FunctionGetIdentity Function = 255
-	FunctionCallbackRead Function = 8
-	FunctionCallbackError Function = 9
-	FunctionCallbackFrameReadable Function = 13
+	FunctionReadFrame                             Function = 14
+	FunctionGetIdentity                           Function = 255
+	FunctionCallbackRead                          Function = 8
+	FunctionCallbackError                         Function = 9
+	FunctionCallbackFrameReadable                 Function = 13
 )
 
 type Baudrate = uint8
 
 const (
-	Baudrate300 Baudrate = 0
-	Baudrate600 Baudrate = 1
-	Baudrate1200 Baudrate = 2
-	Baudrate2400 Baudrate = 3
-	Baudrate4800 Baudrate = 4
-	Baudrate9600 Baudrate = 5
-	Baudrate14400 Baudrate = 6
-	Baudrate19200 Baudrate = 7
-	Baudrate28800 Baudrate = 8
-	Baudrate38400 Baudrate = 9
-	Baudrate57600 Baudrate = 10
+	Baudrate300    Baudrate = 0
+	Baudrate600    Baudrate = 1
+	Baudrate1200   Baudrate = 2
+	Baudrate2400   Baudrate = 3
+	Baudrate4800   Baudrate = 4
+	Baudrate9600   Baudrate = 5
+	Baudrate14400  Baudrate = 6
+	Baudrate19200  Baudrate = 7
+	Baudrate28800  Baudrate = 8
+	Baudrate38400  Baudrate = 9
+	Baudrate57600  Baudrate = 10
 	Baudrate115200 Baudrate = 11
 	Baudrate230400 Baudrate = 12
 )
@@ -64,9 +63,9 @@ const (
 type Parity = uint8
 
 const (
-	ParityNone Parity = 0
-	ParityOdd Parity = 1
-	ParityEven Parity = 2
+	ParityNone          Parity = 0
+	ParityOdd           Parity = 1
+	ParityEven          Parity = 2
 	ParityForcedParity1 Parity = 3
 	ParityForcedParity0 Parity = 4
 )
@@ -91,49 +90,50 @@ type HardwareFlowcontrol = uint8
 
 const (
 	HardwareFlowcontrolOff HardwareFlowcontrol = 0
-	HardwareFlowcontrolOn HardwareFlowcontrol = 1
+	HardwareFlowcontrolOn  HardwareFlowcontrol = 1
 )
 
 type SoftwareFlowcontrol = uint8
 
 const (
 	SoftwareFlowcontrolOff SoftwareFlowcontrol = 0
-	SoftwareFlowcontrolOn SoftwareFlowcontrol = 1
+	SoftwareFlowcontrolOn  SoftwareFlowcontrol = 1
 )
 
 type Error = uint8
 
 const (
 	ErrorOverrun Error = 1
-	ErrorParity Error = 2
+	ErrorParity  Error = 2
 	ErrorFraming Error = 4
 )
 
 type RS232Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 254
 const DeviceDisplayName = "RS232 Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RS232Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,3 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 3}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RS232Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionRead] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionEnableReadCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionDisableReadCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionIsReadCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBreakCondition] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetFrameReadableCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetFrameReadableCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReadFrame] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionRead] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionEnableReadCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionDisableReadCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionIsReadCallbackEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBreakCondition] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetFrameReadableCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetFrameReadableCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReadFrame] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RS232Bricklet{dev}, nil
 }
 
@@ -180,7 +180,7 @@ func (device *RS232Bricklet) GetAPIVersion() [3]uint8 {
 // This callback is called if new data is available. The message has
 // a maximum size of 60 characters. The actual length of the message
 // is given in addition.
-// 
+//
 // To enable this callback, use EnableReadCallback.
 func (device *RS232Bricklet) RegisterReadCallback(fn func([60]rune, uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -205,10 +205,9 @@ func (device *RS232Bricklet) DeregisterReadCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackRead), registrationId)
 }
 
-
 // This callback is called if an error occurs.
 // Possible errors are overrun, parity or framing error.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RS232Bricklet) RegisterErrorCallback(fn func(Error)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -231,12 +230,11 @@ func (device *RS232Bricklet) DeregisterErrorCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackError), registrationId)
 }
 
-
 // This callback is called if at least one frame of data is readable. The frame size is configured with SetFrameReadableCallbackConfiguration.
 // The frame count parameter is the number of frames that can be read.
 // This callback is triggered only once until Read or ReadFrame is called. This means, that if you have configured a frame size of X bytes,
 // you can read exactly X bytes using the ReadFrame function, every time the callback triggers without checking the frame count parameter.
-// 
+//
 // .. versionadded:: 2.0.4$nbsp;(Plugin)
 func (device *RS232Bricklet) RegisterFrameReadableCallback(fn func(uint8)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -259,20 +257,19 @@ func (device *RS232Bricklet) DeregisterFrameReadableCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackFrameReadable), registrationId)
 }
 
-
 // Writes a string of up to 60 characters to the RS232 interface. The string
 // can be binary data, ASCII or similar is not necessary.
-// 
+//
 // The length of the string has to be given as an additional parameter.
-// 
+//
 // The return value is the number of bytes that could be written.
-// 
+//
 // See SetConfiguration for configuration possibilities
 // regarding baudrate, parity and so on.
 func (device *RS232Bricklet) Write(message [60]rune, length uint8) (written uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, message);
-	binary.Write(&buf, binary.LittleEndian, length);
+	binary.Write(&buf, binary.LittleEndian, message)
+	binary.Write(&buf, binary.LittleEndian, length)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWrite), buf.Bytes())
 	if err != nil {
@@ -301,12 +298,12 @@ func (device *RS232Bricklet) Write(message [60]rune, length uint8) (written uint
 
 // Returns the currently buffered message. The maximum length
 // of message is 60. If the returned length is 0, no new data was available.
-// 
+//
 // Instead of polling with this function, you can also use
 // callbacks. See EnableReadCallback and RegisterReadCallback callback.
 func (device *RS232Bricklet) Read() (message [60]rune, length uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionRead), buf.Bytes())
 	if err != nil {
 		return message, length, err
@@ -334,11 +331,11 @@ func (device *RS232Bricklet) Read() (message [60]rune, length uint8, err error) 
 }
 
 // Enables the RegisterReadCallback callback. This will disable the RegisterFrameReadableCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS232Bricklet) EnableReadCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionEnableReadCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -357,18 +354,18 @@ func (device *RS232Bricklet) EnableReadCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Disables the RegisterReadCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS232Bricklet) DisableReadCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionDisableReadCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -387,7 +384,7 @@ func (device *RS232Bricklet) DisableReadCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -397,7 +394,7 @@ func (device *RS232Bricklet) DisableReadCallback() (err error) {
 // *false* otherwise.
 func (device *RS232Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionIsReadCallbackEnabled), buf.Bytes())
 	if err != nil {
 		return enabled, err
@@ -424,7 +421,7 @@ func (device *RS232Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 }
 
 // Sets the configuration for the RS232 communication.
-// 
+//
 // Hard-/Software flow control can either be on or off but not both simultaneously on.
 //
 // Associated constants:
@@ -459,12 +456,12 @@ func (device *RS232Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 //	* SoftwareFlowcontrolOn
 func (device *RS232Bricklet) SetConfiguration(baudrate Baudrate, parity Parity, stopbits Stopbits, wordlength Wordlength, hardwareFlowcontrol HardwareFlowcontrol, softwareFlowcontrol SoftwareFlowcontrol) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, baudrate);
-	binary.Write(&buf, binary.LittleEndian, parity);
-	binary.Write(&buf, binary.LittleEndian, stopbits);
-	binary.Write(&buf, binary.LittleEndian, wordlength);
-	binary.Write(&buf, binary.LittleEndian, hardwareFlowcontrol);
-	binary.Write(&buf, binary.LittleEndian, softwareFlowcontrol);
+	binary.Write(&buf, binary.LittleEndian, baudrate)
+	binary.Write(&buf, binary.LittleEndian, parity)
+	binary.Write(&buf, binary.LittleEndian, stopbits)
+	binary.Write(&buf, binary.LittleEndian, wordlength)
+	binary.Write(&buf, binary.LittleEndian, hardwareFlowcontrol)
+	binary.Write(&buf, binary.LittleEndian, softwareFlowcontrol)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
 	if err != nil {
@@ -484,7 +481,7 @@ func (device *RS232Bricklet) SetConfiguration(baudrate Baudrate, parity Parity, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -524,7 +521,7 @@ func (device *RS232Bricklet) SetConfiguration(baudrate Baudrate, parity Parity, 
 //	* SoftwareFlowcontrolOn
 func (device *RS232Bricklet) GetConfiguration() (baudrate Baudrate, parity Parity, stopbits Stopbits, wordlength Wordlength, hardwareFlowcontrol HardwareFlowcontrol, softwareFlowcontrol SoftwareFlowcontrol, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
 		return baudrate, parity, stopbits, wordlength, hardwareFlowcontrol, softwareFlowcontrol, err
@@ -557,11 +554,11 @@ func (device *RS232Bricklet) GetConfiguration() (baudrate Baudrate, parity Parit
 
 // Sets a break condition (the TX output is forced to a logic 0 state).
 // The parameter sets the hold-time of the break condition.
-// 
+//
 // .. versionadded:: 2.0.2$nbsp;(Plugin)
 func (device *RS232Bricklet) SetBreakCondition(breakTime uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, breakTime);
+	binary.Write(&buf, binary.LittleEndian, breakTime)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetBreakCondition), buf.Bytes())
 	if err != nil {
@@ -581,7 +578,7 @@ func (device *RS232Bricklet) SetBreakCondition(breakTime uint16) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -589,13 +586,13 @@ func (device *RS232Bricklet) SetBreakCondition(breakTime uint16) (err error) {
 
 // Configures the RegisterFrameReadableCallback callback. The frame size is the number of bytes, that have to be readable to trigger the callback.
 // A frame size of 0 disables the callback. A frame size greater than 0 enables the callback and disables the RegisterReadCallback callback.
-// 
+//
 // By default the callback is disabled.
-// 
+//
 // .. versionadded:: 2.0.4$nbsp;(Plugin)
 func (device *RS232Bricklet) SetFrameReadableCallbackConfiguration(frameSize uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, frameSize);
+	binary.Write(&buf, binary.LittleEndian, frameSize)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetFrameReadableCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -615,18 +612,18 @@ func (device *RS232Bricklet) SetFrameReadableCallbackConfiguration(frameSize uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the callback configuration as set by SetFrameReadableCallbackConfiguration.
-// 
+//
 // .. versionadded:: 2.0.4$nbsp;(Plugin)
 func (device *RS232Bricklet) GetFrameReadableCallbackConfiguration() (frameSize uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetFrameReadableCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return frameSize, err
@@ -655,11 +652,11 @@ func (device *RS232Bricklet) GetFrameReadableCallbackConfiguration() (frameSize 
 // Returns up to one frame of bytes from the read buffer.
 // The frame size is configured with SetFrameReadableCallbackConfiguration.
 // If the returned length is 0, no new data was available.
-// 
+//
 // .. versionadded:: 2.0.4$nbsp;(Plugin)
 func (device *RS232Bricklet) ReadFrame() (message [60]rune, length uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadFrame), buf.Bytes())
 	if err != nil {
 		return message, length, err
@@ -689,16 +686,16 @@ func (device *RS232Bricklet) ReadFrame() (message [60]rune, length uint8, err er
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RS232Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

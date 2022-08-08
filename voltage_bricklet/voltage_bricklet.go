@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures DC voltage between 0V and 50V‍.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Voltage_Bricklet_Go.html.
 package voltage_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,31 +25,31 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetVoltage Function = 1
-	FunctionGetAnalogValue Function = 2
-	FunctionSetVoltageCallbackPeriod Function = 3
-	FunctionGetVoltageCallbackPeriod Function = 4
-	FunctionSetAnalogValueCallbackPeriod Function = 5
-	FunctionGetAnalogValueCallbackPeriod Function = 6
-	FunctionSetVoltageCallbackThreshold Function = 7
-	FunctionGetVoltageCallbackThreshold Function = 8
+	FunctionGetVoltage                      Function = 1
+	FunctionGetAnalogValue                  Function = 2
+	FunctionSetVoltageCallbackPeriod        Function = 3
+	FunctionGetVoltageCallbackPeriod        Function = 4
+	FunctionSetAnalogValueCallbackPeriod    Function = 5
+	FunctionGetAnalogValueCallbackPeriod    Function = 6
+	FunctionSetVoltageCallbackThreshold     Function = 7
+	FunctionGetVoltageCallbackThreshold     Function = 8
 	FunctionSetAnalogValueCallbackThreshold Function = 9
 	FunctionGetAnalogValueCallbackThreshold Function = 10
-	FunctionSetDebouncePeriod Function = 11
-	FunctionGetDebouncePeriod Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackVoltage Function = 13
-	FunctionCallbackAnalogValue Function = 14
-	FunctionCallbackVoltageReached Function = 15
-	FunctionCallbackAnalogValueReached Function = 16
+	FunctionSetDebouncePeriod               Function = 11
+	FunctionGetDebouncePeriod               Function = 12
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackVoltage                 Function = 13
+	FunctionCallbackAnalogValue             Function = 14
+	FunctionCallbackVoltageReached          Function = 15
+	FunctionCallbackAnalogValueReached      Function = 16
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -58,29 +57,30 @@ const (
 type VoltageBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 218
 const DeviceDisplayName = "Voltage Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (VoltageBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return VoltageBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetVoltageCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetVoltageCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetVoltageCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetVoltageCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetVoltageCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetVoltageCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetVoltageCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetVoltageCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return VoltageBricklet{dev}, nil
 }
 
@@ -127,7 +127,7 @@ func (device *VoltageBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetVoltageCallbackPeriod. The parameter is the voltage of the
 // sensor.
-// 
+//
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
 func (device *VoltageBricklet) RegisterVoltageCallback(fn func(uint16)) uint64 {
@@ -151,11 +151,10 @@ func (device *VoltageBricklet) DeregisterVoltageCallback(registrationId uint64) 
 	device.device.DeregisterCallback(uint8(FunctionCallbackVoltage), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAnalogValueCallbackPeriod. The parameter is the
 // analog value of the sensor.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the voltage has changed
 // since the last triggering.
 func (device *VoltageBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
@@ -179,11 +178,10 @@ func (device *VoltageBricklet) DeregisterAnalogValueCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetVoltageCallbackThreshold is reached.
 // The parameter is the voltage of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageBricklet) RegisterVoltageReachedCallback(fn func(uint16)) uint64 {
@@ -207,11 +205,10 @@ func (device *VoltageBricklet) DeregisterVoltageReachedCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackVoltageReached), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetAnalogValueCallbackThreshold is reached.
 // The parameter is the analog value of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *VoltageBricklet) RegisterAnalogValueReachedCallback(fn func(uint16)) uint64 {
@@ -235,15 +232,14 @@ func (device *VoltageBricklet) DeregisterAnalogValueReachedCallback(registration
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
-
 // Returns the voltage of the sensor.
-// 
+//
 // If you want to get the voltage periodically, it is recommended to use the
 // RegisterVoltageCallback callback and set the period with
 // SetVoltageCallbackPeriod.
 func (device *VoltageBricklet) GetVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
 	if err != nil {
 		return voltage, err
@@ -270,19 +266,19 @@ func (device *VoltageBricklet) GetVoltage() (voltage uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// 
+//
 // Note
 //  The value returned by GetVoltage is averaged over several samples
 //  to yield less noise, while GetAnalogValue gives back raw
 //  unfiltered analog values. The only reason to use GetAnalogValue is,
 //  if you need the full resolution of the analog-to-digital converter.
-// 
+//
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *VoltageBricklet) GetAnalogValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -310,12 +306,12 @@ func (device *VoltageBricklet) GetAnalogValue() (value uint16, err error) {
 
 // Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since
 // the last triggering.
 func (device *VoltageBricklet) SetVoltageCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -335,7 +331,7 @@ func (device *VoltageBricklet) SetVoltageCallbackPeriod(period uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -344,7 +340,7 @@ func (device *VoltageBricklet) SetVoltageCallbackPeriod(period uint32) (err erro
 // Returns the period as set by SetVoltageCallbackPeriod.
 func (device *VoltageBricklet) GetVoltageCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -372,12 +368,12 @@ func (device *VoltageBricklet) GetVoltageCallbackPeriod() (period uint32, err er
 
 // Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *VoltageBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -397,7 +393,7 @@ func (device *VoltageBricklet) SetAnalogValueCallbackPeriod(period uint32) (err 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -406,7 +402,7 @@ func (device *VoltageBricklet) SetAnalogValueCallbackPeriod(period uint32) (err 
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *VoltageBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -433,11 +429,11 @@ func (device *VoltageBricklet) GetAnalogValueCallbackPeriod() (period uint32, er
 }
 
 // Sets the thresholds for the RegisterVoltageReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the voltage is *outside* the min and max values
 //  'i'|    Callback is triggered when the voltage is *inside* the min and max values
@@ -453,9 +449,9 @@ func (device *VoltageBricklet) GetAnalogValueCallbackPeriod() (period uint32, er
 //	* ThresholdOptionGreater
 func (device *VoltageBricklet) SetVoltageCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -475,7 +471,7 @@ func (device *VoltageBricklet) SetVoltageCallbackThreshold(option ThresholdOptio
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -492,7 +488,7 @@ func (device *VoltageBricklet) SetVoltageCallbackThreshold(option ThresholdOptio
 //	* ThresholdOptionGreater
 func (device *VoltageBricklet) GetVoltageCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -521,11 +517,11 @@ func (device *VoltageBricklet) GetVoltageCallbackThreshold() (option ThresholdOp
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the analog value is *outside* the min and max values
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
@@ -541,9 +537,9 @@ func (device *VoltageBricklet) GetVoltageCallbackThreshold() (option ThresholdOp
 //	* ThresholdOptionGreater
 func (device *VoltageBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -563,7 +559,7 @@ func (device *VoltageBricklet) SetAnalogValueCallbackThreshold(option ThresholdO
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -580,7 +576,7 @@ func (device *VoltageBricklet) SetAnalogValueCallbackThreshold(option ThresholdO
 //	* ThresholdOptionGreater
 func (device *VoltageBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -609,19 +605,19 @@ func (device *VoltageBricklet) GetAnalogValueCallbackThreshold() (option Thresho
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterVoltageReachedCallback,
 // * RegisterAnalogValueReachedCallback
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetVoltageCallbackThreshold,
 // * SetAnalogValueCallbackThreshold
-// 
+//
 // keep being reached.
 func (device *VoltageBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -641,7 +637,7 @@ func (device *VoltageBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -650,7 +646,7 @@ func (device *VoltageBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *VoltageBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -679,16 +675,16 @@ func (device *VoltageBricklet) GetDebouncePeriod() (debounce uint32, err error) 
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *VoltageBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

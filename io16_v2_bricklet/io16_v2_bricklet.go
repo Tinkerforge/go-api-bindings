@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // 16-channel digital input/output.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IO16V2_Bricklet_Go.html.
 package io16_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,121 +25,122 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetValue Function = 1
-	FunctionGetValue Function = 2
-	FunctionSetSelectedValue Function = 3
-	FunctionSetConfiguration Function = 4
-	FunctionGetConfiguration Function = 5
-	FunctionSetInputValueCallbackConfiguration Function = 6
-	FunctionGetInputValueCallbackConfiguration Function = 7
+	FunctionSetValue                              Function = 1
+	FunctionGetValue                              Function = 2
+	FunctionSetSelectedValue                      Function = 3
+	FunctionSetConfiguration                      Function = 4
+	FunctionGetConfiguration                      Function = 5
+	FunctionSetInputValueCallbackConfiguration    Function = 6
+	FunctionGetInputValueCallbackConfiguration    Function = 7
 	FunctionSetAllInputValueCallbackConfiguration Function = 8
 	FunctionGetAllInputValueCallbackConfiguration Function = 9
-	FunctionSetMonoflop Function = 10
-	FunctionGetMonoflop Function = 11
-	FunctionGetEdgeCount Function = 12
-	FunctionSetEdgeCountConfiguration Function = 13
-	FunctionGetEdgeCountConfiguration Function = 14
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackInputValue Function = 15
-	FunctionCallbackAllInputValue Function = 16
-	FunctionCallbackMonoflopDone Function = 17
+	FunctionSetMonoflop                           Function = 10
+	FunctionGetMonoflop                           Function = 11
+	FunctionGetEdgeCount                          Function = 12
+	FunctionSetEdgeCountConfiguration             Function = 13
+	FunctionGetEdgeCountConfiguration             Function = 14
+	FunctionGetSPITFPErrorCount                   Function = 234
+	FunctionSetBootloaderMode                     Function = 235
+	FunctionGetBootloaderMode                     Function = 236
+	FunctionSetWriteFirmwarePointer               Function = 237
+	FunctionWriteFirmware                         Function = 238
+	FunctionSetStatusLEDConfig                    Function = 239
+	FunctionGetStatusLEDConfig                    Function = 240
+	FunctionGetChipTemperature                    Function = 242
+	FunctionReset                                 Function = 243
+	FunctionWriteUID                              Function = 248
+	FunctionReadUID                               Function = 249
+	FunctionGetIdentity                           Function = 255
+	FunctionCallbackInputValue                    Function = 15
+	FunctionCallbackAllInputValue                 Function = 16
+	FunctionCallbackMonoflopDone                  Function = 17
 )
 
 type Direction = rune
 
 const (
-	DirectionIn Direction = 'i'
+	DirectionIn  Direction = 'i'
 	DirectionOut Direction = 'o'
 )
 
 type EdgeType = uint8
 
 const (
-	EdgeTypeRising EdgeType = 0
+	EdgeTypeRising  EdgeType = 0
 	EdgeTypeFalling EdgeType = 1
-	EdgeTypeBoth EdgeType = 2
+	EdgeTypeBoth    EdgeType = 2
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type IO16V2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2114
 const DeviceDisplayName = "IO-16 Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IO16V2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IO16V2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetValue] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSelectedValue] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetInputValueCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetInputValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllInputValueCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllInputValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMonoflop] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMonoflop] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetEdgeCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetEdgeCountConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetEdgeCountConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetValue] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSelectedValue] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetInputValueCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetInputValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAllInputValueCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAllInputValueCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMonoflop] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMonoflop] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetEdgeCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetEdgeCountConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetEdgeCountConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IO16V2Bricklet{dev}, nil
 }
 
@@ -186,7 +186,7 @@ func (device *IO16V2Bricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetInputValueCallbackConfiguration.
-// 
+//
 // The parameters are the channel, a value-changed indicator and the actual value
 // for the channel. The `changed` parameter is true if the value has changed since
 // the last callback.
@@ -215,10 +215,9 @@ func (device *IO16V2Bricklet) DeregisterInputValueCallback(registrationId uint64
 	device.device.DeregisterCallback(uint8(FunctionCallbackInputValue), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetAllInputValueCallbackConfiguration.
-// 
+//
 // The parameters are the same as GetValue. Additional the
 // `changed` parameter is true if the value has changed since
 // the last callback.
@@ -244,7 +243,6 @@ func (device *IO16V2Bricklet) RegisterAllInputValueCallback(fn func([16]bool, [1
 func (device *IO16V2Bricklet) DeregisterAllInputValueCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackAllInputValue), registrationId)
 }
-
 
 // This callback is triggered whenever a monoflop timer reaches 0. The
 // parameters contain the channel and the current value of the channel
@@ -272,23 +270,22 @@ func (device *IO16V2Bricklet) DeregisterMonoflopDoneCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackMonoflopDone), registrationId)
 }
 
-
 // Sets the output value of all sixteen channels. A value of *true* or *false* outputs
 // logic 1 or logic 0 respectively on the corresponding channel.
-// 
+//
 // Use SetSelectedValue to change only one output channel state.
-// 
+//
 // For example: (True, True, False, False, ..., False) will turn the channels 0-1
 // high and the channels 2-15 low.
-// 
+//
 // All running monoflop timers will be aborted if this function is called.
-// 
+//
 // Note
 //  This function does nothing for channels that are configured as input. Pull-up
 //  resistors can be switched on with SetConfiguration.
 func (device *IO16V2Bricklet) SetValue(value [16]bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, value);
+	binary.Write(&buf, binary.LittleEndian, value)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetValue), buf.Bytes())
 	if err != nil {
@@ -308,7 +305,7 @@ func (device *IO16V2Bricklet) SetValue(value [16]bool) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -319,7 +316,7 @@ func (device *IO16V2Bricklet) SetValue(value [16]bool) (err error) {
 // configured as output.
 func (device *IO16V2Bricklet) GetValue() (value [16]bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -346,17 +343,17 @@ func (device *IO16V2Bricklet) GetValue() (value [16]bool, err error) {
 }
 
 // Sets the output value of a specific channel without affecting the other channels.
-// 
+//
 // A running monoflop timer for the specific channel will be aborted if this
 // function is called.
-// 
+//
 // Note
 //  This function does nothing for channels that are configured as input. Pull-up
 //  resistors can be switched on with SetConfiguration.
 func (device *IO16V2Bricklet) SetSelectedValue(channel uint8, value bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, value);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, value)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSelectedValue), buf.Bytes())
 	if err != nil {
@@ -376,7 +373,7 @@ func (device *IO16V2Bricklet) SetSelectedValue(channel uint8, value bool) (err e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -384,20 +381,20 @@ func (device *IO16V2Bricklet) SetSelectedValue(channel uint8, value bool) (err e
 
 // Configures the value and direction of a specific channel. Possible directions
 // are 'i' and 'o' for input and output.
-// 
+//
 // If the direction is configured as output, the value is either high or low
 // (set as *true* or *false*).
-// 
+//
 // If the direction is configured as input, the value is either pull-up or
 // default (set as *true* or *false*).
-// 
+//
 // For example:
-// 
+//
 // * (0, 'i', true) will set channel-0 as input pull-up.
 // * (1, 'i', false) will set channel-1 as input default (floating if nothing is connected).
 // * (2, 'o', true) will set channel-2 as output high.
 // * (3, 'o', false) will set channel-3 as output low.
-// 
+//
 // A running monoflop timer for the specific channel will be aborted if this
 // function is called.
 //
@@ -407,9 +404,9 @@ func (device *IO16V2Bricklet) SetSelectedValue(channel uint8, value bool) (err e
 //	* DirectionOut
 func (device *IO16V2Bricklet) SetConfiguration(channel uint8, direction Direction, value bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, direction);
-	binary.Write(&buf, binary.LittleEndian, value);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, direction)
+	binary.Write(&buf, binary.LittleEndian, value)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
 	if err != nil {
@@ -429,7 +426,7 @@ func (device *IO16V2Bricklet) SetConfiguration(channel uint8, direction Directio
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -443,7 +440,7 @@ func (device *IO16V2Bricklet) SetConfiguration(channel uint8, direction Directio
 //	* DirectionOut
 func (device *IO16V2Bricklet) GetConfiguration(channel uint8) (direction Direction, value bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
@@ -472,21 +469,21 @@ func (device *IO16V2Bricklet) GetConfiguration(channel uint8) (direction Directi
 }
 
 // This callback can be configured per channel.
-// 
+//
 // The period is the period with which the RegisterInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IO16V2Bricklet) SetInputValueCallbackConfiguration(channel uint8, period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetInputValueCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -506,7 +503,7 @@ func (device *IO16V2Bricklet) SetInputValueCallbackConfiguration(channel uint8, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -516,7 +513,7 @@ func (device *IO16V2Bricklet) SetInputValueCallbackConfiguration(channel uint8, 
 // SetInputValueCallbackConfiguration.
 func (device *IO16V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetInputValueCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -546,17 +543,17 @@ func (device *IO16V2Bricklet) GetInputValueCallbackConfiguration(channel uint8) 
 
 // The period is the period with which the RegisterAllInputValueCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IO16V2Bricklet) SetAllInputValueCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllInputValueCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -576,7 +573,7 @@ func (device *IO16V2Bricklet) SetAllInputValueCallbackConfiguration(period uint3
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -586,7 +583,7 @@ func (device *IO16V2Bricklet) SetAllInputValueCallbackConfiguration(period uint3
 // SetAllInputValueCallbackConfiguration.
 func (device *IO16V2Bricklet) GetAllInputValueCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllInputValueCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -614,16 +611,16 @@ func (device *IO16V2Bricklet) GetAllInputValueCallbackConfiguration() (period ui
 }
 
 // Configures a monoflop of the specified channel.
-// 
+//
 // The second parameter is the desired value of the specified
 // channel. A *true* means relay closed and a *false* means relay open.
-// 
+//
 // The third parameter indicates the time that the channels should hold
 // the value.
-// 
+//
 // If this function is called with the parameters (0, 1, 1500) channel 0 will
 // close and in 1.5s channel 0 will open again
-// 
+//
 // A monoflop can be used as a fail-safe mechanism. For example: Lets assume you
 // have a RS485 bus and a IO-16 Bricklet 2.0 connected to one of
 // the slave stacks. You can now call this function every second, with a time
@@ -632,9 +629,9 @@ func (device *IO16V2Bricklet) GetAllInputValueCallbackConfiguration() (period ui
 // most two seconds.
 func (device *IO16V2Bricklet) SetMonoflop(channel uint8, value bool, time uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, value);
-	binary.Write(&buf, binary.LittleEndian, time);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, value)
+	binary.Write(&buf, binary.LittleEndian, time)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMonoflop), buf.Bytes())
 	if err != nil {
@@ -654,7 +651,7 @@ func (device *IO16V2Bricklet) SetMonoflop(channel uint8, value bool, time uint32
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -662,12 +659,12 @@ func (device *IO16V2Bricklet) SetMonoflop(channel uint8, value bool, time uint32
 
 // Returns (for the given channel) the current value and the time as set by
 // SetMonoflop as well as the remaining time until the value flips.
-// 
+//
 // If the timer is not running currently, the remaining time will be returned
 // as 0.
 func (device *IO16V2Bricklet) GetMonoflop(channel uint8) (value bool, time uint32, timeRemaining uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetMonoflop), buf.Bytes())
 	if err != nil {
@@ -698,13 +695,13 @@ func (device *IO16V2Bricklet) GetMonoflop(channel uint8) (value bool, time uint3
 
 // Returns the current value of the edge counter for the selected channel. You can
 // configure the edges that are counted with SetEdgeCountConfiguration.
-// 
+//
 // If you set the reset counter to *true*, the count is set back to 0
 // directly after it is read.
 func (device *IO16V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (count uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, resetCounter);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, resetCounter)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCount), buf.Bytes())
 	if err != nil {
@@ -732,16 +729,16 @@ func (device *IO16V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (co
 }
 
 // Configures the edge counter for a specific channel.
-// 
+//
 // The edge type parameter configures if rising edges, falling edges or
 // both are counted if the channel is configured for input. Possible edge types are:
-// 
+//
 // * 0 = rising
 // * 1 = falling
 // * 2 = both
-// 
+//
 // Configuring an edge counter resets its value to 0.
-// 
+//
 // If you don't know what any of this means, just leave it at default. The
 // default configuration is very likely OK for you.
 //
@@ -752,9 +749,9 @@ func (device *IO16V2Bricklet) GetEdgeCount(channel uint8, resetCounter bool) (co
 //	* EdgeTypeBoth
 func (device *IO16V2Bricklet) SetEdgeCountConfiguration(channel uint8, edgeType EdgeType, debounce uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, edgeType);
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, edgeType)
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetEdgeCountConfiguration), buf.Bytes())
 	if err != nil {
@@ -774,7 +771,7 @@ func (device *IO16V2Bricklet) SetEdgeCountConfiguration(channel uint8, edgeType 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -790,7 +787,7 @@ func (device *IO16V2Bricklet) SetEdgeCountConfiguration(channel uint8, edgeType 
 //	* EdgeTypeBoth
 func (device *IO16V2Bricklet) GetEdgeCountConfiguration(channel uint8) (edgeType EdgeType, debounce uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetEdgeCountConfiguration), buf.Bytes())
 	if err != nil {
@@ -819,19 +816,19 @@ func (device *IO16V2Bricklet) GetEdgeCountConfiguration(channel uint8) (edgeType
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IO16V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -862,11 +859,11 @@ func (device *IO16V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint3
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -885,7 +882,7 @@ func (device *IO16V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint3
 //	* BootloaderStatusCRCMismatch
 func (device *IO16V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -923,7 +920,7 @@ func (device *IO16V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boo
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IO16V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -952,12 +949,12 @@ func (device *IO16V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err erro
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IO16V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -977,7 +974,7 @@ func (device *IO16V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -986,14 +983,14 @@ func (device *IO16V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IO16V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -1023,9 +1020,9 @@ func (device *IO16V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err e
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -1036,7 +1033,7 @@ func (device *IO16V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err e
 //	* StatusLEDConfigShowStatus
 func (device *IO16V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1056,7 +1053,7 @@ func (device *IO16V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1072,7 +1069,7 @@ func (device *IO16V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err er
 //	* StatusLEDConfigShowStatus
 func (device *IO16V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1100,13 +1097,13 @@ func (device *IO16V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err 
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IO16V2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1134,13 +1131,13 @@ func (device *IO16V2Bricklet) GetChipTemperature() (temperature int16, err error
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IO16V2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1159,7 +1156,7 @@ func (device *IO16V2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1168,11 +1165,11 @@ func (device *IO16V2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IO16V2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1192,7 +1189,7 @@ func (device *IO16V2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1202,7 +1199,7 @@ func (device *IO16V2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *IO16V2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1231,16 +1228,16 @@ func (device *IO16V2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IO16V2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

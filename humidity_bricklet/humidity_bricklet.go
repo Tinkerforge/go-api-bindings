@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures relative humidity.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Humidity_Bricklet_Go.html.
 package humidity_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,31 +25,31 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetHumidity Function = 1
-	FunctionGetAnalogValue Function = 2
-	FunctionSetHumidityCallbackPeriod Function = 3
-	FunctionGetHumidityCallbackPeriod Function = 4
-	FunctionSetAnalogValueCallbackPeriod Function = 5
-	FunctionGetAnalogValueCallbackPeriod Function = 6
-	FunctionSetHumidityCallbackThreshold Function = 7
-	FunctionGetHumidityCallbackThreshold Function = 8
+	FunctionGetHumidity                     Function = 1
+	FunctionGetAnalogValue                  Function = 2
+	FunctionSetHumidityCallbackPeriod       Function = 3
+	FunctionGetHumidityCallbackPeriod       Function = 4
+	FunctionSetAnalogValueCallbackPeriod    Function = 5
+	FunctionGetAnalogValueCallbackPeriod    Function = 6
+	FunctionSetHumidityCallbackThreshold    Function = 7
+	FunctionGetHumidityCallbackThreshold    Function = 8
 	FunctionSetAnalogValueCallbackThreshold Function = 9
 	FunctionGetAnalogValueCallbackThreshold Function = 10
-	FunctionSetDebouncePeriod Function = 11
-	FunctionGetDebouncePeriod Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackHumidity Function = 13
-	FunctionCallbackAnalogValue Function = 14
-	FunctionCallbackHumidityReached Function = 15
-	FunctionCallbackAnalogValueReached Function = 16
+	FunctionSetDebouncePeriod               Function = 11
+	FunctionGetDebouncePeriod               Function = 12
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackHumidity                Function = 13
+	FunctionCallbackAnalogValue             Function = 14
+	FunctionCallbackHumidityReached         Function = 15
+	FunctionCallbackAnalogValueReached      Function = 16
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -58,29 +57,30 @@ const (
 type HumidityBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 27
 const DeviceDisplayName = "Humidity Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (HumidityBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return HumidityBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHumidityCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetHumidityCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHumidityCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetHumidityCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetHumidityCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetHumidityCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetHumidityCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetHumidityCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return HumidityBricklet{dev}, nil
 }
 
@@ -127,7 +127,7 @@ func (device *HumidityBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetHumidityCallbackPeriod. The parameter is the humidity of
 // the sensor.
-// 
+//
 // The RegisterHumidityCallback callback is only triggered if the humidity has changed since
 // the last triggering.
 func (device *HumidityBricklet) RegisterHumidityCallback(fn func(uint16)) uint64 {
@@ -151,11 +151,10 @@ func (device *HumidityBricklet) DeregisterHumidityCallback(registrationId uint64
 	device.device.DeregisterCallback(uint8(FunctionCallbackHumidity), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAnalogValueCallbackPeriod. The parameter is the analog
 // value of the sensor.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the humidity has changed
 // since the last triggering.
 func (device *HumidityBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
@@ -179,11 +178,10 @@ func (device *HumidityBricklet) DeregisterAnalogValueCallback(registrationId uin
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetHumidityCallbackThreshold is reached.
 // The parameter is the humidity of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *HumidityBricklet) RegisterHumidityReachedCallback(fn func(uint16)) uint64 {
@@ -207,11 +205,10 @@ func (device *HumidityBricklet) DeregisterHumidityReachedCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackHumidityReached), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetAnalogValueCallbackThreshold is reached.
 // The parameter is the analog value of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *HumidityBricklet) RegisterAnalogValueReachedCallback(fn func(uint16)) uint64 {
@@ -235,15 +232,14 @@ func (device *HumidityBricklet) DeregisterAnalogValueReachedCallback(registratio
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
-
 // Returns the humidity of the sensor.
-// 
+//
 // If you want to get the humidity periodically, it is recommended to use the
 // RegisterHumidityCallback callback and set the period with
 // SetHumidityCallbackPeriod.
 func (device *HumidityBricklet) GetHumidity() (humidity uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidity), buf.Bytes())
 	if err != nil {
 		return humidity, err
@@ -270,16 +266,16 @@ func (device *HumidityBricklet) GetHumidity() (humidity uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// 
+//
 // Note
 //  The value returned by :func:https://github.com/Tinkerforge/humidity-bricklet/raw/master/datasheets/hih-5030.pdf.
-// 
+//
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *HumidityBricklet) GetAnalogValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -307,12 +303,12 @@ func (device *HumidityBricklet) GetAnalogValue() (value uint16, err error) {
 
 // Sets the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterHumidityCallback callback is only triggered if the humidity has changed
 // since the last triggering.
 func (device *HumidityBricklet) SetHumidityCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetHumidityCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -332,7 +328,7 @@ func (device *HumidityBricklet) SetHumidityCallbackPeriod(period uint32) (err er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -341,7 +337,7 @@ func (device *HumidityBricklet) SetHumidityCallbackPeriod(period uint32) (err er
 // Returns the period as set by SetHumidityCallbackPeriod.
 func (device *HumidityBricklet) GetHumidityCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidityCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -369,12 +365,12 @@ func (device *HumidityBricklet) GetHumidityCallbackPeriod() (period uint32, err 
 
 // Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *HumidityBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -394,7 +390,7 @@ func (device *HumidityBricklet) SetAnalogValueCallbackPeriod(period uint32) (err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -403,7 +399,7 @@ func (device *HumidityBricklet) SetAnalogValueCallbackPeriod(period uint32) (err
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *HumidityBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -430,11 +426,11 @@ func (device *HumidityBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 }
 
 // Sets the thresholds for the RegisterHumidityReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the humidity is *outside* the min and max values
 //  'i'|    Callback is triggered when the humidity is *inside* the min and max values
@@ -450,9 +446,9 @@ func (device *HumidityBricklet) GetAnalogValueCallbackPeriod() (period uint32, e
 //	* ThresholdOptionGreater
 func (device *HumidityBricklet) SetHumidityCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetHumidityCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -472,7 +468,7 @@ func (device *HumidityBricklet) SetHumidityCallbackThreshold(option ThresholdOpt
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -489,7 +485,7 @@ func (device *HumidityBricklet) SetHumidityCallbackThreshold(option ThresholdOpt
 //	* ThresholdOptionGreater
 func (device *HumidityBricklet) GetHumidityCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidityCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -518,11 +514,11 @@ func (device *HumidityBricklet) GetHumidityCallbackThreshold() (option Threshold
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the analog value is *outside* the min and max values
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
@@ -538,9 +534,9 @@ func (device *HumidityBricklet) GetHumidityCallbackThreshold() (option Threshold
 //	* ThresholdOptionGreater
 func (device *HumidityBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -560,7 +556,7 @@ func (device *HumidityBricklet) SetAnalogValueCallbackThreshold(option Threshold
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -577,7 +573,7 @@ func (device *HumidityBricklet) SetAnalogValueCallbackThreshold(option Threshold
 //	* ThresholdOptionGreater
 func (device *HumidityBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -606,19 +602,19 @@ func (device *HumidityBricklet) GetAnalogValueCallbackThreshold() (option Thresh
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterHumidityReachedCallback,
 // * RegisterAnalogValueReachedCallback
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetHumidityCallbackThreshold,
 // * SetAnalogValueCallbackThreshold
-// 
+//
 // keep being reached.
 func (device *HumidityBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -638,7 +634,7 @@ func (device *HumidityBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -647,7 +643,7 @@ func (device *HumidityBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *HumidityBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -676,16 +672,16 @@ func (device *HumidityBricklet) GetDebouncePeriod() (debounce uint32, err error)
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *HumidityBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

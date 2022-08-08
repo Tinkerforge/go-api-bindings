@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Battery-backed real-time clock.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RealTimeClock_Bricklet_Go.html.
 package real_time_clock_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,30 +25,30 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetDateTime Function = 1
-	FunctionGetDateTime Function = 2
-	FunctionGetTimestamp Function = 3
-	FunctionSetOffset Function = 4
-	FunctionGetOffset Function = 5
+	FunctionSetDateTime               Function = 1
+	FunctionGetDateTime               Function = 2
+	FunctionGetTimestamp              Function = 3
+	FunctionSetOffset                 Function = 4
+	FunctionGetOffset                 Function = 5
 	FunctionSetDateTimeCallbackPeriod Function = 6
 	FunctionGetDateTimeCallbackPeriod Function = 7
-	FunctionSetAlarm Function = 8
-	FunctionGetAlarm Function = 9
-	FunctionGetIdentity Function = 255
-	FunctionCallbackDateTime Function = 10
-	FunctionCallbackAlarm Function = 11
+	FunctionSetAlarm                  Function = 8
+	FunctionGetAlarm                  Function = 9
+	FunctionGetIdentity               Function = 255
+	FunctionCallbackDateTime          Function = 10
+	FunctionCallbackAlarm             Function = 11
 )
 
 type Weekday = uint8
 
 const (
-	WeekdayMonday Weekday = 1
-	WeekdayTuesday Weekday = 2
+	WeekdayMonday    Weekday = 1
+	WeekdayTuesday   Weekday = 2
 	WeekdayWednesday Weekday = 3
-	WeekdayThursday Weekday = 4
-	WeekdayFriday Weekday = 5
-	WeekdaySaturday Weekday = 6
-	WeekdaySunday Weekday = 7
+	WeekdayThursday  Weekday = 4
+	WeekdayFriday    Weekday = 5
+	WeekdaySaturday  Weekday = 6
+	WeekdaySunday    Weekday = 7
 )
 
 type AlarmMatch = int8
@@ -67,26 +66,27 @@ const (
 type RealTimeClockBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 268
 const DeviceDisplayName = "Real-Time Clock Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RealTimeClockBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RealTimeClockBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetDateTime] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetDateTime] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetTimestamp] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetOffset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetOffset] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDateTimeCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDateTimeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAlarm] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAlarm] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetDateTime] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetDateTime] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetTimestamp] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetOffset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetOffset] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDateTimeCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDateTimeCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAlarm] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAlarm] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RealTimeClockBricklet{dev}, nil
 }
 
@@ -133,10 +133,10 @@ func (device *RealTimeClockBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetDateTimeCallbackPeriod. The parameters are the same
 // as for GetDateTime and GetTimestamp combined.
-// 
+//
 // The RegisterDateTimeCallback callback is only triggered if the date or time changed
 // since the last triggering.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RealTimeClockBricklet) RegisterDateTimeCallback(fn func(uint16, uint8, uint8, uint8, uint8, uint8, uint8, Weekday, int64)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -175,11 +175,10 @@ func (device *RealTimeClockBricklet) DeregisterDateTimeCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackDateTime), registrationId)
 }
 
-
 // This callback is triggered every time the current date and time matches the
 // configured alarm (see SetAlarm). The parameters are the same
 // as for GetDateTime and GetTimestamp combined.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RealTimeClockBricklet) RegisterAlarmCallback(fn func(uint16, uint8, uint8, uint8, uint8, uint8, uint8, Weekday, int64)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -218,12 +217,11 @@ func (device *RealTimeClockBricklet) DeregisterAlarmCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackAlarm), registrationId)
 }
 
-
 // Sets the current date (including weekday) and the current time.
-// 
+//
 // If the backup battery is installed then the real-time clock keeps date and
 // time even if the Bricklet is not powered by a Brick.
-// 
+//
 // The real-time clock handles leap year and inserts the 29th of February
 // accordingly. But leap seconds, time zones and daylight saving time are not
 // handled.
@@ -239,14 +237,14 @@ func (device *RealTimeClockBricklet) DeregisterAlarmCallback(registrationId uint
 //	* WeekdaySunday
 func (device *RealTimeClockBricklet) SetDateTime(year uint16, month uint8, day uint8, hour uint8, minute uint8, second uint8, centisecond uint8, weekday Weekday) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, year);
-	binary.Write(&buf, binary.LittleEndian, month);
-	binary.Write(&buf, binary.LittleEndian, day);
-	binary.Write(&buf, binary.LittleEndian, hour);
-	binary.Write(&buf, binary.LittleEndian, minute);
-	binary.Write(&buf, binary.LittleEndian, second);
-	binary.Write(&buf, binary.LittleEndian, centisecond);
-	binary.Write(&buf, binary.LittleEndian, weekday);
+	binary.Write(&buf, binary.LittleEndian, year)
+	binary.Write(&buf, binary.LittleEndian, month)
+	binary.Write(&buf, binary.LittleEndian, day)
+	binary.Write(&buf, binary.LittleEndian, hour)
+	binary.Write(&buf, binary.LittleEndian, minute)
+	binary.Write(&buf, binary.LittleEndian, second)
+	binary.Write(&buf, binary.LittleEndian, centisecond)
+	binary.Write(&buf, binary.LittleEndian, weekday)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDateTime), buf.Bytes())
 	if err != nil {
@@ -266,7 +264,7 @@ func (device *RealTimeClockBricklet) SetDateTime(year uint16, month uint8, day u
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -286,7 +284,7 @@ func (device *RealTimeClockBricklet) SetDateTime(year uint16, month uint8, day u
 //	* WeekdaySunday
 func (device *RealTimeClockBricklet) GetDateTime() (year uint16, month uint8, day uint8, hour uint8, minute uint8, second uint8, centisecond uint8, weekday Weekday, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDateTime), buf.Bytes())
 	if err != nil {
 		return year, month, day, hour, minute, second, centisecond, weekday, err
@@ -324,7 +322,7 @@ func (device *RealTimeClockBricklet) GetDateTime() (year uint16, month uint8, da
 // second and is an offset to 2000-01-01 00:00:00.000.
 func (device *RealTimeClockBricklet) GetTimestamp() (timestamp int64, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTimestamp), buf.Bytes())
 	if err != nil {
 		return timestamp, err
@@ -352,32 +350,32 @@ func (device *RealTimeClockBricklet) GetTimestamp() (timestamp int64, err error)
 
 // Sets the offset the real-time clock should compensate for in 2.17 ppm steps
 // between -277.76 ppm (-128) and +275.59 ppm (127).
-// 
+//
 // The real-time clock time can deviate from the actual time due to the frequency
 // deviation of its 32.768 kHz crystal. Even without compensation (factory
 // default) the resulting time deviation should be at most ±20 ppm (±52.6
 // seconds per month).
-// 
+//
 // This deviation can be calculated by comparing the same duration measured by the
 // real-time clock (``rtc_duration``) an accurate reference clock
 // (``ref_duration``).
-// 
+//
 // For best results the configured offset should be set to 0 ppm first and then a
 // duration of at least 6 hours should be measured.
-// 
+//
 // The new offset (``new_offset``) can be calculated from the currently configured
 // offset (``current_offset``) and the measured durations as follow::
-// 
+//
 //   new_offset = current_offset - round(1000000 * (rtc_duration - ref_duration) / rtc_duration / 2.17)
-// 
+//
 // If you want to calculate the offset, then we recommend using the calibration
 // dialog in Brick Viewer, instead of doing it manually.
-// 
+//
 // The offset is saved in the EEPROM of the Bricklet and only needs to be
 // configured once.
 func (device *RealTimeClockBricklet) SetOffset(offset int8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, offset)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetOffset), buf.Bytes())
 	if err != nil {
@@ -397,7 +395,7 @@ func (device *RealTimeClockBricklet) SetOffset(offset int8) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -406,7 +404,7 @@ func (device *RealTimeClockBricklet) SetOffset(offset int8) (err error) {
 // Returns the offset as set by SetOffset.
 func (device *RealTimeClockBricklet) GetOffset() (offset int8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOffset), buf.Bytes())
 	if err != nil {
 		return offset, err
@@ -434,14 +432,14 @@ func (device *RealTimeClockBricklet) GetOffset() (offset int8, err error) {
 
 // Sets the period with which the RegisterDateTimeCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterDateTimeCallback Callback is only triggered if the date or time changed
 // since the last triggering.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RealTimeClockBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDateTimeCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -461,18 +459,18 @@ func (device *RealTimeClockBricklet) SetDateTimeCallbackPeriod(period uint32) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the period as set by SetDateTimeCallbackPeriod.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 func (device *RealTimeClockBricklet) GetDateTimeCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDateTimeCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -500,15 +498,15 @@ func (device *RealTimeClockBricklet) GetDateTimeCallbackPeriod() (period uint32,
 
 // Configures a repeatable alarm. The RegisterAlarmCallback callback is triggered if the
 // current date and time matches the configured alarm.
-// 
+//
 // Setting a parameter to -1 means that it should be disabled and doesn't take part
 // in the match. Setting all parameters to -1 disables the alarm completely.
-// 
+//
 // For example, to make the alarm trigger every day at 7:30 AM it can be
 // configured as (-1, -1, 7, 30, -1, -1, -1). The hour is set to match 7 and the
 // minute is set to match 30. The alarm is triggered if all enabled parameters
 // match.
-// 
+//
 // The interval has a special role. It allows to make the alarm reconfigure itself.
 // This is useful if you need a repeated alarm that cannot be expressed by matching
 // the current date and time. For example, to make the alarm trigger every 23
@@ -518,11 +516,11 @@ func (device *RealTimeClockBricklet) GetDateTimeCallbackPeriod() (period uint32,
 // call. Because the interval is not -1, the Bricklet will do the same again
 // internally, take the current date and time, add 23 seconds to it and set that
 // as its alarm. This results in a repeated alarm that triggers every 23 seconds.
-// 
+//
 // The interval can also be used in combination with the other parameters. For
 // example, configuring the alarm as (-1, -1, 7, 30, -1, -1, 300) results in an
 // alarm that triggers every day at 7:30 AM and is then repeated every 5 minutes.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -531,13 +529,13 @@ func (device *RealTimeClockBricklet) GetDateTimeCallbackPeriod() (period uint32,
 //	* AlarmIntervalDisabled
 func (device *RealTimeClockBricklet) SetAlarm(month AlarmMatch, day AlarmMatch, hour AlarmMatch, minute AlarmMatch, second AlarmMatch, weekday AlarmMatch, interval AlarmInterval) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, month);
-	binary.Write(&buf, binary.LittleEndian, day);
-	binary.Write(&buf, binary.LittleEndian, hour);
-	binary.Write(&buf, binary.LittleEndian, minute);
-	binary.Write(&buf, binary.LittleEndian, second);
-	binary.Write(&buf, binary.LittleEndian, weekday);
-	binary.Write(&buf, binary.LittleEndian, interval);
+	binary.Write(&buf, binary.LittleEndian, month)
+	binary.Write(&buf, binary.LittleEndian, day)
+	binary.Write(&buf, binary.LittleEndian, hour)
+	binary.Write(&buf, binary.LittleEndian, minute)
+	binary.Write(&buf, binary.LittleEndian, second)
+	binary.Write(&buf, binary.LittleEndian, weekday)
+	binary.Write(&buf, binary.LittleEndian, interval)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAlarm), buf.Bytes())
 	if err != nil {
@@ -557,14 +555,14 @@ func (device *RealTimeClockBricklet) SetAlarm(month AlarmMatch, day AlarmMatch, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the alarm configuration as set by SetAlarm.
-// 
+//
 // .. versionadded:: 2.0.1$nbsp;(Plugin)
 //
 // Associated constants:
@@ -573,7 +571,7 @@ func (device *RealTimeClockBricklet) SetAlarm(month AlarmMatch, day AlarmMatch, 
 //	* AlarmIntervalDisabled
 func (device *RealTimeClockBricklet) GetAlarm() (month AlarmMatch, day AlarmMatch, hour AlarmMatch, minute AlarmMatch, second AlarmMatch, weekday AlarmMatch, interval AlarmInterval, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAlarm), buf.Bytes())
 	if err != nil {
 		return month, day, hour, minute, second, weekday, interval, err
@@ -608,16 +606,16 @@ func (device *RealTimeClockBricklet) GetAlarm() (month AlarmMatch, day AlarmMatc
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RealTimeClockBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

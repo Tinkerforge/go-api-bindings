@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Creates beep with configurable frequency.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/PiezoSpeaker_Bricklet_Go.html.
 package piezo_speaker_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,38 +25,39 @@ import (
 type Function = uint8
 
 const (
-	FunctionBeep Function = 1
-	FunctionMorseCode Function = 2
-	FunctionCalibrate Function = 3
-	FunctionGetIdentity Function = 255
-	FunctionCallbackBeepFinished Function = 4
+	FunctionBeep                      Function = 1
+	FunctionMorseCode                 Function = 2
+	FunctionCalibrate                 Function = 3
+	FunctionGetIdentity               Function = 255
+	FunctionCallbackBeepFinished      Function = 4
 	FunctionCallbackMorseCodeFinished Function = 5
 )
 
 type BeepDuration = uint32
 
 const (
-	BeepDurationOff BeepDuration = 0
+	BeepDurationOff      BeepDuration = 0
 	BeepDurationInfinite BeepDuration = 4294967295
 )
 
 type PiezoSpeakerBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 242
 const DeviceDisplayName = "Piezo Speaker Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (PiezoSpeakerBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return PiezoSpeakerBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionBeep] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionMorseCode] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionCalibrate] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionBeep] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionMorseCode] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionCalibrate] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return PiezoSpeakerBricklet{dev}, nil
 }
 
@@ -110,9 +110,7 @@ func (device *PiezoSpeakerBricklet) RegisterBeepFinishedCallback(fn func()) uint
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackBeepFinished), wrapper)
@@ -122,7 +120,6 @@ func (device *PiezoSpeakerBricklet) RegisterBeepFinishedCallback(fn func()) uint
 func (device *PiezoSpeakerBricklet) DeregisterBeepFinishedCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackBeepFinished), registrationId)
 }
-
 
 // This callback is triggered if the playback of the morse code set by
 // MorseCode is finished.
@@ -134,9 +131,7 @@ func (device *PiezoSpeakerBricklet) RegisterMorseCodeFinishedCallback(fn func())
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackMorseCodeFinished), wrapper)
@@ -147,13 +142,12 @@ func (device *PiezoSpeakerBricklet) DeregisterMorseCodeFinishedCallback(registra
 	device.device.DeregisterCallback(uint8(FunctionCallbackMorseCodeFinished), registrationId)
 }
 
-
 // Beeps with the given frequency for the given duration.
-// 
+//
 // .. versionchanged:: 2.0.2$nbsp;(Plugin)
 //    A duration of 0 stops the current beep if any, the frequency parameter is
 //    ignored. A duration of 4294967295 results in an infinite beep.
-// 
+//
 // The Piezo Speaker Bricklet can only approximate the frequency, it will play
 // the best possible match by applying the calibration (see Calibrate).
 //
@@ -163,8 +157,8 @@ func (device *PiezoSpeakerBricklet) DeregisterMorseCodeFinishedCallback(registra
 //	* BeepDurationInfinite
 func (device *PiezoSpeakerBricklet) Beep(duration BeepDuration, frequency uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, duration);
-	binary.Write(&buf, binary.LittleEndian, frequency);
+	binary.Write(&buf, binary.LittleEndian, duration)
+	binary.Write(&buf, binary.LittleEndian, frequency)
 
 	resultBytes, err := device.device.Set(uint8(FunctionBeep), buf.Bytes())
 	if err != nil {
@@ -184,7 +178,7 @@ func (device *PiezoSpeakerBricklet) Beep(duration BeepDuration, frequency uint16
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -193,16 +187,18 @@ func (device *PiezoSpeakerBricklet) Beep(duration BeepDuration, frequency uint16
 // Sets morse code that will be played by the piezo buzzer. The morse code
 // is given as a string consisting of . (dot), - (minus) and   (space)
 // for *dits*, *dahs* and *pauses*. Every other character is ignored.
-// 
+//
 // For example: If you set the string ...---..., the piezo buzzer will beep
 // nine times with the durations short short short long long long short
 // short short.
 func (device *PiezoSpeakerBricklet) MorseCode(morse string, frequency uint16) (err error) {
 	var buf bytes.Buffer
 	morse_byte_slice, err := StringToByteSlice(morse, 60)
-	if err != nil { return }
+	if err != nil {
+		return
+	}
 	buf.Write(morse_byte_slice)
-	binary.Write(&buf, binary.LittleEndian, frequency);
+	binary.Write(&buf, binary.LittleEndian, frequency)
 
 	resultBytes, err := device.device.Set(uint8(FunctionMorseCode), buf.Bytes())
 	if err != nil {
@@ -222,7 +218,7 @@ func (device *PiezoSpeakerBricklet) MorseCode(morse string, frequency uint16) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -232,14 +228,14 @@ func (device *PiezoSpeakerBricklet) MorseCode(morse string, frequency uint16) (e
 // plays each tone and measures the exact frequency back. The result is a
 // mapping between setting value and frequency. This mapping is stored
 // in the EEPROM and loaded on startup.
-// 
+//
 // The Bricklet should come calibrated, you only need to call this
 // function (once) every time you reflash the Bricklet plugin.
-// 
+//
 // Returns *true* after the calibration finishes.
 func (device *PiezoSpeakerBricklet) Calibrate() (calibration bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionCalibrate), buf.Bytes())
 	if err != nil {
 		return calibration, err
@@ -268,16 +264,16 @@ func (device *PiezoSpeakerBricklet) Calibrate() (calibration bool, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *PiezoSpeakerBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

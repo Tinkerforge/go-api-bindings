@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures temperature with thermocouples.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/Thermocouple_Bricklet_Go.html.
 package thermocouple_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,28 +25,28 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetTemperature Function = 1
-	FunctionSetTemperatureCallbackPeriod Function = 2
-	FunctionGetTemperatureCallbackPeriod Function = 3
+	FunctionGetTemperature                  Function = 1
+	FunctionSetTemperatureCallbackPeriod    Function = 2
+	FunctionGetTemperatureCallbackPeriod    Function = 3
 	FunctionSetTemperatureCallbackThreshold Function = 4
 	FunctionGetTemperatureCallbackThreshold Function = 5
-	FunctionSetDebouncePeriod Function = 6
-	FunctionGetDebouncePeriod Function = 7
-	FunctionSetConfiguration Function = 10
-	FunctionGetConfiguration Function = 11
-	FunctionGetErrorState Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackTemperature Function = 8
-	FunctionCallbackTemperatureReached Function = 9
-	FunctionCallbackErrorState Function = 13
+	FunctionSetDebouncePeriod               Function = 6
+	FunctionGetDebouncePeriod               Function = 7
+	FunctionSetConfiguration                Function = 10
+	FunctionGetConfiguration                Function = 11
+	FunctionGetErrorState                   Function = 12
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackTemperature             Function = 8
+	FunctionCallbackTemperatureReached      Function = 9
+	FunctionCallbackErrorState              Function = 13
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -55,25 +54,25 @@ const (
 type Averaging = uint8
 
 const (
-	Averaging1 Averaging = 1
-	Averaging2 Averaging = 2
-	Averaging4 Averaging = 4
-	Averaging8 Averaging = 8
+	Averaging1  Averaging = 1
+	Averaging2  Averaging = 2
+	Averaging4  Averaging = 4
+	Averaging8  Averaging = 8
 	Averaging16 Averaging = 16
 )
 
 type Type = uint8
 
 const (
-	TypeB Type = 0
-	TypeE Type = 1
-	TypeJ Type = 2
-	TypeK Type = 3
-	TypeN Type = 4
-	TypeR Type = 5
-	TypeS Type = 6
-	TypeT Type = 7
-	TypeG8 Type = 8
+	TypeB   Type = 0
+	TypeE   Type = 1
+	TypeJ   Type = 2
+	TypeK   Type = 3
+	TypeN   Type = 4
+	TypeR   Type = 5
+	TypeS   Type = 6
+	TypeT   Type = 7
+	TypeG8  Type = 8
 	TypeG32 Type = 9
 )
 
@@ -87,27 +86,28 @@ const (
 type ThermocoupleBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 266
 const DeviceDisplayName = "Thermocouple Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ThermocoupleBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return ThermocoupleBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetErrorState] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetErrorState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return ThermocoupleBricklet{dev}, nil
 }
 
@@ -154,7 +154,7 @@ func (device *ThermocoupleBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetTemperatureCallbackPeriod. The parameter is the
 // temperature of the thermocouple.
-// 
+//
 // The RegisterTemperatureCallback callback is only triggered if the temperature has
 // changed since the last triggering.
 func (device *ThermocoupleBricklet) RegisterTemperatureCallback(fn func(int32)) uint64 {
@@ -178,11 +178,10 @@ func (device *ThermocoupleBricklet) DeregisterTemperatureCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetTemperatureCallbackThreshold is reached.
 // The parameter is the temperature of the thermocouple.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *ThermocoupleBricklet) RegisterTemperatureReachedCallback(fn func(int32)) uint64 {
@@ -205,7 +204,6 @@ func (device *ThermocoupleBricklet) RegisterTemperatureReachedCallback(fn func(i
 func (device *ThermocoupleBricklet) DeregisterTemperatureReachedCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperatureReached), registrationId)
 }
-
 
 // This Callback is triggered every time the error state changes
 // (see GetErrorState).
@@ -232,15 +230,14 @@ func (device *ThermocoupleBricklet) DeregisterErrorStateCallback(registrationId 
 	device.device.DeregisterCallback(uint8(FunctionCallbackErrorState), registrationId)
 }
 
-
 // Returns the temperature of the thermocouple.
-// 
+//
 // If you want to get the temperature periodically, it is recommended
 // to use the RegisterTemperatureCallback callback and set the period with
 // SetTemperatureCallbackPeriod.
 func (device *ThermocoupleBricklet) GetTemperature() (temperature int32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -268,12 +265,12 @@ func (device *ThermocoupleBricklet) GetTemperature() (temperature int32, err err
 
 // Sets the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterTemperatureCallback callback is only triggered if the temperature has changed
 // since the last triggering.
 func (device *ThermocoupleBricklet) SetTemperatureCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -293,7 +290,7 @@ func (device *ThermocoupleBricklet) SetTemperatureCallbackPeriod(period uint32) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -302,7 +299,7 @@ func (device *ThermocoupleBricklet) SetTemperatureCallbackPeriod(period uint32) 
 // Returns the period as set by SetTemperatureCallbackPeriod.
 func (device *ThermocoupleBricklet) GetTemperatureCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -329,11 +326,11 @@ func (device *ThermocoupleBricklet) GetTemperatureCallbackPeriod() (period uint3
 }
 
 // Sets the thresholds for the RegisterTemperatureReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the temperature is *outside* the min and max values
 //  'i'|    Callback is triggered when the temperature is *inside* the min and max values
@@ -349,9 +346,9 @@ func (device *ThermocoupleBricklet) GetTemperatureCallbackPeriod() (period uint3
 //	* ThresholdOptionGreater
 func (device *ThermocoupleBricklet) SetTemperatureCallbackThreshold(option ThresholdOption, min int32, max int32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -371,7 +368,7 @@ func (device *ThermocoupleBricklet) SetTemperatureCallbackThreshold(option Thres
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -388,7 +385,7 @@ func (device *ThermocoupleBricklet) SetTemperatureCallbackThreshold(option Thres
 //	* ThresholdOptionGreater
 func (device *ThermocoupleBricklet) GetTemperatureCallbackThreshold() (option ThresholdOption, min int32, max int32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -417,17 +414,17 @@ func (device *ThermocoupleBricklet) GetTemperatureCallbackThreshold() (option Th
 }
 
 // Sets the period with which the threshold callback
-// 
+//
 // * RegisterTemperatureReachedCallback
-// 
+//
 // is triggered, if the threshold
-// 
+//
 // * SetTemperatureCallbackThreshold
-// 
+//
 // keeps being reached.
 func (device *ThermocoupleBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -447,7 +444,7 @@ func (device *ThermocoupleBricklet) SetDebouncePeriod(debounce uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -456,7 +453,7 @@ func (device *ThermocoupleBricklet) SetDebouncePeriod(debounce uint32) (err erro
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *ThermocoupleBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -484,25 +481,25 @@ func (device *ThermocoupleBricklet) GetDebouncePeriod() (debounce uint32, err er
 
 // You can configure averaging size, thermocouple type and frequency
 // filtering.
-// 
+//
 // Available averaging sizes are 1, 2, 4, 8 and 16 samples.
-// 
+//
 // As thermocouple type you can use B, E, J, K, N, R, S and T. If you have a
 // different thermocouple or a custom thermocouple you can also use
 // G8 and G32. With these types the returned value will not be in °C/100,
 // it will be calculated by the following formulas:
-// 
+//
 // * G8: ``value = 8 * 1.6 * 2^17 * Vin``
 // * G32: ``value = 32 * 1.6 * 2^17 * Vin``
-// 
+//
 // where Vin is the thermocouple input voltage.
-// 
+//
 // The frequency filter can be either configured to 50Hz or to 60Hz. You should
 // configure it according to your utility frequency.
-// 
+//
 // The conversion time depends on the averaging and filter configuration, it can
 // be calculated as follows:
-// 
+//
 // * 60Hz: ``time = 82 + (samples - 1) * 16.67``
 // * 50Hz: ``time = 98 + (samples - 1) * 20``
 //
@@ -527,9 +524,9 @@ func (device *ThermocoupleBricklet) GetDebouncePeriod() (debounce uint32, err er
 //	* FilterOption60Hz
 func (device *ThermocoupleBricklet) SetConfiguration(averaging Averaging, thermocoupleType Type, filter FilterOption) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, averaging);
-	binary.Write(&buf, binary.LittleEndian, thermocoupleType);
-	binary.Write(&buf, binary.LittleEndian, filter);
+	binary.Write(&buf, binary.LittleEndian, averaging)
+	binary.Write(&buf, binary.LittleEndian, thermocoupleType)
+	binary.Write(&buf, binary.LittleEndian, filter)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
 	if err != nil {
@@ -549,7 +546,7 @@ func (device *ThermocoupleBricklet) SetConfiguration(averaging Averaging, thermo
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -578,7 +575,7 @@ func (device *ThermocoupleBricklet) SetConfiguration(averaging Averaging, thermo
 //	* FilterOption60Hz
 func (device *ThermocoupleBricklet) GetConfiguration() (averaging Averaging, thermocoupleType Type, filter FilterOption, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
 		return averaging, thermocoupleType, filter, err
@@ -607,19 +604,19 @@ func (device *ThermocoupleBricklet) GetConfiguration() (averaging Averaging, the
 }
 
 // Returns the current error state. There are two possible errors:
-// 
+//
 // * Over/Under Voltage and
 // * Open Circuit.
-// 
+//
 // Over/Under Voltage happens for voltages below 0V or above 3.3V. In this case
 // it is very likely that your thermocouple is defective. An Open Circuit error
 // indicates that there is no thermocouple connected.
-// 
+//
 // You can use the RegisterErrorStateCallback callback to automatically get triggered
 // when the error state changes.
 func (device *ThermocoupleBricklet) GetErrorState() (overUnder bool, openCircuit bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetErrorState), buf.Bytes())
 	if err != nil {
 		return overUnder, openCircuit, err
@@ -649,16 +646,16 @@ func (device *ThermocoupleBricklet) GetErrorState() (overUnder bool, openCircuit
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *ThermocoupleBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

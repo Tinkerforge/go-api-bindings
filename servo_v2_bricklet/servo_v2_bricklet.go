@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Drives up to 10 RC Servos.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/ServoV2_Bricklet_Go.html.
 package servo_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,128 +25,129 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetStatus Function = 1
-	FunctionSetEnable Function = 2
-	FunctionGetEnabled Function = 3
-	FunctionSetPosition Function = 4
-	FunctionGetPosition Function = 5
-	FunctionGetCurrentPosition Function = 6
-	FunctionGetCurrentVelocity Function = 7
-	FunctionSetMotionConfiguration Function = 8
-	FunctionGetMotionConfiguration Function = 9
-	FunctionSetPulseWidth Function = 10
-	FunctionGetPulseWidth Function = 11
-	FunctionSetDegree Function = 12
-	FunctionGetDegree Function = 13
-	FunctionSetPeriod Function = 14
-	FunctionGetPeriod Function = 15
-	FunctionGetServoCurrent Function = 16
-	FunctionSetServoCurrentConfiguration Function = 17
-	FunctionGetServoCurrentConfiguration Function = 18
-	FunctionSetInputVoltageConfiguration Function = 19
-	FunctionGetInputVoltageConfiguration Function = 20
-	FunctionGetOverallCurrent Function = 21
-	FunctionGetInputVoltage Function = 22
-	FunctionSetCurrentCalibration Function = 23
-	FunctionGetCurrentCalibration Function = 24
+	FunctionGetStatus                               Function = 1
+	FunctionSetEnable                               Function = 2
+	FunctionGetEnabled                              Function = 3
+	FunctionSetPosition                             Function = 4
+	FunctionGetPosition                             Function = 5
+	FunctionGetCurrentPosition                      Function = 6
+	FunctionGetCurrentVelocity                      Function = 7
+	FunctionSetMotionConfiguration                  Function = 8
+	FunctionGetMotionConfiguration                  Function = 9
+	FunctionSetPulseWidth                           Function = 10
+	FunctionGetPulseWidth                           Function = 11
+	FunctionSetDegree                               Function = 12
+	FunctionGetDegree                               Function = 13
+	FunctionSetPeriod                               Function = 14
+	FunctionGetPeriod                               Function = 15
+	FunctionGetServoCurrent                         Function = 16
+	FunctionSetServoCurrentConfiguration            Function = 17
+	FunctionGetServoCurrentConfiguration            Function = 18
+	FunctionSetInputVoltageConfiguration            Function = 19
+	FunctionGetInputVoltageConfiguration            Function = 20
+	FunctionGetOverallCurrent                       Function = 21
+	FunctionGetInputVoltage                         Function = 22
+	FunctionSetCurrentCalibration                   Function = 23
+	FunctionGetCurrentCalibration                   Function = 24
 	FunctionSetPositionReachedCallbackConfiguration Function = 25
 	FunctionGetPositionReachedCallbackConfiguration Function = 26
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackPositionReached Function = 27
+	FunctionGetSPITFPErrorCount                     Function = 234
+	FunctionSetBootloaderMode                       Function = 235
+	FunctionGetBootloaderMode                       Function = 236
+	FunctionSetWriteFirmwarePointer                 Function = 237
+	FunctionWriteFirmware                           Function = 238
+	FunctionSetStatusLEDConfig                      Function = 239
+	FunctionGetStatusLEDConfig                      Function = 240
+	FunctionGetChipTemperature                      Function = 242
+	FunctionReset                                   Function = 243
+	FunctionWriteUID                                Function = 248
+	FunctionReadUID                                 Function = 249
+	FunctionGetIdentity                             Function = 255
+	FunctionCallbackPositionReached                 Function = 27
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type ServoV2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2157
 const DeviceDisplayName = "Servo Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (ServoV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return ServoV2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetStatus] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetEnable] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPosition] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetCurrentPosition] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetCurrentVelocity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMotionConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMotionConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPulseWidth] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetPulseWidth] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDegree] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetDegree] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPeriod] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetServoCurrent] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetServoCurrentConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetServoCurrentConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetInputVoltageConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetInputVoltageConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetOverallCurrent] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetInputVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCurrentCalibration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCurrentCalibration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetPositionReachedCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetPositionReachedCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetStatus] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetEnable] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPosition] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetPosition] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetCurrentPosition] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetCurrentVelocity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMotionConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMotionConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPulseWidth] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetPulseWidth] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDegree] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetDegree] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPeriod] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetServoCurrent] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetServoCurrentConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetServoCurrentConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetInputVoltageConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetInputVoltageConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetOverallCurrent] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetInputVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCurrentCalibration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCurrentCalibration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetPositionReachedCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetPositionReachedCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return ServoV2Bricklet{dev}, nil
 }
 
@@ -195,9 +195,9 @@ func (device *ServoV2Bricklet) GetAPIVersion() [3]uint8 {
 // is reached. If the new position matches the current position then the
 // callback is not triggered, because the servo didn't move.
 // The parameters are the servo and the position that is reached.
-// 
+//
 // You can enable this callback with SetPositionReachedCallbackConfiguration.
-// 
+//
 // Note
 //  Since we can't get any feedback from the servo, this only works if the
 //  velocity (see SetMotionConfiguration) is set smaller or equal to the
@@ -226,22 +226,21 @@ func (device *ServoV2Bricklet) DeregisterPositionReachedCallback(registrationId 
 	device.device.DeregisterCallback(uint8(FunctionCallbackPositionReached), registrationId)
 }
 
-
 // Returns the status information of the Servo Bricklet 2.0.
-// 
+//
 // The status includes
-// 
+//
 // * for each channel if it is enabled or disabled,
 // * for each channel the current position,
 // * for each channel the current velocity,
 // * for each channel the current usage and
 // * the input voltage.
-// 
+//
 // Please note that the position and the velocity is a snapshot of the
 // current position and velocity of the servo in motion.
 func (device *ServoV2Bricklet) GetStatus() (enabled [10]bool, currentPosition [10]int16, currentVelocity [10]int16, current [10]uint16, inputVoltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatus), buf.Bytes())
 	if err != nil {
 		return enabled, currentPosition, currentVelocity, current, inputVoltage, err
@@ -275,8 +274,8 @@ func (device *ServoV2Bricklet) GetStatus() (enabled [10]bool, currentPosition [1
 // velocity, acceleration, etc. are applied immediately.
 func (device *ServoV2Bricklet) SetEnable(servoChannel uint16, enable bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, enable);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, enable)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetEnable), buf.Bytes())
 	if err != nil {
@@ -296,7 +295,7 @@ func (device *ServoV2Bricklet) SetEnable(servoChannel uint16, enable bool) (err 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -305,7 +304,7 @@ func (device *ServoV2Bricklet) SetEnable(servoChannel uint16, enable bool) (err 
 // Returns *true* if the specified servo channel is enabled, *false* otherwise.
 func (device *ServoV2Bricklet) GetEnabled(servoChannel uint16) (enable bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetEnabled), buf.Bytes())
 	if err != nil {
@@ -333,17 +332,17 @@ func (device *ServoV2Bricklet) GetEnabled(servoChannel uint16) (enable bool, err
 }
 
 // Sets the position in °/100 for the specified servo channel.
-// 
+//
 // The default range of the position is -9000 to 9000, but it can be specified
 // according to your servo with SetDegree.
-// 
+//
 // If you want to control a linear servo or RC brushless motor controller or
 // similar with the Servo Brick, you can also define lengths or speeds with
 // SetDegree.
 func (device *ServoV2Bricklet) SetPosition(servoChannel uint16, position int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, position);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, position)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPosition), buf.Bytes())
 	if err != nil {
@@ -363,7 +362,7 @@ func (device *ServoV2Bricklet) SetPosition(servoChannel uint16, position int16) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -372,7 +371,7 @@ func (device *ServoV2Bricklet) SetPosition(servoChannel uint16, position int16) 
 // Returns the position of the specified servo channel as set by SetPosition.
 func (device *ServoV2Bricklet) GetPosition(servoChannel uint16) (position int16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetPosition), buf.Bytes())
 	if err != nil {
@@ -404,7 +403,7 @@ func (device *ServoV2Bricklet) GetPosition(servoChannel uint16) (position int16,
 // position goal.
 func (device *ServoV2Bricklet) GetCurrentPosition(servoChannel uint16) (position int16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentPosition), buf.Bytes())
 	if err != nil {
@@ -436,7 +435,7 @@ func (device *ServoV2Bricklet) GetCurrentPosition(servoChannel uint16) (position
 // currently approaching a velocity goal.
 func (device *ServoV2Bricklet) GetCurrentVelocity(servoChannel uint16) (velocity uint16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentVelocity), buf.Bytes())
 	if err != nil {
@@ -465,17 +464,17 @@ func (device *ServoV2Bricklet) GetCurrentVelocity(servoChannel uint16) (velocity
 
 // Sets the maximum velocity of the specified servo channel in °/100s as well as
 // the acceleration and deceleration in °/100s²
-// 
+//
 // With a velocity of 0 °/100s the position will be set immediately (no velocity).
-// 
+//
 // With an acc-/deceleration of 0 °/100s² the velocity will be set immediately
 // (no acc-/deceleration).
 func (device *ServoV2Bricklet) SetMotionConfiguration(servoChannel uint16, velocity uint32, acceleration uint32, deceleration uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, velocity);
-	binary.Write(&buf, binary.LittleEndian, acceleration);
-	binary.Write(&buf, binary.LittleEndian, deceleration);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, velocity)
+	binary.Write(&buf, binary.LittleEndian, acceleration)
+	binary.Write(&buf, binary.LittleEndian, deceleration)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMotionConfiguration), buf.Bytes())
 	if err != nil {
@@ -495,7 +494,7 @@ func (device *ServoV2Bricklet) SetMotionConfiguration(servoChannel uint16, veloc
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -504,7 +503,7 @@ func (device *ServoV2Bricklet) SetMotionConfiguration(servoChannel uint16, veloc
 // Returns the motion configuration as set by SetMotionConfiguration.
 func (device *ServoV2Bricklet) GetMotionConfiguration(servoChannel uint16) (velocity uint32, acceleration uint32, deceleration uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetMotionConfiguration), buf.Bytes())
 	if err != nil {
@@ -534,27 +533,27 @@ func (device *ServoV2Bricklet) GetMotionConfiguration(servoChannel uint16) (velo
 }
 
 // Sets the minimum and maximum pulse width of the specified servo channel in µs.
-// 
+//
 // Usually, servos are controlled with a
 // https://en.wikipedia.org/wiki/Pulse-width_modulation, whereby the
 // length of the pulse controls the position of the servo. Every servo has
 // different minimum and maximum pulse widths, these can be specified with
 // this function.
-// 
+//
 // If you have a datasheet for your servo that specifies the minimum and
 // maximum pulse width, you should set the values accordingly. If your servo
 // comes without any datasheet you have to find the values via trial and error.
-// 
+//
 // Both values have a range from 1 to 65535 (unsigned 16-bit integer). The
 // minimum must be smaller than the maximum.
-// 
+//
 // The default values are 1000µs (1ms) and 2000µs (2ms) for minimum and
 // maximum pulse width.
 func (device *ServoV2Bricklet) SetPulseWidth(servoChannel uint16, min uint32, max uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPulseWidth), buf.Bytes())
 	if err != nil {
@@ -574,7 +573,7 @@ func (device *ServoV2Bricklet) SetPulseWidth(servoChannel uint16, min uint32, ma
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -584,7 +583,7 @@ func (device *ServoV2Bricklet) SetPulseWidth(servoChannel uint16, min uint32, ma
 // SetPulseWidth.
 func (device *ServoV2Bricklet) GetPulseWidth(servoChannel uint16) (min uint32, max uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetPulseWidth), buf.Bytes())
 	if err != nil {
@@ -614,15 +613,15 @@ func (device *ServoV2Bricklet) GetPulseWidth(servoChannel uint16) (min uint32, m
 
 // Sets the minimum and maximum degree for the specified servo channel (by default
 // given as °/100).
-// 
+//
 // This only specifies the abstract values between which the minimum and maximum
 // pulse width is scaled. For example: If you specify a pulse width of 1000µs
 // to 2000µs and a degree range of -90° to 90°, a call of SetPosition
 // with 0 will result in a pulse width of 1500µs
 // (-90° = 1000µs, 90° = 2000µs, etc.).
-// 
+//
 // Possible usage:
-// 
+//
 // * The datasheet of your servo specifies a range of 200° with the middle position
 //   at 110°. In this case you can set the minimum to -9000 and the maximum to 11000.
 // * You measure a range of 220° on your servo and you don't have or need a middle
@@ -637,16 +636,16 @@ func (device *ServoV2Bricklet) GetPulseWidth(servoChannel uint16) (min uint32, m
 // * You have a brushless motor with a maximum speed of 10000 rpm and want to
 //   control it with a RC brushless motor controller. In this case you can set the
 //   minimum to 0 and the maximum to 10000. SetPosition now controls the rpm.
-// 
+//
 // Both values have a possible range from -32767 to 32767
 // (signed 16-bit integer). The minimum must be smaller than the maximum.
-// 
+//
 // The default values are -9000 and 9000 for the minimum and maximum degree.
 func (device *ServoV2Bricklet) SetDegree(servoChannel uint16, min int16, max int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDegree), buf.Bytes())
 	if err != nil {
@@ -666,7 +665,7 @@ func (device *ServoV2Bricklet) SetDegree(servoChannel uint16, min int16, max int
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -676,7 +675,7 @@ func (device *ServoV2Bricklet) SetDegree(servoChannel uint16, min int16, max int
 // SetDegree.
 func (device *ServoV2Bricklet) GetDegree(servoChannel uint16) (min int16, max int16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetDegree), buf.Bytes())
 	if err != nil {
@@ -705,24 +704,24 @@ func (device *ServoV2Bricklet) GetDegree(servoChannel uint16) (min int16, max in
 }
 
 // Sets the period of the specified servo channel in µs.
-// 
+//
 // Usually, servos are controlled with a
 // https://en.wikipedia.org/wiki/Pulse-width_modulation. Different
 // servos expect PWMs with different periods. Most servos run well with a
 // period of about 20ms.
-// 
+//
 // If your servo comes with a datasheet that specifies a period, you should
 // set it accordingly. If you don't have a datasheet and you have no idea
 // what the correct period is, the default value (19.5ms) will most likely
 // work fine.
-// 
+//
 // The minimum possible period is 1µs and the maximum is 1000000µs.
-// 
+//
 // The default value is 19.5ms (19500µs).
 func (device *ServoV2Bricklet) SetPeriod(servoChannel uint16, period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPeriod), buf.Bytes())
 	if err != nil {
@@ -742,7 +741,7 @@ func (device *ServoV2Bricklet) SetPeriod(servoChannel uint16, period uint32) (er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -751,7 +750,7 @@ func (device *ServoV2Bricklet) SetPeriod(servoChannel uint16, period uint32) (er
 // Returns the period for the specified servo channel as set by SetPeriod.
 func (device *ServoV2Bricklet) GetPeriod(servoChannel uint16) (period uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetPeriod), buf.Bytes())
 	if err != nil {
@@ -781,7 +780,7 @@ func (device *ServoV2Bricklet) GetPeriod(servoChannel uint16) (period uint32, er
 // Returns the current consumption of the specified servo channel in mA.
 func (device *ServoV2Bricklet) GetServoCurrent(servoChannel uint16) (current uint16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetServoCurrent), buf.Bytes())
 	if err != nil {
@@ -811,8 +810,8 @@ func (device *ServoV2Bricklet) GetServoCurrent(servoChannel uint16) (current uin
 // Sets the averaging duration of the current measurement for the specified servo channel in ms.
 func (device *ServoV2Bricklet) SetServoCurrentConfiguration(servoChannel uint16, averagingDuration uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, averagingDuration);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, averagingDuration)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetServoCurrentConfiguration), buf.Bytes())
 	if err != nil {
@@ -832,7 +831,7 @@ func (device *ServoV2Bricklet) SetServoCurrentConfiguration(servoChannel uint16,
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -842,7 +841,7 @@ func (device *ServoV2Bricklet) SetServoCurrentConfiguration(servoChannel uint16,
 // by SetServoCurrentConfiguration.
 func (device *ServoV2Bricklet) GetServoCurrentConfiguration(servoChannel uint16) (averagingDuration uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetServoCurrentConfiguration), buf.Bytes())
 	if err != nil {
@@ -872,7 +871,7 @@ func (device *ServoV2Bricklet) GetServoCurrentConfiguration(servoChannel uint16)
 // Sets the averaging duration of the input voltage measurement for the specified servo channel in ms.
 func (device *ServoV2Bricklet) SetInputVoltageConfiguration(averagingDuration uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, averagingDuration);
+	binary.Write(&buf, binary.LittleEndian, averagingDuration)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetInputVoltageConfiguration), buf.Bytes())
 	if err != nil {
@@ -892,7 +891,7 @@ func (device *ServoV2Bricklet) SetInputVoltageConfiguration(averagingDuration ui
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -901,7 +900,7 @@ func (device *ServoV2Bricklet) SetInputVoltageConfiguration(averagingDuration ui
 // Returns the input voltage configuration as set by SetInputVoltageConfiguration.
 func (device *ServoV2Bricklet) GetInputVoltageConfiguration() (averagingDuration uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetInputVoltageConfiguration), buf.Bytes())
 	if err != nil {
 		return averagingDuration, err
@@ -930,7 +929,7 @@ func (device *ServoV2Bricklet) GetInputVoltageConfiguration() (averagingDuration
 // Returns the current consumption of all servos together in mA.
 func (device *ServoV2Bricklet) GetOverallCurrent() (current uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOverallCurrent), buf.Bytes())
 	if err != nil {
 		return current, err
@@ -960,7 +959,7 @@ func (device *ServoV2Bricklet) GetOverallCurrent() (current uint16, err error) {
 // given via the black power input connector on the Servo Brick.
 func (device *ServoV2Bricklet) GetInputVoltage() (voltage uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetInputVoltage), buf.Bytes())
 	if err != nil {
 		return voltage, err
@@ -987,11 +986,11 @@ func (device *ServoV2Bricklet) GetInputVoltage() (voltage uint16, err error) {
 }
 
 // Sets an offset value (in mA) for each channel.
-// 
+//
 // Note: On delivery the Servo Bricklet 2.0 is already calibrated.
 func (device *ServoV2Bricklet) SetCurrentCalibration(offset [10]int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, offset)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCurrentCalibration), buf.Bytes())
 	if err != nil {
@@ -1011,7 +1010,7 @@ func (device *ServoV2Bricklet) SetCurrentCalibration(offset [10]int16) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1020,7 +1019,7 @@ func (device *ServoV2Bricklet) SetCurrentCalibration(offset [10]int16) (err erro
 // Returns the current calibration as set by SetCurrentCalibration.
 func (device *ServoV2Bricklet) GetCurrentCalibration() (offset [10]int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCurrentCalibration), buf.Bytes())
 	if err != nil {
 		return offset, err
@@ -1049,8 +1048,8 @@ func (device *ServoV2Bricklet) GetCurrentCalibration() (offset [10]int16, err er
 // Enable/Disable RegisterPositionReachedCallback callback.
 func (device *ServoV2Bricklet) SetPositionReachedCallbackConfiguration(servoChannel uint16, enabled bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
-	binary.Write(&buf, binary.LittleEndian, enabled);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
+	binary.Write(&buf, binary.LittleEndian, enabled)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetPositionReachedCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1070,7 +1069,7 @@ func (device *ServoV2Bricklet) SetPositionReachedCallbackConfiguration(servoChan
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1080,7 +1079,7 @@ func (device *ServoV2Bricklet) SetPositionReachedCallbackConfiguration(servoChan
 // SetPositionReachedCallbackConfiguration.
 func (device *ServoV2Bricklet) GetPositionReachedCallbackConfiguration(servoChannel uint16) (enabled bool, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, servoChannel);
+	binary.Write(&buf, binary.LittleEndian, servoChannel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetPositionReachedCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1108,19 +1107,19 @@ func (device *ServoV2Bricklet) GetPositionReachedCallbackConfiguration(servoChan
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *ServoV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -1151,11 +1150,11 @@ func (device *ServoV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -1174,7 +1173,7 @@ func (device *ServoV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 //	* BootloaderStatusCRCMismatch
 func (device *ServoV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -1212,7 +1211,7 @@ func (device *ServoV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *ServoV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1241,12 +1240,12 @@ func (device *ServoV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err err
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *ServoV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -1266,7 +1265,7 @@ func (device *ServoV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1275,14 +1274,14 @@ func (device *ServoV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *ServoV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -1312,9 +1311,9 @@ func (device *ServoV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -1325,7 +1324,7 @@ func (device *ServoV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 //	* StatusLEDConfigShowStatus
 func (device *ServoV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1345,7 +1344,7 @@ func (device *ServoV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1361,7 +1360,7 @@ func (device *ServoV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 //	* StatusLEDConfigShowStatus
 func (device *ServoV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1389,13 +1388,13 @@ func (device *ServoV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *ServoV2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1423,13 +1422,13 @@ func (device *ServoV2Bricklet) GetChipTemperature() (temperature int16, err erro
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *ServoV2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1448,7 +1447,7 @@ func (device *ServoV2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1457,11 +1456,11 @@ func (device *ServoV2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *ServoV2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1481,7 +1480,7 @@ func (device *ServoV2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1491,7 +1490,7 @@ func (device *ServoV2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *ServoV2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1520,16 +1519,16 @@ func (device *ServoV2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *ServoV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

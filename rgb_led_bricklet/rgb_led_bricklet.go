@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Controls one RGB LED‍.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RGBLED_Bricklet_Go.html.
 package rgb_led_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -34,19 +33,20 @@ const (
 type RGBLEDBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 271
 const DeviceDisplayName = "RGB LED Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RGBLEDBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RGBLEDBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetRGBValue] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetRGBValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetRGBValue] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetRGBValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RGBLEDBricklet{dev}, nil
 }
 
@@ -93,9 +93,9 @@ func (device *RGBLEDBricklet) GetAPIVersion() [3]uint8 {
 // Sets the *r*, *g* and *b* values for the LED.
 func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, r);
-	binary.Write(&buf, binary.LittleEndian, g);
-	binary.Write(&buf, binary.LittleEndian, b);
+	binary.Write(&buf, binary.LittleEndian, r)
+	binary.Write(&buf, binary.LittleEndian, g)
+	binary.Write(&buf, binary.LittleEndian, b)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetRGBValue), buf.Bytes())
 	if err != nil {
@@ -115,7 +115,7 @@ func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -124,7 +124,7 @@ func (device *RGBLEDBricklet) SetRGBValue(r uint8, g uint8, b uint8) (err error)
 // Returns the *r*, *g* and *b* values of the LED as set by SetRGBValue.
 func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRGBValue), buf.Bytes())
 	if err != nil {
 		return r, g, b, err
@@ -155,16 +155,16 @@ func (device *RGBLEDBricklet) GetRGBValue() (r uint8, g uint8, b uint8, err erro
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RGBLEDBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

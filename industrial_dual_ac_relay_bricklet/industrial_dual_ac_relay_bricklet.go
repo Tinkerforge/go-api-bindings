@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Two relays to switch AC devices.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialDualACRelay_Bricklet_Go.html.
 package industrial_dual_ac_relay_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,99 +25,100 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetValue Function = 1
-	FunctionGetValue Function = 2
-	FunctionSetChannelLEDConfig Function = 3
-	FunctionGetChannelLEDConfig Function = 4
-	FunctionSetMonoflop Function = 5
-	FunctionGetMonoflop Function = 6
-	FunctionSetSelectedValue Function = 8
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
+	FunctionSetValue                Function = 1
+	FunctionGetValue                Function = 2
+	FunctionSetChannelLEDConfig     Function = 3
+	FunctionGetChannelLEDConfig     Function = 4
+	FunctionSetMonoflop             Function = 5
+	FunctionGetMonoflop             Function = 6
+	FunctionSetSelectedValue        Function = 8
+	FunctionGetSPITFPErrorCount     Function = 234
+	FunctionSetBootloaderMode       Function = 235
+	FunctionGetBootloaderMode       Function = 236
 	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackMonoflopDone Function = 7
+	FunctionWriteFirmware           Function = 238
+	FunctionSetStatusLEDConfig      Function = 239
+	FunctionGetStatusLEDConfig      Function = 240
+	FunctionGetChipTemperature      Function = 242
+	FunctionReset                   Function = 243
+	FunctionWriteUID                Function = 248
+	FunctionReadUID                 Function = 249
+	FunctionGetIdentity             Function = 255
+	FunctionCallbackMonoflopDone    Function = 7
 )
 
 type ChannelLEDConfig = uint8
 
 const (
-	ChannelLEDConfigOff ChannelLEDConfig = 0
-	ChannelLEDConfigOn ChannelLEDConfig = 1
-	ChannelLEDConfigShowHeartbeat ChannelLEDConfig = 2
+	ChannelLEDConfigOff               ChannelLEDConfig = 0
+	ChannelLEDConfigOn                ChannelLEDConfig = 1
+	ChannelLEDConfigShowHeartbeat     ChannelLEDConfig = 2
 	ChannelLEDConfigShowChannelStatus ChannelLEDConfig = 3
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type IndustrialDualACRelayBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2162
 const DeviceDisplayName = "Industrial Dual AC Relay Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDualACRelayBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialDualACRelayBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetValue] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetChannelLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMonoflop] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMonoflop] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSelectedValue] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetValue] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetChannelLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetChannelLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMonoflop] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMonoflop] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSelectedValue] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IndustrialDualACRelayBricklet{dev}, nil
 }
 
@@ -188,19 +188,18 @@ func (device *IndustrialDualACRelayBricklet) DeregisterMonoflopDoneCallback(regi
 	device.device.DeregisterCallback(uint8(FunctionCallbackMonoflopDone), registrationId)
 }
 
-
 // Sets the state of the relays, *true* means on and *false* means off.
 // For example: (true, false) turns relay 0 on and relay 1 off.
-// 
+//
 // If you just want to set one of the relays and don't know the current state
 // of the other relay, you can get the state with GetValue or you
 // can use SetSelectedValue.
-// 
+//
 // All running monoflop timers will be aborted if this function is called.
 func (device *IndustrialDualACRelayBricklet) SetValue(channel0 bool, channel1 bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel0);
-	binary.Write(&buf, binary.LittleEndian, channel1);
+	binary.Write(&buf, binary.LittleEndian, channel0)
+	binary.Write(&buf, binary.LittleEndian, channel1)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetValue), buf.Bytes())
 	if err != nil {
@@ -220,7 +219,7 @@ func (device *IndustrialDualACRelayBricklet) SetValue(channel0 bool, channel1 bo
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -229,7 +228,7 @@ func (device *IndustrialDualACRelayBricklet) SetValue(channel0 bool, channel1 bo
 // Returns the state of the relays, *true* means on and *false* means off.
 func (device *IndustrialDualACRelayBricklet) GetValue() (channel0 bool, channel1 bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetValue), buf.Bytes())
 	if err != nil {
 		return channel0, channel1, err
@@ -268,8 +267,8 @@ func (device *IndustrialDualACRelayBricklet) GetValue() (channel0 bool, channel1
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialDualACRelayBricklet) SetChannelLEDConfig(channel uint8, config ChannelLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetChannelLEDConfig), buf.Bytes())
 	if err != nil {
@@ -289,7 +288,7 @@ func (device *IndustrialDualACRelayBricklet) SetChannelLEDConfig(channel uint8, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -305,7 +304,7 @@ func (device *IndustrialDualACRelayBricklet) SetChannelLEDConfig(channel uint8, 
 //	* ChannelLEDConfigShowChannelStatus
 func (device *IndustrialDualACRelayBricklet) GetChannelLEDConfig(channel uint8) (config ChannelLEDConfig, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetChannelLEDConfig), buf.Bytes())
 	if err != nil {
@@ -336,10 +335,10 @@ func (device *IndustrialDualACRelayBricklet) GetChannelLEDConfig(channel uint8) 
 // is the desired state of the relay (*true* means on and *false* means off).
 // The third parameter indicates the time that the relay should hold
 // the state.
-// 
+//
 // If this function is called with the parameters (1, true, 1500):
 // Relay 1 will turn on and in 1.5s it will turn off again.
-// 
+//
 // A monoflop can be used as a failsafe mechanism. For example: Lets assume you
 // have a RS485 bus and a Industrial Dual AC Relay Bricklet connected to one of the
 // slave stacks. You can now call this function every second, with a time parameter
@@ -347,9 +346,9 @@ func (device *IndustrialDualACRelayBricklet) GetChannelLEDConfig(channel uint8) 
 // connection is lost, the relay will turn off in at most two seconds.
 func (device *IndustrialDualACRelayBricklet) SetMonoflop(channel uint8, value bool, time uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, value);
-	binary.Write(&buf, binary.LittleEndian, time);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, value)
+	binary.Write(&buf, binary.LittleEndian, time)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMonoflop), buf.Bytes())
 	if err != nil {
@@ -369,7 +368,7 @@ func (device *IndustrialDualACRelayBricklet) SetMonoflop(channel uint8, value bo
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -377,12 +376,12 @@ func (device *IndustrialDualACRelayBricklet) SetMonoflop(channel uint8, value bo
 
 // Returns (for the given relay) the current state and the time as set by
 // SetMonoflop as well as the remaining time until the state flips.
-// 
+//
 // If the timer is not running currently, the remaining time will be returned
 // as 0.
 func (device *IndustrialDualACRelayBricklet) GetMonoflop(channel uint8) (value bool, time uint32, timeRemaining uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetMonoflop), buf.Bytes())
 	if err != nil {
@@ -413,15 +412,15 @@ func (device *IndustrialDualACRelayBricklet) GetMonoflop(channel uint8) (value b
 
 // Sets the state of the selected relay, *true* means on and *false*
 // means off.
-// 
+//
 // A running monoflop timer for the selected relay will be aborted if this function
 // is called.
-// 
+//
 // The other relay remains untouched.
 func (device *IndustrialDualACRelayBricklet) SetSelectedValue(channel uint8, value bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, value);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, value)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSelectedValue), buf.Bytes())
 	if err != nil {
@@ -441,26 +440,26 @@ func (device *IndustrialDualACRelayBricklet) SetSelectedValue(channel uint8, val
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IndustrialDualACRelayBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -491,11 +490,11 @@ func (device *IndustrialDualACRelayBricklet) GetSPITFPErrorCount() (errorCountAc
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -514,7 +513,7 @@ func (device *IndustrialDualACRelayBricklet) GetSPITFPErrorCount() (errorCountAc
 //	* BootloaderStatusCRCMismatch
 func (device *IndustrialDualACRelayBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -552,7 +551,7 @@ func (device *IndustrialDualACRelayBricklet) SetBootloaderMode(mode BootloaderMo
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IndustrialDualACRelayBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -581,12 +580,12 @@ func (device *IndustrialDualACRelayBricklet) GetBootloaderMode() (mode Bootloade
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialDualACRelayBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -606,7 +605,7 @@ func (device *IndustrialDualACRelayBricklet) SetWriteFirmwarePointer(pointer uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -615,14 +614,14 @@ func (device *IndustrialDualACRelayBricklet) SetWriteFirmwarePointer(pointer uin
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IndustrialDualACRelayBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -652,9 +651,9 @@ func (device *IndustrialDualACRelayBricklet) WriteFirmware(data [64]uint8) (stat
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -665,7 +664,7 @@ func (device *IndustrialDualACRelayBricklet) WriteFirmware(data [64]uint8) (stat
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialDualACRelayBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -685,7 +684,7 @@ func (device *IndustrialDualACRelayBricklet) SetStatusLEDConfig(config StatusLED
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -701,7 +700,7 @@ func (device *IndustrialDualACRelayBricklet) SetStatusLEDConfig(config StatusLED
 //	* StatusLEDConfigShowStatus
 func (device *IndustrialDualACRelayBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -729,13 +728,13 @@ func (device *IndustrialDualACRelayBricklet) GetStatusLEDConfig() (config Status
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IndustrialDualACRelayBricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -763,13 +762,13 @@ func (device *IndustrialDualACRelayBricklet) GetChipTemperature() (temperature i
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IndustrialDualACRelayBricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -788,7 +787,7 @@ func (device *IndustrialDualACRelayBricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -797,11 +796,11 @@ func (device *IndustrialDualACRelayBricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IndustrialDualACRelayBricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -821,7 +820,7 @@ func (device *IndustrialDualACRelayBricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -831,7 +830,7 @@ func (device *IndustrialDualACRelayBricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *IndustrialDualACRelayBricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -860,16 +859,16 @@ func (device *IndustrialDualACRelayBricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialDualACRelayBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

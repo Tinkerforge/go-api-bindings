@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Two tactile buttons with built-in blue LEDs.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/DualButton_Bricklet_Go.html.
 package dual_button_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,55 +25,56 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetLEDState Function = 1
-	FunctionGetLEDState Function = 2
-	FunctionGetButtonState Function = 3
-	FunctionSetSelectedLEDState Function = 5
-	FunctionGetIdentity Function = 255
+	FunctionSetLEDState          Function = 1
+	FunctionGetLEDState          Function = 2
+	FunctionGetButtonState       Function = 3
+	FunctionSetSelectedLEDState  Function = 5
+	FunctionGetIdentity          Function = 255
 	FunctionCallbackStateChanged Function = 4
 )
 
 type LEDState = uint8
 
 const (
-	LEDStateAutoToggleOn LEDState = 0
+	LEDStateAutoToggleOn  LEDState = 0
 	LEDStateAutoToggleOff LEDState = 1
-	LEDStateOn LEDState = 2
-	LEDStateOff LEDState = 3
+	LEDStateOn            LEDState = 2
+	LEDStateOff           LEDState = 3
 )
 
 type ButtonState = uint8
 
 const (
-	ButtonStatePressed ButtonState = 0
+	ButtonStatePressed  ButtonState = 0
 	ButtonStateReleased ButtonState = 1
 )
 
 type LED = uint8
 
 const (
-	LEDLeft LED = 0
+	LEDLeft  LED = 0
 	LEDRight LED = 1
 )
 
 type DualButtonBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 230
 const DeviceDisplayName = "Dual Button Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DualButtonBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return DualButtonBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetLEDState] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetLEDState] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetButtonState] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSelectedLEDState] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetLEDState] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetLEDState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetButtonState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSelectedLEDState] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return DualButtonBricklet{dev}, nil
 }
 
@@ -119,14 +119,14 @@ func (device *DualButtonBricklet) GetAPIVersion() [3]uint8 {
 }
 
 // This callback is called whenever a button is pressed.
-// 
+//
 // Possible states for buttons are:
-// 
+//
 // * 0 = pressed
 // * 1 = released
-// 
+//
 // Possible states for LEDs are:
-// 
+//
 // * 0 = AutoToggleOn: Auto toggle enabled and LED on.
 // * 1 = AutoToggleOff: Auto toggle enabled and LED off.
 // * 2 = On: LED on (auto toggle is disabled).
@@ -158,16 +158,15 @@ func (device *DualButtonBricklet) DeregisterStateChangedCallback(registrationId 
 	device.device.DeregisterCallback(uint8(FunctionCallbackStateChanged), registrationId)
 }
 
-
 // Sets the state of the LEDs. Possible states are:
-// 
+//
 // * 0 = AutoToggleOn: Enables auto toggle with initially enabled LED.
 // * 1 = AutoToggleOff: Activates auto toggle with initially disabled LED.
 // * 2 = On: Enables LED (auto toggle is disabled).
 // * 3 = Off: Disables LED (auto toggle is disabled).
-// 
+//
 // In auto toggle mode the LED is toggled automatically at each press of a button.
-// 
+//
 // If you just want to set one of the LEDs and don't know the current state
 // of the other LED, you can get the state with GetLEDState or you
 // can use SetSelectedLEDState.
@@ -180,8 +179,8 @@ func (device *DualButtonBricklet) DeregisterStateChangedCallback(registrationId 
 //	* LEDStateOff
 func (device *DualButtonBricklet) SetLEDState(ledL LEDState, ledR LEDState) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, ledL);
-	binary.Write(&buf, binary.LittleEndian, ledR);
+	binary.Write(&buf, binary.LittleEndian, ledL)
+	binary.Write(&buf, binary.LittleEndian, ledR)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetLEDState), buf.Bytes())
 	if err != nil {
@@ -201,7 +200,7 @@ func (device *DualButtonBricklet) SetLEDState(ledL LEDState, ledR LEDState) (err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -217,7 +216,7 @@ func (device *DualButtonBricklet) SetLEDState(ledL LEDState, ledR LEDState) (err
 //	* LEDStateOff
 func (device *DualButtonBricklet) GetLEDState() (ledL LEDState, ledR LEDState, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetLEDState), buf.Bytes())
 	if err != nil {
 		return ledL, ledR, err
@@ -245,7 +244,7 @@ func (device *DualButtonBricklet) GetLEDState() (ledL LEDState, ledR LEDState, e
 }
 
 // Returns the current state for both buttons. Possible states are:
-// 
+//
 // * 0 = pressed
 // * 1 = released
 //
@@ -255,7 +254,7 @@ func (device *DualButtonBricklet) GetLEDState() (ledL LEDState, ledR LEDState, e
 //	* ButtonStateReleased
 func (device *DualButtonBricklet) GetButtonState() (buttonL ButtonState, buttonR ButtonState, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetButtonState), buf.Bytes())
 	if err != nil {
 		return buttonL, buttonR, err
@@ -283,7 +282,7 @@ func (device *DualButtonBricklet) GetButtonState() (buttonL ButtonState, buttonR
 }
 
 // Sets the state of the selected LED (0 or 1).
-// 
+//
 // The other LED remains untouched.
 //
 // Associated constants:
@@ -296,8 +295,8 @@ func (device *DualButtonBricklet) GetButtonState() (buttonL ButtonState, buttonR
 //	* LEDStateOff
 func (device *DualButtonBricklet) SetSelectedLEDState(led LED, state LEDState) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, led);
-	binary.Write(&buf, binary.LittleEndian, state);
+	binary.Write(&buf, binary.LittleEndian, led)
+	binary.Write(&buf, binary.LittleEndian, state)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSelectedLEDState), buf.Bytes())
 	if err != nil {
@@ -317,7 +316,7 @@ func (device *DualButtonBricklet) SetSelectedLEDState(led LED, state LEDState) (
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -326,16 +325,16 @@ func (device *DualButtonBricklet) SetSelectedLEDState(led LED, state LEDState) (
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *DualButtonBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

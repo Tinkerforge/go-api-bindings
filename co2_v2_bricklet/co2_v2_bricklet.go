@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures CO2 concentration, temperature and humidity.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/CO2V2_Bricklet_Go.html.
 package co2_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,46 +25,46 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetAllValues Function = 1
-	FunctionSetAirPressure Function = 2
-	FunctionGetAirPressure Function = 3
-	FunctionSetTemperatureOffset Function = 4
-	FunctionGetTemperatureOffset Function = 5
-	FunctionSetAllValuesCallbackConfiguration Function = 6
-	FunctionGetAllValuesCallbackConfiguration Function = 7
-	FunctionGetCO2Concentration Function = 9
+	FunctionGetAllValues                             Function = 1
+	FunctionSetAirPressure                           Function = 2
+	FunctionGetAirPressure                           Function = 3
+	FunctionSetTemperatureOffset                     Function = 4
+	FunctionGetTemperatureOffset                     Function = 5
+	FunctionSetAllValuesCallbackConfiguration        Function = 6
+	FunctionGetAllValuesCallbackConfiguration        Function = 7
+	FunctionGetCO2Concentration                      Function = 9
 	FunctionSetCO2ConcentrationCallbackConfiguration Function = 10
 	FunctionGetCO2ConcentrationCallbackConfiguration Function = 11
-	FunctionGetTemperature Function = 13
-	FunctionSetTemperatureCallbackConfiguration Function = 14
-	FunctionGetTemperatureCallbackConfiguration Function = 15
-	FunctionGetHumidity Function = 17
-	FunctionSetHumidityCallbackConfiguration Function = 18
-	FunctionGetHumidityCallbackConfiguration Function = 19
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackAllValues Function = 8
-	FunctionCallbackCO2Concentration Function = 12
-	FunctionCallbackTemperature Function = 16
-	FunctionCallbackHumidity Function = 20
+	FunctionGetTemperature                           Function = 13
+	FunctionSetTemperatureCallbackConfiguration      Function = 14
+	FunctionGetTemperatureCallbackConfiguration      Function = 15
+	FunctionGetHumidity                              Function = 17
+	FunctionSetHumidityCallbackConfiguration         Function = 18
+	FunctionGetHumidityCallbackConfiguration         Function = 19
+	FunctionGetSPITFPErrorCount                      Function = 234
+	FunctionSetBootloaderMode                        Function = 235
+	FunctionGetBootloaderMode                        Function = 236
+	FunctionSetWriteFirmwarePointer                  Function = 237
+	FunctionWriteFirmware                            Function = 238
+	FunctionSetStatusLEDConfig                       Function = 239
+	FunctionGetStatusLEDConfig                       Function = 240
+	FunctionGetChipTemperature                       Function = 242
+	FunctionReset                                    Function = 243
+	FunctionWriteUID                                 Function = 248
+	FunctionReadUID                                  Function = 249
+	FunctionGetIdentity                              Function = 255
+	FunctionCallbackAllValues                        Function = 8
+	FunctionCallbackCO2Concentration                 Function = 12
+	FunctionCallbackTemperature                      Function = 16
+	FunctionCallbackHumidity                         Function = 20
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -73,74 +72,75 @@ const (
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type CO2V2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2147
 const DeviceDisplayName = "CO2 Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (CO2V2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return CO2V2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetAllValues] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAirPressure] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetAirPressure] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureOffset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetTemperatureOffset] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllValuesCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllValuesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetCO2Concentration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCO2ConcentrationCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetCO2ConcentrationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHumidityCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetHumidityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetAllValues] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAirPressure] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetAirPressure] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureOffset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetTemperatureOffset] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAllValuesCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAllValuesCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetCO2Concentration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCO2ConcentrationCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetCO2ConcentrationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetHumidityCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetHumidityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return CO2V2Bricklet{dev}, nil
 }
 
@@ -186,9 +186,9 @@ func (device *CO2V2Bricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetAllValuesCallbackConfiguration.
-// 
+//
 // The parameters are the same as GetAllValues.
-// 
+//
 // Note
 //  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
 //  Exposing the Bricklet to higher temperatures might result in permanent damage.
@@ -217,10 +217,9 @@ func (device *CO2V2Bricklet) DeregisterAllValuesCallback(registrationId uint64) 
 	device.device.DeregisterCallback(uint8(FunctionCallbackAllValues), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetCO2ConcentrationCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetCO2Concentration.
 func (device *CO2V2Bricklet) RegisterCO2ConcentrationCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -243,10 +242,9 @@ func (device *CO2V2Bricklet) DeregisterCO2ConcentrationCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackCO2Concentration), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetTemperatureCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetTemperature.
 func (device *CO2V2Bricklet) RegisterTemperatureCallback(fn func(int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -269,10 +267,9 @@ func (device *CO2V2Bricklet) DeregisterTemperatureCallback(registrationId uint64
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetHumidityCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetHumidity.
 func (device *CO2V2Bricklet) RegisterHumidityCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -295,19 +292,18 @@ func (device *CO2V2Bricklet) DeregisterHumidityCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackHumidity), registrationId)
 }
 
-
 // Returns all values measured by the CO2 Bricklet 2.0.
-// 
+//
 // If you want to get the values periodically, it is recommended to use the
 // RegisterAllValuesCallback callback. You can set the callback configuration
 // with SetAllValuesCallbackConfiguration.
-// 
+//
 // Note
 //  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
 //  Exposing the Bricklet to higher temperatures might result in permanent damage.
 func (device *CO2V2Bricklet) GetAllValues() (co2Concentration uint16, temperature int16, humidity uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllValues), buf.Bytes())
 	if err != nil {
 		return co2Concentration, temperature, humidity, err
@@ -336,19 +332,19 @@ func (device *CO2V2Bricklet) GetAllValues() (co2Concentration uint16, temperatur
 }
 
 // The CO2 concentration depends (among other things) on the ambient air pressure.
-// 
+//
 // To increase the accuracy of the CO2 Bricklet 2.0 you can set the current air pressure.
 // You use the `Barometer Bricklet 2.0 <barometer_v2_bricklet>` or the
 // `Air Quality Bricklet <air_quality_bricklet>` to get the current air pressure.
-// 
+//
 // By default air pressure compensation is disabled. Once you set a value it
 // will be used for compensation. You can turn the compensation off again by
 // setting the value to 0.
-// 
+//
 // It is sufficient to update the value every few minutes.
 func (device *CO2V2Bricklet) SetAirPressure(airPressure uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, airPressure);
+	binary.Write(&buf, binary.LittleEndian, airPressure)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAirPressure), buf.Bytes())
 	if err != nil {
@@ -368,7 +364,7 @@ func (device *CO2V2Bricklet) SetAirPressure(airPressure uint16) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -377,7 +373,7 @@ func (device *CO2V2Bricklet) SetAirPressure(airPressure uint16) (err error) {
 // Returns the ambient air pressure as set by SetAirPressure.
 func (device *CO2V2Bricklet) GetAirPressure() (airPressure uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAirPressure), buf.Bytes())
 	if err != nil {
 		return airPressure, err
@@ -405,25 +401,25 @@ func (device *CO2V2Bricklet) GetAirPressure() (airPressure uint16, err error) {
 
 // Sets a temperature offset. A offset of 10 will decrease
 // the measured temperature by 0.1 °C.
-// 
+//
 // If you install this Bricklet into an enclosure and you want to measure the ambient
 // temperature, you may have to decrease the measured temperature by some value to
 // compensate for the error because of the heating inside of the enclosure.
-// 
+//
 // We recommend that you leave the parts in the enclosure running for at least
 // 24 hours such that a temperature equilibrium can be reached. After that you can measure
 // the temperature directly outside of enclosure and set the difference as offset.
-// 
+//
 // This temperature offset is used to calculate the relative humidity and
 // CO2 concentration. In case the Bricklet is installed in an enclosure, we
 // recommend to measure and set the temperature offset to improve the accuracy of
 // the measurements.
-// 
+//
 // It is sufficient to set the temperature offset once. The offset is saved in
 // non-volatile memory and is applied again after a power loss.
 func (device *CO2V2Bricklet) SetTemperatureOffset(offset uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, offset);
+	binary.Write(&buf, binary.LittleEndian, offset)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureOffset), buf.Bytes())
 	if err != nil {
@@ -443,7 +439,7 @@ func (device *CO2V2Bricklet) SetTemperatureOffset(offset uint16) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -453,7 +449,7 @@ func (device *CO2V2Bricklet) SetTemperatureOffset(offset uint16) (err error) {
 // SetTemperatureOffset.
 func (device *CO2V2Bricklet) GetTemperatureOffset() (offset uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureOffset), buf.Bytes())
 	if err != nil {
 		return offset, err
@@ -481,17 +477,17 @@ func (device *CO2V2Bricklet) GetTemperatureOffset() (offset uint16, err error) {
 
 // The period is the period with which the RegisterAllValuesCallback
 // callback is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after at least one of the values has changed. If the values didn't
 // change within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *CO2V2Bricklet) SetAllValuesCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllValuesCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -511,7 +507,7 @@ func (device *CO2V2Bricklet) SetAllValuesCallbackConfiguration(period uint32, va
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -521,7 +517,7 @@ func (device *CO2V2Bricklet) SetAllValuesCallbackConfiguration(period uint32, va
 // SetAllValuesCallbackConfiguration.
 func (device *CO2V2Bricklet) GetAllValuesCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllValuesCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -549,14 +545,14 @@ func (device *CO2V2Bricklet) GetAllValuesCallbackConfiguration() (period uint32,
 }
 
 // Returns CO2 concentration.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterCO2ConcentrationCallback callback. You can set the callback configuration
 // with SetCO2ConcentrationCallbackConfiguration.
 func (device *CO2V2Bricklet) GetCO2Concentration() (co2Concentration uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCO2Concentration), buf.Bytes())
 	if err != nil {
 		return co2Concentration, err
@@ -584,28 +580,28 @@ func (device *CO2V2Bricklet) GetCO2Concentration() (co2Concentration uint16, err
 
 // The period is the period with which the RegisterCO2ConcentrationCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterCO2ConcentrationCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -617,11 +613,11 @@ func (device *CO2V2Bricklet) GetCO2Concentration() (co2Concentration uint16, err
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) SetCO2ConcentrationCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCO2ConcentrationCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -641,7 +637,7 @@ func (device *CO2V2Bricklet) SetCO2ConcentrationCallbackConfiguration(period uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -658,7 +654,7 @@ func (device *CO2V2Bricklet) SetCO2ConcentrationCallbackConfiguration(period uin
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) GetCO2ConcentrationCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCO2ConcentrationCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -689,18 +685,18 @@ func (device *CO2V2Bricklet) GetCO2ConcentrationCallbackConfiguration() (period 
 }
 
 // Returns temperature.
-// 
+//
 // Note
 //  The sensor is able to messure up to 120 °C. However it is only specified up to 70 °C.
 //  Exposing the Bricklet to higher temperatures might result in permanent damage.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterTemperatureCallback callback. You can set the callback configuration
 // with SetTemperatureCallbackConfiguration.
 func (device *CO2V2Bricklet) GetTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -728,28 +724,28 @@ func (device *CO2V2Bricklet) GetTemperature() (temperature int16, err error) {
 
 // The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -761,11 +757,11 @@ func (device *CO2V2Bricklet) GetTemperature() (temperature int16, err error) {
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -785,7 +781,7 @@ func (device *CO2V2Bricklet) SetTemperatureCallbackConfiguration(period uint32, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -802,7 +798,7 @@ func (device *CO2V2Bricklet) SetTemperatureCallbackConfiguration(period uint32, 
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -833,14 +829,14 @@ func (device *CO2V2Bricklet) GetTemperatureCallbackConfiguration() (period uint3
 }
 
 // Returns relative humidity.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterHumidityCallback callback. You can set the callback configuration
 // with SetHumidityCallbackConfiguration.
 func (device *CO2V2Bricklet) GetHumidity() (humidity uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidity), buf.Bytes())
 	if err != nil {
 		return humidity, err
@@ -868,28 +864,28 @@ func (device *CO2V2Bricklet) GetHumidity() (humidity uint16, err error) {
 
 // The period is the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterHumidityCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -901,11 +897,11 @@ func (device *CO2V2Bricklet) GetHumidity() (humidity uint16, err error) {
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) SetHumidityCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetHumidityCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -925,7 +921,7 @@ func (device *CO2V2Bricklet) SetHumidityCallbackConfiguration(period uint32, val
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -942,7 +938,7 @@ func (device *CO2V2Bricklet) SetHumidityCallbackConfiguration(period uint32, val
 //	* ThresholdOptionGreater
 func (device *CO2V2Bricklet) GetHumidityCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidityCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -973,19 +969,19 @@ func (device *CO2V2Bricklet) GetHumidityCallbackConfiguration() (period uint32, 
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *CO2V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -1016,11 +1012,11 @@ func (device *CO2V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -1039,7 +1035,7 @@ func (device *CO2V2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 //	* BootloaderStatusCRCMismatch
 func (device *CO2V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -1077,7 +1073,7 @@ func (device *CO2V2Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *CO2V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1106,12 +1102,12 @@ func (device *CO2V2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *CO2V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -1131,7 +1127,7 @@ func (device *CO2V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1140,14 +1136,14 @@ func (device *CO2V2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *CO2V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -1177,9 +1173,9 @@ func (device *CO2V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -1190,7 +1186,7 @@ func (device *CO2V2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 //	* StatusLEDConfigShowStatus
 func (device *CO2V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1210,7 +1206,7 @@ func (device *CO2V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1226,7 +1222,7 @@ func (device *CO2V2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 //	* StatusLEDConfigShowStatus
 func (device *CO2V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1254,13 +1250,13 @@ func (device *CO2V2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *CO2V2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1288,13 +1284,13 @@ func (device *CO2V2Bricklet) GetChipTemperature() (temperature int16, err error)
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *CO2V2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1313,7 +1309,7 @@ func (device *CO2V2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1322,11 +1318,11 @@ func (device *CO2V2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *CO2V2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1346,7 +1342,7 @@ func (device *CO2V2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1356,7 +1352,7 @@ func (device *CO2V2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *CO2V2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1385,16 +1381,16 @@ func (device *CO2V2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *CO2V2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

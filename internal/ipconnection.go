@@ -33,11 +33,11 @@ const (
 	//Deprecated: BrickletErrorFunctionNotSupported exists for historical compatibility. Use DeviceErrorFunctionNotSupported instead.
 	BrickletErrorFunctionNotSupported DeviceError = 2
 	//Deprecated: BrickletErrorUnknownError exists for historical compatibility. Use DeviceErrorUnknownError instead.
-	BrickletErrorUnknownError DeviceError = 3
-	DeviceErrorSuccess DeviceError = 0
-	DeviceErrorInvalidParameter DeviceError = 1
+	BrickletErrorUnknownError       DeviceError = 3
+	DeviceErrorSuccess              DeviceError = 0
+	DeviceErrorInvalidParameter     DeviceError = 1
 	DeviceErrorFunctionNotSupported DeviceError = 2
-	DeviceErrorUnknownError DeviceError = 3
+	DeviceErrorUnknownError         DeviceError = 3
 )
 
 func (e DeviceError) Error() string {
@@ -54,8 +54,6 @@ func (e DeviceError) Error() string {
 		return "Unknown Error"
 	}
 }
-
-
 
 // The IPConnection gets moved when returning from NewIPConnection(),
 // so it only stores pointers to timeout and autoReconnect, as they are

@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Four 7-segment displays with switchable colon.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/SegmentDisplay4x7_Bricklet_Go.html.
 package segment_display_4x7_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,32 +25,33 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetSegments Function = 1
-	FunctionGetSegments Function = 2
-	FunctionStartCounter Function = 3
-	FunctionGetCounterValue Function = 4
-	FunctionGetIdentity Function = 255
+	FunctionSetSegments             Function = 1
+	FunctionGetSegments             Function = 2
+	FunctionStartCounter            Function = 3
+	FunctionGetCounterValue         Function = 4
+	FunctionGetIdentity             Function = 255
 	FunctionCallbackCounterFinished Function = 5
 )
 
 type SegmentDisplay4x7Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 237
 const DeviceDisplayName = "Segment Display 4x7 Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (SegmentDisplay4x7Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return SegmentDisplay4x7Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSetSegments] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSegments] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionStartCounter] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCounterValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSetSegments] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSegments] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionStartCounter] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCounterValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return SegmentDisplay4x7Bricklet{dev}, nil
 }
 
@@ -105,9 +105,7 @@ func (device *SegmentDisplay4x7Bricklet) RegisterCounterFinishedCallback(fn func
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackCounterFinished), wrapper)
@@ -118,25 +116,24 @@ func (device *SegmentDisplay4x7Bricklet) DeregisterCounterFinishedCallback(regis
 	device.device.DeregisterCallback(uint8(FunctionCallbackCounterFinished), registrationId)
 }
 
-
 // The 7-segment display can be set with bitmaps. Every bit controls one
 // segment:
-// 
+//
 // .. image:: /Images/Bricklets/bricklet_segment_display_4x7_bit_order.png
 //    :scale: 100 %
 //    :alt: Bit order of one segment
 //    :align: center
-// 
+//
 // For example to set a 5 you would want to activate segments 0, 2, 3, 5 and 6.
 // This is represented by the number 0b01101101 = 0x6d = 109.
-// 
+//
 // The brightness can be set between 0 (dark) and 7 (bright). The colon
 // parameter turns the colon of the display on or off.
 func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightness uint8, colon bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, segments);
-	binary.Write(&buf, binary.LittleEndian, brightness);
-	binary.Write(&buf, binary.LittleEndian, colon);
+	binary.Write(&buf, binary.LittleEndian, segments)
+	binary.Write(&buf, binary.LittleEndian, brightness)
+	binary.Write(&buf, binary.LittleEndian, colon)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSegments), buf.Bytes())
 	if err != nil {
@@ -156,7 +153,7 @@ func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightne
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -166,7 +163,7 @@ func (device *SegmentDisplay4x7Bricklet) SetSegments(segments [4]uint8, brightne
 // SetSegments.
 func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brightness uint8, colon bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSegments), buf.Bytes())
 	if err != nil {
 		return segments, brightness, colon, err
@@ -197,20 +194,20 @@ func (device *SegmentDisplay4x7Bricklet) GetSegments() (segments [4]uint8, brigh
 // Starts a counter with the *from* value that counts to the *to*
 // value with the each step incremented by *increment*.
 // *length* is the pause between each increment.
-// 
+//
 // Example: If you set *from* to 0, *to* to 100, *increment* to 1 and
 // *length* to 1000, a counter that goes from 0 to 100 with one second
 // pause between each increment will be started.
-// 
+//
 // Using a negative increment allows to count backwards.
-// 
+//
 // You can stop the counter at every time by calling SetSegments.
 func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo int16, increment int16, length uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, valueFrom);
-	binary.Write(&buf, binary.LittleEndian, valueTo);
-	binary.Write(&buf, binary.LittleEndian, increment);
-	binary.Write(&buf, binary.LittleEndian, length);
+	binary.Write(&buf, binary.LittleEndian, valueFrom)
+	binary.Write(&buf, binary.LittleEndian, valueTo)
+	binary.Write(&buf, binary.LittleEndian, increment)
+	binary.Write(&buf, binary.LittleEndian, length)
 
 	resultBytes, err := device.device.Set(uint8(FunctionStartCounter), buf.Bytes())
 	if err != nil {
@@ -230,18 +227,18 @@ func (device *SegmentDisplay4x7Bricklet) StartCounter(valueFrom int16, valueTo i
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the counter value that is currently shown on the display.
-// 
+//
 // If there is no counter running a 0 will be returned.
 func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCounterValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -270,16 +267,16 @@ func (device *SegmentDisplay4x7Bricklet) GetCounterValue() (value uint16, err er
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *SegmentDisplay4x7Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures distance between 2cm and 400cm with ultrasound.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/DistanceUS_Bricklet_Go.html.
 package distance_us_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,26 +25,26 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetDistanceValue Function = 1
-	FunctionSetDistanceCallbackPeriod Function = 2
-	FunctionGetDistanceCallbackPeriod Function = 3
+	FunctionGetDistanceValue             Function = 1
+	FunctionSetDistanceCallbackPeriod    Function = 2
+	FunctionGetDistanceCallbackPeriod    Function = 3
 	FunctionSetDistanceCallbackThreshold Function = 4
 	FunctionGetDistanceCallbackThreshold Function = 5
-	FunctionSetDebouncePeriod Function = 6
-	FunctionGetDebouncePeriod Function = 7
-	FunctionSetMovingAverage Function = 10
-	FunctionGetMovingAverage Function = 11
-	FunctionGetIdentity Function = 255
-	FunctionCallbackDistance Function = 8
-	FunctionCallbackDistanceReached Function = 9
+	FunctionSetDebouncePeriod            Function = 6
+	FunctionGetDebouncePeriod            Function = 7
+	FunctionSetMovingAverage             Function = 10
+	FunctionGetMovingAverage             Function = 11
+	FunctionGetIdentity                  Function = 255
+	FunctionCallbackDistance             Function = 8
+	FunctionCallbackDistanceReached      Function = 9
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -53,26 +52,27 @@ const (
 type DistanceUSBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 229
 const DeviceDisplayName = "Distance US Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DistanceUSBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return DistanceUSBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetDistanceValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDistanceCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDistanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDistanceCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDistanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMovingAverage] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMovingAverage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetDistanceValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDistanceCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDistanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDistanceCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDistanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMovingAverage] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMovingAverage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return DistanceUSBricklet{dev}, nil
 }
 
@@ -119,7 +119,7 @@ func (device *DistanceUSBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetDistanceCallbackPeriod. The parameter is the distance value
 // of the sensor.
-// 
+//
 // The RegisterDistanceCallback callback is only triggered if the distance value has changed
 // since the last triggering.
 func (device *DistanceUSBricklet) RegisterDistanceCallback(fn func(uint16)) uint64 {
@@ -143,11 +143,10 @@ func (device *DistanceUSBricklet) DeregisterDistanceCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackDistance), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetDistanceCallbackThreshold is reached.
 // The parameter is the distance value of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *DistanceUSBricklet) RegisterDistanceReachedCallback(fn func(uint16)) uint64 {
@@ -171,20 +170,19 @@ func (device *DistanceUSBricklet) DeregisterDistanceReachedCallback(registration
 	device.device.DeregisterCallback(uint8(FunctionCallbackDistanceReached), registrationId)
 }
 
-
 // Returns the current distance value measured by the sensor.
 // A small value corresponds to a small distance, a big
 // value corresponds to a big distance. The relation between the measured distance
 // value and the actual distance is affected by the 5V supply voltage (deviations
 // in the supply voltage result in deviations in the distance values) and is
 // non-linear (resolution is bigger at close range).
-// 
+//
 // If you want to get the distance value periodically, it is recommended to
 // use the RegisterDistanceCallback callback and set the period with
 // SetDistanceCallbackPeriod.
 func (device *DistanceUSBricklet) GetDistanceValue() (distance uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistanceValue), buf.Bytes())
 	if err != nil {
 		return distance, err
@@ -212,12 +210,12 @@ func (device *DistanceUSBricklet) GetDistanceValue() (distance uint16, err error
 
 // Sets the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // Der RegisterDistanceCallback callback is only triggered if the distance value has changed
 // since the last triggering.
 func (device *DistanceUSBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDistanceCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -237,7 +235,7 @@ func (device *DistanceUSBricklet) SetDistanceCallbackPeriod(period uint32) (err 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -246,7 +244,7 @@ func (device *DistanceUSBricklet) SetDistanceCallbackPeriod(period uint32) (err 
 // Returns the period as set by SetDistanceCallbackPeriod.
 func (device *DistanceUSBricklet) GetDistanceCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -273,11 +271,11 @@ func (device *DistanceUSBricklet) GetDistanceCallbackPeriod() (period uint32, er
 }
 
 // Sets the thresholds for the RegisterDistanceReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the distance value is *outside* the min and max values
 //  'i'|    Callback is triggered when the distance value is *inside* the min and max values
@@ -293,9 +291,9 @@ func (device *DistanceUSBricklet) GetDistanceCallbackPeriod() (period uint32, er
 //	* ThresholdOptionGreater
 func (device *DistanceUSBricklet) SetDistanceCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDistanceCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -315,7 +313,7 @@ func (device *DistanceUSBricklet) SetDistanceCallbackThreshold(option ThresholdO
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -332,7 +330,7 @@ func (device *DistanceUSBricklet) SetDistanceCallbackThreshold(option ThresholdO
 //	* ThresholdOptionGreater
 func (device *DistanceUSBricklet) GetDistanceCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -361,17 +359,17 @@ func (device *DistanceUSBricklet) GetDistanceCallbackThreshold() (option Thresho
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterDistanceReachedCallback,
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetDistanceCallbackThreshold,
-// 
+//
 // keep being reached.
 func (device *DistanceUSBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -391,7 +389,7 @@ func (device *DistanceUSBricklet) SetDebouncePeriod(debounce uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -400,7 +398,7 @@ func (device *DistanceUSBricklet) SetDebouncePeriod(debounce uint32) (err error)
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *DistanceUSBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -428,12 +426,12 @@ func (device *DistanceUSBricklet) GetDebouncePeriod() (debounce uint32, err erro
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
 // for the distance value.
-// 
+//
 // Setting the length to 0 will turn the averaging completely off. With less
 // averaging, there is more noise on the data.
 func (device *DistanceUSBricklet) SetMovingAverage(average uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, average);
+	binary.Write(&buf, binary.LittleEndian, average)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMovingAverage), buf.Bytes())
 	if err != nil {
@@ -453,7 +451,7 @@ func (device *DistanceUSBricklet) SetMovingAverage(average uint8) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -462,7 +460,7 @@ func (device *DistanceUSBricklet) SetMovingAverage(average uint8) (err error) {
 // Returns the length moving average as set by SetMovingAverage.
 func (device *DistanceUSBricklet) GetMovingAverage() (average uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverage), buf.Bytes())
 	if err != nil {
 		return average, err
@@ -491,16 +489,16 @@ func (device *DistanceUSBricklet) GetMovingAverage() (average uint8, err error) 
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *DistanceUSBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

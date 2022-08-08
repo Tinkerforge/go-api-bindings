@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures two DC voltages between -35V and +35V with 24bit resolution each.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IndustrialDualAnalogIn_Bricklet_Go.html.
 package industrial_dual_analog_in_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,29 +25,29 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetVoltage Function = 1
-	FunctionSetVoltageCallbackPeriod Function = 2
-	FunctionGetVoltageCallbackPeriod Function = 3
+	FunctionGetVoltage                  Function = 1
+	FunctionSetVoltageCallbackPeriod    Function = 2
+	FunctionGetVoltageCallbackPeriod    Function = 3
 	FunctionSetVoltageCallbackThreshold Function = 4
 	FunctionGetVoltageCallbackThreshold Function = 5
-	FunctionSetDebouncePeriod Function = 6
-	FunctionGetDebouncePeriod Function = 7
-	FunctionSetSampleRate Function = 8
-	FunctionGetSampleRate Function = 9
-	FunctionSetCalibration Function = 10
-	FunctionGetCalibration Function = 11
-	FunctionGetADCValues Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackVoltage Function = 13
-	FunctionCallbackVoltageReached Function = 14
+	FunctionSetDebouncePeriod           Function = 6
+	FunctionGetDebouncePeriod           Function = 7
+	FunctionSetSampleRate               Function = 8
+	FunctionGetSampleRate               Function = 9
+	FunctionSetCalibration              Function = 10
+	FunctionGetCalibration              Function = 11
+	FunctionGetADCValues                Function = 12
+	FunctionGetIdentity                 Function = 255
+	FunctionCallbackVoltage             Function = 13
+	FunctionCallbackVoltageReached      Function = 14
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -60,38 +59,39 @@ const (
 	SampleRate488SPS SampleRate = 1
 	SampleRate244SPS SampleRate = 2
 	SampleRate122SPS SampleRate = 3
-	SampleRate61SPS SampleRate = 4
-	SampleRate4SPS SampleRate = 5
-	SampleRate2SPS SampleRate = 6
-	SampleRate1SPS SampleRate = 7
+	SampleRate61SPS  SampleRate = 4
+	SampleRate4SPS   SampleRate = 5
+	SampleRate2SPS   SampleRate = 6
+	SampleRate1SPS   SampleRate = 7
 )
 
 type IndustrialDualAnalogInBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 249
 const DeviceDisplayName = "Industrial Dual Analog In Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IndustrialDualAnalogInBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IndustrialDualAnalogInBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetVoltageCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetVoltageCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetVoltageCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetVoltageCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSampleRate] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSampleRate] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCalibration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCalibration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetADCValues] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetVoltage] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetVoltageCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetVoltageCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetVoltageCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetVoltageCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSampleRate] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSampleRate] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCalibration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCalibration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetADCValues] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IndustrialDualAnalogInBricklet{dev}, nil
 }
 
@@ -138,7 +138,7 @@ func (device *IndustrialDualAnalogInBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetVoltageCallbackPeriod. The parameter is the voltage of the
 // channel.
-// 
+//
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since the
 // last triggering.
 func (device *IndustrialDualAnalogInBricklet) RegisterVoltageCallback(fn func(uint8, int32)) uint64 {
@@ -164,11 +164,10 @@ func (device *IndustrialDualAnalogInBricklet) DeregisterVoltageCallback(registra
 	device.device.DeregisterCallback(uint8(FunctionCallbackVoltage), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetVoltageCallbackThreshold is reached.
 // The parameter is the voltage of the channel.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *IndustrialDualAnalogInBricklet) RegisterVoltageReachedCallback(fn func(uint8, int32)) uint64 {
@@ -194,15 +193,14 @@ func (device *IndustrialDualAnalogInBricklet) DeregisterVoltageReachedCallback(r
 	device.device.DeregisterCallback(uint8(FunctionCallbackVoltageReached), registrationId)
 }
 
-
 // Returns the voltage for the given channel.
-// 
+//
 // If you want to get the voltage periodically, it is recommended to use the
 // RegisterVoltageCallback callback and set the period with
 // SetVoltageCallbackPeriod.
 func (device *IndustrialDualAnalogInBricklet) GetVoltage(channel uint8) (voltage int32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltage), buf.Bytes())
 	if err != nil {
@@ -231,13 +229,13 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltage(channel uint8) (voltage
 
 // Sets the period with which the RegisterVoltageCallback callback is triggered
 // periodically for the given channel. A value of 0 turns the callback off.
-// 
+//
 // The RegisterVoltageCallback callback is only triggered if the voltage has changed since the
 // last triggering.
 func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackPeriod(channel uint8, period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -257,7 +255,7 @@ func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackPeriod(channel u
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -266,7 +264,7 @@ func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackPeriod(channel u
 // Returns the period as set by SetVoltageCallbackPeriod.
 func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackPeriod(channel uint8) (period uint32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -295,11 +293,11 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackPeriod(channel u
 
 // Sets the thresholds for the RegisterVoltageReachedCallback callback for the given
 // channel.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the voltage is *outside* the min and max values
 //  'i'|    Callback is triggered when the voltage is *inside* the min and max values
@@ -315,10 +313,10 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackPeriod(channel u
 //	* ThresholdOptionGreater
 func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackThreshold(channel uint8, option ThresholdOption, min int32, max int32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, channel)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetVoltageCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -338,7 +336,7 @@ func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackThreshold(channe
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -355,7 +353,7 @@ func (device *IndustrialDualAnalogInBricklet) SetVoltageCallbackThreshold(channe
 //	* ThresholdOptionGreater
 func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackThreshold(channel uint8) (option ThresholdOption, min int32, max int32, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, channel);
+	binary.Write(&buf, binary.LittleEndian, channel)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetVoltageCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -385,17 +383,17 @@ func (device *IndustrialDualAnalogInBricklet) GetVoltageCallbackThreshold(channe
 }
 
 // Sets the period with which the threshold callback
-// 
+//
 // * RegisterVoltageReachedCallback
-// 
+//
 // is triggered, if the threshold
-// 
+//
 // * SetVoltageCallbackThreshold
-// 
+//
 // keeps being reached.
 func (device *IndustrialDualAnalogInBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -415,7 +413,7 @@ func (device *IndustrialDualAnalogInBricklet) SetDebouncePeriod(debounce uint32)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -424,7 +422,7 @@ func (device *IndustrialDualAnalogInBricklet) SetDebouncePeriod(debounce uint32)
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *IndustrialDualAnalogInBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -466,7 +464,7 @@ func (device *IndustrialDualAnalogInBricklet) GetDebouncePeriod() (debounce uint
 //	* SampleRate1SPS
 func (device *IndustrialDualAnalogInBricklet) SetSampleRate(rate SampleRate) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, rate);
+	binary.Write(&buf, binary.LittleEndian, rate)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSampleRate), buf.Bytes())
 	if err != nil {
@@ -486,7 +484,7 @@ func (device *IndustrialDualAnalogInBricklet) SetSampleRate(rate SampleRate) (er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -506,7 +504,7 @@ func (device *IndustrialDualAnalogInBricklet) SetSampleRate(rate SampleRate) (er
 //	* SampleRate1SPS
 func (device *IndustrialDualAnalogInBricklet) GetSampleRate() (rate SampleRate, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSampleRate), buf.Bytes())
 	if err != nil {
 		return rate, err
@@ -533,14 +531,14 @@ func (device *IndustrialDualAnalogInBricklet) GetSampleRate() (rate SampleRate, 
 }
 
 // Sets offset and gain of MCP3911 internal calibration registers.
-// 
+//
 // See MCP3911 datasheet 7.7 and 7.8. The Industrial Dual Analog In Bricklet
 // is already factory calibrated by Tinkerforge. It should not be necessary
 // for you to use this function
 func (device *IndustrialDualAnalogInBricklet) SetCalibration(offset [2]int32, gain [2]int32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, offset);
-	binary.Write(&buf, binary.LittleEndian, gain);
+	binary.Write(&buf, binary.LittleEndian, offset)
+	binary.Write(&buf, binary.LittleEndian, gain)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCalibration), buf.Bytes())
 	if err != nil {
@@ -560,7 +558,7 @@ func (device *IndustrialDualAnalogInBricklet) SetCalibration(offset [2]int32, ga
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -569,7 +567,7 @@ func (device *IndustrialDualAnalogInBricklet) SetCalibration(offset [2]int32, ga
 // Returns the calibration as set by SetCalibration.
 func (device *IndustrialDualAnalogInBricklet) GetCalibration() (offset [2]int32, gain [2]int32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCalibration), buf.Bytes())
 	if err != nil {
 		return offset, gain, err
@@ -600,7 +598,7 @@ func (device *IndustrialDualAnalogInBricklet) GetCalibration() (offset [2]int32,
 // is needed for proper calibration, see SetCalibration.
 func (device *IndustrialDualAnalogInBricklet) GetADCValues() (value [2]int32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetADCValues), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -629,16 +627,16 @@ func (device *IndustrialDualAnalogInBricklet) GetADCValues() (value [2]int32, er
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IndustrialDualAnalogInBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

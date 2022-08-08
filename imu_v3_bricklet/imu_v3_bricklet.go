@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Full fledged AHRS with 9 degrees of freedom.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/IMUV3_Bricklet_Go.html.
 package imu_v3_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,67 +25,67 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetAcceleration Function = 1
-	FunctionGetMagneticField Function = 2
-	FunctionGetAngularVelocity Function = 3
-	FunctionGetTemperature Function = 4
-	FunctionGetOrientation Function = 5
-	FunctionGetLinearAcceleration Function = 6
-	FunctionGetGravityVector Function = 7
-	FunctionGetQuaternion Function = 8
-	FunctionGetAllData Function = 9
-	FunctionSaveCalibration Function = 10
-	FunctionSetSensorConfiguration Function = 11
-	FunctionGetSensorConfiguration Function = 12
-	FunctionSetSensorFusionMode Function = 13
-	FunctionGetSensorFusionMode Function = 14
-	FunctionSetAccelerationCallbackConfiguration Function = 15
-	FunctionGetAccelerationCallbackConfiguration Function = 16
-	FunctionSetMagneticFieldCallbackConfiguration Function = 17
-	FunctionGetMagneticFieldCallbackConfiguration Function = 18
-	FunctionSetAngularVelocityCallbackConfiguration Function = 19
-	FunctionGetAngularVelocityCallbackConfiguration Function = 20
-	FunctionSetTemperatureCallbackConfiguration Function = 21
-	FunctionGetTemperatureCallbackConfiguration Function = 22
-	FunctionSetOrientationCallbackConfiguration Function = 23
-	FunctionGetOrientationCallbackConfiguration Function = 24
+	FunctionGetAcceleration                            Function = 1
+	FunctionGetMagneticField                           Function = 2
+	FunctionGetAngularVelocity                         Function = 3
+	FunctionGetTemperature                             Function = 4
+	FunctionGetOrientation                             Function = 5
+	FunctionGetLinearAcceleration                      Function = 6
+	FunctionGetGravityVector                           Function = 7
+	FunctionGetQuaternion                              Function = 8
+	FunctionGetAllData                                 Function = 9
+	FunctionSaveCalibration                            Function = 10
+	FunctionSetSensorConfiguration                     Function = 11
+	FunctionGetSensorConfiguration                     Function = 12
+	FunctionSetSensorFusionMode                        Function = 13
+	FunctionGetSensorFusionMode                        Function = 14
+	FunctionSetAccelerationCallbackConfiguration       Function = 15
+	FunctionGetAccelerationCallbackConfiguration       Function = 16
+	FunctionSetMagneticFieldCallbackConfiguration      Function = 17
+	FunctionGetMagneticFieldCallbackConfiguration      Function = 18
+	FunctionSetAngularVelocityCallbackConfiguration    Function = 19
+	FunctionGetAngularVelocityCallbackConfiguration    Function = 20
+	FunctionSetTemperatureCallbackConfiguration        Function = 21
+	FunctionGetTemperatureCallbackConfiguration        Function = 22
+	FunctionSetOrientationCallbackConfiguration        Function = 23
+	FunctionGetOrientationCallbackConfiguration        Function = 24
 	FunctionSetLinearAccelerationCallbackConfiguration Function = 25
 	FunctionGetLinearAccelerationCallbackConfiguration Function = 26
-	FunctionSetGravityVectorCallbackConfiguration Function = 27
-	FunctionGetGravityVectorCallbackConfiguration Function = 28
-	FunctionSetQuaternionCallbackConfiguration Function = 29
-	FunctionGetQuaternionCallbackConfiguration Function = 30
-	FunctionSetAllDataCallbackConfiguration Function = 31
-	FunctionGetAllDataCallbackConfiguration Function = 32
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackAcceleration Function = 33
-	FunctionCallbackMagneticField Function = 34
-	FunctionCallbackAngularVelocity Function = 35
-	FunctionCallbackTemperature Function = 36
-	FunctionCallbackLinearAcceleration Function = 37
-	FunctionCallbackGravityVector Function = 38
-	FunctionCallbackOrientation Function = 39
-	FunctionCallbackQuaternion Function = 40
-	FunctionCallbackAllData Function = 41
+	FunctionSetGravityVectorCallbackConfiguration      Function = 27
+	FunctionGetGravityVectorCallbackConfiguration      Function = 28
+	FunctionSetQuaternionCallbackConfiguration         Function = 29
+	FunctionGetQuaternionCallbackConfiguration         Function = 30
+	FunctionSetAllDataCallbackConfiguration            Function = 31
+	FunctionGetAllDataCallbackConfiguration            Function = 32
+	FunctionGetSPITFPErrorCount                        Function = 234
+	FunctionSetBootloaderMode                          Function = 235
+	FunctionGetBootloaderMode                          Function = 236
+	FunctionSetWriteFirmwarePointer                    Function = 237
+	FunctionWriteFirmware                              Function = 238
+	FunctionSetStatusLEDConfig                         Function = 239
+	FunctionGetStatusLEDConfig                         Function = 240
+	FunctionGetChipTemperature                         Function = 242
+	FunctionReset                                      Function = 243
+	FunctionWriteUID                                   Function = 248
+	FunctionReadUID                                    Function = 249
+	FunctionGetIdentity                                Function = 255
+	FunctionCallbackAcceleration                       Function = 33
+	FunctionCallbackMagneticField                      Function = 34
+	FunctionCallbackAngularVelocity                    Function = 35
+	FunctionCallbackTemperature                        Function = 36
+	FunctionCallbackLinearAcceleration                 Function = 37
+	FunctionCallbackGravityVector                      Function = 38
+	FunctionCallbackOrientation                        Function = 39
+	FunctionCallbackQuaternion                         Function = 40
+	FunctionCallbackAllData                            Function = 41
 )
 
 type MagnetometerRate = uint8
 
 const (
-	MagnetometerRate2Hz MagnetometerRate = 0
-	MagnetometerRate6Hz MagnetometerRate = 1
-	MagnetometerRate8Hz MagnetometerRate = 2
+	MagnetometerRate2Hz  MagnetometerRate = 0
+	MagnetometerRate6Hz  MagnetometerRate = 1
+	MagnetometerRate8Hz  MagnetometerRate = 2
 	MagnetometerRate10Hz MagnetometerRate = 3
 	MagnetometerRate15Hz MagnetometerRate = 4
 	MagnetometerRate20Hz MagnetometerRate = 5
@@ -99,9 +98,9 @@ type GyroscopeRange = uint8
 const (
 	GyroscopeRange2000DPS GyroscopeRange = 0
 	GyroscopeRange1000DPS GyroscopeRange = 1
-	GyroscopeRange500DPS GyroscopeRange = 2
-	GyroscopeRange250DPS GyroscopeRange = 3
-	GyroscopeRange125DPS GyroscopeRange = 4
+	GyroscopeRange500DPS  GyroscopeRange = 2
+	GyroscopeRange250DPS  GyroscopeRange = 3
+	GyroscopeRange125DPS  GyroscopeRange = 4
 )
 
 type GyroscopeBandwidth = uint8
@@ -110,131 +109,132 @@ const (
 	GyroscopeBandwidth523Hz GyroscopeBandwidth = 0
 	GyroscopeBandwidth230Hz GyroscopeBandwidth = 1
 	GyroscopeBandwidth116Hz GyroscopeBandwidth = 2
-	GyroscopeBandwidth47Hz GyroscopeBandwidth = 3
-	GyroscopeBandwidth23Hz GyroscopeBandwidth = 4
-	GyroscopeBandwidth12Hz GyroscopeBandwidth = 5
-	GyroscopeBandwidth64Hz GyroscopeBandwidth = 6
-	GyroscopeBandwidth32Hz GyroscopeBandwidth = 7
+	GyroscopeBandwidth47Hz  GyroscopeBandwidth = 3
+	GyroscopeBandwidth23Hz  GyroscopeBandwidth = 4
+	GyroscopeBandwidth12Hz  GyroscopeBandwidth = 5
+	GyroscopeBandwidth64Hz  GyroscopeBandwidth = 6
+	GyroscopeBandwidth32Hz  GyroscopeBandwidth = 7
 )
 
 type AccelerometerRange = uint8
 
 const (
-	AccelerometerRange2G AccelerometerRange = 0
-	AccelerometerRange4G AccelerometerRange = 1
-	AccelerometerRange8G AccelerometerRange = 2
+	AccelerometerRange2G  AccelerometerRange = 0
+	AccelerometerRange4G  AccelerometerRange = 1
+	AccelerometerRange8G  AccelerometerRange = 2
 	AccelerometerRange16G AccelerometerRange = 3
 )
 
 type AccelerometerBandwidth = uint8
 
 const (
-	AccelerometerBandwidth7_81Hz AccelerometerBandwidth = 0
+	AccelerometerBandwidth7_81Hz  AccelerometerBandwidth = 0
 	AccelerometerBandwidth15_63Hz AccelerometerBandwidth = 1
 	AccelerometerBandwidth31_25Hz AccelerometerBandwidth = 2
-	AccelerometerBandwidth62_5Hz AccelerometerBandwidth = 3
-	AccelerometerBandwidth125Hz AccelerometerBandwidth = 4
-	AccelerometerBandwidth250Hz AccelerometerBandwidth = 5
-	AccelerometerBandwidth500Hz AccelerometerBandwidth = 6
-	AccelerometerBandwidth1000Hz AccelerometerBandwidth = 7
+	AccelerometerBandwidth62_5Hz  AccelerometerBandwidth = 3
+	AccelerometerBandwidth125Hz   AccelerometerBandwidth = 4
+	AccelerometerBandwidth250Hz   AccelerometerBandwidth = 5
+	AccelerometerBandwidth500Hz   AccelerometerBandwidth = 6
+	AccelerometerBandwidth1000Hz  AccelerometerBandwidth = 7
 )
 
 type SensorFusion = uint8
 
 const (
-	SensorFusionOff SensorFusion = 0
-	SensorFusionOn SensorFusion = 1
-	SensorFusionOnWithoutMagnetometer SensorFusion = 2
+	SensorFusionOff                                  SensorFusion = 0
+	SensorFusionOn                                   SensorFusion = 1
+	SensorFusionOnWithoutMagnetometer                SensorFusion = 2
 	SensorFusionOnWithoutFastMagnetometerCalibration SensorFusion = 3
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type IMUV3Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2161
 const DeviceDisplayName = "IMU Bricklet 3.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IMUV3Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IMUV3Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetAcceleration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetMagneticField] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAngularVelocity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetOrientation] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetLinearAcceleration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetGravityVector] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetQuaternion] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAllData] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSaveCalibration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSensorConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSensorConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSensorFusionMode] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSensorFusionMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAccelerationCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAccelerationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMagneticFieldCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetMagneticFieldCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAngularVelocityCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAngularVelocityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetOrientationCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetOrientationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetLinearAccelerationCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetLinearAccelerationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetGravityVectorCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetGravityVectorCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetQuaternionCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetQuaternionCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAllDataCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAllDataCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetAcceleration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetMagneticField] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAngularVelocity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetOrientation] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetLinearAcceleration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetGravityVector] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetQuaternion] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAllData] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSaveCalibration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSensorConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSensorConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSensorFusionMode] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSensorFusionMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAccelerationCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAccelerationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMagneticFieldCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetMagneticFieldCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAngularVelocityCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAngularVelocityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetOrientationCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetOrientationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetLinearAccelerationCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetLinearAccelerationCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetGravityVectorCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetGravityVectorCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetQuaternionCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetQuaternionCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAllDataCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAllDataCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return IMUV3Bricklet{dev}, nil
 }
 
@@ -306,7 +306,6 @@ func (device *IMUV3Bricklet) DeregisterAccelerationCallback(registrationId uint6
 	device.device.DeregisterCallback(uint8(FunctionCallbackAcceleration), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetMagneticFieldCallbackConfiguration. The parameters are the magnetic
 // field for the x, y and z axis.
@@ -334,7 +333,6 @@ func (device *IMUV3Bricklet) RegisterMagneticFieldCallback(fn func(int16, int16,
 func (device *IMUV3Bricklet) DeregisterMagneticFieldCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackMagneticField), registrationId)
 }
-
 
 // This callback is triggered periodically with the period that is set by
 // SetAngularVelocityCallbackConfiguration. The parameters are the angular
@@ -364,7 +362,6 @@ func (device *IMUV3Bricklet) DeregisterAngularVelocityCallback(registrationId ui
 	device.device.DeregisterCallback(uint8(FunctionCallbackAngularVelocity), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetTemperatureCallbackConfiguration. The parameter is the temperature.
 func (device *IMUV3Bricklet) RegisterTemperatureCallback(fn func(int8)) uint64 {
@@ -387,7 +384,6 @@ func (device *IMUV3Bricklet) RegisterTemperatureCallback(fn func(int8)) uint64 {
 func (device *IMUV3Bricklet) DeregisterTemperatureCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
-
 
 // This callback is triggered periodically with the period that is set by
 // SetLinearAccelerationCallbackConfiguration. The parameters are the
@@ -417,7 +413,6 @@ func (device *IMUV3Bricklet) DeregisterLinearAccelerationCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackLinearAcceleration), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetGravityVectorCallbackConfiguration. The parameters gravity vector
 // for the x, y and z axis.
@@ -445,7 +440,6 @@ func (device *IMUV3Bricklet) RegisterGravityVectorCallback(fn func(int16, int16,
 func (device *IMUV3Bricklet) DeregisterGravityVectorCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackGravityVector), registrationId)
 }
-
 
 // This callback is triggered periodically with the period that is set by
 // SetOrientationCallbackConfiguration. The parameters are the orientation
@@ -475,7 +469,6 @@ func (device *IMUV3Bricklet) RegisterOrientationCallback(fn func(int16, int16, i
 func (device *IMUV3Bricklet) DeregisterOrientationCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackOrientation), registrationId)
 }
-
 
 // This callback is triggered periodically with the period that is set by
 // SetQuaternionCallbackConfiguration. The parameters are the orientation
@@ -507,7 +500,6 @@ func (device *IMUV3Bricklet) RegisterQuaternionCallback(fn func(int16, int16, in
 func (device *IMUV3Bricklet) DeregisterQuaternionCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackQuaternion), registrationId)
 }
-
 
 // This callback is triggered periodically with the period that is set by
 // SetAllDataCallbackConfiguration. The parameters are as for
@@ -549,17 +541,16 @@ func (device *IMUV3Bricklet) DeregisterAllDataCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackAllData), registrationId)
 }
 
-
 // Returns the calibrated acceleration from the accelerometer for the
 // x, y and z axis. The acceleration is in the range configured with
 // SetSensorConfiguration.
-// 
+//
 // If you want to get the acceleration periodically, it is recommended
 // to use the RegisterAccelerationCallback callback and set the period with
 // SetAccelerationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAcceleration() (x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAcceleration), buf.Bytes())
 	if err != nil {
 		return x, y, z, err
@@ -589,13 +580,13 @@ func (device *IMUV3Bricklet) GetAcceleration() (x int16, y int16, z int16, err e
 
 // Returns the calibrated magnetic field from the magnetometer for the
 // x, y and z axis.
-// 
+//
 // If you want to get the magnetic field periodically, it is recommended
 // to use the RegisterMagneticFieldCallback callback and set the period with
 // SetMagneticFieldCallbackConfiguration.
 func (device *IMUV3Bricklet) GetMagneticField() (x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMagneticField), buf.Bytes())
 	if err != nil {
 		return x, y, z, err
@@ -626,13 +617,13 @@ func (device *IMUV3Bricklet) GetMagneticField() (x int16, y int16, z int16, err 
 // Returns the calibrated angular velocity from the gyroscope for the
 // x, y and z axis. The angular velocity is in the range configured with
 // SetSensorConfiguration.
-// 
+//
 // If you want to get the angular velocity periodically, it is recommended
 // to use the RegisterAngularVelocityCallback acallback nd set the period with
 // SetAngularVelocityCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAngularVelocity() (x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAngularVelocity), buf.Bytes())
 	if err != nil {
 		return x, y, z, err
@@ -665,7 +656,7 @@ func (device *IMUV3Bricklet) GetAngularVelocity() (x int16, y int16, z int16, er
 // ambient temperature
 func (device *IMUV3Bricklet) GetTemperature() (temperature int8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -696,13 +687,13 @@ func (device *IMUV3Bricklet) GetTemperature() (temperature int8, err error) {
 // experience a https://en.wikipedia.org/wiki/Gimbal_lock.
 // We recommend that you use quaternions instead, if you need the absolute
 // orientation.
-// 
+//
 // If you want to get the orientation periodically, it is recommended
 // to use the RegisterOrientationCallback callback and set the period with
 // SetOrientationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetOrientation() (heading int16, roll int16, pitch int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOrientation), buf.Bytes())
 	if err != nil {
 		return heading, roll, pitch, err
@@ -733,19 +724,19 @@ func (device *IMUV3Bricklet) GetOrientation() (heading int16, roll int16, pitch 
 // Returns the linear acceleration of the IMU Brick for the
 // x, y and z axis. The acceleration is in the range configured with
 // SetSensorConfiguration.
-// 
+//
 // The linear acceleration is the acceleration in each of the three
 // axis of the IMU Brick with the influences of gravity removed.
-// 
+//
 // It is also possible to get the gravity vector with the influence of linear
 // acceleration removed, see GetGravityVector.
-// 
+//
 // If you want to get the linear acceleration periodically, it is recommended
 // to use the RegisterLinearAccelerationCallback callback and set the period with
 // SetLinearAccelerationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetLinearAcceleration() (x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetLinearAcceleration), buf.Bytes())
 	if err != nil {
 		return x, y, z, err
@@ -775,19 +766,19 @@ func (device *IMUV3Bricklet) GetLinearAcceleration() (x int16, y int16, z int16,
 
 // Returns the current gravity vector of the IMU Brick for the
 // x, y and z axis.
-// 
+//
 // The gravity vector is the acceleration that occurs due to gravity.
 // Influences of additional linear acceleration are removed.
-// 
+//
 // It is also possible to get the linear acceleration with the influence
 // of gravity removed, see GetLinearAcceleration.
-// 
+//
 // If you want to get the gravity vector periodically, it is recommended
 // to use the RegisterGravityVectorCallback callback and set the period with
 // SetGravityVectorCallbackConfiguration.
 func (device *IMUV3Bricklet) GetGravityVector() (x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetGravityVector), buf.Bytes())
 	if err != nil {
 		return x, y, z, err
@@ -817,16 +808,16 @@ func (device *IMUV3Bricklet) GetGravityVector() (x int16, y int16, z int16, err 
 
 // Returns the current orientation (w, x, y, z) of the IMU Brick as
 // https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation.
-// 
+//
 // You have to divide the return values by 16383 (14 bit) to get
 // the usual range of -1.0 to +1.0 for quaternions.
-// 
+//
 // If you want to get the quaternions periodically, it is recommended
 // to use the RegisterQuaternionCallback callback and set the period with
 // SetQuaternionCallbackConfiguration.
 func (device *IMUV3Bricklet) GetQuaternion() (w int16, x int16, y int16, z int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetQuaternion), buf.Bytes())
 	if err != nil {
 		return w, x, y, z, err
@@ -856,7 +847,7 @@ func (device *IMUV3Bricklet) GetQuaternion() (w int16, x int16, y int16, z int16
 }
 
 // Return all of the available data of the IMU Brick.
-// 
+//
 // * acceleration (see GetAcceleration)
 // * magnetic field (see GetMagneticField)
 // * angular velocity (see GetAngularVelocity)
@@ -866,28 +857,28 @@ func (device *IMUV3Bricklet) GetQuaternion() (w int16, x int16, y int16, z int16
 // * gravity vector (see GetGravityVector)
 // * temperature (see GetTemperature)
 // * calibration status (see below)
-// 
+//
 // The calibration status consists of four pairs of two bits. Each pair
 // of bits represents the status of the current calibration.
-// 
+//
 // * bit 0-1: Magnetometer
 // * bit 2-3: Accelerometer
 // * bit 4-5: Gyroscope
 // * bit 6-7: System
-// 
+//
 // A value of 0 means for not calibrated and a value of 3 means
 // fully calibrated. In your program you should always be able to
 // ignore the calibration status, it is used by the calibration
 // window of the Brick Viewer and it can be ignored after the first
 // calibration. See the documentation in the calibration window for
 // more information regarding the calibration of the IMU Brick.
-// 
+//
 // If you want to get the data periodically, it is recommended
 // to use the RegisterAllDataCallback callback and set the period with
 // SetAllDataCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAllData() (acceleration [3]int16, magneticField [3]int16, angularVelocity [3]int16, eulerAngle [3]int16, quaternion [4]int16, linearAcceleration [3]int16, gravityVector [3]int16, temperature int8, calibrationStatus uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllData), buf.Bytes())
 	if err != nil {
 		return acceleration, magneticField, angularVelocity, eulerAngle, quaternion, linearAcceleration, gravityVector, temperature, calibrationStatus, err
@@ -924,16 +915,16 @@ func (device *IMUV3Bricklet) GetAllData() (acceleration [3]int16, magneticField 
 // A call of this function saves the current calibration to be used
 // as a starting point for the next restart of continuous calibration
 // of the IMU Brick.
-// 
+//
 // A return value of *true* means that the calibration could be used and
 // *false* means that it could not be used (this happens if the calibration
 // status is not fully calibrated).
-// 
+//
 // This function is used by the calibration window of the Brick Viewer, you
 // should not need to call it in your program.
 func (device *IMUV3Bricklet) SaveCalibration() (calibrationDone bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionSaveCalibration), buf.Bytes())
 	if err != nil {
 		return calibrationDone, err
@@ -1000,11 +991,11 @@ func (device *IMUV3Bricklet) SaveCalibration() (calibrationDone bool, err error)
 //	* AccelerometerBandwidth1000Hz
 func (device *IMUV3Bricklet) SetSensorConfiguration(magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, magnetometerRate);
-	binary.Write(&buf, binary.LittleEndian, gyroscopeRange);
-	binary.Write(&buf, binary.LittleEndian, gyroscopeBandwidth);
-	binary.Write(&buf, binary.LittleEndian, accelerometerRange);
-	binary.Write(&buf, binary.LittleEndian, accelerometerBandwidth);
+	binary.Write(&buf, binary.LittleEndian, magnetometerRate)
+	binary.Write(&buf, binary.LittleEndian, gyroscopeRange)
+	binary.Write(&buf, binary.LittleEndian, gyroscopeBandwidth)
+	binary.Write(&buf, binary.LittleEndian, accelerometerRange)
+	binary.Write(&buf, binary.LittleEndian, accelerometerBandwidth)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSensorConfiguration), buf.Bytes())
 	if err != nil {
@@ -1024,7 +1015,7 @@ func (device *IMUV3Bricklet) SetSensorConfiguration(magnetometerRate Magnetomete
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1069,7 +1060,7 @@ func (device *IMUV3Bricklet) SetSensorConfiguration(magnetometerRate Magnetomete
 //	* AccelerometerBandwidth1000Hz
 func (device *IMUV3Bricklet) GetSensorConfiguration() (magnetometerRate MagnetometerRate, gyroscopeRange GyroscopeRange, gyroscopeBandwidth GyroscopeBandwidth, accelerometerRange AccelerometerRange, accelerometerBandwidth AccelerometerBandwidth, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSensorConfiguration), buf.Bytes())
 	if err != nil {
 		return magnetometerRate, gyroscopeRange, gyroscopeBandwidth, accelerometerRange, accelerometerBandwidth, err
@@ -1102,12 +1093,12 @@ func (device *IMUV3Bricklet) GetSensorConfiguration() (magnetometerRate Magnetom
 // If the fusion mode is turned off, the functions GetAcceleration,
 // GetMagneticField and GetAngularVelocity return uncalibrated
 // and uncompensated sensor data. All other sensor data getters return no data.
-// 
+//
 // Since firmware version 2.0.6 you can also use a fusion mode without magnetometer.
 // In this mode the calculated orientation is relative (with magnetometer it is
 // absolute with respect to the earth). However, the calculation can't be influenced
 // by spurious magnetic fields.
-// 
+//
 // Since firmware version 2.0.13 you can also use a fusion mode without fast
 // magnetometer calibration. This mode is the same as the normal fusion mode,
 // but the fast magnetometer calibration is turned off. So to find the orientation
@@ -1122,7 +1113,7 @@ func (device *IMUV3Bricklet) GetSensorConfiguration() (magnetometerRate Magnetom
 //	* SensorFusionOnWithoutFastMagnetometerCalibration
 func (device *IMUV3Bricklet) SetSensorFusionMode(mode SensorFusion) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSensorFusionMode), buf.Bytes())
 	if err != nil {
@@ -1142,7 +1133,7 @@ func (device *IMUV3Bricklet) SetSensorFusionMode(mode SensorFusion) (err error) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1158,7 +1149,7 @@ func (device *IMUV3Bricklet) SetSensorFusionMode(mode SensorFusion) (err error) 
 //	* SensorFusionOnWithoutFastMagnetometerCalibration
 func (device *IMUV3Bricklet) GetSensorFusionMode() (mode SensorFusion, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSensorFusionMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1186,17 +1177,17 @@ func (device *IMUV3Bricklet) GetSensorFusionMode() (mode SensorFusion, err error
 
 // The period is the period with which the RegisterAccelerationCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetAccelerationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAccelerationCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1216,7 +1207,7 @@ func (device *IMUV3Bricklet) SetAccelerationCallbackConfiguration(period uint32,
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1225,7 +1216,7 @@ func (device *IMUV3Bricklet) SetAccelerationCallbackConfiguration(period uint32,
 // Returns the callback configuration as set by SetAccelerationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAccelerationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAccelerationCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1254,17 +1245,17 @@ func (device *IMUV3Bricklet) GetAccelerationCallbackConfiguration() (period uint
 
 // The period is the period with which the RegisterMagneticFieldCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetMagneticFieldCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMagneticFieldCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1284,7 +1275,7 @@ func (device *IMUV3Bricklet) SetMagneticFieldCallbackConfiguration(period uint32
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1293,7 +1284,7 @@ func (device *IMUV3Bricklet) SetMagneticFieldCallbackConfiguration(period uint32
 // Returns the callback configuration as set by SetMagneticFieldCallbackConfiguration.
 func (device *IMUV3Bricklet) GetMagneticFieldCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMagneticFieldCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1322,17 +1313,17 @@ func (device *IMUV3Bricklet) GetMagneticFieldCallbackConfiguration() (period uin
 
 // The period is the period with which the RegisterAngularVelocityCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetAngularVelocityCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAngularVelocityCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1352,7 +1343,7 @@ func (device *IMUV3Bricklet) SetAngularVelocityCallbackConfiguration(period uint
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1361,7 +1352,7 @@ func (device *IMUV3Bricklet) SetAngularVelocityCallbackConfiguration(period uint
 // Returns the callback configuration as set by SetAngularVelocityCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAngularVelocityCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAngularVelocityCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1390,17 +1381,17 @@ func (device *IMUV3Bricklet) GetAngularVelocityCallbackConfiguration() (period u
 
 // The period is the period with which the RegisterTemperatureCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1420,7 +1411,7 @@ func (device *IMUV3Bricklet) SetTemperatureCallbackConfiguration(period uint32, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1429,7 +1420,7 @@ func (device *IMUV3Bricklet) SetTemperatureCallbackConfiguration(period uint32, 
 // Returns the callback configuration as set by SetTemperatureCallbackConfiguration.
 func (device *IMUV3Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1458,17 +1449,17 @@ func (device *IMUV3Bricklet) GetTemperatureCallbackConfiguration() (period uint3
 
 // The period is the period with which the RegisterOrientationCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetOrientationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetOrientationCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1488,7 +1479,7 @@ func (device *IMUV3Bricklet) SetOrientationCallbackConfiguration(period uint32, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1497,7 +1488,7 @@ func (device *IMUV3Bricklet) SetOrientationCallbackConfiguration(period uint32, 
 // Returns the callback configuration as set by SetOrientationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetOrientationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetOrientationCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1526,17 +1517,17 @@ func (device *IMUV3Bricklet) GetOrientationCallbackConfiguration() (period uint3
 
 // The period is the period with which the RegisterLinearAccelerationCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetLinearAccelerationCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetLinearAccelerationCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1556,7 +1547,7 @@ func (device *IMUV3Bricklet) SetLinearAccelerationCallbackConfiguration(period u
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1565,7 +1556,7 @@ func (device *IMUV3Bricklet) SetLinearAccelerationCallbackConfiguration(period u
 // Returns the callback configuration as set by SetLinearAccelerationCallbackConfiguration.
 func (device *IMUV3Bricklet) GetLinearAccelerationCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetLinearAccelerationCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1594,17 +1585,17 @@ func (device *IMUV3Bricklet) GetLinearAccelerationCallbackConfiguration() (perio
 
 // The period is the period with which the RegisterGravityVectorCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetGravityVectorCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetGravityVectorCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1624,7 +1615,7 @@ func (device *IMUV3Bricklet) SetGravityVectorCallbackConfiguration(period uint32
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1633,7 +1624,7 @@ func (device *IMUV3Bricklet) SetGravityVectorCallbackConfiguration(period uint32
 // Returns the callback configuration as set by SetGravityVectorCallbackConfiguration.
 func (device *IMUV3Bricklet) GetGravityVectorCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetGravityVectorCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1662,17 +1653,17 @@ func (device *IMUV3Bricklet) GetGravityVectorCallbackConfiguration() (period uin
 
 // The period is the period with which the RegisterQuaternionCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetQuaternionCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetQuaternionCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1692,7 +1683,7 @@ func (device *IMUV3Bricklet) SetQuaternionCallbackConfiguration(period uint32, v
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1701,7 +1692,7 @@ func (device *IMUV3Bricklet) SetQuaternionCallbackConfiguration(period uint32, v
 // Returns the callback configuration as set by SetQuaternionCallbackConfiguration.
 func (device *IMUV3Bricklet) GetQuaternionCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetQuaternionCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1730,17 +1721,17 @@ func (device *IMUV3Bricklet) GetQuaternionCallbackConfiguration() (period uint32
 
 // The period is the period with which the RegisterAllDataCallback callback
 // is triggered periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change within the
 // period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
 func (device *IMUV3Bricklet) SetAllDataCallbackConfiguration(period uint32, valueHasToChange bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAllDataCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -1760,7 +1751,7 @@ func (device *IMUV3Bricklet) SetAllDataCallbackConfiguration(period uint32, valu
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1769,7 +1760,7 @@ func (device *IMUV3Bricklet) SetAllDataCallbackConfiguration(period uint32, valu
 // Returns the callback configuration as set by SetAllDataCallbackConfiguration.
 func (device *IMUV3Bricklet) GetAllDataCallbackConfiguration() (period uint32, valueHasToChange bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAllDataCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, err
@@ -1797,19 +1788,19 @@ func (device *IMUV3Bricklet) GetAllDataCallbackConfiguration() (period uint32, v
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *IMUV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -1840,11 +1831,11 @@ func (device *IMUV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -1863,7 +1854,7 @@ func (device *IMUV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 //	* BootloaderStatusCRCMismatch
 func (device *IMUV3Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -1901,7 +1892,7 @@ func (device *IMUV3Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *IMUV3Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1930,12 +1921,12 @@ func (device *IMUV3Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IMUV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -1955,7 +1946,7 @@ func (device *IMUV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1964,14 +1955,14 @@ func (device *IMUV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *IMUV3Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -2001,9 +1992,9 @@ func (device *IMUV3Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -2014,7 +2005,7 @@ func (device *IMUV3Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 //	* StatusLEDConfigShowStatus
 func (device *IMUV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -2034,7 +2025,7 @@ func (device *IMUV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2050,7 +2041,7 @@ func (device *IMUV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 //	* StatusLEDConfigShowStatus
 func (device *IMUV3Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -2078,13 +2069,13 @@ func (device *IMUV3Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *IMUV3Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -2112,13 +2103,13 @@ func (device *IMUV3Bricklet) GetChipTemperature() (temperature int16, err error)
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *IMUV3Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -2137,7 +2128,7 @@ func (device *IMUV3Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2146,11 +2137,11 @@ func (device *IMUV3Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *IMUV3Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -2170,7 +2161,7 @@ func (device *IMUV3Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2180,7 +2171,7 @@ func (device *IMUV3Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *IMUV3Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -2209,16 +2200,16 @@ func (device *IMUV3Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *IMUV3Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

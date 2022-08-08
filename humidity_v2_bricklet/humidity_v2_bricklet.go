@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures relative humidity.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/HumidityV2_Bricklet_Go.html.
 package humidity_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,40 +25,40 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetHumidity Function = 1
-	FunctionSetHumidityCallbackConfiguration Function = 2
-	FunctionGetHumidityCallbackConfiguration Function = 3
-	FunctionGetTemperature Function = 5
+	FunctionGetHumidity                         Function = 1
+	FunctionSetHumidityCallbackConfiguration    Function = 2
+	FunctionGetHumidityCallbackConfiguration    Function = 3
+	FunctionGetTemperature                      Function = 5
 	FunctionSetTemperatureCallbackConfiguration Function = 6
 	FunctionGetTemperatureCallbackConfiguration Function = 7
-	FunctionSetHeaterConfiguration Function = 9
-	FunctionGetHeaterConfiguration Function = 10
-	FunctionSetMovingAverageConfiguration Function = 11
-	FunctionGetMovingAverageConfiguration Function = 12
-	FunctionSetSamplesPerSecond Function = 13
-	FunctionGetSamplesPerSecond Function = 14
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackHumidity Function = 4
-	FunctionCallbackTemperature Function = 8
+	FunctionSetHeaterConfiguration              Function = 9
+	FunctionGetHeaterConfiguration              Function = 10
+	FunctionSetMovingAverageConfiguration       Function = 11
+	FunctionGetMovingAverageConfiguration       Function = 12
+	FunctionSetSamplesPerSecond                 Function = 13
+	FunctionGetSamplesPerSecond                 Function = 14
+	FunctionGetSPITFPErrorCount                 Function = 234
+	FunctionSetBootloaderMode                   Function = 235
+	FunctionGetBootloaderMode                   Function = 236
+	FunctionSetWriteFirmwarePointer             Function = 237
+	FunctionWriteFirmware                       Function = 238
+	FunctionSetStatusLEDConfig                  Function = 239
+	FunctionGetStatusLEDConfig                  Function = 240
+	FunctionGetChipTemperature                  Function = 242
+	FunctionReset                               Function = 243
+	FunctionWriteUID                            Function = 248
+	FunctionReadUID                             Function = 249
+	FunctionGetIdentity                         Function = 255
+	FunctionCallbackHumidity                    Function = 4
+	FunctionCallbackTemperature                 Function = 8
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -68,7 +67,7 @@ type HeaterConfig = uint8
 
 const (
 	HeaterConfigDisabled HeaterConfig = 0
-	HeaterConfigEnabled HeaterConfig = 1
+	HeaterConfigEnabled  HeaterConfig = 1
 )
 
 type SPS = uint8
@@ -76,8 +75,8 @@ type SPS = uint8
 const (
 	SPS20 SPS = 0
 	SPS10 SPS = 1
-	SPS5 SPS = 2
-	SPS1 SPS = 3
+	SPS5  SPS = 2
+	SPS1  SPS = 3
 	SPS02 SPS = 4
 	SPS01 SPS = 5
 )
@@ -85,70 +84,71 @@ const (
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type HumidityV2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 283
 const DeviceDisplayName = "Humidity Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (HumidityV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,2 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 2}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return HumidityV2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHumidityCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetHumidityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetHeaterConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetHeaterConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMovingAverageConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMovingAverageConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSamplesPerSecond] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSamplesPerSecond] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetHumidity] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetHumidityCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetHumidityCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetTemperatureCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetTemperatureCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetHeaterConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetHeaterConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMovingAverageConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMovingAverageConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSamplesPerSecond] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSamplesPerSecond] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return HumidityV2Bricklet{dev}, nil
 }
 
@@ -194,7 +194,7 @@ func (device *HumidityV2Bricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetHumidityCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetHumidity.
 func (device *HumidityV2Bricklet) RegisterHumidityCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -217,10 +217,9 @@ func (device *HumidityV2Bricklet) DeregisterHumidityCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackHumidity), registrationId)
 }
 
-
 // This callback is triggered periodically according to the configuration set by
 // SetTemperatureCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetTemperature.
 func (device *HumidityV2Bricklet) RegisterTemperatureCallback(fn func(int16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -243,16 +242,15 @@ func (device *HumidityV2Bricklet) DeregisterTemperatureCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackTemperature), registrationId)
 }
 
-
 // Returns the humidity measured by the sensor.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterHumidityCallback callback. You can set the callback configuration
 // with SetHumidityCallbackConfiguration.
 func (device *HumidityV2Bricklet) GetHumidity() (humidity uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidity), buf.Bytes())
 	if err != nil {
 		return humidity, err
@@ -280,28 +278,28 @@ func (device *HumidityV2Bricklet) GetHumidity() (humidity uint16, err error) {
 
 // The period is the period with which the RegisterHumidityCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterHumidityCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -313,11 +311,11 @@ func (device *HumidityV2Bricklet) GetHumidity() (humidity uint16, err error) {
 //	* ThresholdOptionGreater
 func (device *HumidityV2Bricklet) SetHumidityCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetHumidityCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -337,7 +335,7 @@ func (device *HumidityV2Bricklet) SetHumidityCallbackConfiguration(period uint32
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -354,7 +352,7 @@ func (device *HumidityV2Bricklet) SetHumidityCallbackConfiguration(period uint32
 //	* ThresholdOptionGreater
 func (device *HumidityV2Bricklet) GetHumidityCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHumidityCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -385,14 +383,14 @@ func (device *HumidityV2Bricklet) GetHumidityCallbackConfiguration() (period uin
 }
 
 // Returns the temperature measured by the sensor.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterTemperatureCallback callback. You can set the callback configuration
 // with SetTemperatureCallbackConfiguration.
 func (device *HumidityV2Bricklet) GetTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -420,28 +418,28 @@ func (device *HumidityV2Bricklet) GetTemperature() (temperature int16, err error
 
 // The period is the period with which the RegisterTemperatureCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterTemperatureCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -453,11 +451,11 @@ func (device *HumidityV2Bricklet) GetTemperature() (temperature int16, err error
 //	* ThresholdOptionGreater
 func (device *HumidityV2Bricklet) SetTemperatureCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -477,7 +475,7 @@ func (device *HumidityV2Bricklet) SetTemperatureCallbackConfiguration(period uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -494,7 +492,7 @@ func (device *HumidityV2Bricklet) SetTemperatureCallbackConfiguration(period uin
 //	* ThresholdOptionGreater
 func (device *HumidityV2Bricklet) GetTemperatureCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min int16, max int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetTemperatureCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -533,7 +531,7 @@ func (device *HumidityV2Bricklet) GetTemperatureCallbackConfiguration() (period 
 //	* HeaterConfigEnabled
 func (device *HumidityV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, heaterConfig);
+	binary.Write(&buf, binary.LittleEndian, heaterConfig)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetHeaterConfiguration), buf.Bytes())
 	if err != nil {
@@ -553,7 +551,7 @@ func (device *HumidityV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterConf
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -567,7 +565,7 @@ func (device *HumidityV2Bricklet) SetHeaterConfiguration(heaterConfig HeaterConf
 //	* HeaterConfigEnabled
 func (device *HumidityV2Bricklet) GetHeaterConfiguration() (heaterConfig HeaterConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetHeaterConfiguration), buf.Bytes())
 	if err != nil {
 		return heaterConfig, err
@@ -595,22 +593,22 @@ func (device *HumidityV2Bricklet) GetHeaterConfiguration() (heaterConfig HeaterC
 
 // Sets the length of a https://en.wikipedia.org/wiki/Moving_average
 // for the humidity and temperature.
-// 
+//
 // Setting the length to 1 will turn the averaging off. With less
 // averaging, there is more noise on the data.
-// 
+//
 // New data is gathered every 50ms*. With a moving average of length 1000 the resulting
 // averaging window has a length of 50s. If you want to do long term measurements the longest
 // moving average will give the cleanest results.
-// 
+//
 // \* In firmware version 2.0.3 we added the SetSamplesPerSecond function. It
 // configures the measurement frequency. Since high frequencies can result in self-heating
 // of th IC, changed the default value from 20 samples per second to 1. With 1 sample per second
 // a moving average length of 1000 would result in an averaging window of 1000 seconds!
 func (device *HumidityV2Bricklet) SetMovingAverageConfiguration(movingAverageLengthHumidity uint16, movingAverageLengthTemperature uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, movingAverageLengthHumidity);
-	binary.Write(&buf, binary.LittleEndian, movingAverageLengthTemperature);
+	binary.Write(&buf, binary.LittleEndian, movingAverageLengthHumidity)
+	binary.Write(&buf, binary.LittleEndian, movingAverageLengthTemperature)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMovingAverageConfiguration), buf.Bytes())
 	if err != nil {
@@ -630,7 +628,7 @@ func (device *HumidityV2Bricklet) SetMovingAverageConfiguration(movingAverageLen
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -639,7 +637,7 @@ func (device *HumidityV2Bricklet) SetMovingAverageConfiguration(movingAverageLen
 // Returns the moving average configuration as set by SetMovingAverageConfiguration.
 func (device *HumidityV2Bricklet) GetMovingAverageConfiguration() (movingAverageLengthHumidity uint16, movingAverageLengthTemperature uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMovingAverageConfiguration), buf.Bytes())
 	if err != nil {
 		return movingAverageLengthHumidity, movingAverageLengthTemperature, err
@@ -667,15 +665,15 @@ func (device *HumidityV2Bricklet) GetMovingAverageConfiguration() (movingAverage
 }
 
 // Sets the samples per second that are gathered by the humidity/temperature sensor HDC1080.
-// 
+//
 // We added this function since we found out that a high measurement frequency can lead to
 // self-heating of the sensor. Which can distort the temperature measurement.
-// 
+//
 // If you don't need a lot of measurements, you can use the lowest available measurement
 // frequency of 0.1 samples per second for the least amount of self-heating.
-// 
+//
 // Before version 2.0.3 the default was 20 samples per second. The new default is 1 sample per second.
-// 
+//
 // .. versionadded:: 2.0.3$nbsp;(Plugin)
 //
 // Associated constants:
@@ -688,7 +686,7 @@ func (device *HumidityV2Bricklet) GetMovingAverageConfiguration() (movingAverage
 //	* SPS01
 func (device *HumidityV2Bricklet) SetSamplesPerSecond(sps SPS) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, sps);
+	binary.Write(&buf, binary.LittleEndian, sps)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSamplesPerSecond), buf.Bytes())
 	if err != nil {
@@ -708,14 +706,14 @@ func (device *HumidityV2Bricklet) SetSamplesPerSecond(sps SPS) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returnes the samples per second, as set by SetSamplesPerSecond.
-// 
+//
 // .. versionadded:: 2.0.3$nbsp;(Plugin)
 //
 // Associated constants:
@@ -728,7 +726,7 @@ func (device *HumidityV2Bricklet) SetSamplesPerSecond(sps SPS) (err error) {
 //	* SPS01
 func (device *HumidityV2Bricklet) GetSamplesPerSecond() (sps SPS, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSamplesPerSecond), buf.Bytes())
 	if err != nil {
 		return sps, err
@@ -755,19 +753,19 @@ func (device *HumidityV2Bricklet) GetSamplesPerSecond() (sps SPS, err error) {
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *HumidityV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -798,11 +796,11 @@ func (device *HumidityV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -821,7 +819,7 @@ func (device *HumidityV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum u
 //	* BootloaderStatusCRCMismatch
 func (device *HumidityV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -859,7 +857,7 @@ func (device *HumidityV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *HumidityV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -888,12 +886,12 @@ func (device *HumidityV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err 
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *HumidityV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -913,7 +911,7 @@ func (device *HumidityV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -922,14 +920,14 @@ func (device *HumidityV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err e
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *HumidityV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -959,9 +957,9 @@ func (device *HumidityV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, e
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -972,7 +970,7 @@ func (device *HumidityV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, e
 //	* StatusLEDConfigShowStatus
 func (device *HumidityV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -992,7 +990,7 @@ func (device *HumidityV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1008,7 +1006,7 @@ func (device *HumidityV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (er
 //	* StatusLEDConfigShowStatus
 func (device *HumidityV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1036,13 +1034,13 @@ func (device *HumidityV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, 
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *HumidityV2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1070,13 +1068,13 @@ func (device *HumidityV2Bricklet) GetChipTemperature() (temperature int16, err e
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *HumidityV2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1095,7 +1093,7 @@ func (device *HumidityV2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1104,11 +1102,11 @@ func (device *HumidityV2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *HumidityV2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1128,7 +1126,7 @@ func (device *HumidityV2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1138,7 +1136,7 @@ func (device *HumidityV2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *HumidityV2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1167,16 +1165,16 @@ func (device *HumidityV2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *HumidityV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

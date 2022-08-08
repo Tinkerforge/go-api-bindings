@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures distance up to 150cm with infrared light.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/DistanceIR_Bricklet_Go.html.
 package distance_ir_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,33 +25,33 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetDistance Function = 1
-	FunctionGetAnalogValue Function = 2
-	FunctionSetSamplingPoint Function = 3
-	FunctionGetSamplingPoint Function = 4
-	FunctionSetDistanceCallbackPeriod Function = 5
-	FunctionGetDistanceCallbackPeriod Function = 6
-	FunctionSetAnalogValueCallbackPeriod Function = 7
-	FunctionGetAnalogValueCallbackPeriod Function = 8
-	FunctionSetDistanceCallbackThreshold Function = 9
-	FunctionGetDistanceCallbackThreshold Function = 10
+	FunctionGetDistance                     Function = 1
+	FunctionGetAnalogValue                  Function = 2
+	FunctionSetSamplingPoint                Function = 3
+	FunctionGetSamplingPoint                Function = 4
+	FunctionSetDistanceCallbackPeriod       Function = 5
+	FunctionGetDistanceCallbackPeriod       Function = 6
+	FunctionSetAnalogValueCallbackPeriod    Function = 7
+	FunctionGetAnalogValueCallbackPeriod    Function = 8
+	FunctionSetDistanceCallbackThreshold    Function = 9
+	FunctionGetDistanceCallbackThreshold    Function = 10
 	FunctionSetAnalogValueCallbackThreshold Function = 11
 	FunctionGetAnalogValueCallbackThreshold Function = 12
-	FunctionSetDebouncePeriod Function = 13
-	FunctionGetDebouncePeriod Function = 14
-	FunctionGetIdentity Function = 255
-	FunctionCallbackDistance Function = 15
-	FunctionCallbackAnalogValue Function = 16
-	FunctionCallbackDistanceReached Function = 17
-	FunctionCallbackAnalogValueReached Function = 18
+	FunctionSetDebouncePeriod               Function = 13
+	FunctionGetDebouncePeriod               Function = 14
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackDistance                Function = 15
+	FunctionCallbackAnalogValue             Function = 16
+	FunctionCallbackDistanceReached         Function = 17
+	FunctionCallbackAnalogValueReached      Function = 18
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -60,31 +59,32 @@ const (
 type DistanceIRBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 25
 const DeviceDisplayName = "Distance IR Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (DistanceIRBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return DistanceIRBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetDistance] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetSamplingPoint] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetSamplingPoint] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDistanceCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDistanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDistanceCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDistanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetDistance] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetSamplingPoint] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetSamplingPoint] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDistanceCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDistanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDistanceCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDistanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return DistanceIRBricklet{dev}, nil
 }
 
@@ -131,7 +131,7 @@ func (device *DistanceIRBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetDistanceCallbackPeriod. The parameter is the distance of the
 // sensor.
-// 
+//
 // The RegisterDistanceCallback callback is only triggered if the distance has changed since the
 // last triggering.
 func (device *DistanceIRBricklet) RegisterDistanceCallback(fn func(uint16)) uint64 {
@@ -155,11 +155,10 @@ func (device *DistanceIRBricklet) DeregisterDistanceCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackDistance), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAnalogValueCallbackPeriod. The parameter is the analog value of the
 // sensor.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has changed
 // since the last triggering.
 func (device *DistanceIRBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
@@ -183,11 +182,10 @@ func (device *DistanceIRBricklet) DeregisterAnalogValueCallback(registrationId u
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetDistanceCallbackThreshold is reached.
 // The parameter is the distance of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *DistanceIRBricklet) RegisterDistanceReachedCallback(fn func(uint16)) uint64 {
@@ -211,11 +209,10 @@ func (device *DistanceIRBricklet) DeregisterDistanceReachedCallback(registration
 	device.device.DeregisterCallback(uint8(FunctionCallbackDistanceReached), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetAnalogValueCallbackThreshold is reached.
 // The parameter is the analog value of the sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *DistanceIRBricklet) RegisterAnalogValueReachedCallback(fn func(uint16)) uint64 {
@@ -239,17 +236,16 @@ func (device *DistanceIRBricklet) DeregisterAnalogValueReachedCallback(registrat
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
-
 // Returns the distance measured by the sensor. Possible
 // distance ranges are 40 to 300, 100 to 800 and 200 to 1500, depending on the
 // selected IR sensor.
-// 
+//
 // If you want to get the distance periodically, it is recommended to use the
 // RegisterDistanceCallback callback and set the period with
 // SetDistanceCallbackPeriod.
 func (device *DistanceIRBricklet) GetDistance() (distance uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistance), buf.Bytes())
 	if err != nil {
 		return distance, err
@@ -276,19 +272,19 @@ func (device *DistanceIRBricklet) GetDistance() (distance uint16, err error) {
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// 
+//
 // Note
 //  The value returned by GetDistance is averaged over several samples
 //  to yield less noise, while GetAnalogValue gives back raw
 //  unfiltered analog values. The only reason to use GetAnalogValue is,
 //  if you need the full resolution of the analog-to-digital converter.
-// 
+//
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *DistanceIRBricklet) GetAnalogValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -317,25 +313,25 @@ func (device *DistanceIRBricklet) GetAnalogValue() (value uint16, err error) {
 // Sets a sampling point value to a specific position of the lookup table.
 // The lookup table comprises 128 equidistant analog values with
 // corresponding distances.
-// 
+//
 // If you measure a distance of 50cm at the analog value 2048, you
 // should call this function with (64, 5000). The utilized analog-to-digital
 // converter has a resolution of 12 bit. With 128 sampling points on the
 // whole range, this means that every sampling point has a size of 32
 // analog values. Thus the analog value 2048 has the corresponding sampling
 // point 64 = 2048/32.
-// 
+//
 // Sampling points are saved on the EEPROM of the Distance IR Bricklet and
 // loaded again on startup.
-// 
+//
 // Note
 //  An easy way to calibrate the sampling points of the Distance IR Bricklet is
 //  implemented in the Brick Viewer. If you want to calibrate your Bricklet it is
 //  highly recommended to use this implementation.
 func (device *DistanceIRBricklet) SetSamplingPoint(position uint8, distance uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, position);
-	binary.Write(&buf, binary.LittleEndian, distance);
+	binary.Write(&buf, binary.LittleEndian, position)
+	binary.Write(&buf, binary.LittleEndian, distance)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSamplingPoint), buf.Bytes())
 	if err != nil {
@@ -355,7 +351,7 @@ func (device *DistanceIRBricklet) SetSamplingPoint(position uint8, distance uint
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -365,7 +361,7 @@ func (device *DistanceIRBricklet) SetSamplingPoint(position uint8, distance uint
 // SetSamplingPoint.
 func (device *DistanceIRBricklet) GetSamplingPoint(position uint8) (distance uint16, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, position);
+	binary.Write(&buf, binary.LittleEndian, position)
 
 	resultBytes, err := device.device.Get(uint8(FunctionGetSamplingPoint), buf.Bytes())
 	if err != nil {
@@ -394,12 +390,12 @@ func (device *DistanceIRBricklet) GetSamplingPoint(position uint8) (distance uin
 
 // Sets the period with which the RegisterDistanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterDistanceCallback callback is only triggered if the distance has changed since the
 // last triggering.
 func (device *DistanceIRBricklet) SetDistanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDistanceCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -419,7 +415,7 @@ func (device *DistanceIRBricklet) SetDistanceCallbackPeriod(period uint32) (err 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -428,7 +424,7 @@ func (device *DistanceIRBricklet) SetDistanceCallbackPeriod(period uint32) (err 
 // Returns the period as set by SetDistanceCallbackPeriod.
 func (device *DistanceIRBricklet) GetDistanceCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -456,12 +452,12 @@ func (device *DistanceIRBricklet) GetDistanceCallbackPeriod() (period uint32, er
 
 // Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *DistanceIRBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -481,7 +477,7 @@ func (device *DistanceIRBricklet) SetAnalogValueCallbackPeriod(period uint32) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -490,7 +486,7 @@ func (device *DistanceIRBricklet) SetAnalogValueCallbackPeriod(period uint32) (e
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *DistanceIRBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -517,11 +513,11 @@ func (device *DistanceIRBricklet) GetAnalogValueCallbackPeriod() (period uint32,
 }
 
 // Sets the thresholds for the RegisterDistanceReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the distance is *outside* the min and max values
 //  'i'|    Callback is triggered when the distance is *inside* the min and max values
@@ -537,9 +533,9 @@ func (device *DistanceIRBricklet) GetAnalogValueCallbackPeriod() (period uint32,
 //	* ThresholdOptionGreater
 func (device *DistanceIRBricklet) SetDistanceCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDistanceCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -559,7 +555,7 @@ func (device *DistanceIRBricklet) SetDistanceCallbackThreshold(option ThresholdO
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -576,7 +572,7 @@ func (device *DistanceIRBricklet) SetDistanceCallbackThreshold(option ThresholdO
 //	* ThresholdOptionGreater
 func (device *DistanceIRBricklet) GetDistanceCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDistanceCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -605,11 +601,11 @@ func (device *DistanceIRBricklet) GetDistanceCallbackThreshold() (option Thresho
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the analog value is *outside* the min and max values
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
@@ -625,9 +621,9 @@ func (device *DistanceIRBricklet) GetDistanceCallbackThreshold() (option Thresho
 //	* ThresholdOptionGreater
 func (device *DistanceIRBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -647,7 +643,7 @@ func (device *DistanceIRBricklet) SetAnalogValueCallbackThreshold(option Thresho
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -664,7 +660,7 @@ func (device *DistanceIRBricklet) SetAnalogValueCallbackThreshold(option Thresho
 //	* ThresholdOptionGreater
 func (device *DistanceIRBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -693,19 +689,19 @@ func (device *DistanceIRBricklet) GetAnalogValueCallbackThreshold() (option Thre
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterDistanceReachedCallback,
 // * RegisterAnalogValueReachedCallback
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetDistanceCallbackThreshold,
 // * SetAnalogValueCallbackThreshold
-// 
+//
 // keep being reached.
 func (device *DistanceIRBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -725,7 +721,7 @@ func (device *DistanceIRBricklet) SetDebouncePeriod(debounce uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -734,7 +730,7 @@ func (device *DistanceIRBricklet) SetDebouncePeriod(debounce uint32) (err error)
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *DistanceIRBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -763,16 +759,16 @@ func (device *DistanceIRBricklet) GetDebouncePeriod() (debounce uint32, err erro
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *DistanceIRBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

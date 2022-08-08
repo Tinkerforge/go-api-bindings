@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Communicates with up 64 1-Wire devices.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/OneWire_Bricklet_Go.html.
 package one_wire_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,108 +25,109 @@ import (
 type Function = uint8
 
 const (
-	FunctionSearchBusLowLevel Function = 1
-	FunctionResetBus Function = 2
-	FunctionWrite Function = 3
-	FunctionRead Function = 4
-	FunctionWriteCommand Function = 5
+	FunctionSearchBusLowLevel         Function = 1
+	FunctionResetBus                  Function = 2
+	FunctionWrite                     Function = 3
+	FunctionRead                      Function = 4
+	FunctionWriteCommand              Function = 5
 	FunctionSetCommunicationLEDConfig Function = 6
 	FunctionGetCommunicationLEDConfig Function = 7
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
+	FunctionGetSPITFPErrorCount       Function = 234
+	FunctionSetBootloaderMode         Function = 235
+	FunctionGetBootloaderMode         Function = 236
+	FunctionSetWriteFirmwarePointer   Function = 237
+	FunctionWriteFirmware             Function = 238
+	FunctionSetStatusLEDConfig        Function = 239
+	FunctionGetStatusLEDConfig        Function = 240
+	FunctionGetChipTemperature        Function = 242
+	FunctionReset                     Function = 243
+	FunctionWriteUID                  Function = 248
+	FunctionReadUID                   Function = 249
+	FunctionGetIdentity               Function = 255
 )
 
 type Status = uint8
 
 const (
-	StatusOK Status = 0
-	StatusBusy Status = 1
+	StatusOK         Status = 0
+	StatusBusy       Status = 1
 	StatusNoPresence Status = 2
-	StatusTimeout Status = 3
-	StatusError Status = 4
+	StatusTimeout    Status = 3
+	StatusError      Status = 4
 )
 
 type CommunicationLEDConfig = uint8
 
 const (
-	CommunicationLEDConfigOff CommunicationLEDConfig = 0
-	CommunicationLEDConfigOn CommunicationLEDConfig = 1
-	CommunicationLEDConfigShowHeartbeat CommunicationLEDConfig = 2
+	CommunicationLEDConfigOff               CommunicationLEDConfig = 0
+	CommunicationLEDConfigOn                CommunicationLEDConfig = 1
+	CommunicationLEDConfigShowHeartbeat     CommunicationLEDConfig = 2
 	CommunicationLEDConfigShowCommunication CommunicationLEDConfig = 3
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type OneWireBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2123
 const DeviceDisplayName = "One Wire Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (OneWireBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 1, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 1, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return OneWireBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionSearchBusLowLevel] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionResetBus] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionRead] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionWriteCommand] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCommunicationLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCommunicationLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionSearchBusLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionResetBus] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionWrite] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionRead] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionWriteCommand] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCommunicationLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCommunicationLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return OneWireBricklet{dev}, nil
 }
 
@@ -174,7 +174,7 @@ func (device *OneWireBricklet) GetAPIVersion() [3]uint8 {
 // Returns a list of up to 64 identifiers of the connected 1-Wire devices.
 // Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
 // 8-bit CRC.
-// 
+//
 // To get these identifiers the Bricklet runs the
 // https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
 // as defined by Maxim.
@@ -188,7 +188,7 @@ func (device *OneWireBricklet) GetAPIVersion() [3]uint8 {
 //	* StatusError
 func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, identifierChunkOffset uint16, identifierChunkData [7]uint64, status Status, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionSearchBusLowLevel), buf.Bytes())
 	if err != nil {
 		return identifierLength, identifierChunkOffset, identifierChunkData, status, err
@@ -209,7 +209,7 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
 		binary.Read(resultBuf, binary.LittleEndian, &identifierLength)
 		binary.Read(resultBuf, binary.LittleEndian, &identifierChunkOffset)
-		copy(identifierChunkData[:], ByteSliceToUint64Slice(resultBuf.Next(64 * 7/8)))
+		copy(identifierChunkData[:], ByteSliceToUint64Slice(resultBuf.Next(64*7/8)))
 		binary.Read(resultBuf, binary.LittleEndian, &status)
 
 	}
@@ -220,36 +220,36 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
 // Returns a list of up to 64 identifiers of the connected 1-Wire devices.
 // Each identifier is 64-bit and consists of 8-bit family code, 48-bit ID and
 // 8-bit CRC.
-// 
+//
 // To get these identifiers the Bricklet runs the
 // https://www.maximintegrated.com/en/app-notes/index.mvp/id/187,
 // as defined by Maxim.
-	func (device *OneWireBricklet) SearchBus() (identifier []uint64, status Status, err error) {
-		buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-			identifierLength, identifierChunkOffset, identifierChunkData, status, err := device.SearchBusLowLevel()
+func (device *OneWireBricklet) SearchBus() (identifier []uint64, status Status, err error) {
+	buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+		identifierLength, identifierChunkOffset, identifierChunkData, status, err := device.SearchBusLowLevel()
 
-			if err != nil {
-				return LowLevelResult{}, err
-			}
-
-			var lowLevelResults bytes.Buffer
-			binary.Write(&lowLevelResults, binary.LittleEndian, status);
-
-			return LowLevelResult{
-				uint64(identifierLength),
-				uint64(identifierChunkOffset),
-				Uint64SliceToByteSlice(identifierChunkData[:]),
-				lowLevelResults.Bytes()}, nil
-		},
-			0,
-			64)
 		if err != nil {
-			return ByteSliceToUint64Slice(buf), status, err
+			return LowLevelResult{}, err
 		}
-		resultBuf := bytes.NewBuffer(result)
-		binary.Read(resultBuf, binary.LittleEndian, &status)
-		return ByteSliceToUint64Slice(buf), status, nil
+
+		var lowLevelResults bytes.Buffer
+		binary.Write(&lowLevelResults, binary.LittleEndian, status)
+
+		return LowLevelResult{
+			uint64(identifierLength),
+			uint64(identifierChunkOffset),
+			Uint64SliceToByteSlice(identifierChunkData[:]),
+			lowLevelResults.Bytes()}, nil
+	},
+		0,
+		64)
+	if err != nil {
+		return ByteSliceToUint64Slice(buf), status, err
 	}
+	resultBuf := bytes.NewBuffer(result)
+	binary.Read(resultBuf, binary.LittleEndian, &status)
+	return ByteSliceToUint64Slice(buf), status, nil
+}
 
 // Resets the bus with the 1-Wire reset operation.
 //
@@ -262,7 +262,7 @@ func (device *OneWireBricklet) SearchBusLowLevel() (identifierLength uint16, ide
 //	* StatusError
 func (device *OneWireBricklet) ResetBus() (status Status, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionResetBus), buf.Bytes())
 	if err != nil {
 		return status, err
@@ -299,7 +299,7 @@ func (device *OneWireBricklet) ResetBus() (status Status, err error) {
 //	* StatusError
 func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWrite), buf.Bytes())
 	if err != nil {
@@ -337,7 +337,7 @@ func (device *OneWireBricklet) Write(data uint8) (status Status, err error) {
 //	* StatusError
 func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionRead), buf.Bytes())
 	if err != nil {
 		return data, status, err
@@ -367,7 +367,7 @@ func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
 // Writes a command to the 1-Wire device with the given identifier. You can obtain
 // the identifier by calling SearchBus. The MATCH ROM operation is used to
 // write the command.
-// 
+//
 // If you only have one device connected or want to broadcast to all devices
 // you can set the identifier to 0. In this case the SKIP ROM operation is used to
 // write the command.
@@ -381,8 +381,8 @@ func (device *OneWireBricklet) Read() (data uint8, status Status, err error) {
 //	* StatusError
 func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (status Status, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, identifier);
-	binary.Write(&buf, binary.LittleEndian, command);
+	binary.Write(&buf, binary.LittleEndian, identifier)
+	binary.Write(&buf, binary.LittleEndian, command)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteCommand), buf.Bytes())
 	if err != nil {
@@ -411,9 +411,9 @@ func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (s
 
 // Sets the communication LED configuration. By default the LED shows 1-wire
 // communication traffic by flickering.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
@@ -424,7 +424,7 @@ func (device *OneWireBricklet) WriteCommand(identifier uint64, command uint8) (s
 //	* CommunicationLEDConfigShowCommunication
 func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCommunicationLEDConfig), buf.Bytes())
 	if err != nil {
@@ -444,7 +444,7 @@ func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLED
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -460,7 +460,7 @@ func (device *OneWireBricklet) SetCommunicationLEDConfig(config CommunicationLED
 //	* CommunicationLEDConfigShowCommunication
 func (device *OneWireBricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -487,19 +487,19 @@ func (device *OneWireBricklet) GetCommunicationLEDConfig() (config Communication
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -530,11 +530,11 @@ func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -553,7 +553,7 @@ func (device *OneWireBricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint
 //	* BootloaderStatusCRCMismatch
 func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -591,7 +591,7 @@ func (device *OneWireBricklet) SetBootloaderMode(mode BootloaderMode) (status Bo
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -620,12 +620,12 @@ func (device *OneWireBricklet) GetBootloaderMode() (mode BootloaderMode, err err
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -645,7 +645,7 @@ func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -654,14 +654,14 @@ func (device *OneWireBricklet) SetWriteFirmwarePointer(pointer uint32) (err erro
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -691,9 +691,9 @@ func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -704,7 +704,7 @@ func (device *OneWireBricklet) WriteFirmware(data [64]uint8) (status uint8, err 
 //	* StatusLEDConfigShowStatus
 func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -724,7 +724,7 @@ func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -740,7 +740,7 @@ func (device *OneWireBricklet) SetStatusLEDConfig(config StatusLEDConfig) (err e
 //	* StatusLEDConfigShowStatus
 func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -768,13 +768,13 @@ func (device *OneWireBricklet) GetStatusLEDConfig() (config StatusLEDConfig, err
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -802,13 +802,13 @@ func (device *OneWireBricklet) GetChipTemperature() (temperature int16, err erro
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *OneWireBricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -827,7 +827,7 @@ func (device *OneWireBricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -836,11 +836,11 @@ func (device *OneWireBricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -860,7 +860,7 @@ func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -870,7 +870,7 @@ func (device *OneWireBricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -899,16 +899,16 @@ func (device *OneWireBricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *OneWireBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

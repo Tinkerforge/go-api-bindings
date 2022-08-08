@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Communicates with RS485/Modbus devices with full- or half-duplex.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RS485_Bricklet_Go.html.
 package rs485_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,86 +25,86 @@ import (
 type Function = uint8
 
 const (
-	FunctionWriteLowLevel Function = 1
-	FunctionReadLowLevel Function = 2
-	FunctionEnableReadCallback Function = 3
-	FunctionDisableReadCallback Function = 4
-	FunctionIsReadCallbackEnabled Function = 5
-	FunctionSetRS485Configuration Function = 6
-	FunctionGetRS485Configuration Function = 7
-	FunctionSetModbusConfiguration Function = 8
-	FunctionGetModbusConfiguration Function = 9
-	FunctionSetMode Function = 10
-	FunctionGetMode Function = 11
-	FunctionSetCommunicationLEDConfig Function = 12
-	FunctionGetCommunicationLEDConfig Function = 13
-	FunctionSetErrorLEDConfig Function = 14
-	FunctionGetErrorLEDConfig Function = 15
-	FunctionSetBufferConfig Function = 16
-	FunctionGetBufferConfig Function = 17
-	FunctionGetBufferStatus Function = 18
-	FunctionEnableErrorCountCallback Function = 19
-	FunctionDisableErrorCountCallback Function = 20
-	FunctionIsErrorCountCallbackEnabled Function = 21
-	FunctionGetErrorCount Function = 22
-	FunctionGetModbusCommonErrorCount Function = 23
-	FunctionModbusSlaveReportException Function = 24
-	FunctionModbusSlaveAnswerReadCoilsRequestLowLevel Function = 25
-	FunctionModbusMasterReadCoils Function = 26
-	FunctionModbusSlaveAnswerReadHoldingRegistersRequestLowLevel Function = 27
-	FunctionModbusMasterReadHoldingRegisters Function = 28
-	FunctionModbusSlaveAnswerWriteSingleCoilRequest Function = 29
-	FunctionModbusMasterWriteSingleCoil Function = 30
-	FunctionModbusSlaveAnswerWriteSingleRegisterRequest Function = 31
-	FunctionModbusMasterWriteSingleRegister Function = 32
-	FunctionModbusSlaveAnswerWriteMultipleCoilsRequest Function = 33
-	FunctionModbusMasterWriteMultipleCoilsLowLevel Function = 34
-	FunctionModbusSlaveAnswerWriteMultipleRegistersRequest Function = 35
-	FunctionModbusMasterWriteMultipleRegistersLowLevel Function = 36
-	FunctionModbusSlaveAnswerReadDiscreteInputsRequestLowLevel Function = 37
-	FunctionModbusMasterReadDiscreteInputs Function = 38
-	FunctionModbusSlaveAnswerReadInputRegistersRequestLowLevel Function = 39
-	FunctionModbusMasterReadInputRegisters Function = 40
-	FunctionSetFrameReadableCallbackConfiguration Function = 59
-	FunctionGetFrameReadableCallbackConfiguration Function = 60
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackReadLowLevel Function = 41
-	FunctionCallbackErrorCount Function = 42
-	FunctionCallbackModbusSlaveReadCoilsRequest Function = 43
-	FunctionCallbackModbusMasterReadCoilsResponseLowLevel Function = 44
-	FunctionCallbackModbusSlaveReadHoldingRegistersRequest Function = 45
+	FunctionWriteLowLevel                                            Function = 1
+	FunctionReadLowLevel                                             Function = 2
+	FunctionEnableReadCallback                                       Function = 3
+	FunctionDisableReadCallback                                      Function = 4
+	FunctionIsReadCallbackEnabled                                    Function = 5
+	FunctionSetRS485Configuration                                    Function = 6
+	FunctionGetRS485Configuration                                    Function = 7
+	FunctionSetModbusConfiguration                                   Function = 8
+	FunctionGetModbusConfiguration                                   Function = 9
+	FunctionSetMode                                                  Function = 10
+	FunctionGetMode                                                  Function = 11
+	FunctionSetCommunicationLEDConfig                                Function = 12
+	FunctionGetCommunicationLEDConfig                                Function = 13
+	FunctionSetErrorLEDConfig                                        Function = 14
+	FunctionGetErrorLEDConfig                                        Function = 15
+	FunctionSetBufferConfig                                          Function = 16
+	FunctionGetBufferConfig                                          Function = 17
+	FunctionGetBufferStatus                                          Function = 18
+	FunctionEnableErrorCountCallback                                 Function = 19
+	FunctionDisableErrorCountCallback                                Function = 20
+	FunctionIsErrorCountCallbackEnabled                              Function = 21
+	FunctionGetErrorCount                                            Function = 22
+	FunctionGetModbusCommonErrorCount                                Function = 23
+	FunctionModbusSlaveReportException                               Function = 24
+	FunctionModbusSlaveAnswerReadCoilsRequestLowLevel                Function = 25
+	FunctionModbusMasterReadCoils                                    Function = 26
+	FunctionModbusSlaveAnswerReadHoldingRegistersRequestLowLevel     Function = 27
+	FunctionModbusMasterReadHoldingRegisters                         Function = 28
+	FunctionModbusSlaveAnswerWriteSingleCoilRequest                  Function = 29
+	FunctionModbusMasterWriteSingleCoil                              Function = 30
+	FunctionModbusSlaveAnswerWriteSingleRegisterRequest              Function = 31
+	FunctionModbusMasterWriteSingleRegister                          Function = 32
+	FunctionModbusSlaveAnswerWriteMultipleCoilsRequest               Function = 33
+	FunctionModbusMasterWriteMultipleCoilsLowLevel                   Function = 34
+	FunctionModbusSlaveAnswerWriteMultipleRegistersRequest           Function = 35
+	FunctionModbusMasterWriteMultipleRegistersLowLevel               Function = 36
+	FunctionModbusSlaveAnswerReadDiscreteInputsRequestLowLevel       Function = 37
+	FunctionModbusMasterReadDiscreteInputs                           Function = 38
+	FunctionModbusSlaveAnswerReadInputRegistersRequestLowLevel       Function = 39
+	FunctionModbusMasterReadInputRegisters                           Function = 40
+	FunctionSetFrameReadableCallbackConfiguration                    Function = 59
+	FunctionGetFrameReadableCallbackConfiguration                    Function = 60
+	FunctionGetSPITFPErrorCount                                      Function = 234
+	FunctionSetBootloaderMode                                        Function = 235
+	FunctionGetBootloaderMode                                        Function = 236
+	FunctionSetWriteFirmwarePointer                                  Function = 237
+	FunctionWriteFirmware                                            Function = 238
+	FunctionSetStatusLEDConfig                                       Function = 239
+	FunctionGetStatusLEDConfig                                       Function = 240
+	FunctionGetChipTemperature                                       Function = 242
+	FunctionReset                                                    Function = 243
+	FunctionWriteUID                                                 Function = 248
+	FunctionReadUID                                                  Function = 249
+	FunctionGetIdentity                                              Function = 255
+	FunctionCallbackReadLowLevel                                     Function = 41
+	FunctionCallbackErrorCount                                       Function = 42
+	FunctionCallbackModbusSlaveReadCoilsRequest                      Function = 43
+	FunctionCallbackModbusMasterReadCoilsResponseLowLevel            Function = 44
+	FunctionCallbackModbusSlaveReadHoldingRegistersRequest           Function = 45
 	FunctionCallbackModbusMasterReadHoldingRegistersResponseLowLevel Function = 46
-	FunctionCallbackModbusSlaveWriteSingleCoilRequest Function = 47
-	FunctionCallbackModbusMasterWriteSingleCoilResponse Function = 48
-	FunctionCallbackModbusSlaveWriteSingleRegisterRequest Function = 49
-	FunctionCallbackModbusMasterWriteSingleRegisterResponse Function = 50
-	FunctionCallbackModbusSlaveWriteMultipleCoilsRequestLowLevel Function = 51
-	FunctionCallbackModbusMasterWriteMultipleCoilsResponse Function = 52
+	FunctionCallbackModbusSlaveWriteSingleCoilRequest                Function = 47
+	FunctionCallbackModbusMasterWriteSingleCoilResponse              Function = 48
+	FunctionCallbackModbusSlaveWriteSingleRegisterRequest            Function = 49
+	FunctionCallbackModbusMasterWriteSingleRegisterResponse          Function = 50
+	FunctionCallbackModbusSlaveWriteMultipleCoilsRequestLowLevel     Function = 51
+	FunctionCallbackModbusMasterWriteMultipleCoilsResponse           Function = 52
 	FunctionCallbackModbusSlaveWriteMultipleRegistersRequestLowLevel Function = 53
-	FunctionCallbackModbusMasterWriteMultipleRegistersResponse Function = 54
-	FunctionCallbackModbusSlaveReadDiscreteInputsRequest Function = 55
-	FunctionCallbackModbusMasterReadDiscreteInputsResponseLowLevel Function = 56
-	FunctionCallbackModbusSlaveReadInputRegistersRequest Function = 57
-	FunctionCallbackModbusMasterReadInputRegistersResponseLowLevel Function = 58
-	FunctionCallbackFrameReadable Function = 61
+	FunctionCallbackModbusMasterWriteMultipleRegistersResponse       Function = 54
+	FunctionCallbackModbusSlaveReadDiscreteInputsRequest             Function = 55
+	FunctionCallbackModbusMasterReadDiscreteInputsResponseLowLevel   Function = 56
+	FunctionCallbackModbusSlaveReadInputRegistersRequest             Function = 57
+	FunctionCallbackModbusMasterReadInputRegistersResponseLowLevel   Function = 58
+	FunctionCallbackFrameReadable                                    Function = 61
 )
 
 type Parity = uint8
 
 const (
 	ParityNone Parity = 0
-	ParityOdd Parity = 1
+	ParityOdd  Parity = 1
 	ParityEven Parity = 2
 )
 
@@ -135,142 +134,143 @@ const (
 type Mode = uint8
 
 const (
-	ModeRS485 Mode = 0
+	ModeRS485           Mode = 0
 	ModeModbusMasterRTU Mode = 1
-	ModeModbusSlaveRTU Mode = 2
+	ModeModbusSlaveRTU  Mode = 2
 )
 
 type CommunicationLEDConfig = uint8
 
 const (
-	CommunicationLEDConfigOff CommunicationLEDConfig = 0
-	CommunicationLEDConfigOn CommunicationLEDConfig = 1
-	CommunicationLEDConfigShowHeartbeat CommunicationLEDConfig = 2
+	CommunicationLEDConfigOff               CommunicationLEDConfig = 0
+	CommunicationLEDConfigOn                CommunicationLEDConfig = 1
+	CommunicationLEDConfigShowHeartbeat     CommunicationLEDConfig = 2
 	CommunicationLEDConfigShowCommunication CommunicationLEDConfig = 3
 )
 
 type ErrorLEDConfig = uint8
 
 const (
-	ErrorLEDConfigOff ErrorLEDConfig = 0
-	ErrorLEDConfigOn ErrorLEDConfig = 1
+	ErrorLEDConfigOff           ErrorLEDConfig = 0
+	ErrorLEDConfigOn            ErrorLEDConfig = 1
 	ErrorLEDConfigShowHeartbeat ErrorLEDConfig = 2
-	ErrorLEDConfigShowError ErrorLEDConfig = 3
+	ErrorLEDConfigShowError     ErrorLEDConfig = 3
 )
 
 type ExceptionCode = int8
 
 const (
-	ExceptionCodeTimeout ExceptionCode = -1
-	ExceptionCodeSuccess ExceptionCode = 0
-	ExceptionCodeIllegalFunction ExceptionCode = 1
-	ExceptionCodeIllegalDataAddress ExceptionCode = 2
-	ExceptionCodeIllegalDataValue ExceptionCode = 3
-	ExceptionCodeSlaveDeviceFailure ExceptionCode = 4
-	ExceptionCodeAcknowledge ExceptionCode = 5
-	ExceptionCodeSlaveDeviceBusy ExceptionCode = 6
-	ExceptionCodeMemoryParityError ExceptionCode = 8
-	ExceptionCodeGatewayPathUnavailable ExceptionCode = 10
+	ExceptionCodeTimeout                            ExceptionCode = -1
+	ExceptionCodeSuccess                            ExceptionCode = 0
+	ExceptionCodeIllegalFunction                    ExceptionCode = 1
+	ExceptionCodeIllegalDataAddress                 ExceptionCode = 2
+	ExceptionCodeIllegalDataValue                   ExceptionCode = 3
+	ExceptionCodeSlaveDeviceFailure                 ExceptionCode = 4
+	ExceptionCodeAcknowledge                        ExceptionCode = 5
+	ExceptionCodeSlaveDeviceBusy                    ExceptionCode = 6
+	ExceptionCodeMemoryParityError                  ExceptionCode = 8
+	ExceptionCodeGatewayPathUnavailable             ExceptionCode = 10
 	ExceptionCodeGatewayTargetDeviceFailedToRespond ExceptionCode = 11
 )
 
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type RS485Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 277
 const DeviceDisplayName = "RS485 Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RS485Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 15, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 15, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RS485Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionWriteLowLevel] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReadLowLevel] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionEnableReadCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionDisableReadCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionIsReadCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetRS485Configuration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetRS485Configuration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetModbusConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetModbusConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetMode] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetCommunicationLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetCommunicationLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetErrorLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetErrorLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBufferConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetBufferConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBufferStatus] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionEnableErrorCountCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionDisableErrorCountCallback] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionIsErrorCountCallbackEnabled] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetModbusCommonErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveReportException] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerReadCoilsRequestLowLevel] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionModbusMasterReadCoils] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerReadHoldingRegistersRequestLowLevel] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionModbusMasterReadHoldingRegisters] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteSingleCoilRequest] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionModbusMasterWriteSingleCoil] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteSingleRegisterRequest] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionModbusMasterWriteSingleRegister] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteMultipleCoilsRequest] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionModbusMasterWriteMultipleCoilsLowLevel] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteMultipleRegistersRequest] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionModbusMasterWriteMultipleRegistersLowLevel] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerReadDiscreteInputsRequestLowLevel] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionModbusMasterReadDiscreteInputs] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionModbusSlaveAnswerReadInputRegistersRequestLowLevel] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionModbusMasterReadInputRegisters] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetFrameReadableCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetFrameReadableCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionWriteLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReadLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionEnableReadCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionDisableReadCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionIsReadCallbackEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetRS485Configuration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetRS485Configuration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetModbusConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetModbusConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMode] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCommunicationLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetCommunicationLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetErrorLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetErrorLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBufferConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetBufferConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBufferStatus] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionEnableErrorCountCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionDisableErrorCountCallback] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionIsErrorCountCallbackEnabled] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetModbusCommonErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveReportException] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionModbusSlaveAnswerReadCoilsRequestLowLevel] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionModbusMasterReadCoils] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerReadHoldingRegistersRequestLowLevel] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionModbusMasterReadHoldingRegisters] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteSingleCoilRequest] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionModbusMasterWriteSingleCoil] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteSingleRegisterRequest] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionModbusMasterWriteSingleRegister] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteMultipleCoilsRequest] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionModbusMasterWriteMultipleCoilsLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerWriteMultipleRegistersRequest] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionModbusMasterWriteMultipleRegistersLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerReadDiscreteInputsRequestLowLevel] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionModbusMasterReadDiscreteInputs] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionModbusSlaveAnswerReadInputRegistersRequestLowLevel] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionModbusMasterReadInputRegisters] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetFrameReadableCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetFrameReadableCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RS485Bricklet{dev}, nil
 }
 
@@ -329,7 +329,7 @@ func (device *RS485Bricklet) RegisterReadLowLevelCallback(fn func(uint16, uint16
 		var messageChunkData [60]rune
 		binary.Read(buf, binary.LittleEndian, &messageLength)
 		binary.Read(buf, binary.LittleEndian, &messageChunkOffset)
-		copy(messageChunkData[:], ByteSliceToRuneSlice(buf.Next(8 * 60/8)))
+		copy(messageChunkData[:], ByteSliceToRuneSlice(buf.Next(8*60/8)))
 		fn(messageLength, messageChunkOffset, messageChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackReadLowLevel), wrapper)
@@ -340,16 +340,15 @@ func (device *RS485Bricklet) DeregisterReadLowLevelCallback(registrationId uint6
 	device.device.DeregisterCallback(uint8(FunctionCallbackReadLowLevel), registrationId)
 }
 
-
 // This callback is called if new data is available.
-// 
+//
 // To enable this callback, use EnableReadCallback.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for message.
 func (device *RS485Bricklet) RegisterReadCallback(fn func([]rune)) uint64 {
 	buf := make([]rune, 0)
-	wrapper := func(messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune)  {
+	wrapper := func(messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune) {
 		if int(messageChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -374,7 +373,6 @@ func (device *RS485Bricklet) RegisterReadCallback(fn func([]rune)) uint64 {
 func (device *RS485Bricklet) DeregisterReadCallback(registrationId uint64) {
 	device.DeregisterReadLowLevelCallback(registrationId)
 }
-
 
 // This callback is called if a new error occurs. It returns
 // the current overrun and parity error count.
@@ -401,13 +399,12 @@ func (device *RS485Bricklet) DeregisterErrorCountCallback(registrationId uint64)
 	device.device.DeregisterCallback(uint8(FunctionCallbackErrorCount), registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to read coils. The parameters are
 // request ID of the request, the number of the first coil to be read and the number of coils to
 // be read as received by the request. The number of the first coil is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerReadCoilsRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveReadCoilsRequestCallback(fn func(uint8, uint32, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -434,7 +431,6 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadCoilsRequestCallback(regis
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveReadCoilsRequest), registrationId)
 }
 
-
 // See RegisterModbusMasterReadCoilsResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadCoilsResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [464]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -454,7 +450,7 @@ func (device *RS485Bricklet) RegisterModbusMasterReadCoilsResponseLowLevelCallba
 		binary.Read(buf, binary.LittleEndian, &exceptionCode)
 		binary.Read(buf, binary.LittleEndian, &coilsLength)
 		binary.Read(buf, binary.LittleEndian, &coilsChunkOffset)
-		copy(coilsChunkData[:], ByteSliceToBoolSlice(buf.Next(1 * 464/8)))
+		copy(coilsChunkData[:], ByteSliceToBoolSlice(buf.Next(1*464/8)))
 		fn(requestID, exceptionCode, coilsLength, coilsChunkOffset, coilsChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusMasterReadCoilsResponseLowLevel), wrapper)
@@ -465,26 +461,25 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadCoilsResponseLowLevelCall
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterReadCoilsResponseLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to read coils.
-// 
+//
 // The parameters are request ID
 // of the request, exception code of the response and the data as received by the
 // response.
-// 
+//
 // Any non-zero exception code indicates a problem. If the exception code
 // is greater than 0 then the number represents a Modbus exception code. If it is
 // less than 0 then it represents other errors. For example, -1 indicates that
 // the request timed out or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for coils.
 func (device *RS485Bricklet) RegisterModbusMasterReadCoilsResponseCallback(fn func(uint8, ExceptionCode, []bool)) uint64 {
 	buf := make([]bool, 0)
-	wrapper := func(requestID uint8, exceptionCode ExceptionCode, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [464]bool)  {
+	wrapper := func(requestID uint8, exceptionCode ExceptionCode, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [464]bool) {
 		if int(coilsChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -510,13 +505,12 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadCoilsResponseCallback(reg
 	device.DeregisterModbusMasterReadCoilsResponseLowLevelCallback(registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to read holding registers. The parameters
 // are request ID of the request, the number of the first holding register to be read and the number of holding
 // registers to be read as received by the request. The number of the first holding register is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is omitted.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerReadHoldingRegistersRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveReadHoldingRegistersRequestCallback(fn func(uint8, uint32, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -543,7 +537,6 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadHoldingRegistersRequestCal
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveReadHoldingRegistersRequest), registrationId)
 }
 
-
 // See RegisterModbusMasterReadHoldingRegistersResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadHoldingRegistersResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [29]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -563,7 +556,7 @@ func (device *RS485Bricklet) RegisterModbusMasterReadHoldingRegistersResponseLow
 		binary.Read(buf, binary.LittleEndian, &exceptionCode)
 		binary.Read(buf, binary.LittleEndian, &holdingRegistersLength)
 		binary.Read(buf, binary.LittleEndian, &holdingRegistersChunkOffset)
-		copy(holdingRegistersChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 29/8)))
+		copy(holdingRegistersChunkData[:], ByteSliceToUint16Slice(buf.Next(16*29/8)))
 		fn(requestID, exceptionCode, holdingRegistersLength, holdingRegistersChunkOffset, holdingRegistersChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusMasterReadHoldingRegistersResponseLowLevel), wrapper)
@@ -574,26 +567,25 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadHoldingRegistersResponseL
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterReadHoldingRegistersResponseLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to read holding registers.
-// 
+//
 // The parameters are
 // request ID of the request, exception code of the response and the data as received
 // by the response.
-// 
+//
 // Any non-zero exception code indicates a problem. If the exception
 // code is greater than 0 then the number represents a Modbus exception code. If
 // it is less than 0 then it represents other errors. For example, -1 indicates that
 // the request timed out or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for holdingRegisters.
 func (device *RS485Bricklet) RegisterModbusMasterReadHoldingRegistersResponseCallback(fn func(uint8, ExceptionCode, []uint16)) uint64 {
 	buf := make([]uint16, 0)
-	wrapper := func(requestID uint8, exceptionCode ExceptionCode, holdingRegistersLength uint16, holdingRegistersChunkOffset uint16, holdingRegistersChunkData [29]uint16)  {
+	wrapper := func(requestID uint8, exceptionCode ExceptionCode, holdingRegistersLength uint16, holdingRegistersChunkOffset uint16, holdingRegistersChunkData [29]uint16) {
 		if int(holdingRegistersChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -619,13 +611,12 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadHoldingRegistersResponseC
 	device.DeregisterModbusMasterReadHoldingRegistersResponseLowLevelCallback(registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to write a single coil. The parameters
 // are request ID of the request, the number of the coil and the value of coil to be
 // written as received by the request. The number of the coil is called coil address for backwards compatibility reasons.
 // It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerWriteSingleCoilRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteSingleCoilRequestCallback(fn func(uint8, uint32, bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -652,13 +643,12 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteSingleCoilRequestCallback
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveWriteSingleCoilRequest), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to write a single coil.
-// 
+//
 // The parameters are
 // request ID of the request and exception code of the response.
-// 
+//
 // Any non-zero exception code indicates a problem.
 // If the exception code is greater than 0 then the number represents a Modbus
 // exception code. If it is less than 0 then it represents other errors. For
@@ -688,13 +678,12 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteSingleCoilResponseCallba
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterWriteSingleCoilResponse), registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to write a single holding register. The parameters
 // are request ID of the request, the number of the holding register and the register value to
 // be written as received by the request. The number of the holding register is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is omitted.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerWriteSingleRegisterRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteSingleRegisterRequestCallback(fn func(uint8, uint32, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -721,13 +710,12 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteSingleRegisterRequestCall
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveWriteSingleRegisterRequest), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to write a single register.
-// 
+//
 // The parameters are
 // request ID of the request and exception code of the response.
-// 
+//
 // Any non-zero exception code
 // indicates a problem. If the exception code is greater than 0 then the number
 // represents a Modbus exception code. If it is less than 0 then it represents
@@ -757,7 +745,6 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteSingleRegisterResponseCa
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterWriteSingleRegisterResponse), registrationId)
 }
 
-
 // See RegisterModbusSlaveWriteMultipleCoilsRequestCallback
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleCoilsRequestLowLevelCallback(fn func(uint8, uint32, uint16, uint16, [440]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -777,7 +764,7 @@ func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleCoilsRequestLowLeve
 		binary.Read(buf, binary.LittleEndian, &startingAddress)
 		binary.Read(buf, binary.LittleEndian, &coilsLength)
 		binary.Read(buf, binary.LittleEndian, &coilsChunkOffset)
-		copy(coilsChunkData[:], ByteSliceToBoolSlice(buf.Next(1 * 440/8)))
+		copy(coilsChunkData[:], ByteSliceToBoolSlice(buf.Next(1*440/8)))
 		fn(requestID, startingAddress, coilsLength, coilsChunkOffset, coilsChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusSlaveWriteMultipleCoilsRequestLowLevel), wrapper)
@@ -788,20 +775,19 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleCoilsRequestLowLe
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveWriteMultipleCoilsRequestLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to write multiple coils. The parameters
 // are request ID of the request, the number of the first coil and the data to be written as
 // received by the request. The number of the first coil is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerWriteMultipleCoilsRequest.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for coils.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleCoilsRequestCallback(fn func(uint8, uint32, []bool)) uint64 {
 	buf := make([]bool, 0)
-	wrapper := func(requestID uint8, startingAddress uint32, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [440]bool)  {
+	wrapper := func(requestID uint8, startingAddress uint32, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [440]bool) {
 		if int(coilsChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -827,13 +813,12 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleCoilsRequestCallb
 	device.DeregisterModbusSlaveWriteMultipleCoilsRequestLowLevelCallback(registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to read coils.
-// 
+//
 // The parameters are
 // request ID of the request and exception code of the response.
-// 
+//
 // Any non-zero exception code
 // indicates a problem. If the exception code is greater than 0 then the number
 // represents a Modbus exception code. If it is less than 0 then it represents
@@ -863,7 +848,6 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteMultipleCoilsResponseCal
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterWriteMultipleCoilsResponse), registrationId)
 }
 
-
 // See RegisterModbusSlaveWriteMultipleRegistersRequestCallback
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleRegistersRequestLowLevelCallback(fn func(uint8, uint32, uint16, uint16, [27]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -883,7 +867,7 @@ func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleRegistersRequestLow
 		binary.Read(buf, binary.LittleEndian, &startingAddress)
 		binary.Read(buf, binary.LittleEndian, &registersLength)
 		binary.Read(buf, binary.LittleEndian, &registersChunkOffset)
-		copy(registersChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 27/8)))
+		copy(registersChunkData[:], ByteSliceToUint16Slice(buf.Next(16*27/8)))
 		fn(requestID, startingAddress, registersLength, registersChunkOffset, registersChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusSlaveWriteMultipleRegistersRequestLowLevel), wrapper)
@@ -894,20 +878,19 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleRegistersRequestL
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveWriteMultipleRegistersRequestLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to write multiple holding registers. The parameters
 // are request ID of the request, the number of the first holding register and the data to be written as
 // received by the request. The number of the first holding register is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is omitted.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerWriteMultipleRegistersRequest.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for registers.
 func (device *RS485Bricklet) RegisterModbusSlaveWriteMultipleRegistersRequestCallback(fn func(uint8, uint32, []uint16)) uint64 {
 	buf := make([]uint16, 0)
-	wrapper := func(requestID uint8, startingAddress uint32, registersLength uint16, registersChunkOffset uint16, registersChunkData [27]uint16)  {
+	wrapper := func(requestID uint8, startingAddress uint32, registersLength uint16, registersChunkOffset uint16, registersChunkData [27]uint16) {
 		if int(registersChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -933,13 +916,12 @@ func (device *RS485Bricklet) DeregisterModbusSlaveWriteMultipleRegistersRequestC
 	device.DeregisterModbusSlaveWriteMultipleRegistersRequestLowLevelCallback(registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to write multiple registers.
-// 
+//
 // The parameters
 // are request ID of the request and exception code of the response.
-// 
+//
 // Any non-zero
 // exception code indicates a problem. If the exception code is greater than 0 then
 // the number represents a Modbus exception code. If it is less than 0 then it
@@ -969,13 +951,12 @@ func (device *RS485Bricklet) DeregisterModbusMasterWriteMultipleRegistersRespons
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterWriteMultipleRegistersResponse), registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to read discrete inputs. The parameters
 // are request ID of the request, the number of the first discrete input and the number of discrete
 // inputs to be read as received by the request. The number of the first discrete input is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a discrete input number in the range of 1 to 65536. The prefix digit 1 (for discrete input) is omitted.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerReadDiscreteInputsRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveReadDiscreteInputsRequestCallback(fn func(uint8, uint32, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -1002,7 +983,6 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadDiscreteInputsRequestCallb
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveReadDiscreteInputsRequest), registrationId)
 }
 
-
 // See RegisterModbusMasterReadDiscreteInputsResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadDiscreteInputsResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [464]bool)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -1022,7 +1002,7 @@ func (device *RS485Bricklet) RegisterModbusMasterReadDiscreteInputsResponseLowLe
 		binary.Read(buf, binary.LittleEndian, &exceptionCode)
 		binary.Read(buf, binary.LittleEndian, &discreteInputsLength)
 		binary.Read(buf, binary.LittleEndian, &discreteInputsChunkOffset)
-		copy(discreteInputsChunkData[:], ByteSliceToBoolSlice(buf.Next(1 * 464/8)))
+		copy(discreteInputsChunkData[:], ByteSliceToBoolSlice(buf.Next(1*464/8)))
 		fn(requestID, exceptionCode, discreteInputsLength, discreteInputsChunkOffset, discreteInputsChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusMasterReadDiscreteInputsResponseLowLevel), wrapper)
@@ -1033,26 +1013,25 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadDiscreteInputsResponseLow
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterReadDiscreteInputsResponseLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to read discrete inputs.
-// 
+//
 // The parameters are
 // request ID of the request, exception code of the response and the data as received
 // by the response.
-// 
+//
 // Any non-zero exception code indicates a problem. If the exception
 // code is greater than 0 then the number represents a Modbus exception code. If
 // it is less than 0 then it represents other errors. For example, -1 indicates that
 // the request timedout or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for discreteInputs.
 func (device *RS485Bricklet) RegisterModbusMasterReadDiscreteInputsResponseCallback(fn func(uint8, ExceptionCode, []bool)) uint64 {
 	buf := make([]bool, 0)
-	wrapper := func(requestID uint8, exceptionCode ExceptionCode, discreteInputsLength uint16, discreteInputsChunkOffset uint16, discreteInputsChunkData [464]bool)  {
+	wrapper := func(requestID uint8, exceptionCode ExceptionCode, discreteInputsLength uint16, discreteInputsChunkOffset uint16, discreteInputsChunkData [464]bool) {
 		if int(discreteInputsChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -1078,13 +1057,12 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadDiscreteInputsResponseCal
 	device.DeregisterModbusMasterReadDiscreteInputsResponseLowLevelCallback(registrationId)
 }
 
-
 // This callback is called only in Modbus slave mode when the slave receives a
 // valid request from a Modbus master to read input registers. The parameters
 // are request ID of the request, the number of the first input register and the number of input
 // registers to be read as received by the request. The number of the first input register is called starting address for backwards compatibility reasons.
 // It is not an address, but instead a input register number in the range of 1 to 65536. The prefix digit 3 (for input register) is omitted.
-// 
+//
 // To send a response of this request use ModbusSlaveAnswerReadInputRegistersRequest.
 func (device *RS485Bricklet) RegisterModbusSlaveReadInputRegistersRequestCallback(fn func(uint8, uint32, uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -1111,7 +1089,6 @@ func (device *RS485Bricklet) DeregisterModbusSlaveReadInputRegistersRequestCallb
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusSlaveReadInputRegistersRequest), registrationId)
 }
 
-
 // See RegisterModbusMasterReadInputRegistersResponseCallback
 func (device *RS485Bricklet) RegisterModbusMasterReadInputRegistersResponseLowLevelCallback(fn func(uint8, ExceptionCode, uint16, uint16, [29]uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -1131,7 +1108,7 @@ func (device *RS485Bricklet) RegisterModbusMasterReadInputRegistersResponseLowLe
 		binary.Read(buf, binary.LittleEndian, &exceptionCode)
 		binary.Read(buf, binary.LittleEndian, &inputRegistersLength)
 		binary.Read(buf, binary.LittleEndian, &inputRegistersChunkOffset)
-		copy(inputRegistersChunkData[:], ByteSliceToUint16Slice(buf.Next(16 * 29/8)))
+		copy(inputRegistersChunkData[:], ByteSliceToUint16Slice(buf.Next(16*29/8)))
 		fn(requestID, exceptionCode, inputRegistersLength, inputRegistersChunkOffset, inputRegistersChunkData)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackModbusMasterReadInputRegistersResponseLowLevel), wrapper)
@@ -1142,26 +1119,25 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadInputRegistersResponseLow
 	device.device.DeregisterCallback(uint8(FunctionCallbackModbusMasterReadInputRegistersResponseLowLevel), registrationId)
 }
 
-
 // This callback is called only in Modbus master mode when the master receives a
 // valid response of a request to read input registers.
-// 
+//
 // The parameters are
 // request ID of the request, exception code of the response and the data as received
 // by the response.
-// 
+//
 // Any non-zero exception code indicates a problem. If the exception
 // code is greater than 0 then the number represents a Modbus exception code. If
 // it is less than 0 then it represents other errors. For example, -1 indicates that
 // the request timedout or that the master did not receive any valid response of the
 // request within the master request timeout period as set by
 // SetModbusConfiguration.
-// 
+//
 // Note
 //  If reconstructing the value fails, the callback is triggered with nil for inputRegisters.
 func (device *RS485Bricklet) RegisterModbusMasterReadInputRegistersResponseCallback(fn func(uint8, ExceptionCode, []uint16)) uint64 {
 	buf := make([]uint16, 0)
-	wrapper := func(requestID uint8, exceptionCode ExceptionCode, inputRegistersLength uint16, inputRegistersChunkOffset uint16, inputRegistersChunkData [29]uint16)  {
+	wrapper := func(requestID uint8, exceptionCode ExceptionCode, inputRegistersLength uint16, inputRegistersChunkOffset uint16, inputRegistersChunkData [29]uint16) {
 		if int(inputRegistersChunkOffset) != len(buf) {
 			if len(buf) != 0 {
 				buf = nil
@@ -1187,12 +1163,11 @@ func (device *RS485Bricklet) DeregisterModbusMasterReadInputRegistersResponseCal
 	device.DeregisterModbusMasterReadInputRegistersResponseLowLevelCallback(registrationId)
 }
 
-
 // This callback is called if at least one frame of data is readable. The frame size is configured with SetFrameReadableCallbackConfiguration.
 // The frame count parameter is the number of frames that can be read.
 // This callback is triggered only once until Read is called. This means, that if you have configured a frame size of X bytes,
 // you can read exactly X bytes using the Read function, every time the callback triggers without checking the frame count parameter.
-// 
+//
 // .. versionadded:: 2.0.5$nbsp;(Plugin)
 func (device *RS485Bricklet) RegisterFrameReadableCallback(fn func(uint16)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -1215,18 +1190,17 @@ func (device *RS485Bricklet) DeregisterFrameReadableCallback(registrationId uint
 	device.device.DeregisterCallback(uint8(FunctionCallbackFrameReadable), registrationId)
 }
 
-
 // Writes characters to the RS485 interface. The characters can be binary data,
 // ASCII or similar is not necessary.
-// 
+//
 // The return value is the number of characters that were written.
-// 
+//
 // See SetRS485Configuration for configuration possibilities
 // regarding baudrate, parity and so on.
 func (device *RS485Bricklet) WriteLowLevel(messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune) (messageChunkWritten uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, messageLength);
-	binary.Write(&buf, binary.LittleEndian, messageChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, messageLength)
+	binary.Write(&buf, binary.LittleEndian, messageChunkOffset)
 	buf.Write(RuneSliceToByteSlice(messageChunkData[:]))
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteLowLevel), buf.Bytes())
@@ -1256,45 +1230,42 @@ func (device *RS485Bricklet) WriteLowLevel(messageLength uint16, messageChunkOff
 
 // Writes characters to the RS485 interface. The characters can be binary data,
 // ASCII or similar is not necessary.
-// 
+//
 // The return value is the number of characters that were written.
-// 
+//
 // See SetRS485Configuration for configuration possibilities
 // regarding baudrate, parity and so on.
-	func (device *RS485Bricklet) Write(message []rune) (messageChunkWritten uint64, err error) {
-		lowLevelResult, err := device.device.SetHighLevel(func(messageLength uint64, messageChunkOffset uint64, messageChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [60]rune{}
-			copy(arr[:], ByteSliceToRuneSlice(messageChunkData))
+func (device *RS485Bricklet) Write(message []rune) (messageChunkWritten uint64, err error) {
+	lowLevelResult, err := device.device.SetHighLevel(func(messageLength uint64, messageChunkOffset uint64, messageChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [60]rune{}
+		copy(arr[:], ByteSliceToRuneSlice(messageChunkData))
 
-			messageChunkWritten, err := device.WriteLowLevel(uint16(messageLength), uint16(messageChunkOffset), arr)
+		messageChunkWritten, err := device.WriteLowLevel(uint16(messageLength), uint16(messageChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			
+		var lowLevelResults bytes.Buffer
 
-			return LowLevelWriteResult{
-				uint64(messageChunkWritten),
-				lowLevelResults.Bytes()}, err
-		}, 0, 8, 480, RuneSliceToByteSlice(message))
+		return LowLevelWriteResult{
+			uint64(messageChunkWritten),
+			lowLevelResults.Bytes()}, err
+	}, 0, 8, 480, RuneSliceToByteSlice(message))
 
-		if err != nil {
-			return
-		}
-
-		
-		
-		messageChunkWritten = lowLevelResult.Written
+	if err != nil {
 		return
 	}
 
+	messageChunkWritten = lowLevelResult.Written
+	return
+}
+
 // Returns up to *length* characters from receive buffer.
-// 
+//
 // Instead of polling with this function, you can also use
 // callbacks. But note that this function will return available
 // data only when the read callback is disabled.
 // See EnableReadCallback and RegisterReadCallback callback.
 func (device *RS485Bricklet) ReadLowLevel(length uint16) (messageLength uint16, messageChunkOffset uint16, messageChunkData [60]rune, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, length);
+	binary.Write(&buf, binary.LittleEndian, length)
 
 	resultBytes, err := device.device.Get(uint8(FunctionReadLowLevel), buf.Bytes())
 	if err != nil {
@@ -1316,7 +1287,7 @@ func (device *RS485Bricklet) ReadLowLevel(length uint16) (messageLength uint16, 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
 		binary.Read(resultBuf, binary.LittleEndian, &messageLength)
 		binary.Read(resultBuf, binary.LittleEndian, &messageChunkOffset)
-		copy(messageChunkData[:], ByteSliceToRuneSlice(resultBuf.Next(8 * 60/8)))
+		copy(messageChunkData[:], ByteSliceToRuneSlice(resultBuf.Next(8*60/8)))
 
 	}
 
@@ -1324,44 +1295,42 @@ func (device *RS485Bricklet) ReadLowLevel(length uint16) (messageLength uint16, 
 }
 
 // Returns up to *length* characters from receive buffer.
-// 
+//
 // Instead of polling with this function, you can also use
 // callbacks. But note that this function will return available
 // data only when the read callback is disabled.
 // See EnableReadCallback and RegisterReadCallback callback.
-	func (device *RS485Bricklet) Read(length uint16) (message []rune, err error) {
-		buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
-			messageLength, messageChunkOffset, messageChunkData, err := device.ReadLowLevel(length)
+func (device *RS485Bricklet) Read(length uint16) (message []rune, err error) {
+	buf, _, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
+		messageLength, messageChunkOffset, messageChunkData, err := device.ReadLowLevel(length)
 
-			if err != nil {
-				return LowLevelResult{}, err
-			}
-
-			var lowLevelResults bytes.Buffer
-			
-
-			return LowLevelResult{
-				uint64(messageLength),
-				uint64(messageChunkOffset),
-				RuneSliceToByteSlice(messageChunkData[:]),
-				lowLevelResults.Bytes()}, nil
-		},
-			1,
-			8)
 		if err != nil {
-			return ByteSliceToRuneSlice(buf), err
+			return LowLevelResult{}, err
 		}
-		
-		
-		return ByteSliceToRuneSlice(buf), nil
+
+		var lowLevelResults bytes.Buffer
+
+		return LowLevelResult{
+			uint64(messageLength),
+			uint64(messageChunkOffset),
+			RuneSliceToByteSlice(messageChunkData[:]),
+			lowLevelResults.Bytes()}, nil
+	},
+		1,
+		8)
+	if err != nil {
+		return ByteSliceToRuneSlice(buf), err
 	}
 
+	return ByteSliceToRuneSlice(buf), nil
+}
+
 // Enables the RegisterReadCallback callback. This will disable the RegisterFrameReadableCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS485Bricklet) EnableReadCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionEnableReadCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -1380,18 +1349,18 @@ func (device *RS485Bricklet) EnableReadCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Disables the RegisterReadCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS485Bricklet) DisableReadCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionDisableReadCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -1410,7 +1379,7 @@ func (device *RS485Bricklet) DisableReadCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1420,7 +1389,7 @@ func (device *RS485Bricklet) DisableReadCallback() (err error) {
 // *false* otherwise.
 func (device *RS485Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionIsReadCallbackEnabled), buf.Bytes())
 	if err != nil {
 		return enabled, err
@@ -1463,11 +1432,11 @@ func (device *RS485Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 //	* DuplexFull
 func (device *RS485Bricklet) SetRS485Configuration(baudrate uint32, parity Parity, stopbits Stopbits, wordlength Wordlength, duplex Duplex) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, baudrate);
-	binary.Write(&buf, binary.LittleEndian, parity);
-	binary.Write(&buf, binary.LittleEndian, stopbits);
-	binary.Write(&buf, binary.LittleEndian, wordlength);
-	binary.Write(&buf, binary.LittleEndian, duplex);
+	binary.Write(&buf, binary.LittleEndian, baudrate)
+	binary.Write(&buf, binary.LittleEndian, parity)
+	binary.Write(&buf, binary.LittleEndian, stopbits)
+	binary.Write(&buf, binary.LittleEndian, wordlength)
+	binary.Write(&buf, binary.LittleEndian, duplex)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetRS485Configuration), buf.Bytes())
 	if err != nil {
@@ -1487,7 +1456,7 @@ func (device *RS485Bricklet) SetRS485Configuration(baudrate uint32, parity Parit
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1510,7 +1479,7 @@ func (device *RS485Bricklet) SetRS485Configuration(baudrate uint32, parity Parit
 //	* DuplexFull
 func (device *RS485Bricklet) GetRS485Configuration() (baudrate uint32, parity Parity, stopbits Stopbits, wordlength Wordlength, duplex Duplex, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRS485Configuration), buf.Bytes())
 	if err != nil {
 		return baudrate, parity, stopbits, wordlength, duplex, err
@@ -1541,13 +1510,13 @@ func (device *RS485Bricklet) GetRS485Configuration() (baudrate uint32, parity Pa
 }
 
 // Sets the configuration for the RS485 Modbus communication. Available options:
-// 
+//
 // * Slave Address: Address to be used as the Modbus slave address in Modbus slave mode. Valid Modbus slave address range is 1 to 247.
 // * Master Request Timeout: Specifies how long the master should wait for a response from a slave when in Modbus master mode.
 func (device *RS485Bricklet) SetModbusConfiguration(slaveAddress uint8, masterRequestTimeout uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, masterRequestTimeout);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, masterRequestTimeout)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetModbusConfiguration), buf.Bytes())
 	if err != nil {
@@ -1567,7 +1536,7 @@ func (device *RS485Bricklet) SetModbusConfiguration(slaveAddress uint8, masterRe
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1576,7 +1545,7 @@ func (device *RS485Bricklet) SetModbusConfiguration(slaveAddress uint8, masterRe
 // Returns the configuration as set by SetModbusConfiguration.
 func (device *RS485Bricklet) GetModbusConfiguration() (slaveAddress uint8, masterRequestTimeout uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetModbusConfiguration), buf.Bytes())
 	if err != nil {
 		return slaveAddress, masterRequestTimeout, err
@@ -1604,7 +1573,7 @@ func (device *RS485Bricklet) GetModbusConfiguration() (slaveAddress uint8, maste
 }
 
 // Sets the mode of the Bricklet in which it operates. Available options are
-// 
+//
 // * RS485,
 // * Modbus Master RTU and
 // * Modbus Slave RTU.
@@ -1616,7 +1585,7 @@ func (device *RS485Bricklet) GetModbusConfiguration() (slaveAddress uint8, maste
 //	* ModeModbusSlaveRTU
 func (device *RS485Bricklet) SetMode(mode Mode) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetMode), buf.Bytes())
 	if err != nil {
@@ -1636,7 +1605,7 @@ func (device *RS485Bricklet) SetMode(mode Mode) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1651,7 +1620,7 @@ func (device *RS485Bricklet) SetMode(mode Mode) (err error) {
 //	* ModeModbusSlaveRTU
 func (device *RS485Bricklet) GetMode() (mode Mode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -1679,9 +1648,9 @@ func (device *RS485Bricklet) GetMode() (mode Mode, err error) {
 
 // Sets the communication LED configuration. By default the LED shows RS485
 // communication traffic by flickering.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
@@ -1692,7 +1661,7 @@ func (device *RS485Bricklet) GetMode() (mode Mode, err error) {
 //	* CommunicationLEDConfigShowCommunication
 func (device *RS485Bricklet) SetCommunicationLEDConfig(config CommunicationLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetCommunicationLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1712,7 +1681,7 @@ func (device *RS485Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1728,7 +1697,7 @@ func (device *RS485Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
 //	* CommunicationLEDConfigShowCommunication
 func (device *RS485Bricklet) GetCommunicationLEDConfig() (config CommunicationLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetCommunicationLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1755,13 +1724,13 @@ func (device *RS485Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
 }
 
 // Sets the error LED configuration.
-// 
+//
 // By default the error LED turns on if there is any error (see RegisterErrorCountCallback
 // callback). If you call this function with the SHOW ERROR option again, the LED
 // will turn off until the next error occurs.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is off.
 //
 // Associated constants:
@@ -1772,7 +1741,7 @@ func (device *RS485Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
 //	* ErrorLEDConfigShowError
 func (device *RS485Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetErrorLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1792,7 +1761,7 @@ func (device *RS485Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1808,7 +1777,7 @@ func (device *RS485Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
 //	* ErrorLEDConfigShowError
 func (device *RS485Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetErrorLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1837,17 +1806,17 @@ func (device *RS485Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err err
 // Sets the send and receive buffer size in byte. In sum there is
 // 10240 byte (10KiB) buffer available and the minimum buffer size
 // is 1024 byte (1KiB) for both.
-// 
+//
 // The current buffer content is lost if this function is called.
-// 
+//
 // The send buffer holds data that was given by Write and
 // could not be written yet. The receive buffer holds data that is
 // received through RS485 but could not yet be send to the
 // user, either by Read or through RegisterReadCallback callback.
 func (device *RS485Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBufferSize uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, sendBufferSize);
-	binary.Write(&buf, binary.LittleEndian, receiveBufferSize);
+	binary.Write(&buf, binary.LittleEndian, sendBufferSize)
+	binary.Write(&buf, binary.LittleEndian, receiveBufferSize)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetBufferConfig), buf.Bytes())
 	if err != nil {
@@ -1867,7 +1836,7 @@ func (device *RS485Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBuffe
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1876,7 +1845,7 @@ func (device *RS485Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBuffe
 // Returns the buffer configuration as set by SetBufferConfig.
 func (device *RS485Bricklet) GetBufferConfig() (sendBufferSize uint16, receiveBufferSize uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBufferConfig), buf.Bytes())
 	if err != nil {
 		return sendBufferSize, receiveBufferSize, err
@@ -1904,11 +1873,11 @@ func (device *RS485Bricklet) GetBufferConfig() (sendBufferSize uint16, receiveBu
 }
 
 // Returns the currently used bytes for the send and received buffer.
-// 
+//
 // See SetBufferConfig for buffer size configuration.
 func (device *RS485Bricklet) GetBufferStatus() (sendBufferUsed uint16, receiveBufferUsed uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBufferStatus), buf.Bytes())
 	if err != nil {
 		return sendBufferUsed, receiveBufferUsed, err
@@ -1936,11 +1905,11 @@ func (device *RS485Bricklet) GetBufferStatus() (sendBufferUsed uint16, receiveBu
 }
 
 // Enables the RegisterErrorCountCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS485Bricklet) EnableErrorCountCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionEnableErrorCountCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -1959,18 +1928,18 @@ func (device *RS485Bricklet) EnableErrorCountCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Disables the RegisterErrorCountCallback callback.
-// 
+//
 // By default the callback is disabled.
 func (device *RS485Bricklet) DisableErrorCountCallback() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionDisableErrorCountCallback), buf.Bytes())
 	if err != nil {
 		return err
@@ -1989,7 +1958,7 @@ func (device *RS485Bricklet) DisableErrorCountCallback() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1999,7 +1968,7 @@ func (device *RS485Bricklet) DisableErrorCountCallback() (err error) {
 // *false* otherwise.
 func (device *RS485Bricklet) IsErrorCountCallbackEnabled() (enabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionIsErrorCountCallbackEnabled), buf.Bytes())
 	if err != nil {
 		return enabled, err
@@ -2028,7 +1997,7 @@ func (device *RS485Bricklet) IsErrorCountCallbackEnabled() (enabled bool, err er
 // Returns the current number of overrun and parity errors.
 func (device *RS485Bricklet) GetErrorCount() (overrunErrorCount uint32, parityErrorCount uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetErrorCount), buf.Bytes())
 	if err != nil {
 		return overrunErrorCount, parityErrorCount, err
@@ -2056,7 +2025,7 @@ func (device *RS485Bricklet) GetErrorCount() (overrunErrorCount uint32, parityEr
 }
 
 // Returns the current number of errors occurred in Modbus mode.
-// 
+//
 // * Timeout Error Count: Number of timeouts occurred.
 // * Checksum Error Count: Number of failures due to Modbus frame CRC16 checksum mismatch.
 // * Frame Too Big Error Count: Number of times frames were rejected because they exceeded maximum Modbus frame size which is 256 bytes.
@@ -2066,7 +2035,7 @@ func (device *RS485Bricklet) GetErrorCount() (overrunErrorCount uint32, parityEr
 // * Slave Device Failure Error Count: Number of errors occurred on the slave device which were unrecoverable. This corresponds to Modbus exception code 4.
 func (device *RS485Bricklet) GetModbusCommonErrorCount() (timeoutErrorCount uint32, checksumErrorCount uint32, frameTooBigErrorCount uint32, illegalFunctionErrorCount uint32, illegalDataAddressErrorCount uint32, illegalDataValueErrorCount uint32, slaveDeviceFailureErrorCount uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetModbusCommonErrorCount), buf.Bytes())
 	if err != nil {
 		return timeoutErrorCount, checksumErrorCount, frameTooBigErrorCount, illegalFunctionErrorCount, illegalDataAddressErrorCount, illegalDataValueErrorCount, slaveDeviceFailureErrorCount, err
@@ -2100,7 +2069,7 @@ func (device *RS485Bricklet) GetModbusCommonErrorCount() (timeoutErrorCount uint
 
 // In Modbus slave mode this function can be used to report a Modbus exception for
 // a Modbus master request.
-// 
+//
 // * Request ID: Request ID of the request received by the slave.
 // * Exception Code: Modbus exception code to report to the Modbus master.
 //
@@ -2119,8 +2088,8 @@ func (device *RS485Bricklet) GetModbusCommonErrorCount() (timeoutErrorCount uint
 //	* ExceptionCodeGatewayTargetDeviceFailedToRespond
 func (device *RS485Bricklet) ModbusSlaveReportException(requestID uint8, exceptionCode ExceptionCode) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
-	binary.Write(&buf, binary.LittleEndian, exceptionCode);
+	binary.Write(&buf, binary.LittleEndian, requestID)
+	binary.Write(&buf, binary.LittleEndian, exceptionCode)
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveReportException), buf.Bytes())
 	if err != nil {
@@ -2140,7 +2109,7 @@ func (device *RS485Bricklet) ModbusSlaveReportException(requestID uint8, excepti
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2148,17 +2117,17 @@ func (device *RS485Bricklet) ModbusSlaveReportException(requestID uint8, excepti
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read coils.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Coils: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadCoilsRequestCallback callback
 // with the Request ID as provided by the argument of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID uint8, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [472]bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
-	binary.Write(&buf, binary.LittleEndian, coilsLength);
-	binary.Write(&buf, binary.LittleEndian, coilsChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, requestID)
+	binary.Write(&buf, binary.LittleEndian, coilsLength)
+	binary.Write(&buf, binary.LittleEndian, coilsChunkOffset)
 	buf.Write(BoolSliceToByteSlice(coilsChunkData[:]))
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerReadCoilsRequestLowLevel), buf.Bytes())
@@ -2179,7 +2148,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2187,57 +2156,53 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read coils.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Coils: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadCoilsRequestCallback callback
 // with the Request ID as provided by the argument of the callback.
-	func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequest(requestID uint8, coils []bool) (err error) {
-		_, err = device.device.SetHighLevel(func(coilsLength uint64, coilsChunkOffset uint64, coilsChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [472]bool{}
-			copy(arr[:], ByteSliceToBoolSlice(coilsChunkData))
+func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequest(requestID uint8, coils []bool) (err error) {
+	_, err = device.device.SetHighLevel(func(coilsLength uint64, coilsChunkOffset uint64, coilsChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [472]bool{}
+		copy(arr[:], ByteSliceToBoolSlice(coilsChunkData))
 
-			err := device.ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID, uint16(coilsLength), uint16(coilsChunkOffset), arr)
+		err := device.ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID, uint16(coilsLength), uint16(coilsChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			
+		var lowLevelResults bytes.Buffer
 
-			return LowLevelWriteResult{
-				uint64(472),
-				lowLevelResults.Bytes()}, err
-		}, 2, 1, 472, BoolSliceToByteSlice(coils))
+		return LowLevelWriteResult{
+			uint64(472),
+			lowLevelResults.Bytes()}, err
+	}, 2, 1, 472, BoolSliceToByteSlice(coils))
 
-		if err != nil {
-			return
-		}
-
-		
-		
-		
+	if err != nil {
 		return
 	}
 
+	return
+}
+
 // In Modbus master mode this function can be used to read coils from a slave. This
 // function creates a Modbus function code 1 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first coil to read. For backwards compatibility reasons this parameter is called Starting Address. It is not an address, but instead a coil number in the range of 1 to 65536.
 // * Count: Number of coils to read.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterReadCoilsResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be
 // matched with the Request ID returned from this function to verify that the callback
 // is indeed for a particular request.
 func (device *RS485Bricklet) ModbusMasterReadCoils(slaveAddress uint8, startingAddress uint32, count uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, count);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, count)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterReadCoils), buf.Bytes())
 	if err != nil {
@@ -2266,17 +2231,17 @@ func (device *RS485Bricklet) ModbusMasterReadCoils(slaveAddress uint8, startingA
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read holding registers.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Holding Registers: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadHoldingRegistersRequestCallback
 // callback with the Request ID as provided by the argument of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequestLowLevel(requestID uint8, holdingRegistersLength uint16, holdingRegistersChunkOffset uint16, holdingRegistersChunkData [29]uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
-	binary.Write(&buf, binary.LittleEndian, holdingRegistersLength);
-	binary.Write(&buf, binary.LittleEndian, holdingRegistersChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, requestID)
+	binary.Write(&buf, binary.LittleEndian, holdingRegistersLength)
+	binary.Write(&buf, binary.LittleEndian, holdingRegistersChunkOffset)
 	buf.Write(Uint16SliceToByteSlice(holdingRegistersChunkData[:]))
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerReadHoldingRegistersRequestLowLevel), buf.Bytes())
@@ -2297,7 +2262,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequestLowLeve
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2305,57 +2270,53 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequestLowLeve
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read holding registers.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Holding Registers: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadHoldingRegistersRequestCallback
 // callback with the Request ID as provided by the argument of the callback.
-	func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequest(requestID uint8, holdingRegisters []uint16) (err error) {
-		_, err = device.device.SetHighLevel(func(holdingRegistersLength uint64, holdingRegistersChunkOffset uint64, holdingRegistersChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [29]uint16{}
-			copy(arr[:], ByteSliceToUint16Slice(holdingRegistersChunkData))
+func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequest(requestID uint8, holdingRegisters []uint16) (err error) {
+	_, err = device.device.SetHighLevel(func(holdingRegistersLength uint64, holdingRegistersChunkOffset uint64, holdingRegistersChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [29]uint16{}
+		copy(arr[:], ByteSliceToUint16Slice(holdingRegistersChunkData))
 
-			err := device.ModbusSlaveAnswerReadHoldingRegistersRequestLowLevel(requestID, uint16(holdingRegistersLength), uint16(holdingRegistersChunkOffset), arr)
+		err := device.ModbusSlaveAnswerReadHoldingRegistersRequestLowLevel(requestID, uint16(holdingRegistersLength), uint16(holdingRegistersChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			
+		var lowLevelResults bytes.Buffer
 
-			return LowLevelWriteResult{
-				uint64(29),
-				lowLevelResults.Bytes()}, err
-		}, 3, 16, 464, Uint16SliceToByteSlice(holdingRegisters))
+		return LowLevelWriteResult{
+			uint64(29),
+			lowLevelResults.Bytes()}, err
+	}, 3, 16, 464, Uint16SliceToByteSlice(holdingRegisters))
 
-		if err != nil {
-			return
-		}
-
-		
-		
-		
+	if err != nil {
 		return
 	}
 
+	return
+}
+
 // In Modbus master mode this function can be used to read holding registers from a slave.
 // This function creates a Modbus function code 3 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first holding register to read. For backwards compatibility reasons this parameter is called Starting Address. It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is implicit and must be omitted.
 // * Count: Number of holding registers to read.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterReadHoldingRegistersResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterReadHoldingRegisters(slaveAddress uint8, startingAddress uint32, count uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, count);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, count)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterReadHoldingRegisters), buf.Bytes())
 	if err != nil {
@@ -2384,14 +2345,14 @@ func (device *RS485Bricklet) ModbusMasterReadHoldingRegisters(slaveAddress uint8
 
 // In Modbus slave mode this function can be used to answer a master request to
 // write a single coil.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
-// 
+//
 // This function must be called from the RegisterModbusSlaveWriteSingleCoilRequestCallback
 // callback with the Request ID as provided by the arguments of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleCoilRequest(requestID uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
+	binary.Write(&buf, binary.LittleEndian, requestID)
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerWriteSingleCoilRequest), buf.Bytes())
 	if err != nil {
@@ -2411,7 +2372,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleCoilRequest(requestID u
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2419,24 +2380,24 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleCoilRequest(requestID u
 
 // In Modbus master mode this function can be used to write a single coil of a slave.
 // This function creates a Modbus function code 5 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Coil Address: Number of the coil to be written. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead a coil number in the range of 1 to 65536.
 // * Coil Value: Value to be written.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteSingleCoilResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterWriteSingleCoil(slaveAddress uint8, coilAddress uint32, coilValue bool) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, coilAddress);
-	binary.Write(&buf, binary.LittleEndian, coilValue);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, coilAddress)
+	binary.Write(&buf, binary.LittleEndian, coilValue)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterWriteSingleCoil), buf.Bytes())
 	if err != nil {
@@ -2465,15 +2426,15 @@ func (device *RS485Bricklet) ModbusMasterWriteSingleCoil(slaveAddress uint8, coi
 
 // In Modbus slave mode this function can be used to answer a master request to
 // write a single register.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
-// 
+//
 // This function must be called from the RegisterModbusSlaveWriteSingleRegisterRequestCallback
 // callback with the Request ID, Register Address and Register Value as provided by
 // the arguments of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleRegisterRequest(requestID uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
+	binary.Write(&buf, binary.LittleEndian, requestID)
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerWriteSingleRegisterRequest), buf.Bytes())
 	if err != nil {
@@ -2493,7 +2454,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleRegisterRequest(request
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2501,24 +2462,24 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleRegisterRequest(request
 
 // In Modbus master mode this function can be used to write a single holding register of a
 // slave. This function creates a Modbus function code 6 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Register Address: Number of the holding register to be written. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is implicit and must be omitted.
 // * Register Value: Value to be written.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteSingleRegisterResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterWriteSingleRegister(slaveAddress uint8, registerAddress uint32, registerValue uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, registerAddress);
-	binary.Write(&buf, binary.LittleEndian, registerValue);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, registerAddress)
+	binary.Write(&buf, binary.LittleEndian, registerValue)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterWriteSingleRegister), buf.Bytes())
 	if err != nil {
@@ -2547,14 +2508,14 @@ func (device *RS485Bricklet) ModbusMasterWriteSingleRegister(slaveAddress uint8,
 
 // In Modbus slave mode this function can be used to answer a master request to
 // write multiple coils.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
-// 
+//
 // This function must be called from the RegisterModbusSlaveWriteMultipleCoilsRequestCallback
 // callback with the Request ID of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleCoilsRequest(requestID uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
+	binary.Write(&buf, binary.LittleEndian, requestID)
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerWriteMultipleCoilsRequest), buf.Bytes())
 	if err != nil {
@@ -2574,7 +2535,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleCoilsRequest(requestI
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2582,24 +2543,24 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleCoilsRequest(requestI
 
 // In Modbus master mode this function can be used to write multiple coils of a slave.
 // This function creates a Modbus function code 15 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first coil to write. For backwards compatibility reasons, this parameter is called Starting Address.It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteMultipleCoilsResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterWriteMultipleCoilsLowLevel(slaveAddress uint8, startingAddress uint32, coilsLength uint16, coilsChunkOffset uint16, coilsChunkData [440]bool) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, coilsLength);
-	binary.Write(&buf, binary.LittleEndian, coilsChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, coilsLength)
+	binary.Write(&buf, binary.LittleEndian, coilsChunkOffset)
 	buf.Write(BoolSliceToByteSlice(coilsChunkData[:]))
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterWriteMultipleCoilsLowLevel), buf.Bytes())
@@ -2629,54 +2590,54 @@ func (device *RS485Bricklet) ModbusMasterWriteMultipleCoilsLowLevel(slaveAddress
 
 // In Modbus master mode this function can be used to write multiple coils of a slave.
 // This function creates a Modbus function code 15 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first coil to write. For backwards compatibility reasons, this parameter is called Starting Address.It is not an address, but instead a coil number in the range of 1 to 65536.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteMultipleCoilsResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
-	func (device *RS485Bricklet) ModbusMasterWriteMultipleCoils(slaveAddress uint8, startingAddress uint32, coils []bool) (requestID uint8, err error) {
-		lowLevelResult, err := device.device.SetHighLevel(func(coilsLength uint64, coilsChunkOffset uint64, coilsChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [440]bool{}
-			copy(arr[:], ByteSliceToBoolSlice(coilsChunkData))
+func (device *RS485Bricklet) ModbusMasterWriteMultipleCoils(slaveAddress uint8, startingAddress uint32, coils []bool) (requestID uint8, err error) {
+	lowLevelResult, err := device.device.SetHighLevel(func(coilsLength uint64, coilsChunkOffset uint64, coilsChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [440]bool{}
+		copy(arr[:], ByteSliceToBoolSlice(coilsChunkData))
 
-			requestID, err := device.ModbusMasterWriteMultipleCoilsLowLevel(slaveAddress, startingAddress, uint16(coilsLength), uint16(coilsChunkOffset), arr)
+		requestID, err := device.ModbusMasterWriteMultipleCoilsLowLevel(slaveAddress, startingAddress, uint16(coilsLength), uint16(coilsChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			binary.Write(&lowLevelResults, binary.LittleEndian, requestID);
+		var lowLevelResults bytes.Buffer
+		binary.Write(&lowLevelResults, binary.LittleEndian, requestID)
 
-			return LowLevelWriteResult{
-				uint64(440),
-				lowLevelResults.Bytes()}, err
-		}, 4, 1, 440, BoolSliceToByteSlice(coils))
+		return LowLevelWriteResult{
+			uint64(440),
+			lowLevelResults.Bytes()}, err
+	}, 4, 1, 440, BoolSliceToByteSlice(coils))
 
-		if err != nil {
-			return
-		}
-
-		resultBuf := bytes.NewBuffer(lowLevelResult.Result)
-
-		binary.Read(resultBuf, binary.LittleEndian, &requestID)
-		
+	if err != nil {
 		return
 	}
 
+	resultBuf := bytes.NewBuffer(lowLevelResult.Result)
+
+	binary.Read(resultBuf, binary.LittleEndian, &requestID)
+
+	return
+}
+
 // In Modbus slave mode this function can be used to answer a master request to
 // write multiple registers.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
-// 
+//
 // This function must be called from the RegisterModbusSlaveWriteMultipleRegistersRequestCallback
 // callback with the Request ID of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleRegistersRequest(requestID uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
+	binary.Write(&buf, binary.LittleEndian, requestID)
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerWriteMultipleRegistersRequest), buf.Bytes())
 	if err != nil {
@@ -2696,7 +2657,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleRegistersRequest(requ
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2704,24 +2665,24 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleRegistersRequest(requ
 
 // In Modbus master mode this function can be used to write multiple registers of a slave.
 // This function creates a Modbus function code 16 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first holding register to write. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is implicit and must be omitted.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteMultipleRegistersResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterWriteMultipleRegistersLowLevel(slaveAddress uint8, startingAddress uint32, registersLength uint16, registersChunkOffset uint16, registersChunkData [27]uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, registersLength);
-	binary.Write(&buf, binary.LittleEndian, registersChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, registersLength)
+	binary.Write(&buf, binary.LittleEndian, registersChunkOffset)
 	buf.Write(Uint16SliceToByteSlice(registersChunkData[:]))
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterWriteMultipleRegistersLowLevel), buf.Bytes())
@@ -2751,57 +2712,57 @@ func (device *RS485Bricklet) ModbusMasterWriteMultipleRegistersLowLevel(slaveAdd
 
 // In Modbus master mode this function can be used to write multiple registers of a slave.
 // This function creates a Modbus function code 16 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first holding register to write. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead a holding register number in the range of 1 to 65536. The prefix digit 4 (for holding register) is implicit and must be omitted.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterWriteMultipleRegistersResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
-	func (device *RS485Bricklet) ModbusMasterWriteMultipleRegisters(slaveAddress uint8, startingAddress uint32, registers []uint16) (requestID uint8, err error) {
-		lowLevelResult, err := device.device.SetHighLevel(func(registersLength uint64, registersChunkOffset uint64, registersChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [27]uint16{}
-			copy(arr[:], ByteSliceToUint16Slice(registersChunkData))
+func (device *RS485Bricklet) ModbusMasterWriteMultipleRegisters(slaveAddress uint8, startingAddress uint32, registers []uint16) (requestID uint8, err error) {
+	lowLevelResult, err := device.device.SetHighLevel(func(registersLength uint64, registersChunkOffset uint64, registersChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [27]uint16{}
+		copy(arr[:], ByteSliceToUint16Slice(registersChunkData))
 
-			requestID, err := device.ModbusMasterWriteMultipleRegistersLowLevel(slaveAddress, startingAddress, uint16(registersLength), uint16(registersChunkOffset), arr)
+		requestID, err := device.ModbusMasterWriteMultipleRegistersLowLevel(slaveAddress, startingAddress, uint16(registersLength), uint16(registersChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			binary.Write(&lowLevelResults, binary.LittleEndian, requestID);
+		var lowLevelResults bytes.Buffer
+		binary.Write(&lowLevelResults, binary.LittleEndian, requestID)
 
-			return LowLevelWriteResult{
-				uint64(27),
-				lowLevelResults.Bytes()}, err
-		}, 5, 16, 432, Uint16SliceToByteSlice(registers))
+		return LowLevelWriteResult{
+			uint64(27),
+			lowLevelResults.Bytes()}, err
+	}, 5, 16, 432, Uint16SliceToByteSlice(registers))
 
-		if err != nil {
-			return
-		}
-
-		resultBuf := bytes.NewBuffer(lowLevelResult.Result)
-
-		binary.Read(resultBuf, binary.LittleEndian, &requestID)
-		
+	if err != nil {
 		return
 	}
 
+	resultBuf := bytes.NewBuffer(lowLevelResult.Result)
+
+	binary.Read(resultBuf, binary.LittleEndian, &requestID)
+
+	return
+}
+
 // In Modbus slave mode this function can be used to answer a master request to
 // read discrete inputs.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Discrete Inputs: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadDiscreteInputsRequestCallback
 // callback with the Request ID as provided by the argument of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(requestID uint8, discreteInputsLength uint16, discreteInputsChunkOffset uint16, discreteInputsChunkData [472]bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
-	binary.Write(&buf, binary.LittleEndian, discreteInputsLength);
-	binary.Write(&buf, binary.LittleEndian, discreteInputsChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, requestID)
+	binary.Write(&buf, binary.LittleEndian, discreteInputsLength)
+	binary.Write(&buf, binary.LittleEndian, discreteInputsChunkOffset)
 	buf.Write(BoolSliceToByteSlice(discreteInputsChunkData[:]))
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerReadDiscreteInputsRequestLowLevel), buf.Bytes())
@@ -2822,7 +2783,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2830,57 +2791,53 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read discrete inputs.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Discrete Inputs: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadDiscreteInputsRequestCallback
 // callback with the Request ID as provided by the argument of the callback.
-	func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequest(requestID uint8, discreteInputs []bool) (err error) {
-		_, err = device.device.SetHighLevel(func(discreteInputsLength uint64, discreteInputsChunkOffset uint64, discreteInputsChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [472]bool{}
-			copy(arr[:], ByteSliceToBoolSlice(discreteInputsChunkData))
+func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequest(requestID uint8, discreteInputs []bool) (err error) {
+	_, err = device.device.SetHighLevel(func(discreteInputsLength uint64, discreteInputsChunkOffset uint64, discreteInputsChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [472]bool{}
+		copy(arr[:], ByteSliceToBoolSlice(discreteInputsChunkData))
 
-			err := device.ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(requestID, uint16(discreteInputsLength), uint16(discreteInputsChunkOffset), arr)
+		err := device.ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(requestID, uint16(discreteInputsLength), uint16(discreteInputsChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			
+		var lowLevelResults bytes.Buffer
 
-			return LowLevelWriteResult{
-				uint64(472),
-				lowLevelResults.Bytes()}, err
-		}, 6, 1, 472, BoolSliceToByteSlice(discreteInputs))
+		return LowLevelWriteResult{
+			uint64(472),
+			lowLevelResults.Bytes()}, err
+	}, 6, 1, 472, BoolSliceToByteSlice(discreteInputs))
 
-		if err != nil {
-			return
-		}
-
-		
-		
-		
+	if err != nil {
 		return
 	}
 
+	return
+}
+
 // In Modbus master mode this function can be used to read discrete inputs from a slave.
 // This function creates a Modbus function code 2 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first discrete input to read. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead a discrete input number in the range of 1 to 65536. The prefix digit 1 (for discrete input) is implicit and must be omitted.
 // * Count: Number of discrete inputs to read.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterReadDiscreteInputsResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterReadDiscreteInputs(slaveAddress uint8, startingAddress uint32, count uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, count);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, count)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterReadDiscreteInputs), buf.Bytes())
 	if err != nil {
@@ -2909,17 +2866,17 @@ func (device *RS485Bricklet) ModbusMasterReadDiscreteInputs(slaveAddress uint8, 
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read input registers.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Input Registers: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadInputRegistersRequestCallback callback
 // with the Request ID as provided by the argument of the callback.
 func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequestLowLevel(requestID uint8, inputRegistersLength uint16, inputRegistersChunkOffset uint16, inputRegistersChunkData [29]uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, requestID);
-	binary.Write(&buf, binary.LittleEndian, inputRegistersLength);
-	binary.Write(&buf, binary.LittleEndian, inputRegistersChunkOffset);
+	binary.Write(&buf, binary.LittleEndian, requestID)
+	binary.Write(&buf, binary.LittleEndian, inputRegistersLength)
+	binary.Write(&buf, binary.LittleEndian, inputRegistersChunkOffset)
 	buf.Write(Uint16SliceToByteSlice(inputRegistersChunkData[:]))
 
 	resultBytes, err := device.device.Set(uint8(FunctionModbusSlaveAnswerReadInputRegistersRequestLowLevel), buf.Bytes())
@@ -2940,7 +2897,7 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequestLowLevel(
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -2948,57 +2905,53 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequestLowLevel(
 
 // In Modbus slave mode this function can be used to answer a master request to
 // read input registers.
-// 
+//
 // * Request ID: Request ID of the corresponding request that is being answered.
 // * Input Registers: Data that is to be sent to the Modbus master for the corresponding request.
-// 
+//
 // This function must be called from the RegisterModbusSlaveReadInputRegistersRequestCallback callback
 // with the Request ID as provided by the argument of the callback.
-	func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequest(requestID uint8, inputRegisters []uint16) (err error) {
-		_, err = device.device.SetHighLevel(func(inputRegistersLength uint64, inputRegistersChunkOffset uint64, inputRegistersChunkData []byte) (LowLevelWriteResult, error) {
-			arr := [29]uint16{}
-			copy(arr[:], ByteSliceToUint16Slice(inputRegistersChunkData))
+func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequest(requestID uint8, inputRegisters []uint16) (err error) {
+	_, err = device.device.SetHighLevel(func(inputRegistersLength uint64, inputRegistersChunkOffset uint64, inputRegistersChunkData []byte) (LowLevelWriteResult, error) {
+		arr := [29]uint16{}
+		copy(arr[:], ByteSliceToUint16Slice(inputRegistersChunkData))
 
-			err := device.ModbusSlaveAnswerReadInputRegistersRequestLowLevel(requestID, uint16(inputRegistersLength), uint16(inputRegistersChunkOffset), arr)
+		err := device.ModbusSlaveAnswerReadInputRegistersRequestLowLevel(requestID, uint16(inputRegistersLength), uint16(inputRegistersChunkOffset), arr)
 
-			var lowLevelResults bytes.Buffer
-			
+		var lowLevelResults bytes.Buffer
 
-			return LowLevelWriteResult{
-				uint64(29),
-				lowLevelResults.Bytes()}, err
-		}, 7, 16, 464, Uint16SliceToByteSlice(inputRegisters))
+		return LowLevelWriteResult{
+			uint64(29),
+			lowLevelResults.Bytes()}, err
+	}, 7, 16, 464, Uint16SliceToByteSlice(inputRegisters))
 
-		if err != nil {
-			return
-		}
-
-		
-		
-		
+	if err != nil {
 		return
 	}
 
+	return
+}
+
 // In Modbus master mode this function can be used to read input registers from a slave.
 // This function creates a Modbus function code 4 request.
-// 
+//
 // * Slave Address: Address of the target Modbus slave.
 // * Starting Address: Number of the first input register to read. For backwards compatibility reasons, this parameter is called Starting Address. It is not an address, but instead an input register number in the range of 1 to 65536. The prefix digit 3 (for input register) is implicit and must be omitted.
 // * Count: Number of input registers to read.
-// 
+//
 // Upon success the function will return a non-zero request ID which will represent
 // the current request initiated by the Modbus master. In case of failure the returned
 // request ID will be 0.
-// 
+//
 // When successful this function will also invoke the RegisterModbusMasterReadInputRegistersResponseCallback
 // callback. In this callback the Request ID provided by the callback argument must be matched
 // with the Request ID returned from this function to verify that the callback is indeed for a
 // particular request.
 func (device *RS485Bricklet) ModbusMasterReadInputRegisters(slaveAddress uint8, startingAddress uint32, count uint16) (requestID uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, slaveAddress);
-	binary.Write(&buf, binary.LittleEndian, startingAddress);
-	binary.Write(&buf, binary.LittleEndian, count);
+	binary.Write(&buf, binary.LittleEndian, slaveAddress)
+	binary.Write(&buf, binary.LittleEndian, startingAddress)
+	binary.Write(&buf, binary.LittleEndian, count)
 
 	resultBytes, err := device.device.Get(uint8(FunctionModbusMasterReadInputRegisters), buf.Bytes())
 	if err != nil {
@@ -3027,13 +2980,13 @@ func (device *RS485Bricklet) ModbusMasterReadInputRegisters(slaveAddress uint8, 
 
 // Configures the RegisterFrameReadableCallback callback. The frame size is the number of bytes, that have to be readable to trigger the callback.
 // A frame size of 0 disables the callback. A frame size greater than 0 enables the callback and disables the RegisterReadCallback callback.
-// 
+//
 // By default the callback is disabled.
-// 
+//
 // .. versionadded:: 2.0.5$nbsp;(Plugin)
 func (device *RS485Bricklet) SetFrameReadableCallbackConfiguration(frameSize uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, frameSize);
+	binary.Write(&buf, binary.LittleEndian, frameSize)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetFrameReadableCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -3053,18 +3006,18 @@ func (device *RS485Bricklet) SetFrameReadableCallbackConfiguration(frameSize uin
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Returns the callback configuration as set by SetFrameReadableCallbackConfiguration.
-// 
+//
 // .. versionadded:: 2.0.5$nbsp;(Plugin)
 func (device *RS485Bricklet) GetFrameReadableCallbackConfiguration() (frameSize uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetFrameReadableCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return frameSize, err
@@ -3091,19 +3044,19 @@ func (device *RS485Bricklet) GetFrameReadableCallbackConfiguration() (frameSize 
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *RS485Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -3134,11 +3087,11 @@ func (device *RS485Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -3157,7 +3110,7 @@ func (device *RS485Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 //	* BootloaderStatusCRCMismatch
 func (device *RS485Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -3195,7 +3148,7 @@ func (device *RS485Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *RS485Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -3224,12 +3177,12 @@ func (device *RS485Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RS485Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -3249,7 +3202,7 @@ func (device *RS485Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -3258,14 +3211,14 @@ func (device *RS485Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RS485Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -3295,9 +3248,9 @@ func (device *RS485Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -3308,7 +3261,7 @@ func (device *RS485Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 //	* StatusLEDConfigShowStatus
 func (device *RS485Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -3328,7 +3281,7 @@ func (device *RS485Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -3344,7 +3297,7 @@ func (device *RS485Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 //	* StatusLEDConfigShowStatus
 func (device *RS485Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -3372,13 +3325,13 @@ func (device *RS485Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *RS485Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -3406,13 +3359,13 @@ func (device *RS485Bricklet) GetChipTemperature() (temperature int16, err error)
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *RS485Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -3431,7 +3384,7 @@ func (device *RS485Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -3440,11 +3393,11 @@ func (device *RS485Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *RS485Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -3464,7 +3417,7 @@ func (device *RS485Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -3474,7 +3427,7 @@ func (device *RS485Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *RS485Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -3503,16 +3456,16 @@ func (device *RS485Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RS485Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

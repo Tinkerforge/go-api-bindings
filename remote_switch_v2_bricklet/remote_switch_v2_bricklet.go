@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Controls remote mains switches and receives signals from remotes.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/RemoteSwitchV2_Bricklet_Go.html.
 package remote_switch_v2_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,48 +25,48 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetSwitchingState Function = 1
-	FunctionSetRepeats Function = 3
-	FunctionGetRepeats Function = 4
-	FunctionSwitchSocketA Function = 5
-	FunctionSwitchSocketB Function = 6
-	FunctionDimSocketB Function = 7
-	FunctionSwitchSocketC Function = 8
-	FunctionSetRemoteConfiguration Function = 9
-	FunctionGetRemoteConfiguration Function = 10
-	FunctionGetRemoteStatusA Function = 11
-	FunctionGetRemoteStatusB Function = 12
-	FunctionGetRemoteStatusC Function = 13
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
+	FunctionGetSwitchingState       Function = 1
+	FunctionSetRepeats              Function = 3
+	FunctionGetRepeats              Function = 4
+	FunctionSwitchSocketA           Function = 5
+	FunctionSwitchSocketB           Function = 6
+	FunctionDimSocketB              Function = 7
+	FunctionSwitchSocketC           Function = 8
+	FunctionSetRemoteConfiguration  Function = 9
+	FunctionGetRemoteConfiguration  Function = 10
+	FunctionGetRemoteStatusA        Function = 11
+	FunctionGetRemoteStatusB        Function = 12
+	FunctionGetRemoteStatusC        Function = 13
+	FunctionGetSPITFPErrorCount     Function = 234
+	FunctionSetBootloaderMode       Function = 235
+	FunctionGetBootloaderMode       Function = 236
 	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackSwitchingDone Function = 2
-	FunctionCallbackRemoteStatusA Function = 14
-	FunctionCallbackRemoteStatusB Function = 15
-	FunctionCallbackRemoteStatusC Function = 16
+	FunctionWriteFirmware           Function = 238
+	FunctionSetStatusLEDConfig      Function = 239
+	FunctionGetStatusLEDConfig      Function = 240
+	FunctionGetChipTemperature      Function = 242
+	FunctionReset                   Function = 243
+	FunctionWriteUID                Function = 248
+	FunctionReadUID                 Function = 249
+	FunctionGetIdentity             Function = 255
+	FunctionCallbackSwitchingDone   Function = 2
+	FunctionCallbackRemoteStatusA   Function = 14
+	FunctionCallbackRemoteStatusB   Function = 15
+	FunctionCallbackRemoteStatusC   Function = 16
 )
 
 type SwitchingState = uint8
 
 const (
 	SwitchingStateReady SwitchingState = 0
-	SwitchingStateBusy SwitchingState = 1
+	SwitchingStateBusy  SwitchingState = 1
 )
 
 type SwitchTo = uint8
 
 const (
 	SwitchToOff SwitchTo = 0
-	SwitchToOn SwitchTo = 1
+	SwitchToOn  SwitchTo = 1
 )
 
 type RemoteType = uint8
@@ -81,70 +80,71 @@ const (
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type RemoteSwitchV2Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 289
 const DeviceDisplayName = "Remote Switch Bricklet 2.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (RemoteSwitchV2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return RemoteSwitchV2Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetSwitchingState] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetRepeats] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetRepeats] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSwitchSocketA] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSwitchSocketB] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionDimSocketB] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSwitchSocketC] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionSetRemoteConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetRemoteConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetRemoteStatusA] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetRemoteStatusB] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetRemoteStatusC] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetSwitchingState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetRepeats] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetRepeats] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSwitchSocketA] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSwitchSocketB] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionDimSocketB] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSwitchSocketC] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionSetRemoteConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetRemoteConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetRemoteStatusA] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetRemoteStatusB] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetRemoteStatusC] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return RemoteSwitchV2Bricklet{dev}, nil
 }
 
@@ -198,9 +198,7 @@ func (device *RemoteSwitchV2Bricklet) RegisterSwitchingDoneCallback(fn func()) u
 		if header.Length != 8 {
 			return
 		}
-		
-		
-		
+
 		fn()
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackSwitchingDone), wrapper)
@@ -211,13 +209,12 @@ func (device *RemoteSwitchV2Bricklet) DeregisterSwitchingDoneCallback(registrati
 	device.device.DeregisterCallback(uint8(FunctionCallbackSwitchingDone), registrationId)
 }
 
-
 // Returns the house code, receiver code, switch state (on/off) and number of repeats for
 // remote type A.
-// 
+//
 // The repeats are the number of received identical data packets. The longer the button is pressed,
 // the higher the repeat number. The callback is triggered with every repeat.
-// 
+//
 // You have to enable the callback with SetRemoteConfiguration. The number
 // of repeats that you can set in the configuration is the minimum number of repeats that have
 // to be seen before the callback is triggered for the first time.
@@ -248,15 +245,14 @@ func (device *RemoteSwitchV2Bricklet) DeregisterRemoteStatusACallback(registrati
 	device.device.DeregisterCallback(uint8(FunctionCallbackRemoteStatusA), registrationId)
 }
 
-
 // Returns the address (unique per remote), unit (button number), switch state (on/off) and number of repeats for
 // remote type B.
-// 
+//
 // If the remote supports dimming the dim value is used instead of the switch state.
-// 
+//
 // The repeats are the number of received identical data packets. The longer the button is pressed,
 // the higher the repeat number. The callback is triggered with every repeat.
-// 
+//
 // You have to enable the callback with SetRemoteConfiguration. The number
 // of repeats that you can set in the configuration is the minimum number of repeats that have
 // to be seen before the callback is triggered for the first time.
@@ -289,13 +285,12 @@ func (device *RemoteSwitchV2Bricklet) DeregisterRemoteStatusBCallback(registrati
 	device.device.DeregisterCallback(uint8(FunctionCallbackRemoteStatusB), registrationId)
 }
 
-
 // Returns the system code, device code, switch state (on/off) and number of repeats for
 // remote type C.
-// 
+//
 // The repeats are the number of received identical data packets. The longer the button is pressed,
 // the higher the repeat number. The callback is triggered with every repeat.
-// 
+//
 // You have to enable the callback with SetRemoteConfiguration. The number
 // of repeats that you can set in the configuration is the minimum number of repeats that have
 // to be seen before the callback is triggered for the first time.
@@ -326,11 +321,10 @@ func (device *RemoteSwitchV2Bricklet) DeregisterRemoteStatusCCallback(registrati
 	device.device.DeregisterCallback(uint8(FunctionCallbackRemoteStatusC), registrationId)
 }
 
-
 // Returns the current switching state. If the current state is busy, the
 // Bricklet is currently sending a code to switch a socket. It will not
 // accept any calls of switch socket functions until the state changes to ready.
-// 
+//
 // How long the switching takes is dependent on the number of repeats, see
 // SetRepeats.
 //
@@ -340,7 +334,7 @@ func (device *RemoteSwitchV2Bricklet) DeregisterRemoteStatusCCallback(registrati
 //	* SwitchingStateBusy
 func (device *RemoteSwitchV2Bricklet) GetSwitchingState() (state SwitchingState, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSwitchingState), buf.Bytes())
 	if err != nil {
 		return state, err
@@ -369,12 +363,12 @@ func (device *RemoteSwitchV2Bricklet) GetSwitchingState() (state SwitchingState,
 // Sets the number of times the code is sent when one of the Switch Socket
 // functions is called. The repeats basically correspond to the amount of time
 // that a button of the remote is pressed.
-// 
+//
 // Some dimmers are controlled by the length of a button pressed,
 // this can be simulated by increasing the repeats.
 func (device *RemoteSwitchV2Bricklet) SetRepeats(repeats uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, repeats);
+	binary.Write(&buf, binary.LittleEndian, repeats)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetRepeats), buf.Bytes())
 	if err != nil {
@@ -394,7 +388,7 @@ func (device *RemoteSwitchV2Bricklet) SetRepeats(repeats uint8) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -403,7 +397,7 @@ func (device *RemoteSwitchV2Bricklet) SetRepeats(repeats uint8) (err error) {
 // Returns the number of repeats as set by SetRepeats.
 func (device *RemoteSwitchV2Bricklet) GetRepeats() (repeats uint8, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRepeats), buf.Bytes())
 	if err != nil {
 		return repeats, err
@@ -431,7 +425,7 @@ func (device *RemoteSwitchV2Bricklet) GetRepeats() (repeats uint8, err error) {
 
 // To switch a type A socket you have to give the house code, receiver code and the
 // state (on or off) you want to switch to.
-// 
+//
 // A detailed description on how you can figure out the house and receiver code
 // can be found `here <remote_switch_bricklet_type_a_house_and_receiver_code>`.
 //
@@ -441,9 +435,9 @@ func (device *RemoteSwitchV2Bricklet) GetRepeats() (repeats uint8, err error) {
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) SwitchSocketA(houseCode uint8, receiverCode uint8, switchTo SwitchTo) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, houseCode);
-	binary.Write(&buf, binary.LittleEndian, receiverCode);
-	binary.Write(&buf, binary.LittleEndian, switchTo);
+	binary.Write(&buf, binary.LittleEndian, houseCode)
+	binary.Write(&buf, binary.LittleEndian, receiverCode)
+	binary.Write(&buf, binary.LittleEndian, switchTo)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSwitchSocketA), buf.Bytes())
 	if err != nil {
@@ -463,7 +457,7 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketA(houseCode uint8, receiverCod
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -471,9 +465,9 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketA(houseCode uint8, receiverCod
 
 // To switch a type B socket you have to give the address, unit and the state
 // (on or off) you want to switch to.
-// 
+//
 // To switch all devices with the same address use 255 for the unit.
-// 
+//
 // A detailed description on how you can teach a socket the address and unit can
 // be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
 //
@@ -483,9 +477,9 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketA(houseCode uint8, receiverCod
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) SwitchSocketB(address uint32, unit uint8, switchTo SwitchTo) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, address);
-	binary.Write(&buf, binary.LittleEndian, unit);
-	binary.Write(&buf, binary.LittleEndian, switchTo);
+	binary.Write(&buf, binary.LittleEndian, address)
+	binary.Write(&buf, binary.LittleEndian, unit)
+	binary.Write(&buf, binary.LittleEndian, switchTo)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSwitchSocketB), buf.Bytes())
 	if err != nil {
@@ -505,7 +499,7 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketB(address uint32, unit uint8, 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -513,14 +507,14 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketB(address uint32, unit uint8, 
 
 // To control a type B dimmer you have to give the address, unit and the
 // dim value you want to set the dimmer to.
-// 
+//
 // A detailed description on how you can teach a dimmer the address and unit can
 // be found `here <remote_switch_bricklet_type_b_address_and_unit>`.
 func (device *RemoteSwitchV2Bricklet) DimSocketB(address uint32, unit uint8, dimValue uint8) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, address);
-	binary.Write(&buf, binary.LittleEndian, unit);
-	binary.Write(&buf, binary.LittleEndian, dimValue);
+	binary.Write(&buf, binary.LittleEndian, address)
+	binary.Write(&buf, binary.LittleEndian, unit)
+	binary.Write(&buf, binary.LittleEndian, dimValue)
 
 	resultBytes, err := device.device.Set(uint8(FunctionDimSocketB), buf.Bytes())
 	if err != nil {
@@ -540,7 +534,7 @@ func (device *RemoteSwitchV2Bricklet) DimSocketB(address uint32, unit uint8, dim
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -548,7 +542,7 @@ func (device *RemoteSwitchV2Bricklet) DimSocketB(address uint32, unit uint8, dim
 
 // To switch a type C socket you have to give the system code, device code and the
 // state (on or off) you want to switch to.
-// 
+//
 // A detailed description on how you can figure out the system and device code
 // can be found `here <remote_switch_bricklet_type_c_system_and_device_code>`.
 //
@@ -558,9 +552,9 @@ func (device *RemoteSwitchV2Bricklet) DimSocketB(address uint32, unit uint8, dim
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) SwitchSocketC(systemCode rune, deviceCode uint8, switchTo SwitchTo) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, systemCode);
-	binary.Write(&buf, binary.LittleEndian, deviceCode);
-	binary.Write(&buf, binary.LittleEndian, switchTo);
+	binary.Write(&buf, binary.LittleEndian, systemCode)
+	binary.Write(&buf, binary.LittleEndian, deviceCode)
+	binary.Write(&buf, binary.LittleEndian, switchTo)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSwitchSocketC), buf.Bytes())
 	if err != nil {
@@ -580,14 +574,14 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketC(systemCode rune, deviceCode 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
 }
 
 // Sets the configuration for **receiving** data from a remote of type A, B or C.
-// 
+//
 // * Remote Type: A, B or C depending on the type of remote you want to receive.
 // * Minimum Repeats: The minimum number of repeated data packets until the callback
 //   is triggered (if enabled).
@@ -601,9 +595,9 @@ func (device *RemoteSwitchV2Bricklet) SwitchSocketC(systemCode rune, deviceCode 
 //	* RemoteTypeC
 func (device *RemoteSwitchV2Bricklet) SetRemoteConfiguration(remoteType RemoteType, minimumRepeats uint16, callbackEnabled bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, remoteType);
-	binary.Write(&buf, binary.LittleEndian, minimumRepeats);
-	binary.Write(&buf, binary.LittleEndian, callbackEnabled);
+	binary.Write(&buf, binary.LittleEndian, remoteType)
+	binary.Write(&buf, binary.LittleEndian, minimumRepeats)
+	binary.Write(&buf, binary.LittleEndian, callbackEnabled)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetRemoteConfiguration), buf.Bytes())
 	if err != nil {
@@ -623,7 +617,7 @@ func (device *RemoteSwitchV2Bricklet) SetRemoteConfiguration(remoteType RemoteTy
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -638,7 +632,7 @@ func (device *RemoteSwitchV2Bricklet) SetRemoteConfiguration(remoteType RemoteTy
 //	* RemoteTypeC
 func (device *RemoteSwitchV2Bricklet) GetRemoteConfiguration() (remoteType RemoteType, minimumRepeats uint16, callbackEnabled bool, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRemoteConfiguration), buf.Bytes())
 	if err != nil {
 		return remoteType, minimumRepeats, callbackEnabled, err
@@ -668,12 +662,12 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteConfiguration() (remoteType Remot
 
 // Returns the house code, receiver code, switch state (on/off) and number of
 // repeats for remote type A.
-// 
+//
 // Repeats == 0 means there was no button press. Repeats >= 1 means there
 // was a button press with the specified house/receiver code. The repeats are the
 // number of received identical data packets. The longer the button is pressed,
 // the higher the repeat number.
-// 
+//
 // Use the callback to get this data automatically when a button is pressed,
 // see SetRemoteConfiguration and RegisterRemoteStatusACallback callback.
 //
@@ -683,7 +677,7 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteConfiguration() (remoteType Remot
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) GetRemoteStatusA() (houseCode uint8, receiverCode uint8, switchTo SwitchTo, repeats uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRemoteStatusA), buf.Bytes())
 	if err != nil {
 		return houseCode, receiverCode, switchTo, repeats, err
@@ -714,13 +708,13 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteStatusA() (houseCode uint8, recei
 
 // Returns the address (unique per remote), unit (button number), switch state
 // (on/off) and number of repeats for remote type B.
-// 
+//
 // If the remote supports dimming the dim value is used instead of the switch state.
-// 
+//
 // If repeats=0 there was no button press. If repeats >= 1 there
 // was a button press with the specified address/unit. The repeats are the number of received
 // identical data packets. The longer the button is pressed, the higher the repeat number.
-// 
+//
 // Use the callback to get this data automatically when a button is pressed,
 // see SetRemoteConfiguration and RegisterRemoteStatusBCallback callback.
 //
@@ -730,7 +724,7 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteStatusA() (houseCode uint8, recei
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) GetRemoteStatusB() (address uint32, unit uint8, switchTo SwitchTo, dimValue uint8, repeats uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRemoteStatusB), buf.Bytes())
 	if err != nil {
 		return address, unit, switchTo, dimValue, repeats, err
@@ -762,11 +756,11 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteStatusB() (address uint32, unit u
 
 // Returns the system code, device code, switch state (on/off) and number of repeats for
 // remote type C.
-// 
+//
 // If repeats=0 there was no button press. If repeats >= 1 there
 // was a button press with the specified system/device code. The repeats are the number of received
 // identical data packets. The longer the button is pressed, the higher the repeat number.
-// 
+//
 // Use the callback to get this data automatically when a button is pressed,
 // see SetRemoteConfiguration and RegisterRemoteStatusCCallback callback.
 //
@@ -776,7 +770,7 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteStatusB() (address uint32, unit u
 //	* SwitchToOn
 func (device *RemoteSwitchV2Bricklet) GetRemoteStatusC() (systemCode rune, deviceCode uint8, switchTo SwitchTo, repeats uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetRemoteStatusC), buf.Bytes())
 	if err != nil {
 		return systemCode, deviceCode, switchTo, repeats, err
@@ -806,19 +800,19 @@ func (device *RemoteSwitchV2Bricklet) GetRemoteStatusC() (systemCode rune, devic
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *RemoteSwitchV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -849,11 +843,11 @@ func (device *RemoteSwitchV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -872,7 +866,7 @@ func (device *RemoteSwitchV2Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 //	* BootloaderStatusCRCMismatch
 func (device *RemoteSwitchV2Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -910,7 +904,7 @@ func (device *RemoteSwitchV2Bricklet) SetBootloaderMode(mode BootloaderMode) (st
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *RemoteSwitchV2Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -939,12 +933,12 @@ func (device *RemoteSwitchV2Bricklet) GetBootloaderMode() (mode BootloaderMode, 
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RemoteSwitchV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -964,7 +958,7 @@ func (device *RemoteSwitchV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -973,14 +967,14 @@ func (device *RemoteSwitchV2Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *RemoteSwitchV2Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -1010,9 +1004,9 @@ func (device *RemoteSwitchV2Bricklet) WriteFirmware(data [64]uint8) (status uint
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -1023,7 +1017,7 @@ func (device *RemoteSwitchV2Bricklet) WriteFirmware(data [64]uint8) (status uint
 //	* StatusLEDConfigShowStatus
 func (device *RemoteSwitchV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -1043,7 +1037,7 @@ func (device *RemoteSwitchV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1059,7 +1053,7 @@ func (device *RemoteSwitchV2Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigShowStatus
 func (device *RemoteSwitchV2Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -1087,13 +1081,13 @@ func (device *RemoteSwitchV2Bricklet) GetStatusLEDConfig() (config StatusLEDConf
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *RemoteSwitchV2Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -1121,13 +1115,13 @@ func (device *RemoteSwitchV2Bricklet) GetChipTemperature() (temperature int16, e
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *RemoteSwitchV2Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -1146,7 +1140,7 @@ func (device *RemoteSwitchV2Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1155,11 +1149,11 @@ func (device *RemoteSwitchV2Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *RemoteSwitchV2Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -1179,7 +1173,7 @@ func (device *RemoteSwitchV2Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -1189,7 +1183,7 @@ func (device *RemoteSwitchV2Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *RemoteSwitchV2Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -1218,16 +1212,16 @@ func (device *RemoteSwitchV2Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *RemoteSwitchV2Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

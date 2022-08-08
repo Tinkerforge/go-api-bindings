@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures ambient light up to 900lux.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AmbientLight_Bricklet_Go.html.
 package ambient_light_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,31 +25,31 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetIlluminance Function = 1
-	FunctionGetAnalogValue Function = 2
-	FunctionSetIlluminanceCallbackPeriod Function = 3
-	FunctionGetIlluminanceCallbackPeriod Function = 4
-	FunctionSetAnalogValueCallbackPeriod Function = 5
-	FunctionGetAnalogValueCallbackPeriod Function = 6
+	FunctionGetIlluminance                  Function = 1
+	FunctionGetAnalogValue                  Function = 2
+	FunctionSetIlluminanceCallbackPeriod    Function = 3
+	FunctionGetIlluminanceCallbackPeriod    Function = 4
+	FunctionSetAnalogValueCallbackPeriod    Function = 5
+	FunctionGetAnalogValueCallbackPeriod    Function = 6
 	FunctionSetIlluminanceCallbackThreshold Function = 7
 	FunctionGetIlluminanceCallbackThreshold Function = 8
 	FunctionSetAnalogValueCallbackThreshold Function = 9
 	FunctionGetAnalogValueCallbackThreshold Function = 10
-	FunctionSetDebouncePeriod Function = 11
-	FunctionGetDebouncePeriod Function = 12
-	FunctionGetIdentity Function = 255
-	FunctionCallbackIlluminance Function = 13
-	FunctionCallbackAnalogValue Function = 14
-	FunctionCallbackIlluminanceReached Function = 15
-	FunctionCallbackAnalogValueReached Function = 16
+	FunctionSetDebouncePeriod               Function = 11
+	FunctionGetDebouncePeriod               Function = 12
+	FunctionGetIdentity                     Function = 255
+	FunctionCallbackIlluminance             Function = 13
+	FunctionCallbackAnalogValue             Function = 14
+	FunctionCallbackIlluminanceReached      Function = 15
+	FunctionCallbackAnalogValueReached      Function = 16
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -58,29 +57,30 @@ const (
 type AmbientLightBricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 21
 const DeviceDisplayName = "Ambient Light Bricklet"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,1 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return AmbientLightBricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetIlluminanceCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetIlluminanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetIlluminanceCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetIlluminanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetAnalogValue] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetIlluminanceCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetIlluminanceCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackPeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackPeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetIlluminanceCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetIlluminanceCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetAnalogValueCallbackThreshold] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetAnalogValueCallbackThreshold] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetDebouncePeriod] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetDebouncePeriod] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return AmbientLightBricklet{dev}, nil
 }
 
@@ -127,7 +127,7 @@ func (device *AmbientLightBricklet) GetAPIVersion() [3]uint8 {
 // This callback is triggered periodically with the period that is set by
 // SetIlluminanceCallbackPeriod. The parameter is the illuminance of the
 // ambient light sensor.
-// 
+//
 // The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
 // since the last triggering.
 func (device *AmbientLightBricklet) RegisterIlluminanceCallback(fn func(uint16)) uint64 {
@@ -151,11 +151,10 @@ func (device *AmbientLightBricklet) DeregisterIlluminanceCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationId)
 }
 
-
 // This callback is triggered periodically with the period that is set by
 // SetAnalogValueCallbackPeriod. The parameter is the analog value of the
 // ambient light sensor.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *AmbientLightBricklet) RegisterAnalogValueCallback(fn func(uint16)) uint64 {
@@ -179,11 +178,10 @@ func (device *AmbientLightBricklet) DeregisterAnalogValueCallback(registrationId
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValue), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetIlluminanceCallbackThreshold is reached.
 // The parameter is the illuminance of the ambient light sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *AmbientLightBricklet) RegisterIlluminanceReachedCallback(fn func(uint16)) uint64 {
@@ -207,11 +205,10 @@ func (device *AmbientLightBricklet) DeregisterIlluminanceReachedCallback(registr
 	device.device.DeregisterCallback(uint8(FunctionCallbackIlluminanceReached), registrationId)
 }
 
-
 // This callback is triggered when the threshold as set by
 // SetAnalogValueCallbackThreshold is reached.
 // The parameter is the analog value of the ambient light sensor.
-// 
+//
 // If the threshold keeps being reached, the callback is triggered periodically
 // with the period as set by SetDebouncePeriod.
 func (device *AmbientLightBricklet) RegisterAnalogValueReachedCallback(fn func(uint16)) uint64 {
@@ -235,15 +232,14 @@ func (device *AmbientLightBricklet) DeregisterAnalogValueReachedCallback(registr
 	device.device.DeregisterCallback(uint8(FunctionCallbackAnalogValueReached), registrationId)
 }
 
-
 // Returns the illuminance of the ambient light sensor.
-// 
+//
 // If you want to get the illuminance periodically, it is recommended to use the
 // RegisterIlluminanceCallback callback and set the period with
 // SetIlluminanceCallbackPeriod.
 func (device *AmbientLightBricklet) GetIlluminance() (illuminance uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
 	if err != nil {
 		return illuminance, err
@@ -270,23 +266,23 @@ func (device *AmbientLightBricklet) GetIlluminance() (illuminance uint16, err er
 }
 
 // Returns the value as read by a 12-bit analog-to-digital converter.
-// 
+//
 // Note
 //  The value returned by GetIlluminance is averaged over several samples
 //  to yield less noise, while GetAnalogValue gives back raw
 //  unfiltered analog values. The only reason to use GetAnalogValue is,
 //  if you need the full resolution of the analog-to-digital converter.
-// 
+//
 //  Also, the analog-to-digital converter covers three different ranges that are
 //  set dynamically depending on the light intensity. It is impossible to
 //  distinguish between these ranges with the analog value.
-// 
+//
 // If you want the analog value periodically, it is recommended to use the
 // RegisterAnalogValueCallback callback and set the period with
 // SetAnalogValueCallbackPeriod.
 func (device *AmbientLightBricklet) GetAnalogValue() (value uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValue), buf.Bytes())
 	if err != nil {
 		return value, err
@@ -314,12 +310,12 @@ func (device *AmbientLightBricklet) GetAnalogValue() (value uint16, err error) {
 
 // Sets the period with which the RegisterIlluminanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterIlluminanceCallback callback is only triggered if the illuminance has changed
 // since the last triggering.
 func (device *AmbientLightBricklet) SetIlluminanceCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -339,7 +335,7 @@ func (device *AmbientLightBricklet) SetIlluminanceCallbackPeriod(period uint32) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -348,7 +344,7 @@ func (device *AmbientLightBricklet) SetIlluminanceCallbackPeriod(period uint32) 
 // Returns the period as set by SetIlluminanceCallbackPeriod.
 func (device *AmbientLightBricklet) GetIlluminanceCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -376,12 +372,12 @@ func (device *AmbientLightBricklet) GetIlluminanceCallbackPeriod() (period uint3
 
 // Sets the period with which the RegisterAnalogValueCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // The RegisterAnalogValueCallback callback is only triggered if the analog value has
 // changed since the last triggering.
 func (device *AmbientLightBricklet) SetAnalogValueCallbackPeriod(period uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
+	binary.Write(&buf, binary.LittleEndian, period)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
@@ -401,7 +397,7 @@ func (device *AmbientLightBricklet) SetAnalogValueCallbackPeriod(period uint32) 
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -410,7 +406,7 @@ func (device *AmbientLightBricklet) SetAnalogValueCallbackPeriod(period uint32) 
 // Returns the period as set by SetAnalogValueCallbackPeriod.
 func (device *AmbientLightBricklet) GetAnalogValueCallbackPeriod() (period uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackPeriod), buf.Bytes())
 	if err != nil {
 		return period, err
@@ -437,11 +433,11 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackPeriod() (period uint3
 }
 
 // Sets the thresholds for the RegisterIlluminanceReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the illuminance is *outside* the min and max values
 //  'i'|    Callback is triggered when the illuminance is *inside* the min and max values
@@ -457,9 +453,9 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackPeriod() (period uint3
 //	* ThresholdOptionGreater
 func (device *AmbientLightBricklet) SetIlluminanceCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -479,7 +475,7 @@ func (device *AmbientLightBricklet) SetIlluminanceCallbackThreshold(option Thres
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -496,7 +492,7 @@ func (device *AmbientLightBricklet) SetIlluminanceCallbackThreshold(option Thres
 //	* ThresholdOptionGreater
 func (device *AmbientLightBricklet) GetIlluminanceCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -525,11 +521,11 @@ func (device *AmbientLightBricklet) GetIlluminanceCallbackThreshold() (option Th
 }
 
 // Sets the thresholds for the RegisterAnalogValueReachedCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Callback is turned off
 //  'o'|    Callback is triggered when the analog value is *outside* the min and max values
 //  'i'|    Callback is triggered when the analog value is *inside* the min and max values
@@ -545,9 +541,9 @@ func (device *AmbientLightBricklet) GetIlluminanceCallbackThreshold() (option Th
 //	* ThresholdOptionGreater
 func (device *AmbientLightBricklet) SetAnalogValueCallbackThreshold(option ThresholdOption, min uint16, max uint16) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
@@ -567,7 +563,7 @@ func (device *AmbientLightBricklet) SetAnalogValueCallbackThreshold(option Thres
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -584,7 +580,7 @@ func (device *AmbientLightBricklet) SetAnalogValueCallbackThreshold(option Thres
 //	* ThresholdOptionGreater
 func (device *AmbientLightBricklet) GetAnalogValueCallbackThreshold() (option ThresholdOption, min uint16, max uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetAnalogValueCallbackThreshold), buf.Bytes())
 	if err != nil {
 		return option, min, max, err
@@ -613,19 +609,19 @@ func (device *AmbientLightBricklet) GetAnalogValueCallbackThreshold() (option Th
 }
 
 // Sets the period with which the threshold callbacks
-// 
+//
 // * RegisterIlluminanceReachedCallback,
 // * RegisterAnalogValueReachedCallback
-// 
+//
 // are triggered, if the thresholds
-// 
+//
 // * SetIlluminanceCallbackThreshold,
 // * SetAnalogValueCallbackThreshold
-// 
+//
 // keep being reached.
 func (device *AmbientLightBricklet) SetDebouncePeriod(debounce uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, debounce);
+	binary.Write(&buf, binary.LittleEndian, debounce)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetDebouncePeriod), buf.Bytes())
 	if err != nil {
@@ -645,7 +641,7 @@ func (device *AmbientLightBricklet) SetDebouncePeriod(debounce uint32) (err erro
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -654,7 +650,7 @@ func (device *AmbientLightBricklet) SetDebouncePeriod(debounce uint32) (err erro
 // Returns the debounce period as set by SetDebouncePeriod.
 func (device *AmbientLightBricklet) GetDebouncePeriod() (debounce uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetDebouncePeriod), buf.Bytes())
 	if err != nil {
 		return debounce, err
@@ -683,16 +679,16 @@ func (device *AmbientLightBricklet) GetDebouncePeriod() (debounce uint32, err er
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *AmbientLightBricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err

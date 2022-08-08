@@ -1,23 +1,22 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-05-11.      *
+ * This file was automatically generated on 2022-08-08.      *
  *                                                           *
- * Go Bindings Version 2.0.12                                *
+ * Go Bindings Version 2.0.13                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
  * to the generators git repository on tinkerforge.com       *
  *************************************************************/
 
-
 // Measures ambient light up to 64000lux.
-// 
-// 
+//
+//
 // See also the documentation here: https://www.tinkerforge.com/en/doc/Software/Bricklets/AmbientLightV3_Bricklet_Go.html.
 package ambient_light_v3_bricklet
 
 import (
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	. "github.com/Tinkerforge/go-api-bindings/internal"
 	"github.com/Tinkerforge/go-api-bindings/ipconnection"
@@ -26,32 +25,32 @@ import (
 type Function = uint8
 
 const (
-	FunctionGetIlluminance Function = 1
+	FunctionGetIlluminance                      Function = 1
 	FunctionSetIlluminanceCallbackConfiguration Function = 2
 	FunctionGetIlluminanceCallbackConfiguration Function = 3
-	FunctionSetConfiguration Function = 5
-	FunctionGetConfiguration Function = 6
-	FunctionGetSPITFPErrorCount Function = 234
-	FunctionSetBootloaderMode Function = 235
-	FunctionGetBootloaderMode Function = 236
-	FunctionSetWriteFirmwarePointer Function = 237
-	FunctionWriteFirmware Function = 238
-	FunctionSetStatusLEDConfig Function = 239
-	FunctionGetStatusLEDConfig Function = 240
-	FunctionGetChipTemperature Function = 242
-	FunctionReset Function = 243
-	FunctionWriteUID Function = 248
-	FunctionReadUID Function = 249
-	FunctionGetIdentity Function = 255
-	FunctionCallbackIlluminance Function = 4
+	FunctionSetConfiguration                    Function = 5
+	FunctionGetConfiguration                    Function = 6
+	FunctionGetSPITFPErrorCount                 Function = 234
+	FunctionSetBootloaderMode                   Function = 235
+	FunctionGetBootloaderMode                   Function = 236
+	FunctionSetWriteFirmwarePointer             Function = 237
+	FunctionWriteFirmware                       Function = 238
+	FunctionSetStatusLEDConfig                  Function = 239
+	FunctionGetStatusLEDConfig                  Function = 240
+	FunctionGetChipTemperature                  Function = 242
+	FunctionReset                               Function = 243
+	FunctionWriteUID                            Function = 248
+	FunctionReadUID                             Function = 249
+	FunctionGetIdentity                         Function = 255
+	FunctionCallbackIlluminance                 Function = 4
 )
 
 type ThresholdOption = rune
 
 const (
-	ThresholdOptionOff ThresholdOption = 'x'
+	ThresholdOptionOff     ThresholdOption = 'x'
 	ThresholdOptionOutside ThresholdOption = 'o'
-	ThresholdOptionInside ThresholdOption = 'i'
+	ThresholdOptionInside  ThresholdOption = 'i'
 	ThresholdOptionSmaller ThresholdOption = '<'
 	ThresholdOptionGreater ThresholdOption = '>'
 )
@@ -60,18 +59,18 @@ type IlluminanceRange = uint8
 
 const (
 	IlluminanceRangeUnlimited IlluminanceRange = 6
-	IlluminanceRange64000Lux IlluminanceRange = 0
-	IlluminanceRange32000Lux IlluminanceRange = 1
-	IlluminanceRange16000Lux IlluminanceRange = 2
-	IlluminanceRange8000Lux IlluminanceRange = 3
-	IlluminanceRange1300Lux IlluminanceRange = 4
-	IlluminanceRange600Lux IlluminanceRange = 5
+	IlluminanceRange64000Lux  IlluminanceRange = 0
+	IlluminanceRange32000Lux  IlluminanceRange = 1
+	IlluminanceRange16000Lux  IlluminanceRange = 2
+	IlluminanceRange8000Lux   IlluminanceRange = 3
+	IlluminanceRange1300Lux   IlluminanceRange = 4
+	IlluminanceRange600Lux    IlluminanceRange = 5
 )
 
 type IntegrationTime = uint8
 
 const (
-	IntegrationTime50ms IntegrationTime = 0
+	IntegrationTime50ms  IntegrationTime = 0
 	IntegrationTime100ms IntegrationTime = 1
 	IntegrationTime150ms IntegrationTime = 2
 	IntegrationTime200ms IntegrationTime = 3
@@ -84,63 +83,64 @@ const (
 type BootloaderMode = uint8
 
 const (
-	BootloaderModeBootloader BootloaderMode = 0
-	BootloaderModeFirmware BootloaderMode = 1
-	BootloaderModeBootloaderWaitForReboot BootloaderMode = 2
-	BootloaderModeFirmwareWaitForReboot BootloaderMode = 3
+	BootloaderModeBootloader                    BootloaderMode = 0
+	BootloaderModeFirmware                      BootloaderMode = 1
+	BootloaderModeBootloaderWaitForReboot       BootloaderMode = 2
+	BootloaderModeFirmwareWaitForReboot         BootloaderMode = 3
 	BootloaderModeFirmwareWaitForEraseAndReboot BootloaderMode = 4
 )
 
 type BootloaderStatus = uint8
 
 const (
-	BootloaderStatusOK BootloaderStatus = 0
-	BootloaderStatusInvalidMode BootloaderStatus = 1
-	BootloaderStatusNoChange BootloaderStatus = 2
-	BootloaderStatusEntryFunctionNotPresent BootloaderStatus = 3
+	BootloaderStatusOK                        BootloaderStatus = 0
+	BootloaderStatusInvalidMode               BootloaderStatus = 1
+	BootloaderStatusNoChange                  BootloaderStatus = 2
+	BootloaderStatusEntryFunctionNotPresent   BootloaderStatus = 3
 	BootloaderStatusDeviceIdentifierIncorrect BootloaderStatus = 4
-	BootloaderStatusCRCMismatch BootloaderStatus = 5
+	BootloaderStatusCRCMismatch               BootloaderStatus = 5
 )
 
 type StatusLEDConfig = uint8
 
 const (
-	StatusLEDConfigOff StatusLEDConfig = 0
-	StatusLEDConfigOn StatusLEDConfig = 1
+	StatusLEDConfigOff           StatusLEDConfig = 0
+	StatusLEDConfigOn            StatusLEDConfig = 1
 	StatusLEDConfigShowHeartbeat StatusLEDConfig = 2
-	StatusLEDConfigShowStatus StatusLEDConfig = 3
+	StatusLEDConfigShowStatus    StatusLEDConfig = 3
 )
 
 type AmbientLightV3Bricklet struct {
 	device Device
 }
+
 const DeviceIdentifier = 2131
 const DeviceDisplayName = "Ambient Light Bricklet 3.0"
 
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (AmbientLightV3Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{ 2,0,0 }, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return AmbientLightV3Bricklet{}, err
 	}
-	dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetIlluminanceCallbackConfiguration] = ResponseExpectedFlagTrue;
-	dev.ResponseExpected[FunctionGetIlluminanceCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse;
-	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue;
-	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue;
+	dev.ResponseExpected[FunctionGetIlluminance] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetIlluminanceCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetIlluminanceCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetConfiguration] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetWriteFirmwarePointer] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteFirmware] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetStatusLEDConfig] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionGetStatusLEDConfig] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetChipTemperature] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionReset] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteUID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionReadUID] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionGetIdentity] = ResponseExpectedFlagAlwaysTrue
 	return AmbientLightV3Bricklet{dev}, nil
 }
 
@@ -186,7 +186,7 @@ func (device *AmbientLightV3Bricklet) GetAPIVersion() [3]uint8 {
 
 // This callback is triggered periodically according to the configuration set by
 // SetIlluminanceCallbackConfiguration.
-// 
+//
 // The parameter is the same as GetIlluminance.
 func (device *AmbientLightV3Bricklet) RegisterIlluminanceCallback(fn func(uint32)) uint64 {
 	wrapper := func(byteSlice []byte) {
@@ -209,25 +209,24 @@ func (device *AmbientLightV3Bricklet) DeregisterIlluminanceCallback(registration
 	device.device.DeregisterCallback(uint8(FunctionCallbackIlluminance), registrationId)
 }
 
-
 // Returns the illuminance of the ambient light sensor. The measurement range goes
 // up to about 100000lux, but above 64000lux the precision starts to drop.
 // The illuminance is given in lux/100, i.e. a value of 450000 means that an
 // illuminance of 4500lux is measured.
-// 
+//
 // An illuminance of 0lux indicates an error condition where the sensor cannot
 // perform a reasonable measurement. This can happen with very dim or very bright
 // light conditions. In bright light conditions this might indicate that the sensor
 // is saturated and the configuration should be modified (SetConfiguration)
 // to better match the conditions.
-// 
-// 
+//
+//
 // If you want to get the value periodically, it is recommended to use the
 // RegisterIlluminanceCallback callback. You can set the callback configuration
 // with SetIlluminanceCallbackConfiguration.
 func (device *AmbientLightV3Bricklet) GetIlluminance() (illuminance uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminance), buf.Bytes())
 	if err != nil {
 		return illuminance, err
@@ -255,28 +254,28 @@ func (device *AmbientLightV3Bricklet) GetIlluminance() (illuminance uint32, err 
 
 // The period is the period with which the RegisterIlluminanceCallback callback is triggered
 // periodically. A value of 0 turns the callback off.
-// 
+//
 // If the `value has to change`-parameter is set to true, the callback is only
 // triggered after the value has changed. If the value didn't change
 // within the period, the callback is triggered immediately on change.
-// 
+//
 // If it is set to false, the callback is continuously triggered with the period,
 // independent of the value.
-// 
+//
 // It is furthermore possible to constrain the callback with thresholds.
-// 
+//
 // The `option`-parameter together with min/max sets a threshold for the RegisterIlluminanceCallback callback.
-// 
+//
 // The following options are possible:
-// 
+//
 //  Option| Description
-//  --- | --- 
+//  --- | ---
 //  'x'|    Threshold is turned off
 //  'o'|    Threshold is triggered when the value is *outside* the min and max values
 //  'i'|    Threshold is triggered when the value is *inside* or equal to the min and max values
 //  '<'|    Threshold is triggered when the value is smaller than the min value (max is ignored)
 //  '>'|    Threshold is triggered when the value is greater than the min value (max is ignored)
-// 
+//
 // If the option is set to 'x' (threshold turned off) the callback is triggered with the fixed period.
 //
 // Associated constants:
@@ -288,11 +287,11 @@ func (device *AmbientLightV3Bricklet) GetIlluminance() (illuminance uint32, err 
 //	* ThresholdOptionGreater
 func (device *AmbientLightV3Bricklet) SetIlluminanceCallbackConfiguration(period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, period);
-	binary.Write(&buf, binary.LittleEndian, valueHasToChange);
-	binary.Write(&buf, binary.LittleEndian, option);
-	binary.Write(&buf, binary.LittleEndian, min);
-	binary.Write(&buf, binary.LittleEndian, max);
+	binary.Write(&buf, binary.LittleEndian, period)
+	binary.Write(&buf, binary.LittleEndian, valueHasToChange)
+	binary.Write(&buf, binary.LittleEndian, option)
+	binary.Write(&buf, binary.LittleEndian, min)
+	binary.Write(&buf, binary.LittleEndian, max)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetIlluminanceCallbackConfiguration), buf.Bytes())
 	if err != nil {
@@ -312,7 +311,7 @@ func (device *AmbientLightV3Bricklet) SetIlluminanceCallbackConfiguration(period
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -329,7 +328,7 @@ func (device *AmbientLightV3Bricklet) SetIlluminanceCallbackConfiguration(period
 //	* ThresholdOptionGreater
 func (device *AmbientLightV3Bricklet) GetIlluminanceCallbackConfiguration() (period uint32, valueHasToChange bool, option ThresholdOption, min uint32, max uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIlluminanceCallbackConfiguration), buf.Bytes())
 	if err != nil {
 		return period, valueHasToChange, option, min, max, err
@@ -361,21 +360,21 @@ func (device *AmbientLightV3Bricklet) GetIlluminanceCallbackConfiguration() (per
 
 // Sets the configuration. It is possible to configure an illuminance range
 // between 0-600lux and 0-64000lux and an integration time between 50ms and 400ms.
-// 
+//
 // The unlimited illuminance range allows to measure up to about 100000lux, but
 // above 64000lux the precision starts to drop.
-// 
+//
 // A smaller illuminance range increases the resolution of the data. A longer
 // integration time will result in less noise on the data.
-// 
+//
 // If the actual measure illuminance is out-of-range then the current illuminance
 // range maximum +0.01lux is reported by GetIlluminance and the
 // RegisterIlluminanceCallback callback. For example, 800001 for the 0-8000lux range.
-// 
+//
 // With a long integration time the sensor might be saturated before the measured
 // value reaches the maximum of the selected illuminance range. In this case 0lux
 // is reported by GetIlluminance and the RegisterIlluminanceCallback callback.
-// 
+//
 // If the measurement is out-of-range or the sensor is saturated then you should
 // configure the next higher illuminance range. If the highest range is already
 // in use, then start to reduce the integration time.
@@ -399,8 +398,8 @@ func (device *AmbientLightV3Bricklet) GetIlluminanceCallbackConfiguration() (per
 //	* IntegrationTime400ms
 func (device *AmbientLightV3Bricklet) SetConfiguration(illuminanceRange IlluminanceRange, integrationTime IntegrationTime) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, illuminanceRange);
-	binary.Write(&buf, binary.LittleEndian, integrationTime);
+	binary.Write(&buf, binary.LittleEndian, illuminanceRange)
+	binary.Write(&buf, binary.LittleEndian, integrationTime)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetConfiguration), buf.Bytes())
 	if err != nil {
@@ -420,7 +419,7 @@ func (device *AmbientLightV3Bricklet) SetConfiguration(illuminanceRange Illumina
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -447,7 +446,7 @@ func (device *AmbientLightV3Bricklet) SetConfiguration(illuminanceRange Illumina
 //	* IntegrationTime400ms
 func (device *AmbientLightV3Bricklet) GetConfiguration() (illuminanceRange IlluminanceRange, integrationTime IntegrationTime, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetConfiguration), buf.Bytes())
 	if err != nil {
 		return illuminanceRange, integrationTime, err
@@ -475,19 +474,19 @@ func (device *AmbientLightV3Bricklet) GetConfiguration() (illuminanceRange Illum
 }
 
 // Returns the error count for the communication between Brick and Bricklet.
-// 
+//
 // The errors are divided into
-// 
+//
 // * ACK checksum errors,
 // * message checksum errors,
 // * framing errors and
 // * overflow errors.
-// 
+//
 // The errors counts are for errors that occur on the Bricklet side. All
 // Bricks have a similar function that returns the errors on the Brick side.
 func (device *AmbientLightV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32, errorCountMessageChecksum uint32, errorCountFrame uint32, errorCountOverflow uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetSPITFPErrorCount), buf.Bytes())
 	if err != nil {
 		return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, err
@@ -518,11 +517,11 @@ func (device *AmbientLightV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 
 // Sets the bootloader mode and returns the status after the requested
 // mode change was instigated.
-// 
+//
 // You can change from bootloader mode to firmware mode and vice versa. A change
 // from bootloader mode to firmware mode will only take place if the entry function,
 // device identifier and CRC are present and correct.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 //
@@ -541,7 +540,7 @@ func (device *AmbientLightV3Bricklet) GetSPITFPErrorCount() (errorCountAckChecks
 //	* BootloaderStatusCRCMismatch
 func (device *AmbientLightV3Bricklet) SetBootloaderMode(mode BootloaderMode) (status BootloaderStatus, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, mode);
+	binary.Write(&buf, binary.LittleEndian, mode)
 
 	resultBytes, err := device.device.Get(uint8(FunctionSetBootloaderMode), buf.Bytes())
 	if err != nil {
@@ -579,7 +578,7 @@ func (device *AmbientLightV3Bricklet) SetBootloaderMode(mode BootloaderMode) (st
 //	* BootloaderModeFirmwareWaitForEraseAndReboot
 func (device *AmbientLightV3Bricklet) GetBootloaderMode() (mode BootloaderMode, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetBootloaderMode), buf.Bytes())
 	if err != nil {
 		return mode, err
@@ -608,12 +607,12 @@ func (device *AmbientLightV3Bricklet) GetBootloaderMode() (mode BootloaderMode, 
 // Sets the firmware pointer for WriteFirmware. The pointer has
 // to be increased by chunks of size 64. The data is written to flash
 // every 4 chunks (which equals to one page of size 256).
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *AmbientLightV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, pointer);
+	binary.Write(&buf, binary.LittleEndian, pointer)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetWriteFirmwarePointer), buf.Bytes())
 	if err != nil {
@@ -633,7 +632,7 @@ func (device *AmbientLightV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -642,14 +641,14 @@ func (device *AmbientLightV3Bricklet) SetWriteFirmwarePointer(pointer uint32) (e
 // Writes 64 Bytes of firmware at the position as written by
 // SetWriteFirmwarePointer before. The firmware is written
 // to flash every 4 chunks.
-// 
+//
 // You can only write firmware in bootloader mode.
-// 
+//
 // This function is used by Brick Viewer during flashing. It should not be
 // necessary to call it in a normal user program.
 func (device *AmbientLightV3Bricklet) WriteFirmware(data [64]uint8) (status uint8, err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, data);
+	binary.Write(&buf, binary.LittleEndian, data)
 
 	resultBytes, err := device.device.Get(uint8(FunctionWriteFirmware), buf.Bytes())
 	if err != nil {
@@ -679,9 +678,9 @@ func (device *AmbientLightV3Bricklet) WriteFirmware(data [64]uint8) (status uint
 // Sets the status LED configuration. By default the LED shows
 // communication traffic between Brick and Bricklet, it flickers once
 // for every 10 received data packets.
-// 
+//
 // You can also turn the LED permanently on/off or show a heartbeat.
-// 
+//
 // If the Bricklet is in bootloader mode, the LED is will show heartbeat by default.
 //
 // Associated constants:
@@ -692,7 +691,7 @@ func (device *AmbientLightV3Bricklet) WriteFirmware(data [64]uint8) (status uint
 //	* StatusLEDConfigShowStatus
 func (device *AmbientLightV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, config);
+	binary.Write(&buf, binary.LittleEndian, config)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetStatusLEDConfig), buf.Bytes())
 	if err != nil {
@@ -712,7 +711,7 @@ func (device *AmbientLightV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -728,7 +727,7 @@ func (device *AmbientLightV3Bricklet) SetStatusLEDConfig(config StatusLEDConfig)
 //	* StatusLEDConfigShowStatus
 func (device *AmbientLightV3Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetStatusLEDConfig), buf.Bytes())
 	if err != nil {
 		return config, err
@@ -756,13 +755,13 @@ func (device *AmbientLightV3Bricklet) GetStatusLEDConfig() (config StatusLEDConf
 
 // Returns the temperature as measured inside the microcontroller. The
 // value returned is not the ambient temperature!
-// 
+//
 // The temperature is only proportional to the real temperature and it has bad
 // accuracy. Practically it is only useful as an indicator for
 // temperature changes.
 func (device *AmbientLightV3Bricklet) GetChipTemperature() (temperature int16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetChipTemperature), buf.Bytes())
 	if err != nil {
 		return temperature, err
@@ -790,13 +789,13 @@ func (device *AmbientLightV3Bricklet) GetChipTemperature() (temperature int16, e
 
 // Calling this function will reset the Bricklet. All configurations
 // will be lost.
-// 
+//
 // After a reset you have to create new device objects,
 // calling functions on the existing ones will result in
 // undefined behavior!
 func (device *AmbientLightV3Bricklet) Reset() (err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Set(uint8(FunctionReset), buf.Bytes())
 	if err != nil {
 		return err
@@ -815,7 +814,7 @@ func (device *AmbientLightV3Bricklet) Reset() (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -824,11 +823,11 @@ func (device *AmbientLightV3Bricklet) Reset() (err error) {
 // Writes a new UID into flash. If you want to set a new UID
 // you have to decode the Base58 encoded UID string into an
 // integer first.
-// 
+//
 // We recommend that you use Brick Viewer to change the UID.
 func (device *AmbientLightV3Bricklet) WriteUID(uid uint32) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, uid);
+	binary.Write(&buf, binary.LittleEndian, uid)
 
 	resultBytes, err := device.device.Set(uint8(FunctionWriteUID), buf.Bytes())
 	if err != nil {
@@ -848,7 +847,7 @@ func (device *AmbientLightV3Bricklet) WriteUID(uid uint32) (err error) {
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
-		
+
 	}
 
 	return nil
@@ -858,7 +857,7 @@ func (device *AmbientLightV3Bricklet) WriteUID(uid uint32) (err error) {
 // Base58 to get the usual string version.
 func (device *AmbientLightV3Bricklet) ReadUID() (uid uint32, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionReadUID), buf.Bytes())
 	if err != nil {
 		return uid, err
@@ -887,16 +886,16 @@ func (device *AmbientLightV3Bricklet) ReadUID() (uid uint32, err error) {
 // Returns the UID, the UID where the Bricklet is connected to,
 // the position, the hardware and firmware version as well as the
 // device identifier.
-// 
+//
 // The position can be 'a', 'b', 'c', 'd', 'e', 'f', 'g' or 'h' (Bricklet Port).
 // A Bricklet connected to an `Isolator Bricklet <isolator_bricklet>` is always at
 // position 'z'.
-// 
+//
 // The device identifier numbers can be found `here <device_identifier>`.
 // |device_identifier_constant|
 func (device *AmbientLightV3Bricklet) GetIdentity() (uid string, connectedUid string, position rune, hardwareVersion [3]uint8, firmwareVersion [3]uint8, deviceIdentifier uint16, err error) {
 	var buf bytes.Buffer
-	
+
 	resultBytes, err := device.device.Get(uint8(FunctionGetIdentity), buf.Bytes())
 	if err != nil {
 		return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, err
