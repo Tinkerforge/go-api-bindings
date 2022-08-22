@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-08.      *
+ * This file was automatically generated on 2022-08-22.      *
  *                                                           *
- * Go Bindings Version 2.0.13                                *
+ * Go Bindings Version 2.0.14                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -183,7 +183,7 @@ func (device *MultiTouchV2Bricklet) RegisterTouchStateCallback(fn func([13]bool)
 		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var state [13]bool
-		binary.Read(buf, binary.LittleEndian, &state)
+		copy(state[:], ByteSliceToBoolSlice(buf.Next(2)))
 		fn(state)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackTouchState), wrapper)
@@ -234,7 +234,7 @@ func (device *MultiTouchV2Bricklet) GetTouchState() (state [13]bool, err error) 
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &state)
+		copy(state[:], ByteSliceToBoolSlice(resultBuf.Next(2)))
 
 	}
 
@@ -401,7 +401,7 @@ func (device *MultiTouchV2Bricklet) GetElectrodeConfig() (enabledElectrodes [13]
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &enabledElectrodes)
+		copy(enabledElectrodes[:], ByteSliceToBoolSlice(resultBuf.Next(2)))
 
 	}
 

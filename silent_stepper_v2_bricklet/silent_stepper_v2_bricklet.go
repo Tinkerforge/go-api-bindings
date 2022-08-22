@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-08.      *
+ * This file was automatically generated on 2022-08-22.      *
  *                                                           *
- * Go Bindings Version 2.0.13                                *
+ * Go Bindings Version 2.0.14                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -480,7 +480,7 @@ func (device *SilentStepperV2Bricklet) RegisterGPIOStateCallback(fn func([2]bool
 		}
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var gpioState [2]bool
-		binary.Read(buf, binary.LittleEndian, &gpioState)
+		copy(gpioState[:], ByteSliceToBoolSlice(buf.Next(1)))
 		fn(gpioState)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackGPIOState), wrapper)
@@ -2357,7 +2357,7 @@ func (device *SilentStepperV2Bricklet) GetGPIOState() (gpioState [2]bool, err er
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &gpioState)
+		copy(gpioState[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
 
 	}
 

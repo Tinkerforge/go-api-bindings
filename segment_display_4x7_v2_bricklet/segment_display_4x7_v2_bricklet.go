@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-08.      *
+ * This file was automatically generated on 2022-08-22.      *
  *                                                           *
- * Go Bindings Version 2.0.13                                *
+ * Go Bindings Version 2.0.14                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -243,11 +243,11 @@ func (device *SegmentDisplay4x7V2Bricklet) GetSegments() (digit0 [8]bool, digit1
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &digit0)
-		binary.Read(resultBuf, binary.LittleEndian, &digit1)
-		binary.Read(resultBuf, binary.LittleEndian, &digit2)
-		binary.Read(resultBuf, binary.LittleEndian, &digit3)
-		binary.Read(resultBuf, binary.LittleEndian, &colon)
+		copy(digit0[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
+		copy(digit1[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
+		copy(digit2[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
+		copy(digit3[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
+		copy(colon[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
 		binary.Read(resultBuf, binary.LittleEndian, &tick)
 
 	}

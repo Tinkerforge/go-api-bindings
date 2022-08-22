@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-08.      *
+ * This file was automatically generated on 2022-08-22.      *
  *                                                           *
- * Go Bindings Version 2.0.13                                *
+ * Go Bindings Version 2.0.14                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -291,7 +291,7 @@ func (device *IndustrialCounterBricklet) RegisterAllSignalDataCallback(fn func([
 		binary.Read(buf, binary.LittleEndian, &dutyCycle)
 		binary.Read(buf, binary.LittleEndian, &period)
 		binary.Read(buf, binary.LittleEndian, &frequency)
-		binary.Read(buf, binary.LittleEndian, &value)
+		copy(value[:], ByteSliceToBoolSlice(buf.Next(1)))
 		fn(dutyCycle, period, frequency, value)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackAllSignalData), wrapper)
@@ -505,7 +505,7 @@ func (device *IndustrialCounterBricklet) GetAllSignalData() (dutyCycle [4]uint16
 		binary.Read(resultBuf, binary.LittleEndian, &dutyCycle)
 		binary.Read(resultBuf, binary.LittleEndian, &period)
 		binary.Read(resultBuf, binary.LittleEndian, &frequency)
-		binary.Read(resultBuf, binary.LittleEndian, &value)
+		copy(value[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
 
 	}
 
@@ -649,7 +649,7 @@ func (device *IndustrialCounterBricklet) GetAllCounterActive() (active [4]bool, 
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &active)
+		copy(active[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
 
 	}
 

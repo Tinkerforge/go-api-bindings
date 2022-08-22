@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-08.      *
+ * This file was automatically generated on 2022-08-22.      *
  *                                                           *
- * Go Bindings Version 2.0.13                                *
+ * Go Bindings Version 2.0.14                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -234,8 +234,8 @@ func (device *IndustrialDigitalIn4V2Bricklet) RegisterAllValueCallback(fn func([
 		buf := bytes.NewBuffer(byteSlice[8:])
 		var changed [4]bool
 		var value [4]bool
-		binary.Read(buf, binary.LittleEndian, &changed)
-		binary.Read(buf, binary.LittleEndian, &value)
+		copy(changed[:], ByteSliceToBoolSlice(buf.Next(1)))
+		copy(value[:], ByteSliceToBoolSlice(buf.Next(1)))
 		fn(changed, value)
 	}
 	return device.device.RegisterCallback(uint8(FunctionCallbackAllValue), wrapper)
@@ -268,7 +268,7 @@ func (device *IndustrialDigitalIn4V2Bricklet) GetValue() (value [4]bool, err err
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
-		binary.Read(resultBuf, binary.LittleEndian, &value)
+		copy(value[:], ByteSliceToBoolSlice(resultBuf.Next(1)))
 
 	}
 
