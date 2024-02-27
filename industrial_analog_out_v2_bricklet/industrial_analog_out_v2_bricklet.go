@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -207,12 +207,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetEnabled(enabled bool) (err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -235,12 +235,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetEnabled() (enabled bool, err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -268,12 +268,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetVoltage(voltage uint16) (err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -296,12 +296,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetVoltage() (voltage uint16, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -329,12 +329,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetCurrent(current uint16) (err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -357,12 +357,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetCurrent() (current uint16, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return current, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -410,12 +410,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetConfiguration(voltageRange Volta
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -446,12 +446,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetConfiguration() (voltageRange Vo
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltageRange, currentRange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltageRange, currentRange, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltageRange, currentRange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -489,12 +489,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDConfig(config OutLEDConfig
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -524,12 +524,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDConfig() (config OutLEDCon
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -581,12 +581,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetOutLEDStatusConfig(min uint16, m
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -614,12 +614,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetOutLEDStatusConfig() (min uint16
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return min, max, config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return min, max, config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return min, max, config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -655,12 +655,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetSPITFPErrorCount() (errorCountAc
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -710,12 +710,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetBootloaderMode(mode BootloaderMo
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -747,12 +747,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetBootloaderMode() (mode Bootloade
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -782,12 +782,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetWriteFirmwarePointer(pointer uin
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -818,12 +818,12 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteFirmware(data [64]uint8) (stat
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -861,12 +861,12 @@ func (device *IndustrialAnalogOutV2Bricklet) SetStatusLEDConfig(config StatusLED
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -896,12 +896,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetStatusLEDConfig() (config Status
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -930,12 +930,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetChipTemperature() (temperature i
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -964,12 +964,12 @@ func (device *IndustrialAnalogOutV2Bricklet) Reset() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -997,12 +997,12 @@ func (device *IndustrialAnalogOutV2Bricklet) WriteUID(uid uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1026,12 +1026,12 @@ func (device *IndustrialAnalogOutV2Bricklet) ReadUID() (uid uint32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1064,12 +1064,12 @@ func (device *IndustrialAnalogOutV2Bricklet) GetIdentity() (uid string, connecte
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

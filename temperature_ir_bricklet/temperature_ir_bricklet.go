@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -253,12 +253,12 @@ func (device *TemperatureIRBricklet) GetAmbientTemperature() (temperature int16,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -291,12 +291,12 @@ func (device *TemperatureIRBricklet) GetObjectTemperature() (temperature int16, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -333,12 +333,12 @@ func (device *TemperatureIRBricklet) SetEmissivity(emissivity uint16) (err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -361,12 +361,12 @@ func (device *TemperatureIRBricklet) GetEmissivity() (emissivity uint16, err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return emissivity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return emissivity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return emissivity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -395,12 +395,12 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackPeriod(period 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -423,12 +423,12 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackPeriod() (peri
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -457,12 +457,12 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackPeriod(period u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -485,12 +485,12 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackPeriod() (perio
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -535,12 +535,12 @@ func (device *TemperatureIRBricklet) SetAmbientTemperatureCallbackThreshold(opti
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -571,12 +571,12 @@ func (device *TemperatureIRBricklet) GetAmbientTemperatureCallbackThreshold() (o
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -623,12 +623,12 @@ func (device *TemperatureIRBricklet) SetObjectTemperatureCallbackThreshold(optio
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -659,12 +659,12 @@ func (device *TemperatureIRBricklet) GetObjectTemperatureCallbackThreshold() (op
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -701,12 +701,12 @@ func (device *TemperatureIRBricklet) SetDebouncePeriod(debounce uint32) (err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -729,12 +729,12 @@ func (device *TemperatureIRBricklet) GetDebouncePeriod() (debounce uint32, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return debounce, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -767,12 +767,12 @@ func (device *TemperatureIRBricklet) GetIdentity() (uid string, connectedUid str
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

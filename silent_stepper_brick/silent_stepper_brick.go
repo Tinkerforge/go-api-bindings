@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -446,12 +446,12 @@ func (device *SilentStepperBrick) SetMaxVelocity(velocity uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -474,12 +474,12 @@ func (device *SilentStepperBrick) GetMaxVelocity() (velocity uint16, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return velocity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -503,12 +503,12 @@ func (device *SilentStepperBrick) GetCurrentVelocity() (velocity uint16, err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return velocity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -543,12 +543,12 @@ func (device *SilentStepperBrick) SetSpeedRamping(acceleration uint16, deacceler
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -572,12 +572,12 @@ func (device *SilentStepperBrick) GetSpeedRamping() (acceleration uint16, deacce
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return acceleration, deacceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return acceleration, deacceleration, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return acceleration, deacceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -609,12 +609,12 @@ func (device *SilentStepperBrick) FullBrake() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -640,12 +640,12 @@ func (device *SilentStepperBrick) SetCurrentPosition(position int32) (err error)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -672,12 +672,12 @@ func (device *SilentStepperBrick) GetCurrentPosition() (position int32, err erro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -710,12 +710,12 @@ func (device *SilentStepperBrick) SetTargetPosition(position int32) (err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -738,12 +738,12 @@ func (device *SilentStepperBrick) GetTargetPosition() (position int32, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -771,12 +771,12 @@ func (device *SilentStepperBrick) SetSteps(steps int32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -799,12 +799,12 @@ func (device *SilentStepperBrick) GetSteps() (steps int32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return steps, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return steps, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return steps, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -831,12 +831,12 @@ func (device *SilentStepperBrick) GetRemainingSteps() (steps int32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return steps, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return steps, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return steps, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -884,12 +884,12 @@ func (device *SilentStepperBrick) SetStepConfiguration(stepResolution StepResolu
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -924,12 +924,12 @@ func (device *SilentStepperBrick) GetStepConfiguration() (stepResolution StepRes
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return stepResolution, interpolation, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return stepResolution, interpolation, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return stepResolution, interpolation, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -956,12 +956,12 @@ func (device *SilentStepperBrick) DriveForward() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -986,12 +986,12 @@ func (device *SilentStepperBrick) DriveBackward() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1015,12 +1015,12 @@ func (device *SilentStepperBrick) Stop() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1045,12 +1045,12 @@ func (device *SilentStepperBrick) GetStackInputVoltage() (voltage uint16, err er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1085,12 +1085,12 @@ func (device *SilentStepperBrick) GetExternalInputVoltage() (voltage uint16, err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1119,12 +1119,12 @@ func (device *SilentStepperBrick) SetMotorCurrent(current uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1147,12 +1147,12 @@ func (device *SilentStepperBrick) GetMotorCurrent() (current uint16, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return current, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1177,12 +1177,12 @@ func (device *SilentStepperBrick) Enable() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1214,12 +1214,12 @@ func (device *SilentStepperBrick) Disable() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1242,12 +1242,12 @@ func (device *SilentStepperBrick) IsEnabled() (enabled bool, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1317,12 +1317,12 @@ func (device *SilentStepperBrick) SetBasicConfiguration(standstillCurrent uint16
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1345,12 +1345,12 @@ func (device *SilentStepperBrick) GetBasicConfiguration() (standstillCurrent uin
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 23 {
-			return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
-		}
-
 		if header.ErrorCode != 0 {
 			return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 23 {
+			return standstillCurrent, motorRunCurrent, standstillDelayTime, powerDownTime, stealthThreshold, coolstepThreshold, classicThreshold, highVelocityChopperMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1433,12 +1433,12 @@ func (device *SilentStepperBrick) SetSpreadcycleConfiguration(slowDecayDuration 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1466,12 +1466,12 @@ func (device *SilentStepperBrick) GetSpreadcycleConfiguration() (slowDecayDurati
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return slowDecayDuration, enableRandomSlowDecay, fastDecayDuration, hysteresisStartValue, hysteresisEndValue, sineWaveOffset, chopperMode, comparatorBlankTime, fastDecayWithoutComparator, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1538,12 +1538,12 @@ func (device *SilentStepperBrick) SetStealthConfiguration(enableStealth bool, am
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1573,12 +1573,12 @@ func (device *SilentStepperBrick) GetStealthConfiguration() (enableStealth bool,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 14 {
-			return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
-		}
-
 		if header.ErrorCode != 0 {
 			return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 14 {
+			return enableStealth, amplitude, gradient, enableAutoscale, forceSymmetric, freewheelMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1655,12 +1655,12 @@ func (device *SilentStepperBrick) SetCoolstepConfiguration(minimumStallguardValu
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1698,12 +1698,12 @@ func (device *SilentStepperBrick) GetCoolstepConfiguration() (minimumStallguardV
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 15 {
-			return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
-		}
-
 		if header.ErrorCode != 0 {
 			return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 15 {
+			return minimumStallguardValue, maximumStallguardValue, currentUpStepWidth, currentDownStepWidth, minimumCurrent, stallguardThresholdValue, stallguardMode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1747,12 +1747,12 @@ func (device *SilentStepperBrick) SetMiscConfiguration(disableShortToGroundProte
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1775,12 +1775,12 @@ func (device *SilentStepperBrick) GetMiscConfiguration() (disableShortToGroundPr
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return disableShortToGroundProtection, synchronizePhaseFrequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return disableShortToGroundProtection, synchronizePhaseFrequency, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return disableShortToGroundProtection, synchronizePhaseFrequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1845,12 +1845,12 @@ func (device *SilentStepperBrick) GetDriverStatus() (openLoad OpenLoad, shortToG
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return openLoad, shortToGround, overTemperature, motorStalled, actualMotorCurrent, fullStepActive, stallguardResult, stealthVoltageAmplitude, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1887,12 +1887,12 @@ func (device *SilentStepperBrick) SetMinimumVoltage(voltage uint16) (err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1915,12 +1915,12 @@ func (device *SilentStepperBrick) GetMinimumVoltage() (voltage uint16, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1950,12 +1950,12 @@ func (device *SilentStepperBrick) SetTimeBase(timeBase uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1978,12 +1978,12 @@ func (device *SilentStepperBrick) GetTimeBase() (timeBase uint32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return timeBase, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return timeBase, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return timeBase, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2019,12 +2019,12 @@ func (device *SilentStepperBrick) GetAllData() (currentVelocity uint16, currentP
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return currentVelocity, currentPosition, remainingSteps, stackVoltage, externalVoltage, currentConsumption, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2055,12 +2055,12 @@ func (device *SilentStepperBrick) SetAllDataPeriod(period uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2083,12 +2083,12 @@ func (device *SilentStepperBrick) GetAllDataPeriod() (period uint32, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2133,12 +2133,12 @@ func (device *SilentStepperBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2163,12 +2163,12 @@ func (device *SilentStepperBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudra
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2210,12 +2210,12 @@ func (device *SilentStepperBrick) GetSendTimeoutCount(communicationMethod Commun
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return timeoutCount, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2253,12 +2253,12 @@ func (device *SilentStepperBrick) SetSPITFPBaudrate(brickletPort rune, baudrate 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2282,12 +2282,12 @@ func (device *SilentStepperBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return baudrate, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2322,12 +2322,12 @@ func (device *SilentStepperBrick) GetSPITFPErrorCount(brickletPort rune) (errorC
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2359,12 +2359,12 @@ func (device *SilentStepperBrick) EnableStatusLED() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2392,12 +2392,12 @@ func (device *SilentStepperBrick) DisableStatusLED() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2420,12 +2420,12 @@ func (device *SilentStepperBrick) IsStatusLEDEnabled() (enabled bool, err error)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2454,12 +2454,12 @@ func (device *SilentStepperBrick) GetProtocol1BrickletName(port rune) (protocolV
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 52 {
-			return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
-		}
-
 		if header.ErrorCode != 0 {
 			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 52 {
+			return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2490,12 +2490,12 @@ func (device *SilentStepperBrick) GetChipTemperature() (temperature int16, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2524,12 +2524,12 @@ func (device *SilentStepperBrick) Reset() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2559,12 +2559,12 @@ func (device *SilentStepperBrick) WriteBrickletPlugin(port rune, offset uint8, c
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2593,12 +2593,12 @@ func (device *SilentStepperBrick) ReadBrickletPlugin(port rune, offset uint8) (c
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 40 {
-			return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
-		}
-
 		if header.ErrorCode != 0 {
 			return chunk, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 40 {
+			return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2629,12 +2629,12 @@ func (device *SilentStepperBrick) GetIdentity() (uid string, connectedUid string
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

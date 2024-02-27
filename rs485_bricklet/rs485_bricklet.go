@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -1212,12 +1212,12 @@ func (device *RS485Bricklet) WriteLowLevel(messageLength uint16, messageChunkOff
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return messageChunkWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return messageChunkWritten, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return messageChunkWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1276,12 +1276,12 @@ func (device *RS485Bricklet) ReadLowLevel(length uint16) (messageLength uint16, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 72 {
-			return messageLength, messageChunkOffset, messageChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
-		}
-
 		if header.ErrorCode != 0 {
 			return messageLength, messageChunkOffset, messageChunkData, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 72 {
+			return messageLength, messageChunkOffset, messageChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1340,12 +1340,12 @@ func (device *RS485Bricklet) EnableReadCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1370,12 +1370,12 @@ func (device *RS485Bricklet) DisableReadCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1399,12 +1399,12 @@ func (device *RS485Bricklet) IsReadCallbackEnabled() (enabled bool, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1447,12 +1447,12 @@ func (device *RS485Bricklet) SetRS485Configuration(baudrate uint32, parity Parit
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1489,12 +1489,12 @@ func (device *RS485Bricklet) GetRS485Configuration() (baudrate uint32, parity Pa
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return baudrate, parity, stopbits, wordlength, duplex, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return baudrate, parity, stopbits, wordlength, duplex, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return baudrate, parity, stopbits, wordlength, duplex, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1527,12 +1527,12 @@ func (device *RS485Bricklet) SetModbusConfiguration(slaveAddress uint8, masterRe
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1555,12 +1555,12 @@ func (device *RS485Bricklet) GetModbusConfiguration() (slaveAddress uint8, maste
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return slaveAddress, masterRequestTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return slaveAddress, masterRequestTimeout, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return slaveAddress, masterRequestTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1596,12 +1596,12 @@ func (device *RS485Bricklet) SetMode(mode Mode) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1630,12 +1630,12 @@ func (device *RS485Bricklet) GetMode() (mode Mode, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1672,12 +1672,12 @@ func (device *RS485Bricklet) SetCommunicationLEDConfig(config CommunicationLEDCo
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1707,12 +1707,12 @@ func (device *RS485Bricklet) GetCommunicationLEDConfig() (config CommunicationLE
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1752,12 +1752,12 @@ func (device *RS485Bricklet) SetErrorLEDConfig(config ErrorLEDConfig) (err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1787,12 +1787,12 @@ func (device *RS485Bricklet) GetErrorLEDConfig() (config ErrorLEDConfig, err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1827,12 +1827,12 @@ func (device *RS485Bricklet) SetBufferConfig(sendBufferSize uint16, receiveBuffe
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1855,12 +1855,12 @@ func (device *RS485Bricklet) GetBufferConfig() (sendBufferSize uint16, receiveBu
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return sendBufferSize, receiveBufferSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return sendBufferSize, receiveBufferSize, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return sendBufferSize, receiveBufferSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1887,12 +1887,12 @@ func (device *RS485Bricklet) GetBufferStatus() (sendBufferUsed uint16, receiveBu
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return sendBufferUsed, receiveBufferUsed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return sendBufferUsed, receiveBufferUsed, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return sendBufferUsed, receiveBufferUsed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1919,12 +1919,12 @@ func (device *RS485Bricklet) EnableErrorCountCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1949,12 +1949,12 @@ func (device *RS485Bricklet) DisableErrorCountCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1978,12 +1978,12 @@ func (device *RS485Bricklet) IsErrorCountCallbackEnabled() (enabled bool, err er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2007,12 +2007,12 @@ func (device *RS485Bricklet) GetErrorCount() (overrunErrorCount uint32, parityEr
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return overrunErrorCount, parityErrorCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return overrunErrorCount, parityErrorCount, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return overrunErrorCount, parityErrorCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2045,12 +2045,12 @@ func (device *RS485Bricklet) GetModbusCommonErrorCount() (timeoutErrorCount uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 36 {
-			return timeoutErrorCount, checksumErrorCount, frameTooBigErrorCount, illegalFunctionErrorCount, illegalDataAddressErrorCount, illegalDataValueErrorCount, slaveDeviceFailureErrorCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 36)
-		}
-
 		if header.ErrorCode != 0 {
 			return timeoutErrorCount, checksumErrorCount, frameTooBigErrorCount, illegalFunctionErrorCount, illegalDataAddressErrorCount, illegalDataValueErrorCount, slaveDeviceFailureErrorCount, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 36 {
+			return timeoutErrorCount, checksumErrorCount, frameTooBigErrorCount, illegalFunctionErrorCount, illegalDataAddressErrorCount, illegalDataValueErrorCount, slaveDeviceFailureErrorCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 36)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2100,12 +2100,12 @@ func (device *RS485Bricklet) ModbusSlaveReportException(requestID uint8, excepti
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2139,12 +2139,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadCoilsRequestLowLevel(requestID
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2213,12 +2213,12 @@ func (device *RS485Bricklet) ModbusMasterReadCoils(slaveAddress uint8, startingA
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2253,12 +2253,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadHoldingRegistersRequestLowLeve
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2327,12 +2327,12 @@ func (device *RS485Bricklet) ModbusMasterReadHoldingRegisters(slaveAddress uint8
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2363,12 +2363,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleCoilRequest(requestID u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2408,12 +2408,12 @@ func (device *RS485Bricklet) ModbusMasterWriteSingleCoil(slaveAddress uint8, coi
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2445,12 +2445,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteSingleRegisterRequest(request
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2490,12 +2490,12 @@ func (device *RS485Bricklet) ModbusMasterWriteSingleRegister(slaveAddress uint8,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2526,12 +2526,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleCoilsRequest(requestI
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2572,12 +2572,12 @@ func (device *RS485Bricklet) ModbusMasterWriteMultipleCoilsLowLevel(slaveAddress
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2648,12 +2648,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerWriteMultipleRegistersRequest(requ
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2694,12 +2694,12 @@ func (device *RS485Bricklet) ModbusMasterWriteMultipleRegistersLowLevel(slaveAdd
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2774,12 +2774,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadDiscreteInputsRequestLowLevel(
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2848,12 +2848,12 @@ func (device *RS485Bricklet) ModbusMasterReadDiscreteInputs(slaveAddress uint8, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2888,12 +2888,12 @@ func (device *RS485Bricklet) ModbusSlaveAnswerReadInputRegistersRequestLowLevel(
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2962,12 +2962,12 @@ func (device *RS485Bricklet) ModbusMasterReadInputRegisters(slaveAddress uint8, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return requestID, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return requestID, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2997,12 +2997,12 @@ func (device *RS485Bricklet) SetFrameReadableCallbackConfiguration(frameSize uin
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -3027,12 +3027,12 @@ func (device *RS485Bricklet) GetFrameReadableCallbackConfiguration() (frameSize 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return frameSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return frameSize, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return frameSize, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3066,12 +3066,12 @@ func (device *RS485Bricklet) GetSPITFPErrorCount() (errorCountAckChecksum uint32
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3121,12 +3121,12 @@ func (device *RS485Bricklet) SetBootloaderMode(mode BootloaderMode) (status Boot
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3158,12 +3158,12 @@ func (device *RS485Bricklet) GetBootloaderMode() (mode BootloaderMode, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3193,12 +3193,12 @@ func (device *RS485Bricklet) SetWriteFirmwarePointer(pointer uint32) (err error)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -3229,12 +3229,12 @@ func (device *RS485Bricklet) WriteFirmware(data [64]uint8) (status uint8, err er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3272,12 +3272,12 @@ func (device *RS485Bricklet) SetStatusLEDConfig(config StatusLEDConfig) (err err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -3307,12 +3307,12 @@ func (device *RS485Bricklet) GetStatusLEDConfig() (config StatusLEDConfig, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3341,12 +3341,12 @@ func (device *RS485Bricklet) GetChipTemperature() (temperature int16, err error)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3375,12 +3375,12 @@ func (device *RS485Bricklet) Reset() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -3408,12 +3408,12 @@ func (device *RS485Bricklet) WriteUID(uid uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -3437,12 +3437,12 @@ func (device *RS485Bricklet) ReadUID() (uid uint32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3475,12 +3475,12 @@ func (device *RS485Bricklet) GetIdentity() (uid string, connectedUid string, pos
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

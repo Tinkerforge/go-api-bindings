@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -292,12 +292,12 @@ func (device *LaserRangeFinderBricklet) GetDistance() (distance uint16, err erro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return distance, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return distance, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return distance, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -333,12 +333,12 @@ func (device *LaserRangeFinderBricklet) GetVelocity() (velocity int16, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return velocity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -367,12 +367,12 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackPeriod(period uint32)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -395,12 +395,12 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackPeriod() (period uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -429,12 +429,12 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackPeriod(period uint32)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -457,12 +457,12 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackPeriod() (period uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -507,12 +507,12 @@ func (device *LaserRangeFinderBricklet) SetDistanceCallbackThreshold(option Thre
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -543,12 +543,12 @@ func (device *LaserRangeFinderBricklet) GetDistanceCallbackThreshold() (option T
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -595,12 +595,12 @@ func (device *LaserRangeFinderBricklet) SetVelocityCallbackThreshold(option Thre
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -631,12 +631,12 @@ func (device *LaserRangeFinderBricklet) GetVelocityCallbackThreshold() (option T
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return option, min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return option, min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -673,12 +673,12 @@ func (device *LaserRangeFinderBricklet) SetDebouncePeriod(debounce uint32) (err 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -701,12 +701,12 @@ func (device *LaserRangeFinderBricklet) GetDebouncePeriod() (debounce uint32, er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return debounce, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return debounce, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -736,12 +736,12 @@ func (device *LaserRangeFinderBricklet) SetMovingAverage(distanceAverageLength u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -764,12 +764,12 @@ func (device *LaserRangeFinderBricklet) GetMovingAverage() (distanceAverageLengt
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return distanceAverageLength, velocityAverageLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return distanceAverageLength, velocityAverageLength, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return distanceAverageLength, velocityAverageLength, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -818,12 +818,12 @@ func (device *LaserRangeFinderBricklet) SetMode(mode Mode) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -854,12 +854,12 @@ func (device *LaserRangeFinderBricklet) GetMode() (mode Mode, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -886,12 +886,12 @@ func (device *LaserRangeFinderBricklet) EnableLaser() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -914,12 +914,12 @@ func (device *LaserRangeFinderBricklet) DisableLaser() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -942,12 +942,12 @@ func (device *LaserRangeFinderBricklet) IsLaserEnabled() (laserEnabled bool, err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return laserEnabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return laserEnabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return laserEnabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -978,12 +978,12 @@ func (device *LaserRangeFinderBricklet) GetSensorHardwareVersion() (version Vers
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return version, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return version, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return version, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1041,12 +1041,12 @@ func (device *LaserRangeFinderBricklet) SetConfiguration(acquisitionCount uint8,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1071,12 +1071,12 @@ func (device *LaserRangeFinderBricklet) GetConfiguration() (acquisitionCount uin
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return acquisitionCount, enableQuickTermination, thresholdValue, measurementFrequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return acquisitionCount, enableQuickTermination, thresholdValue, measurementFrequency, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return acquisitionCount, enableQuickTermination, thresholdValue, measurementFrequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1112,12 +1112,12 @@ func (device *LaserRangeFinderBricklet) GetIdentity() (uid string, connectedUid 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

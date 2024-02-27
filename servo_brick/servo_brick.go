@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -298,12 +298,12 @@ func (device *ServoBrick) Enable(servoNum uint8) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -328,12 +328,12 @@ func (device *ServoBrick) Disable(servoNum uint8) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -357,12 +357,12 @@ func (device *ServoBrick) IsEnabled(servoNum uint8) (enabled bool, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -395,12 +395,12 @@ func (device *ServoBrick) SetPosition(servoNum uint8, position int16) (err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -424,12 +424,12 @@ func (device *ServoBrick) GetPosition(servoNum uint8) (position int16, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -456,12 +456,12 @@ func (device *ServoBrick) GetCurrentPosition(servoNum uint8) (position int16, er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -491,12 +491,12 @@ func (device *ServoBrick) SetVelocity(servoNum uint8, velocity uint16) (err erro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -520,12 +520,12 @@ func (device *ServoBrick) GetVelocity(servoNum uint8) (velocity uint16, err erro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return velocity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -552,12 +552,12 @@ func (device *ServoBrick) GetCurrentVelocity(servoNum uint8) (velocity uint16, e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return velocity, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return velocity, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -586,12 +586,12 @@ func (device *ServoBrick) SetAcceleration(servoNum uint8, acceleration uint16) (
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -616,12 +616,12 @@ func (device *ServoBrick) GetAcceleration(servoNum uint8) (acceleration uint16, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return acceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return acceleration, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return acceleration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -651,12 +651,12 @@ func (device *ServoBrick) SetOutputVoltage(voltage uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -679,12 +679,12 @@ func (device *ServoBrick) GetOutputVoltage() (voltage uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -723,12 +723,12 @@ func (device *ServoBrick) SetPulseWidth(servoNum uint8, min uint16, max uint16) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -753,12 +753,12 @@ func (device *ServoBrick) GetPulseWidth(servoNum uint8) (min uint16, max uint16,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -812,12 +812,12 @@ func (device *ServoBrick) SetDegree(servoNum uint8, min int16, max int16) (err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -842,12 +842,12 @@ func (device *ServoBrick) GetDegree(servoNum uint8) (min int16, max int16, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return min, max, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return min, max, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -884,12 +884,12 @@ func (device *ServoBrick) SetPeriod(servoNum uint8, period uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -913,12 +913,12 @@ func (device *ServoBrick) GetPeriod(servoNum uint8) (period uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -943,12 +943,12 @@ func (device *ServoBrick) GetServoCurrent(servoNum uint8) (current uint16, err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return current, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -972,12 +972,12 @@ func (device *ServoBrick) GetOverallCurrent() (current uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return current, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return current, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1003,12 +1003,12 @@ func (device *ServoBrick) GetStackInputVoltage() (voltage uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1043,12 +1043,12 @@ func (device *ServoBrick) GetExternalInputVoltage() (voltage uint16, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1077,12 +1077,12 @@ func (device *ServoBrick) SetMinimumVoltage(voltage uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1105,12 +1105,12 @@ func (device *ServoBrick) GetMinimumVoltage() (voltage uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1138,12 +1138,12 @@ func (device *ServoBrick) EnablePositionReachedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1168,12 +1168,12 @@ func (device *ServoBrick) DisablePositionReachedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1198,12 +1198,12 @@ func (device *ServoBrick) IsPositionReachedCallbackEnabled() (enabled bool, err 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1231,12 +1231,12 @@ func (device *ServoBrick) EnableVelocityReachedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1263,12 +1263,12 @@ func (device *ServoBrick) DisableVelocityReachedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1293,12 +1293,12 @@ func (device *ServoBrick) IsVelocityReachedCallbackEnabled() (enabled bool, err 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1343,12 +1343,12 @@ func (device *ServoBrick) SetSPITFPBaudrateConfig(enableDynamicBaudrate bool, mi
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1373,12 +1373,12 @@ func (device *ServoBrick) GetSPITFPBaudrateConfig() (enableDynamicBaudrate bool,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return enableDynamicBaudrate, minimumDynamicBaudrate, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return enableDynamicBaudrate, minimumDynamicBaudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1422,12 +1422,12 @@ func (device *ServoBrick) GetSendTimeoutCount(communicationMethod CommunicationM
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return timeoutCount, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return timeoutCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1467,12 +1467,12 @@ func (device *ServoBrick) SetSPITFPBaudrate(brickletPort rune, baudrate uint32) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1498,12 +1498,12 @@ func (device *ServoBrick) GetSPITFPBaudrate(brickletPort rune) (baudrate uint32,
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return baudrate, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return baudrate, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1540,12 +1540,12 @@ func (device *ServoBrick) GetSPITFPErrorCount(brickletPort rune) (errorCountACKC
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return errorCountACKChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1579,12 +1579,12 @@ func (device *ServoBrick) EnableStatusLED() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1614,12 +1614,12 @@ func (device *ServoBrick) DisableStatusLED() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1644,12 +1644,12 @@ func (device *ServoBrick) IsStatusLEDEnabled() (enabled bool, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1678,12 +1678,12 @@ func (device *ServoBrick) GetProtocol1BrickletName(port rune) (protocolVersion u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 52 {
-			return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
-		}
-
 		if header.ErrorCode != 0 {
 			return protocolVersion, firmwareVersion, name, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 52 {
+			return protocolVersion, firmwareVersion, name, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 52)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1714,12 +1714,12 @@ func (device *ServoBrick) GetChipTemperature() (temperature int16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1748,12 +1748,12 @@ func (device *ServoBrick) Reset() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1783,12 +1783,12 @@ func (device *ServoBrick) WriteBrickletPlugin(port rune, offset uint8, chunk [32
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1817,12 +1817,12 @@ func (device *ServoBrick) ReadBrickletPlugin(port rune, offset uint8) (chunk [32
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 40 {
-			return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
-		}
-
 		if header.ErrorCode != 0 {
 			return chunk, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 40 {
+			return chunk, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 40)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1853,12 +1853,12 @@ func (device *ServoBrick) GetIdentity() (uid string, connectedUid string, positi
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

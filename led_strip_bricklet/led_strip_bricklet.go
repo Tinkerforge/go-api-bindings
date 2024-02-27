@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -247,12 +247,12 @@ func (device *LEDStripBricklet) SetRGBValues(index uint16, length uint8, r [16]u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -280,12 +280,12 @@ func (device *LEDStripBricklet) GetRGBValues(index uint16, length uint8) (r [16]
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 56 {
-			return r, g, b, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 56)
-		}
-
 		if header.ErrorCode != 0 {
 			return r, g, b, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 56 {
+			return r, g, b, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 56)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -317,12 +317,12 @@ func (device *LEDStripBricklet) SetFrameDuration(duration uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -345,12 +345,12 @@ func (device *LEDStripBricklet) GetFrameDuration() (duration uint16, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return duration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return duration, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return duration, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -374,12 +374,12 @@ func (device *LEDStripBricklet) GetSupplyVoltage() (voltage uint16, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return voltage, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return voltage, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -420,12 +420,12 @@ func (device *LEDStripBricklet) SetClockFrequency(frequency uint32) (err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -450,12 +450,12 @@ func (device *LEDStripBricklet) GetClockFrequency() (frequency uint32, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return frequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return frequency, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return frequency, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -497,12 +497,12 @@ func (device *LEDStripBricklet) SetChipType(chip ChipType) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -535,12 +535,12 @@ func (device *LEDStripBricklet) GetChipType() (chip ChipType, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return chip, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return chip, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return chip, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -623,12 +623,12 @@ func (device *LEDStripBricklet) SetRGBWValues(index uint16, length uint8, r [12]
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -657,12 +657,12 @@ func (device *LEDStripBricklet) GetRGBWValues(index uint16, length uint8) (r [12
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 56 {
-			return r, g, b, w, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 56)
-		}
-
 		if header.ErrorCode != 0 {
 			return r, g, b, w, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 56 {
+			return r, g, b, w, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 56)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -743,12 +743,12 @@ func (device *LEDStripBricklet) SetChannelMapping(mapping ChannelMapping) (err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -806,12 +806,12 @@ func (device *LEDStripBricklet) GetChannelMapping() (mapping ChannelMapping, err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mapping, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mapping, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mapping, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -839,12 +839,12 @@ func (device *LEDStripBricklet) EnableFrameRenderedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -871,12 +871,12 @@ func (device *LEDStripBricklet) DisableFrameRenderedCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -901,12 +901,12 @@ func (device *LEDStripBricklet) IsFrameRenderedCallbackEnabled() (enabled bool, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -939,12 +939,12 @@ func (device *LEDStripBricklet) GetIdentity() (uid string, connectedUid string, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

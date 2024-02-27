@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -272,12 +272,12 @@ func (device *OutdoorWeatherBricklet) GetStationIdentifiersLowLevel() (identifie
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 72 {
-			return identifiersLength, identifiersChunkOffset, identifiersChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
-		}
-
 		if header.ErrorCode != 0 {
 			return identifiersLength, identifiersChunkOffset, identifiersChunkData, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 72 {
+			return identifiersLength, identifiersChunkOffset, identifiersChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -343,12 +343,12 @@ func (device *OutdoorWeatherBricklet) GetSensorIdentifiersLowLevel() (identifier
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 72 {
-			return identifiersLength, identifiersChunkOffset, identifiersChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
-		}
-
 		if header.ErrorCode != 0 {
 			return identifiersLength, identifiersChunkOffset, identifiersChunkData, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 72 {
+			return identifiersLength, identifiersChunkOffset, identifiersChunkData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -440,12 +440,12 @@ func (device *OutdoorWeatherBricklet) GetStationData(identifier uint8) (temperat
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 27 {
-			return temperature, humidity, windSpeed, gustSpeed, rain, windDirection, batteryLow, lastChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 27)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, humidity, windSpeed, gustSpeed, rain, windDirection, batteryLow, lastChange, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 27 {
+			return temperature, humidity, windSpeed, gustSpeed, rain, windDirection, batteryLow, lastChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 27)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -484,12 +484,12 @@ func (device *OutdoorWeatherBricklet) GetSensorData(identifier uint8) (temperatu
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return temperature, humidity, lastChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, humidity, lastChange, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return temperature, humidity, lastChange, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -516,12 +516,12 @@ func (device *OutdoorWeatherBricklet) SetStationCallbackConfiguration(enableCall
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -544,12 +544,12 @@ func (device *OutdoorWeatherBricklet) GetStationCallbackConfiguration() (enableC
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enableCallback, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enableCallback, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enableCallback, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -574,12 +574,12 @@ func (device *OutdoorWeatherBricklet) SetSensorCallbackConfiguration(enableCallb
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -602,12 +602,12 @@ func (device *OutdoorWeatherBricklet) GetSensorCallbackConfiguration() (enableCa
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enableCallback, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enableCallback, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enableCallback, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -641,12 +641,12 @@ func (device *OutdoorWeatherBricklet) GetSPITFPErrorCount() (errorCountAckChecks
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 24 {
-			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 24 {
+			return errorCountAckChecksum, errorCountMessageChecksum, errorCountFrame, errorCountOverflow, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 24)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -696,12 +696,12 @@ func (device *OutdoorWeatherBricklet) SetBootloaderMode(mode BootloaderMode) (st
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -733,12 +733,12 @@ func (device *OutdoorWeatherBricklet) GetBootloaderMode() (mode BootloaderMode, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return mode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -768,12 +768,12 @@ func (device *OutdoorWeatherBricklet) SetWriteFirmwarePointer(pointer uint32) (e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -804,12 +804,12 @@ func (device *OutdoorWeatherBricklet) WriteFirmware(data [64]uint8) (status uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return status, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return status, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -847,12 +847,12 @@ func (device *OutdoorWeatherBricklet) SetStatusLEDConfig(config StatusLEDConfig)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -882,12 +882,12 @@ func (device *OutdoorWeatherBricklet) GetStatusLEDConfig() (config StatusLEDConf
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return config, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return config, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -916,12 +916,12 @@ func (device *OutdoorWeatherBricklet) GetChipTemperature() (temperature int16, e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return temperature, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return temperature, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -950,12 +950,12 @@ func (device *OutdoorWeatherBricklet) Reset() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -983,12 +983,12 @@ func (device *OutdoorWeatherBricklet) WriteUID(uid uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -1012,12 +1012,12 @@ func (device *OutdoorWeatherBricklet) ReadUID() (uid uint32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return uid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1050,12 +1050,12 @@ func (device *OutdoorWeatherBricklet) GetIdentity() (uid string, connectedUid st
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

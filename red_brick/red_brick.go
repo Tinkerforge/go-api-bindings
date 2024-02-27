@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -597,12 +597,12 @@ func (device *REDBrick) CreateSession(lifetime uint32) (errorCode ErrorCode, ses
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, sessionId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, sessionId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, sessionId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -661,12 +661,12 @@ func (device *REDBrick) ExpireSession(sessionId uint16) (errorCode ErrorCode, er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -691,12 +691,12 @@ func (device *REDBrick) ExpireSessionUnchecked(sessionId uint16) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -754,12 +754,12 @@ func (device *REDBrick) KeepSessionAlive(sessionId uint16, lifetime uint32) (err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -819,12 +819,12 @@ func (device *REDBrick) ReleaseObject(objectId uint16, sessionId uint16) (errorC
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -850,12 +850,12 @@ func (device *REDBrick) ReleaseObjectUnchecked(objectId uint16, sessionId uint16
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -922,12 +922,12 @@ func (device *REDBrick) AllocateString(lengthToReserve uint32, buffer string, se
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, stringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, stringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, stringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -988,12 +988,12 @@ func (device *REDBrick) TruncateString(stringId uint16, length uint32) (errorCod
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1051,12 +1051,12 @@ func (device *REDBrick) GetStringLength(stringId uint16) (errorCode ErrorCode, l
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 13 {
-			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, length, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 13 {
+			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 13)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1123,12 +1123,12 @@ func (device *REDBrick) SetStringChunk(stringId uint16, offset uint32, buffer st
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1188,12 +1188,12 @@ func (device *REDBrick) GetStringChunk(stringId uint16, offset uint32) (errorCod
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 72 {
-			return errorCode, buffer, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, buffer, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 72 {
+			return errorCode, buffer, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1260,12 +1260,12 @@ func (device *REDBrick) AllocateList(lengthToReserve uint16, sessionId uint16) (
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, listId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, listId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, listId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1324,12 +1324,12 @@ func (device *REDBrick) GetListLength(listId uint16) (errorCode ErrorCode, lengt
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, length, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1406,12 +1406,12 @@ func (device *REDBrick) GetListItem(listId uint16, index uint16, sessionId uint1
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return errorCode, itemObjectId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, itemObjectId, type_, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return errorCode, itemObjectId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1475,12 +1475,12 @@ func (device *REDBrick) AppendToList(listId uint16, itemObjectId uint16) (errorC
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1542,12 +1542,12 @@ func (device *REDBrick) RemoveFromList(listId uint16, index uint16) (errorCode E
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1672,12 +1672,12 @@ func (device *REDBrick) OpenFile(nameStringId uint16, flags FileFlag, permission
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1751,12 +1751,12 @@ func (device *REDBrick) CreatePipe(flags PipeFlag, length uint64, sessionId uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, fileId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, fileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1869,12 +1869,12 @@ func (device *REDBrick) GetFileInfo(fileId uint16, sessionId uint16) (errorCode 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 58 {
-			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 58 {
+			return errorCode, type_, nameStringId, flags, permissions, uid, gid, length, accessTimestamp, modificationTimestamp, statusChangeTimestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 58)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1954,12 +1954,12 @@ func (device *REDBrick) ReadFile(fileId uint16, lengthToRead uint8) (errorCode E
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 72 {
-			return errorCode, buffer, lengthRead, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, buffer, lengthRead, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 72 {
+			return errorCode, buffer, lengthRead, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 72)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -1998,12 +1998,12 @@ func (device *REDBrick) ReadFileAsync(fileId uint16, lengthToRead uint64) (err e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2064,12 +2064,12 @@ func (device *REDBrick) AbortAsyncFileRead(fileId uint16) (errorCode ErrorCode, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2135,12 +2135,12 @@ func (device *REDBrick) WriteFile(fileId uint16, buffer [61]uint8, lengthToWrite
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 10 {
-			return errorCode, lengthWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, lengthWritten, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 10 {
+			return errorCode, lengthWritten, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 10)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2175,12 +2175,12 @@ func (device *REDBrick) WriteFileUnchecked(fileId uint16, buffer [61]uint8, leng
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2213,12 +2213,12 @@ func (device *REDBrick) WriteFileAsync(fileId uint16, buffer [61]uint8, lengthTo
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -2291,12 +2291,12 @@ func (device *REDBrick) SetFilePosition(fileId uint16, offset int64, origin File
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2359,12 +2359,12 @@ func (device *REDBrick) GetFilePosition(fileId uint16) (errorCode ErrorCode, pos
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, position, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return errorCode, position, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2426,12 +2426,12 @@ func (device *REDBrick) SetFileEvents(fileId uint16, events FileEvent) (errorCod
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2491,12 +2491,12 @@ func (device *REDBrick) GetFileEvents(fileId uint16) (errorCode ErrorCode, event
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, events, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, events, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, events, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2565,12 +2565,12 @@ func (device *REDBrick) OpenDirectory(nameStringId uint16, sessionId uint16) (er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, directoryId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, directoryId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, directoryId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2631,12 +2631,12 @@ func (device *REDBrick) GetDirectoryName(directoryId uint16, sessionId uint16) (
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, nameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, nameStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, nameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2718,12 +2718,12 @@ func (device *REDBrick) GetNextDirectoryEntry(directoryId uint16, sessionId uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return errorCode, nameStringId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, nameStringId, type_, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return errorCode, nameStringId, type_, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2783,12 +2783,12 @@ func (device *REDBrick) RewindDirectory(directoryId uint16) (errorCode ErrorCode
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2864,12 +2864,12 @@ func (device *REDBrick) CreateDirectory(nameStringId uint16, flags DirectoryFlag
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -2927,12 +2927,12 @@ func (device *REDBrick) GetProcesses(sessionId uint16) (errorCode ErrorCode, pro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, processesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, processesListId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, processesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3000,12 +3000,12 @@ func (device *REDBrick) SpawnProcess(executableStringId uint16, argumentsListId 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, processId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, processId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, processId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3086,12 +3086,12 @@ func (device *REDBrick) KillProcess(processId uint16, signal ProcessSignal) (err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3152,12 +3152,12 @@ func (device *REDBrick) GetProcessCommand(processId uint16, sessionId uint16) (e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3223,12 +3223,12 @@ func (device *REDBrick) GetProcessIdentity(processId uint16) (errorCode ErrorCod
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 21 {
-			return errorCode, pid, uid, gid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, pid, uid, gid, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 21 {
+			return errorCode, pid, uid, gid, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3291,12 +3291,12 @@ func (device *REDBrick) GetProcessStdio(processId uint16, sessionId uint16) (err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 15 {
-			return errorCode, stdinFileId, stdoutFileId, stderrFileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, stdinFileId, stdoutFileId, stderrFileId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 15 {
+			return errorCode, stdinFileId, stdoutFileId, stderrFileId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 15)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3393,12 +3393,12 @@ func (device *REDBrick) GetProcessState(processId uint16) (errorCode ErrorCode, 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 19 {
-			return errorCode, state, timestamp, exitCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, state, timestamp, exitCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 19 {
+			return errorCode, state, timestamp, exitCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3459,12 +3459,12 @@ func (device *REDBrick) GetPrograms(sessionId uint16) (errorCode ErrorCode, prog
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, programsListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, programsListId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, programsListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3524,12 +3524,12 @@ func (device *REDBrick) DefineProgram(identifierStringId uint16, sessionId uint1
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, programId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, programId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, programId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3589,12 +3589,12 @@ func (device *REDBrick) PurgeProgram(programId uint16, cookie uint32) (errorCode
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3653,12 +3653,12 @@ func (device *REDBrick) GetProgramIdentifier(programId uint16, sessionId uint16)
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, identifierStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, identifierStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, identifierStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3718,12 +3718,12 @@ func (device *REDBrick) GetProgramRootDirectory(programId uint16, sessionId uint
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, rootDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, rootDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, rootDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3786,12 +3786,12 @@ func (device *REDBrick) SetProgramCommand(programId uint16, executableStringId u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3850,12 +3850,12 @@ func (device *REDBrick) GetProgramCommand(programId uint16, sessionId uint16) (e
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return errorCode, executableStringId, argumentsListId, environmentListId, workingDirectoryStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3929,12 +3929,12 @@ func (device *REDBrick) SetProgramStdioRedirection(programId uint16, stdinRedire
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -3999,12 +3999,12 @@ func (device *REDBrick) GetProgramStdioRedirection(programId uint16, sessionId u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 18 {
-			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 18 {
+			return errorCode, stdinRedirection, stdinFileNameStringId, stdoutRedirection, stdoutFileNameStringId, stderrRedirection, stderrFileNameStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 18)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4076,12 +4076,12 @@ func (device *REDBrick) SetProgramSchedule(programId uint16, startMode ProgramSt
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4144,12 +4144,12 @@ func (device *REDBrick) GetProgramSchedule(programId uint16, sessionId uint16) (
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 17 {
-			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 17 {
+			return errorCode, startMode, continueAfterError, startInterval, startFieldsStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 17)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4214,12 +4214,12 @@ func (device *REDBrick) GetProgramSchedulerState(programId uint16, sessionId uin
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 20 {
-			return errorCode, state, timestamp, messageStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 20)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, state, timestamp, messageStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 20 {
+			return errorCode, state, timestamp, messageStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 20)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4280,12 +4280,12 @@ func (device *REDBrick) ContinueProgramSchedule(programId uint16) (errorCode Err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4343,12 +4343,12 @@ func (device *REDBrick) StartProgram(programId uint16) (errorCode ErrorCode, err
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4407,12 +4407,12 @@ func (device *REDBrick) GetLastSpawnedProgramProcess(programId uint16, sessionId
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 19 {
-			return errorCode, processId, timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, processId, timestamp, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 19 {
+			return errorCode, processId, timestamp, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 19)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4473,12 +4473,12 @@ func (device *REDBrick) GetCustomProgramOptionNames(programId uint16, sessionId 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, namesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, namesListId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, namesListId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4539,12 +4539,12 @@ func (device *REDBrick) SetCustomProgramOptionValue(programId uint16, nameString
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4604,12 +4604,12 @@ func (device *REDBrick) GetCustomProgramOptionValue(programId uint16, nameString
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return errorCode, valueStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, valueStringId, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return errorCode, valueStringId, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4669,12 +4669,12 @@ func (device *REDBrick) RemoveCustomProgramOption(programId uint16, nameStringId
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return errorCode, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return errorCode, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -4705,12 +4705,12 @@ func (device *REDBrick) GetIdentity() (uid string, connectedUid string, position
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

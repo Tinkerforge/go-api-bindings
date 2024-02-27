@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -266,12 +266,12 @@ func (device *CANBricklet) WriteFrame(frameType FrameType, identifier uint32, da
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return success, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return success, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return success, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -318,12 +318,12 @@ func (device *CANBricklet) ReadFrame() (success bool, frameType FrameType, ident
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 23 {
-			return success, frameType, identifier, data, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
-		}
-
 		if header.ErrorCode != 0 {
 			return success, frameType, identifier, data, length, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 23 {
+			return success, frameType, identifier, data, length, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -353,12 +353,12 @@ func (device *CANBricklet) EnableFrameReadCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -383,12 +383,12 @@ func (device *CANBricklet) DisableFrameReadCallback() (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -411,12 +411,12 @@ func (device *CANBricklet) IsFrameReadCallbackEnabled() (enabled bool, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -480,12 +480,12 @@ func (device *CANBricklet) SetConfiguration(baudRate BaudRate, transceiverMode T
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -522,12 +522,12 @@ func (device *CANBricklet) GetConfiguration() (baudRate BaudRate, transceiverMod
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 14 {
-			return baudRate, transceiverMode, writeTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
-		}
-
 		if header.ErrorCode != 0 {
 			return baudRate, transceiverMode, writeTimeout, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 14 {
+			return baudRate, transceiverMode, writeTimeout, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 14)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -614,12 +614,12 @@ func (device *CANBricklet) SetReadFilter(mode FilterMode, mask uint32, filter1 u
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -650,12 +650,12 @@ func (device *CANBricklet) GetReadFilter() (mode FilterMode, mask uint32, filter
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 21 {
-			return mode, mask, filter1, filter2, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
-		}
-
 		if header.ErrorCode != 0 {
 			return mode, mask, filter1, filter2, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 21 {
+			return mode, mask, filter1, filter2, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 21)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -714,12 +714,12 @@ func (device *CANBricklet) GetErrorLog() (writeErrorLevel uint8, readErrorLevel 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 23 {
-			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
-		}
-
 		if header.ErrorCode != 0 {
 			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 23 {
+			return writeErrorLevel, readErrorLevel, transceiverDisabled, writeTimeoutCount, readRegisterOverflowCount, readBufferOverflowCount, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 23)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -753,12 +753,12 @@ func (device *CANBricklet) SetFrameReadableCallbackConfiguration(enabled bool) (
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -783,12 +783,12 @@ func (device *CANBricklet) GetFrameReadableCallbackConfiguration() (enabled bool
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 9 {
-			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
-		}
-
 		if header.ErrorCode != 0 {
 			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -821,12 +821,12 @@ func (device *CANBricklet) GetIdentity() (uid string, connectedUid string, posit
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])

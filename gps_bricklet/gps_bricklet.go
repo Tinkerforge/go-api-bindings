@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2022-08-22.      *
+ * This file was automatically generated on 2024-02-27.      *
  *                                                           *
- * Go Bindings Version 2.0.14                                *
+ * Go Bindings Version 2.0.15                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -324,12 +324,12 @@ func (device *GPSBricklet) GetCoordinates() (latitude uint32, ns rune, longitude
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 26 {
-			return latitude, ns, longitude, ew, pdop, hdop, vdop, epe, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 26)
-		}
-
 		if header.ErrorCode != 0 {
 			return latitude, ns, longitude, ew, pdop, hdop, vdop, epe, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 26 {
+			return latitude, ns, longitude, ew, pdop, hdop, vdop, epe, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 26)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -378,12 +378,12 @@ func (device *GPSBricklet) GetStatus() (fix Fix, satellitesView uint8, satellite
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 11 {
-			return fix, satellitesView, satellitesUsed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
-		}
-
 		if header.ErrorCode != 0 {
 			return fix, satellitesView, satellitesUsed, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return fix, satellitesView, satellitesUsed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -412,12 +412,12 @@ func (device *GPSBricklet) GetAltitude() (altitude int32, geoidalSeparation int3
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return altitude, geoidalSeparation, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return altitude, geoidalSeparation, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return altitude, geoidalSeparation, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -449,12 +449,12 @@ func (device *GPSBricklet) GetMotion() (course uint32, speed uint32, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return course, speed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return course, speed, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return course, speed, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -482,12 +482,12 @@ func (device *GPSBricklet) GetDateTime() (date uint32, time uint32, err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 16 {
-			return date, time, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
-		}
-
 		if header.ErrorCode != 0 {
 			return date, time, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return date, time, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -527,12 +527,12 @@ func (device *GPSBricklet) Restart(restartType RestartType) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -560,12 +560,12 @@ func (device *GPSBricklet) SetCoordinatesCallbackPeriod(period uint32) (err erro
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -588,12 +588,12 @@ func (device *GPSBricklet) GetCoordinatesCallbackPeriod() (period uint32, err er
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -622,12 +622,12 @@ func (device *GPSBricklet) SetStatusCallbackPeriod(period uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -650,12 +650,12 @@ func (device *GPSBricklet) GetStatusCallbackPeriod() (period uint32, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -684,12 +684,12 @@ func (device *GPSBricklet) SetAltitudeCallbackPeriod(period uint32) (err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -712,12 +712,12 @@ func (device *GPSBricklet) GetAltitudeCallbackPeriod() (period uint32, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -746,12 +746,12 @@ func (device *GPSBricklet) SetMotionCallbackPeriod(period uint32) (err error) {
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -774,12 +774,12 @@ func (device *GPSBricklet) GetMotionCallbackPeriod() (period uint32, err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -808,12 +808,12 @@ func (device *GPSBricklet) SetDateTimeCallbackPeriod(period uint32) (err error) 
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 8 {
-			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
-		}
-
 		if header.ErrorCode != 0 {
 			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
 		}
 
 		bytes.NewBuffer(resultBytes[8:])
@@ -836,12 +836,12 @@ func (device *GPSBricklet) GetDateTimeCallbackPeriod() (period uint32, err error
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 12 {
-			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
-		}
-
 		if header.ErrorCode != 0 {
 			return period, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 12 {
+			return period, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 12)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
@@ -874,12 +874,12 @@ func (device *GPSBricklet) GetIdentity() (uid string, connectedUid string, posit
 
 		header.FillFromBytes(resultBytes)
 
-		if header.Length != 33 {
-			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
-		}
-
 		if header.ErrorCode != 0 {
 			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 33 {
+			return uid, connectedUid, position, hardwareVersion, firmwareVersion, deviceIdentifier, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 33)
 		}
 
 		resultBuf := bytes.NewBuffer(resultBytes[8:])
