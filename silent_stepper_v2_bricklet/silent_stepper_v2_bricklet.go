@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -25,71 +25,74 @@ import (
 type Function = uint8
 
 const (
-	FunctionSetMaxVelocity                 Function = 1
-	FunctionGetMaxVelocity                 Function = 2
-	FunctionGetCurrentVelocity             Function = 3
-	FunctionSetSpeedRamping                Function = 4
-	FunctionGetSpeedRamping                Function = 5
-	FunctionFullBrake                      Function = 6
-	FunctionSetCurrentPosition             Function = 7
-	FunctionGetCurrentPosition             Function = 8
-	FunctionSetTargetPosition              Function = 9
-	FunctionGetTargetPosition              Function = 10
-	FunctionSetSteps                       Function = 11
-	FunctionGetSteps                       Function = 12
-	FunctionGetRemainingSteps              Function = 13
-	FunctionSetStepConfiguration           Function = 14
-	FunctionGetStepConfiguration           Function = 15
-	FunctionDriveForward                   Function = 16
-	FunctionDriveBackward                  Function = 17
-	FunctionStop                           Function = 18
-	FunctionGetInputVoltage                Function = 19
-	FunctionSetMotorCurrent                Function = 22
-	FunctionGetMotorCurrent                Function = 23
-	FunctionSetEnabled                     Function = 24
-	FunctionGetEnabled                     Function = 25
-	FunctionSetBasicConfiguration          Function = 26
-	FunctionGetBasicConfiguration          Function = 27
-	FunctionSetSpreadcycleConfiguration    Function = 28
-	FunctionGetSpreadcycleConfiguration    Function = 29
-	FunctionSetStealthConfiguration        Function = 30
-	FunctionGetStealthConfiguration        Function = 31
-	FunctionSetCoolstepConfiguration       Function = 32
-	FunctionGetCoolstepConfiguration       Function = 33
-	FunctionSetMiscConfiguration           Function = 34
-	FunctionGetMiscConfiguration           Function = 35
-	FunctionSetErrorLEDConfig              Function = 36
-	FunctionGetErrorLEDConfig              Function = 37
-	FunctionGetDriverStatus                Function = 38
-	FunctionSetMinimumVoltage              Function = 39
-	FunctionGetMinimumVoltage              Function = 40
-	FunctionSetTimeBase                    Function = 43
-	FunctionGetTimeBase                    Function = 44
-	FunctionGetAllData                     Function = 45
-	FunctionSetAllCallbackConfiguration    Function = 46
-	FunctionGetAllDataCallbackConfiguraton Function = 47
-	FunctionSetGPIOConfiguration           Function = 48
-	FunctionGetGPIOConfiguration           Function = 49
-	FunctionSetGPIOAction                  Function = 50
-	FunctionGetGPIOAction                  Function = 51
-	FunctionGetGPIOState                   Function = 52
-	FunctionGetSPITFPErrorCount            Function = 234
-	FunctionSetBootloaderMode              Function = 235
-	FunctionGetBootloaderMode              Function = 236
-	FunctionSetWriteFirmwarePointer        Function = 237
-	FunctionWriteFirmware                  Function = 238
-	FunctionSetStatusLEDConfig             Function = 239
-	FunctionGetStatusLEDConfig             Function = 240
-	FunctionGetChipTemperature             Function = 242
-	FunctionReset                          Function = 243
-	FunctionWriteUID                       Function = 248
-	FunctionReadUID                        Function = 249
-	FunctionGetIdentity                    Function = 255
-	FunctionCallbackUnderVoltage           Function = 41
-	FunctionCallbackPositionReached        Function = 42
-	FunctionCallbackAllData                Function = 53
-	FunctionCallbackNewState               Function = 54
-	FunctionCallbackGPIOState              Function = 55
+	FunctionSetMaxVelocity                       Function = 1
+	FunctionGetMaxVelocity                       Function = 2
+	FunctionGetCurrentVelocity                   Function = 3
+	FunctionSetSpeedRamping                      Function = 4
+	FunctionGetSpeedRamping                      Function = 5
+	FunctionFullBrake                            Function = 6
+	FunctionSetCurrentPosition                   Function = 7
+	FunctionGetCurrentPosition                   Function = 8
+	FunctionSetTargetPosition                    Function = 9
+	FunctionGetTargetPosition                    Function = 10
+	FunctionSetSteps                             Function = 11
+	FunctionGetSteps                             Function = 12
+	FunctionGetRemainingSteps                    Function = 13
+	FunctionSetStepConfiguration                 Function = 14
+	FunctionGetStepConfiguration                 Function = 15
+	FunctionDriveForward                         Function = 16
+	FunctionDriveBackward                        Function = 17
+	FunctionStop                                 Function = 18
+	FunctionGetInputVoltage                      Function = 19
+	FunctionSetMotorCurrent                      Function = 22
+	FunctionGetMotorCurrent                      Function = 23
+	FunctionSetEnabled                           Function = 24
+	FunctionGetEnabled                           Function = 25
+	FunctionSetBasicConfiguration                Function = 26
+	FunctionGetBasicConfiguration                Function = 27
+	FunctionSetSpreadcycleConfiguration          Function = 28
+	FunctionGetSpreadcycleConfiguration          Function = 29
+	FunctionSetStealthConfiguration              Function = 30
+	FunctionGetStealthConfiguration              Function = 31
+	FunctionSetCoolstepConfiguration             Function = 32
+	FunctionGetCoolstepConfiguration             Function = 33
+	FunctionSetMiscConfiguration                 Function = 34
+	FunctionGetMiscConfiguration                 Function = 35
+	FunctionSetErrorLEDConfig                    Function = 36
+	FunctionGetErrorLEDConfig                    Function = 37
+	FunctionGetDriverStatus                      Function = 38
+	FunctionSetMinimumVoltage                    Function = 39
+	FunctionGetMinimumVoltage                    Function = 40
+	FunctionSetTimeBase                          Function = 43
+	FunctionGetTimeBase                          Function = 44
+	FunctionGetAllData                           Function = 45
+	FunctionSetAllCallbackConfiguration          Function = 46
+	FunctionGetAllDataCallbackConfiguraton       Function = 47
+	FunctionSetGPIOConfiguration                 Function = 48
+	FunctionGetGPIOConfiguration                 Function = 49
+	FunctionSetGPIOAction                        Function = 50
+	FunctionGetGPIOAction                        Function = 51
+	FunctionGetGPIOState                         Function = 52
+	FunctionSetMotorStalledCallbackConfiguration Function = 56
+	FunctionGetMotorStalledCallbackConfiguraton  Function = 57
+	FunctionGetSPITFPErrorCount                  Function = 234
+	FunctionSetBootloaderMode                    Function = 235
+	FunctionGetBootloaderMode                    Function = 236
+	FunctionSetWriteFirmwarePointer              Function = 237
+	FunctionWriteFirmware                        Function = 238
+	FunctionSetStatusLEDConfig                   Function = 239
+	FunctionGetStatusLEDConfig                   Function = 240
+	FunctionGetChipTemperature                   Function = 242
+	FunctionReset                                Function = 243
+	FunctionWriteUID                             Function = 248
+	FunctionReadUID                              Function = 249
+	FunctionGetIdentity                          Function = 255
+	FunctionCallbackUnderVoltage                 Function = 41
+	FunctionCallbackPositionReached              Function = 42
+	FunctionCallbackAllData                      Function = 53
+	FunctionCallbackNewState                     Function = 54
+	FunctionCallbackGPIOState                    Function = 55
+	FunctionCallbackMotorStalled                 Function = 58
 )
 
 type StepResolution = uint8
@@ -304,6 +307,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (SilentStepperV2Bricklet,
 	dev.ResponseExpected[FunctionSetGPIOAction] = ResponseExpectedFlagFalse
 	dev.ResponseExpected[FunctionGetGPIOAction] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetGPIOState] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetMotorStalledCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetMotorStalledCallbackConfiguraton] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
@@ -489,6 +494,29 @@ func (device *SilentStepperV2Bricklet) RegisterGPIOStateCallback(fn func([2]bool
 // Remove a registered GPIO State callback.
 func (device *SilentStepperV2Bricklet) DeregisterGPIOStateCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackGPIOState), registrationId)
+}
+
+// This callback is triggered whenever the motor stalled parameter in the status is set (changes from false to true).
+// See GetDriverStatus.
+func (device *SilentStepperV2Bricklet) RegisterMotorStalledCallback(fn func(int32)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 12 {
+			return
+		}
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var position int32
+		binary.Read(buf, binary.LittleEndian, &position)
+		fn(position)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackMotorStalled), wrapper)
+}
+
+// Remove a registered Motor Stalled callback.
+func (device *SilentStepperV2Bricklet) DeregisterMotorStalledCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackMotorStalled), registrationId)
 }
 
 // Sets the maximum velocity of the stepper motor.
@@ -2362,6 +2390,65 @@ func (device *SilentStepperV2Bricklet) GetGPIOState() (gpioState [2]bool, err er
 	}
 
 	return gpioState, nil
+}
+
+// Sets the period with which the RegisterAllDataCallback callback is triggered
+// periodically. A value of 0 turns the callback off.
+func (device *SilentStepperV2Bricklet) SetMotorStalledCallbackConfiguration(enabled bool) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enabled)
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetMotorStalledCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+
+	}
+
+	return nil
+}
+
+// Returns the period as set by SetAllCallbackConfiguration.
+func (device *SilentStepperV2Bricklet) GetMotorStalledCallbackConfiguraton() (enabled bool, err error) {
+	var buf bytes.Buffer
+
+	resultBytes, err := device.device.Get(uint8(FunctionGetMotorStalledCallbackConfiguraton), buf.Bytes())
+	if err != nil {
+		return enabled, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return enabled, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 9 {
+			return enabled, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 9)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enabled)
+
+	}
+
+	return enabled, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

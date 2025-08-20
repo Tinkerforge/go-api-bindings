@@ -84,8 +84,18 @@
 2022-08-22: 2.0.14 (ee02315)
 - Fix bool arrays in getters
 
-2024-02-27: 2.0.15 (<unknown>)
+2024-02-27: 2.0.15 (3a86bf6)
 - Add support for Industrial Dual AC In Bricklet
 - Add FFC shutter mode and normalization to Thermal Imaging Bricklet API
 - Fix error response check
 - Fix single chunk streams
+
+2025-08-20: 2.0.16 (75eff11)
+- Add support NFC forum tag type 5 to NFC Bricklet API
+- Add CardemuSet/GetTagID function to NFC Bricklet API
+- Add WriteLine2 function to OLED 128x64 Bricklet 2.0 API
+- Add Set/GetMotorStalledCallbackConfiguration functions and MotorStalled
+  callback to Silent Stepper Bricklet 2.0 API
+- Add Set/GetCaptureInputCallbackConfiguration functions and CaptureInput
+  callback to IO-4 Bricklet 2.0 API
+- Fix device identifier check

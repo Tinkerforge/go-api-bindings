@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -41,6 +41,8 @@ const (
 	FunctionGetEdgeCountConfiguration             Function = 14
 	FunctionSetPWMConfiguration                   Function = 15
 	FunctionGetPWMConfiguration                   Function = 16
+	FunctionSetCaptureInputCallbackConfiguration  Function = 20
+	FunctionGetCaptureInputCallbackConfiguration  Function = 21
 	FunctionGetSPITFPErrorCount                   Function = 234
 	FunctionSetBootloaderMode                     Function = 235
 	FunctionGetBootloaderMode                     Function = 236
@@ -56,6 +58,7 @@ const (
 	FunctionCallbackInputValue                    Function = 17
 	FunctionCallbackAllInputValue                 Function = 18
 	FunctionCallbackMonoflopDone                  Function = 19
+	FunctionCallbackCaptureInput                  Function = 22
 )
 
 type Direction = rune
@@ -113,7 +116,7 @@ const DeviceDisplayName = "IO-4 Bricklet 2.0"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (IO4V2Bricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{2, 0, 0}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 1}, uid, &internalIPCon, 0, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return IO4V2Bricklet{}, err
 	}
@@ -133,6 +136,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (IO4V2Bricklet, error) {
 	dev.ResponseExpected[FunctionGetEdgeCountConfiguration] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSetPWMConfiguration] = ResponseExpectedFlagFalse
 	dev.ResponseExpected[FunctionGetPWMConfiguration] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionSetCaptureInputCallbackConfiguration] = ResponseExpectedFlagTrue
+	dev.ResponseExpected[FunctionGetCaptureInputCallbackConfiguration] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
@@ -272,6 +277,32 @@ func (device *IO4V2Bricklet) RegisterMonoflopDoneCallback(fn func(uint8, bool)) 
 // Remove a registered Monoflop Done callback.
 func (device *IO4V2Bricklet) DeregisterMonoflopDoneCallback(registrationId uint64) {
 	device.device.DeregisterCallback(uint8(FunctionCallbackMonoflopDone), registrationId)
+}
+
+// Returns a stream of IO-4 inputs encoded as bitmasks. There are two samples per 8 bit (i.e. 128 samples per callback). Each sample has a time distance as defined by SetCaptureInputCallbackConfiguration.
+//
+// The data starts to stream when the callback is enabled and stops after it is disabled again.
+//
+// .. versionadded:: 2.0.5$nbsp;(Plugin)
+func (device *IO4V2Bricklet) RegisterCaptureInputCallback(fn func([64]uint8)) uint64 {
+	wrapper := func(byteSlice []byte) {
+		var header PacketHeader
+
+		header.FillFromBytes(byteSlice)
+		if header.Length != 72 {
+			return
+		}
+		buf := bytes.NewBuffer(byteSlice[8:])
+		var data [64]uint8
+		binary.Read(buf, binary.LittleEndian, &data)
+		fn(data)
+	}
+	return device.device.RegisterCallback(uint8(FunctionCallbackCaptureInput), wrapper)
+}
+
+// Remove a registered Capture Input callback.
+func (device *IO4V2Bricklet) DeregisterCaptureInputCallback(registrationId uint64) {
+	device.device.DeregisterCallback(uint8(FunctionCallbackCaptureInput), registrationId)
 }
 
 // Sets the output value of all four channels. A value of *true* or *false* outputs
@@ -892,6 +923,74 @@ func (device *IO4V2Bricklet) GetPWMConfiguration(channel uint8) (frequency uint3
 	}
 
 	return frequency, dutyCycle, nil
+}
+
+// If `enable` is set to true, the RegisterCaptureInputCallback callback is started. The sample frequency is given with the `time between capture` parameter (in us).
+// For example: A time between capture of 50us corresponds to a sampling frequency of 20kHz. The maximum sampling frquency is 50kHz.
+//
+// Note: When the RegisterCaptureInputCallback callback is activated, all other functions of the IO-4 Bricklet 2.0 stop working.
+//
+// .. versionadded:: 2.0.5$nbsp;(Plugin)
+func (device *IO4V2Bricklet) SetCaptureInputCallbackConfiguration(enable bool, timeBetweenCapture uint16) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, enable)
+	binary.Write(&buf, binary.LittleEndian, timeBetweenCapture)
+
+	resultBytes, err := device.device.Set(uint8(FunctionSetCaptureInputCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+
+	}
+
+	return nil
+}
+
+// Returns the callback configuration as set by
+// SetCaptureInputCallbackConfiguration.
+//
+// .. versionadded:: 2.0.5$nbsp;(Plugin)
+func (device *IO4V2Bricklet) GetCaptureInputCallbackConfiguration() (enable bool, timeBetweenCapture uint16, err error) {
+	var buf bytes.Buffer
+
+	resultBytes, err := device.device.Get(uint8(FunctionGetCaptureInputCallbackConfiguration), buf.Bytes())
+	if err != nil {
+		return enable, timeBetweenCapture, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return enable, timeBetweenCapture, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 11 {
+			return enable, timeBetweenCapture, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 11)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &enable)
+		binary.Read(resultBuf, binary.LittleEndian, &timeBetweenCapture)
+
+	}
+
+	return enable, timeBetweenCapture, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

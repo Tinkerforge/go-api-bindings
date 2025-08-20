@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -650,10 +650,10 @@ func (device *ThermalImagingBricklet) GetResolution() (resolution Resolution, er
 
 // Sets the spotmeter region of interest. The 4 values are
 //
-// * Index 0: Column start (has to be smaller then Column end).
-// * Index 1: Row start (has to be smaller then Row end).
-// * Index 2: Column end (has to be smaller then 80).
-// * Index 3: Row end (has to be smaller then 60).
+// * Index 0: Column start (has to be smaller than column end).
+// * Index 1: Row start (has to be smaller than row end).
+// * Index 2: Column end (has to be smaller than 80).
+// * Index 3: Row end (has to be smaller than 60).
 //
 // The spotmeter statistics can be read out with GetStatistics.
 func (device *ThermalImagingBricklet) SetSpotmeterConfig(regionOfInterest [4]uint8) (err error) {
@@ -718,10 +718,10 @@ func (device *ThermalImagingBricklet) GetSpotmeterConfig() (regionOfInterest [4]
 //
 // The high contrast region of interest consists of four values:
 //
-// * Index 0: Column start (has to be smaller or equal then Column end).
-// * Index 1: Row start (has to be smaller then Row end).
-// * Index 2: Column end (has to be smaller then 80).
-// * Index 3: Row end (has to be smaller then 60).
+// * Index 0: Column start (has to be smaller than or equal to column end).
+// * Index 1: Row start (has to be smaller than row end).
+// * Index 2: Column end (has to be smaller than 80).
+// * Index 3: Row end (has to be smaller than 60).
 //
 // The algorithm to generate the high contrast image is applied to this region.
 //

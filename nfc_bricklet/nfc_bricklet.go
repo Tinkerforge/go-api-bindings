@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -51,6 +51,8 @@ const (
 	FunctionSetMaximumTimeout                   Function = 27
 	FunctionGetMaximumTimeout                   Function = 28
 	FunctionSimpleGetTagIDLowLevel              Function = 29
+	FunctionCardemuSetTagID                     Function = 30
+	FunctionCardemuGetTagID                     Function = 31
 	FunctionGetSPITFPErrorCount                 Function = 234
 	FunctionSetBootloaderMode                   Function = 235
 	FunctionGetBootloaderMode                   Function = 236
@@ -86,6 +88,7 @@ const (
 	TagTypeType2         TagType = 2
 	TagTypeType3         TagType = 3
 	TagTypeType4         TagType = 4
+	TagTypeType5         TagType = 5
 )
 
 type ReaderState = uint8
@@ -227,7 +230,7 @@ const DeviceDisplayName = "NFC Bricklet"
 // Creates an object with the unique device ID `uid`. This object can then be used after the IP Connection `ipcon` is connected.
 func New(uid string, ipcon *ipconnection.IPConnection) (NFCBricklet, error) {
 	internalIPCon := ipcon.GetInternalHandle().(IPConnection)
-	dev, err := NewDevice([3]uint8{2, 0, 2}, uid, &internalIPCon, 9, DeviceIdentifier, DeviceDisplayName)
+	dev, err := NewDevice([3]uint8{2, 0, 3}, uid, &internalIPCon, 9, DeviceIdentifier, DeviceDisplayName)
 	if err != nil {
 		return NFCBricklet{}, err
 	}
@@ -257,6 +260,8 @@ func New(uid string, ipcon *ipconnection.IPConnection) (NFCBricklet, error) {
 	dev.ResponseExpected[FunctionSetMaximumTimeout] = ResponseExpectedFlagFalse
 	dev.ResponseExpected[FunctionGetMaximumTimeout] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSimpleGetTagIDLowLevel] = ResponseExpectedFlagAlwaysTrue
+	dev.ResponseExpected[FunctionCardemuSetTagID] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionCardemuGetTagID] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
@@ -533,6 +538,7 @@ func (device *NFCBricklet) ReaderRequestTagID() (err error) {
 //	* TagTypeType2
 //	* TagTypeType3
 //	* TagTypeType4
+//	* TagTypeType5
 func (device *NFCBricklet) ReaderGetTagIDLowLevel() (tagType TagType, tagIDLength uint8, tagIDData [32]uint8, err error) {
 	var buf bytes.Buffer
 
@@ -671,7 +677,7 @@ func (device *NFCBricklet) ReaderGetState() (state ReaderState, idle bool, err e
 
 // Writes NDEF formated data.
 //
-// This function currently supports NFC Forum Type 2 and 4.
+// This function currently supports NFC Forum Type 2, 4, 5 and Mifare Classic.
 //
 // The general approach for writing a NDEF message is as follows:
 //
@@ -715,7 +721,7 @@ func (device *NFCBricklet) ReaderWriteNDEFLowLevel(ndefLength uint16, ndefChunkO
 
 // Writes NDEF formated data.
 //
-// This function currently supports NFC Forum Type 2 and 4.
+// This function currently supports NFC Forum Type 2, 4, 5 and Mifare Classic.
 //
 // The general approach for writing a NDEF message is as follows:
 //
@@ -750,7 +756,7 @@ func (device *NFCBricklet) ReaderWriteNDEF(ndef []uint8) (err error) {
 
 // Reads NDEF formated data from a tag.
 //
-// This function currently supports NFC Forum Type 1, 2, 3 and 4.
+// This function currently supports NFC Forum Type 1, 2, 3, 4, 5 and Mifare Classic.
 //
 // The general approach for reading a NDEF message is as follows:
 //
@@ -912,6 +918,7 @@ func (device *NFCBricklet) ReaderAuthenticateMifareClassicPage(page uint16, keyN
 // * NFC Forum Type 2 page size: 4 byte
 // * NFC Forum Type 3 page size: 16 byte
 // * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// * NFC Forum Type 5 page size: 4 byte
 //
 // The general approach for writing to a tag is as follows:
 //
@@ -975,6 +982,7 @@ func (device *NFCBricklet) ReaderWritePageLowLevel(page ReaderWrite, dataLength 
 // * NFC Forum Type 2 page size: 4 byte
 // * NFC Forum Type 3 page size: 16 byte
 // * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// * NFC Forum Type 5 page size: 4 byte
 //
 // The general approach for writing to a tag is as follows:
 //
@@ -1025,6 +1033,7 @@ func (device *NFCBricklet) ReaderWritePage(page ReaderWrite, data []uint8) (err 
 // * NFC Forum Type 2 page size: 4 byte
 // * NFC Forum Type 3 page size: 16 byte
 // * NFC Forum Type 4: No pages, page = file selection (CC or NDEF, see below)
+// * NFC Forum Type 5 page size: 4 byte
 //
 // The general approach for reading a tag is as follows:
 //
@@ -1761,6 +1770,10 @@ func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
 	return timeout, nil
 }
 
+// Returns the tag type and tag ID from simple mode sorted by last seen time for a given index.
+//
+// Up to eight tags are saved.
+//
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 //
 // Associated constants:
@@ -1770,6 +1783,7 @@ func (device *NFCBricklet) GetMaximumTimeout() (timeout uint16, err error) {
 //	* TagTypeType2
 //	* TagTypeType3
 //	* TagTypeType4
+//	* TagTypeType5
 func (device *NFCBricklet) SimpleGetTagIDLowLevel(index uint8) (tagType TagType, tagIDLength uint8, tagIDData [10]uint8, lastSeen uint32, err error) {
 	var buf bytes.Buffer
 	binary.Write(&buf, binary.LittleEndian, index)
@@ -1802,6 +1816,10 @@ func (device *NFCBricklet) SimpleGetTagIDLowLevel(index uint8) (tagType TagType,
 	return tagType, tagIDLength, tagIDData, lastSeen, nil
 }
 
+// Returns the tag type and tag ID from simple mode sorted by last seen time for a given index.
+//
+// Up to eight tags are saved.
+//
 // .. versionadded:: 2.0.6$nbsp;(Plugin)
 func (device *NFCBricklet) SimpleGetTagID(index uint8) (tagID []uint8, tagType TagType, lastSeen uint32, err error) {
 	buf, result, err := device.device.GetHighLevel(func() (LowLevelResult, error) {
@@ -1830,6 +1848,72 @@ func (device *NFCBricklet) SimpleGetTagID(index uint8) (tagID []uint8, tagType T
 	binary.Read(resultBuf, binary.LittleEndian, &tagType)
 	binary.Read(resultBuf, binary.LittleEndian, &lastSeen)
 	return ByteSliceToUint8Slice(buf), tagType, lastSeen, nil
+}
+
+// Sets the tag ID for cardemu mode. The tag ID can either have a length of 4 or 7.
+//
+// Set a length of 0 for random tag ID (default)
+//
+// .. versionadded:: 2.1.0$nbsp;(Plugin)
+func (device *NFCBricklet) CardemuSetTagID(tagIDLength uint8, tagIDData [7]uint8) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, tagIDLength)
+	binary.Write(&buf, binary.LittleEndian, tagIDData)
+
+	resultBytes, err := device.device.Set(uint8(FunctionCardemuSetTagID), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+
+	}
+
+	return nil
+}
+
+// Returns the tag ID and length as set by CardemuSetTagID.
+//
+// .. versionadded:: 2.1.0$nbsp;(Plugin)
+func (device *NFCBricklet) CardemuGetTagID() (tagIDLength uint8, tagIDData [7]uint8, err error) {
+	var buf bytes.Buffer
+
+	resultBytes, err := device.device.Get(uint8(FunctionCardemuGetTagID), buf.Bytes())
+	if err != nil {
+		return tagIDLength, tagIDData, err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return tagIDLength, tagIDData, DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 16 {
+			return tagIDLength, tagIDData, fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 16)
+		}
+
+		resultBuf := bytes.NewBuffer(resultBytes[8:])
+		binary.Read(resultBuf, binary.LittleEndian, &tagIDLength)
+		binary.Read(resultBuf, binary.LittleEndian, &tagIDData)
+
+	}
+
+	return tagIDLength, tagIDData, nil
 }
 
 // Returns the error count for the communication between Brick and Bricklet.

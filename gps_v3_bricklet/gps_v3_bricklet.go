@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -635,8 +635,7 @@ func (device *GPSV3Bricklet) Restart(restartType RestartType) (err error) {
 // * HDOP value and
 // * VDOP value
 //
-// for a given satellite system. Currently GPS and GLONASS are supported, Galileo
-// is not yet supported.
+// for a given satellite system. Currently GPS, GLONASS and Galileo are supported.
 //
 // The GPS and GLONASS satellites have unique numbers and the satellite list gives
 // the numbers of the satellites that are currently utilized. The number 0 is not
@@ -692,8 +691,7 @@ func (device *GPSV3Bricklet) GetSatelliteSystemStatusLowLevel(satelliteSystem Sa
 // * HDOP value and
 // * VDOP value
 //
-// for a given satellite system. Currently GPS and GLONASS are supported, Galileo
-// is not yet supported.
+// for a given satellite system. Currently GPS, GLONASS and Galileo are supported.
 //
 // The GPS and GLONASS satellites have unique numbers and the satellite list gives
 // the numbers of the satellites that are currently utilized. The number 0 is not
@@ -731,13 +729,13 @@ func (device *GPSV3Bricklet) GetSatelliteSystemStatus(satelliteSystem SatelliteS
 	return ByteSliceToUint8Slice(buf), fix, pdop, hdop, vdop, nil
 }
 
-// Returns the current elevation, azimuth and SNR
-// for a given satellite and satellite system.
+// Returns the current elevation, azimuth and SNR for a given satellite and satellite system.
 //
-// The satellite number here always goes from 1 to 32. For GLONASS it corresponds to
-// the satellites 65-96.
+// The available satellite numbers are:
 //
-// Galileo is not yet supported.
+// * GPS: 1-32
+// * GLONASS: 65-96
+// * Galileo: 301-332
 //
 // Associated constants:
 //

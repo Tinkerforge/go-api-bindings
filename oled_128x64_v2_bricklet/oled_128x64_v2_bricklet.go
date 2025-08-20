@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2024-02-27.      *
+ * This file was automatically generated on 2025-08-20.      *
  *                                                           *
- * Go Bindings Version 2.0.15                                *
+ * Go Bindings Version 2.0.16                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -32,6 +32,7 @@ const (
 	FunctionGetDisplayConfiguration Function = 5
 	FunctionWriteLine               Function = 6
 	FunctionDrawBufferedFrame       Function = 7
+	FunctionWriteLine2              Function = 8
 	FunctionGetSPITFPErrorCount     Function = 234
 	FunctionSetBootloaderMode       Function = 235
 	FunctionGetBootloaderMode       Function = 236
@@ -97,6 +98,7 @@ func New(uid string, ipcon *ipconnection.IPConnection) (OLED128x64V2Bricklet, er
 	dev.ResponseExpected[FunctionGetDisplayConfiguration] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionWriteLine] = ResponseExpectedFlagFalse
 	dev.ResponseExpected[FunctionDrawBufferedFrame] = ResponseExpectedFlagFalse
+	dev.ResponseExpected[FunctionWriteLine2] = ResponseExpectedFlagFalse
 	dev.ResponseExpected[FunctionGetSPITFPErrorCount] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionSetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
 	dev.ResponseExpected[FunctionGetBootloaderMode] = ResponseExpectedFlagAlwaysTrue
@@ -432,6 +434,11 @@ func (device *OLED128x64V2Bricklet) GetDisplayConfiguration() (contrast uint8, i
 	return contrast, invert, automaticDraw, nil
 }
 
+// Note
+//  This function is deprecated and only here for backward compatibility.
+//  Since firmware version 2.0.5 we recommend WriteLine2.
+//  It has an additional parameter for letter spacing.
+//
 // Writes text to a specific line with a specific position.
 // The text can have a maximum of 22 characters.
 //
@@ -502,6 +509,64 @@ func (device *OLED128x64V2Bricklet) DrawBufferedFrame(forceCompleteRedraw bool) 
 	binary.Write(&buf, binary.LittleEndian, forceCompleteRedraw)
 
 	resultBytes, err := device.device.Set(uint8(FunctionDrawBufferedFrame), buf.Bytes())
+	if err != nil {
+		return err
+	}
+	if len(resultBytes) > 0 {
+		var header PacketHeader
+
+		header.FillFromBytes(resultBytes)
+
+		if header.ErrorCode != 0 {
+			return DeviceError(header.ErrorCode)
+		}
+
+		if header.Length != 8 {
+			return fmt.Errorf("Received packet of unexpected size %d, instead of %d", header.Length, 8)
+		}
+
+		bytes.NewBuffer(resultBytes[8:])
+
+	}
+
+	return nil
+}
+
+// Writes text to a specific line with a specific position.
+// The text can have a maximum of 26 characters.
+//
+// With a letter spacing of 0, a maximum of 26 characters can be written and
+// with a letter spacing of 1 a maximum of 22 characters can be written.
+//
+// For example: (1, 10, Hello) will write *Hello* in the middle of the
+// second line of the display.
+//
+// The display uses a special 5x7 pixel charset. You can view the characters
+// of the charset in Brick Viewer.
+//
+// If automatic draw is enabled (default) the text is directly written to
+// the screen. Only pixels that have actually changed are updated on the screen,
+// the rest stays the same.
+//
+// If automatic draw is disabled the text is written to an internal buffer and
+// the buffer is transferred to the display only after DrawBufferedFrame
+// is called. This can be used to avoid flicker when drawing a complex frame in
+// multiple steps.
+//
+// Automatic draw can be configured with the SetDisplayConfiguration
+// function.
+func (device *OLED128x64V2Bricklet) WriteLine2(line uint8, position uint8, letterSpacing uint8, text string) (err error) {
+	var buf bytes.Buffer
+	binary.Write(&buf, binary.LittleEndian, line)
+	binary.Write(&buf, binary.LittleEndian, position)
+	binary.Write(&buf, binary.LittleEndian, letterSpacing)
+	text_byte_slice, err := StringToByteSlice(text, 26)
+	if err != nil {
+		return
+	}
+	buf.Write(text_byte_slice)
+
+	resultBytes, err := device.device.Set(uint8(FunctionWriteLine2), buf.Bytes())
 	if err != nil {
 		return err
 	}
