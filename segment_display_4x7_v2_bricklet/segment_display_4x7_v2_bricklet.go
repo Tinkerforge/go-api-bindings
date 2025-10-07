@@ -1,7 +1,7 @@
 /* ***********************************************************
- * This file was automatically generated on 2025-08-20.      *
+ * This file was automatically generated on 2025-10-07.      *
  *                                                           *
- * Go Bindings Version 2.0.16                                *
+ * Go Bindings Version 2.0.17                                *
  *                                                           *
  * If you have a bugfix for this file and want to commit it, *
  * please fix the bug in the generator. You can find a link  *
@@ -190,11 +190,11 @@ func (device *SegmentDisplay4x7V2Bricklet) DeregisterCounterFinishedCallback(reg
 //    :align: center
 func (device *SegmentDisplay4x7V2Bricklet) SetSegments(digit0 [8]bool, digit1 [8]bool, digit2 [8]bool, digit3 [8]bool, colon [2]bool, tick bool) (err error) {
 	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, digit0)
-	binary.Write(&buf, binary.LittleEndian, digit1)
-	binary.Write(&buf, binary.LittleEndian, digit2)
-	binary.Write(&buf, binary.LittleEndian, digit3)
-	binary.Write(&buf, binary.LittleEndian, colon)
+	buf.Write(BoolSliceToByteSlice(digit0[:]))
+	buf.Write(BoolSliceToByteSlice(digit1[:]))
+	buf.Write(BoolSliceToByteSlice(digit2[:]))
+	buf.Write(BoolSliceToByteSlice(digit3[:]))
+	buf.Write(BoolSliceToByteSlice(colon[:]))
 	binary.Write(&buf, binary.LittleEndian, tick)
 
 	resultBytes, err := device.device.Set(uint8(FunctionSetSegments), buf.Bytes())
